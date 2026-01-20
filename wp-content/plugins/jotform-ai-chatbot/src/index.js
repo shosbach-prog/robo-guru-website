@@ -1,0 +1,1 @@
+export { ChatbotGenerator } from './components';

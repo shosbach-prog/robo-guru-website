@@ -1,0 +1,161 @@
+/* RG Forum Design Extension v2.1.2 — Robo-Guru Look (forced) */
+
+:root{
+  --rg-blue: #35a7c4;
+  --rg-blue-dark: #1a7f95;
+  --rg-border: rgba(0,0,0,.10);
+  --rg-shadow: 0 14px 34px rgba(0,0,0,.10);
+  --rg-radius: 18px;
+  --rg-muted: rgba(0,0,0,.70);
+}
+
+/* Make sure BuddyBoss can't override */
+body.buddyboss-theme .rgfde-wrap,
+body .rgfde-wrap{
+  display:grid !important;
+  grid-template-columns: minmax(0, 1fr) 360px !important;
+  gap:18px !important;
+  align-items:start !important;
+  width:100% !important;
+}
+
+@media (max-width: 1024px){
+  body.buddyboss-theme .rgfde-wrap,
+  body .rgfde-wrap{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Sidebar */
+body.buddyboss-theme .rgfde-sidebar,
+body .rgfde-sidebar{
+  position: sticky !important;
+  top: 110px !important;
+  align-self: start !important;
+  z-index: 5 !important;
+}
+
+@media (max-width: 1024px){
+  body.buddyboss-theme .rgfde-sidebar,
+  body .rgfde-sidebar{
+    position: static !important;
+    top:auto !important;
+  }
+}
+
+/* Card */
+body.buddyboss-theme .rgfde-card,
+body .rgfde-card{
+  background: #fff !important;
+  border: 1px solid var(--rg-border) !important;
+  border-radius: var(--rg-radius) !important;
+  box-shadow: var(--rg-shadow) !important;
+  overflow:hidden !important;
+}
+
+body.buddyboss-theme .rgfde-card img,
+body .rgfde-card img{
+  width:100% !important;
+  height:auto !important;
+  display:block !important;
+  background:#fff !important;
+  object-fit:contain !important;
+  max-height:320px !important;
+}
+
+body.buddyboss-theme .rgfde-card .rgfde-card-body,
+body .rgfde-card .rgfde-card-body{
+  padding:14px 16px 16px !important;
+}
+
+body.buddyboss-theme .rgfde-kicker,
+body .rgfde-kicker{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  font-weight:900 !important;
+  color: var(--rg-blue-dark) !important;
+  background: rgba(53,167,196,.10) !important;
+  border: 1px solid rgba(53,167,196,.18) !important;
+  padding:6px 10px !important;
+  border-radius: 999px !important;
+  margin: 0 0 10px 0 !important;
+}
+
+body.buddyboss-theme .rgfde-title,
+body .rgfde-title{
+  margin:0 0 10px 0 !important;
+  font-weight:950 !important;
+  font-size: 1.15rem !important;
+  letter-spacing: -0.01em !important;
+}
+
+body.buddyboss-theme .rgfde-highlights,
+body .rgfde-highlights{
+  margin:0 0 14px 0 !important;
+  padding:0 !important;
+  list-style:none !important;
+  color: var(--rg-muted) !important;
+  font-weight:650 !important;
+}
+
+body.buddyboss-theme .rgfde-highlights li,
+body .rgfde-highlights li{
+  display:flex !important;
+  gap:10px !important;
+  align-items:flex-start !important;
+  padding:8px 10px !important;
+  border-radius:14px !important;
+  background: rgba(0,0,0,.03) !important;
+  margin: 8px 0 !important;
+}
+
+body.buddyboss-theme .rgfde-highlights li:before,
+body .rgfde-highlights li:before{
+  content:"✔" !important;
+  color: var(--rg-blue-dark) !important;
+  font-weight:900 !important;
+  margin-top:1px !important;
+}
+
+/* Buttons */
+body.buddyboss-theme .rgfde-actions,
+body .rgfde-actions{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:10px !important;
+}
+
+body.buddyboss-theme a.rgfde-btn,
+body a.rgfde-btn{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:10px !important;
+  padding:12px 14px !important;
+  border-radius:16px !important;
+  text-decoration:none !important;
+  font-weight:950 !important;
+  line-height:1 !important;
+  border: none !important;
+}
+
+body.buddyboss-theme a.rgfde-btn.primary,
+body a.rgfde-btn.primary{
+  background: linear-gradient(135deg, var(--rg-blue), var(--rg-blue-dark)) !important;
+  color:#fff !important;
+  box-shadow: 0 10px 22px rgba(53,167,196,.25) !important;
+}
+
+body.buddyboss-theme a.rgfde-btn.secondary,
+body a.rgfde-btn.secondary{
+  background:#fff !important;
+  color: var(--rg-blue-dark) !important;
+  border:1px solid rgba(53,167,196,.35) !important;
+  box-shadow:none !important;
+}
+
+body.buddyboss-theme .rgfde-btn-ico,
+body .rgfde-btn-ico{
+  font-size: 1.05rem !important;
+}

@@ -1,0 +1,56 @@
+.jfInfobox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  &--back-btn {
+    svg {
+      width: 100%;
+      height: auto;
+    }
+  }
+  &--icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    padding: 8px;
+    color: var(--jfv-white);
+    flex-shrink: 0;
+    &:not(.success) {
+      background-color: var(--jfv-purple-400);
+    }
+    &.success {
+      background-color: var(--jfv-green-400);
+    }
+    &.isKnowledge {
+      background-color: rgba(100, 178, 0, 0.2);
+      color: var(--jfv-green-500);
+    }
+    &.isDocument {
+      background-color: rgb(0, 153, 255, 0.2);
+      color: var(--jfv-blue-400);
+    }
+    &.isURL {
+      background-color: rgba(255, 182, 41, 0.2);
+      color: var(--jfv-yellow-400);
+    }
+    &.isQA {
+      background-color: rgb(62, 98, 200, 0.2);
+      color: var(--jfv-pdf-default);
+    }
+  }
+  &--content {
+    display: flex;
+    flex-direction: column;
+  }
+  &--name {
+    font-weight: 500;
+    color: var(--jfv-navy-700);
+    font-size: 16px;
+    line-height: 20px;
+  }
+  &--desc {
+    color: var(--jfv-navy-300);
+    font-size: 14px;
+    line-height: 18px;
+  }
+}

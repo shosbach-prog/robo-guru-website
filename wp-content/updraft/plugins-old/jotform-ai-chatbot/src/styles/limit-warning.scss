@@ -1,0 +1,37 @@
+.jf-limit-warning-banner {
+    --banner-background-color: #FFF5D2;
+    --banner-border-color: #FFDC7B;
+    --banner-text-color: #945901;
+
+    &.isOverLimit {
+        --banner-background-color: #FEF2F2;
+        --banner-border-color: #FECACA80;
+        --banner-text-color: #AB0101;
+    }
+
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 22px;
+    margin-bottom: 24px;
+    background-color: var(--banner-background-color);
+    border: 1px solid var(--banner-border-color);
+    border-radius: 6px;
+
+    .jf-limit-warning-content {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        p {
+            color: var(--banner-text-color);
+            font-size: 12px;
+            strong {
+                font-weight: 700;
+            }
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        flex-direction: column;
+        gap: 16px;
+    }
+}

@@ -1,0 +1,114 @@
+.jfInput {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid var(--jfv-navy-100);
+  background: var(--jfv-white);
+  outline: 2px solid transparent;
+  outline-offset: 0;
+  transition: all 0.3s;
+  color: var(--jfv-navy-700);
+  overflow: hidden;
+
+  &:has(:disabled) {
+    background: var(--jfv-navy-50);
+    border-color: transparent;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  &:hover {
+    border-color: var(--jfv-navy-300);
+  }
+
+  &:focus-within {
+    border-color: var(--jfv-blue-500);
+    outline-color: var(--jfv-blue-200);
+  }
+
+  &--counter {
+    font-size: 14px;
+    color: var(--jfv-navy-200);
+    padding: 0 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: 0 !important;
+  }
+
+  input {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    padding: 12px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 18px;
+    color: currentColor;
+    background: transparent;
+    // wp style override
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+
+    &:focus {
+      border: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+    }
+
+    &::placeholder {
+      color: var(--jfv-navy-200);
+    }
+  }
+
+  &--prefix {
+    background-color: var(--jfv-navy-25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 12px;
+    &-text {
+      color: var(--jfv-navy-300);
+      line-height: 38px;
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+    &-icon {
+      display: block;
+      width: 20px;
+      height: 20px;
+      svg {
+        fill: var(--jfv-navy-700);
+      }
+    }
+    &-error {
+      color: var(--jfv-red-500);
+      display: block;
+      margin-top: 8px;
+    }
+  }
+
+  &--suffix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 12px 0 0;
+    border: none;
+    background-color: unset;
+    cursor: pointer;
+    &-icon {
+      display: block;
+      width: 20px;
+      height: 20px;
+      svg {
+        fill: var(--jfv-navy-700);
+      }
+    }
+  }
+}

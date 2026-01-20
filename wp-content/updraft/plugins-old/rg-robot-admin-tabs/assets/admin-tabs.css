@@ -1,0 +1,18 @@
+
+/* Tabs container */
+.rg-tabs{margin-top:8px;}
+.rg-tabs__bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;position:sticky;top:32px;background:#f0f0f1;padding:10px;border-radius:12px;z-index:2;}
+.rg-tab{border:1px solid rgba(0,0,0,.12);background:#fff;border-radius:999px;padding:8px 12px;font-weight:700;cursor:pointer}
+.rg-tab.is-active{background:#111;color:#fff;border-color:#111;}
+.rg-tabs__panes{background:#fff;border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:14px;}
+.rg-pane{display:none;}
+.rg-pane.is-active{display:block;}
+.rg-grid2{display:grid;grid-template-columns: 1fr 1fr;gap:12px;}
+.rg-grid1{display:grid;grid-template-columns: 1fr;gap:12px;}
+@media (max-width: 960px){.rg-grid2{grid-template-columns:1fr;}}
+.rg-field{display:flex;flex-direction:column;gap:6px;}
+.rg-label{font-weight:800;}
+.rg-input{border:1px solid rgba(0,0,0,.14);border-radius:12px;padding:10px 12px;font-weight:600;max-width:100%;}
+.rg-textarea{border:1px solid rgba(0,0,0,.14);border-radius:12px;padding:10px 12px;font-weight:600;width:100%;}
+.rg-help{font-size:12px;opacity:.7;}
+.rg-note{margin-top:10px;padding:10px 12px;border-radius:12px;background:#f6f7f7;border:1px dashed rgba(0,0,0,.2);font-weight:600;}

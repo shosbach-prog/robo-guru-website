@@ -1,0 +1,121 @@
+.jfKnowledgeBase {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  .knowledge-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .knowledge-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 16px 12px 25px;
+      border: 1px solid #c8ceed;
+      border-radius: 4px;
+      margin-bottom: 0;
+      position: relative;
+      cursor: pointer;
+      &[data-item="isKnowledge"] {
+        .knowledge-before,
+        .knowledge-icon {
+          background-color: #64b200;
+        }
+      }
+      &[data-item="isDocument"] {
+        .knowledge-before,
+        .knowledge-icon {
+          background-color: #0099ff;
+        }
+      }
+      &[data-item="isURL"] {
+        .knowledge-before,
+        .knowledge-icon {
+          background-color: #ffb629;
+        }
+      }
+      &[data-item="isQA"] {
+        .knowledge-before,
+        .knowledge-icon {
+          background-color: #3E62C8;
+        }
+      }
+      .knowledge-before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 7px;
+        height: 100%;
+        border-radius: 3px 0px 0px 3px;
+      }
+      .knowledge-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        padding: 6px;
+        svg {
+          fill: #fff;
+          width: 20px;
+          height: 20px;
+        }
+      }
+      .knowledge-content {
+        flex-grow: 1;
+        .knowledge-title {
+          font-size: 16px;
+          line-height: 130%;
+          color: #0a1551;
+          font-weight: 600;
+        }
+        .knowledge-desc {
+          font-size: 12px;
+          line-height: 16px;
+          color: #6c73a8;
+        }
+      }
+      .knowledge-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+          width: 20px;
+          height: 20px;
+          fill: #c8ceed;
+        }
+      }
+    }
+  }
+  .knowledge-filter-container {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    @media screen and (max-width: 640px) {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .jfInput {
+      @media screen and (min-width: 640px) {
+        flex-basis: 66%;
+      }
+      &--prefix {
+        padding: 0 0 0 12px;
+        background: transparent;
+      }
+    }
+    .jfDropdown {
+      font-size: 14px;
+    }
+  }
+  .knowledge-filter-dropdown {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 33%;
+  }
+  .knowledge-base-loading-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

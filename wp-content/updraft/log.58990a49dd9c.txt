@@ -1,0 +1,1436 @@
+0000.000 (0) Opened log file at time: Wed, 14 Jan 2026 20:53:28 +0000 on https://robo-guru.de
+0000.001 (0) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 2.25.9.0 WP: 6.9 PHP: 8.1.34 (fpm-fcgi, Linux agitated-mclean.217-154-80-227.plesk.page 6.8.0-90-generic #91-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 18 14:14:30 UTC 2025 x86_64) MySQL: 10.11.13-MariaDB-0ubuntu0.24.04.1 (max packet size=16777216) WPLANG: de_DE_formal Server: Apache safe_mode: 0 max_execution_time: 120 memory_limit: 128M (used: 17.3M | 18M) multisite: N openssl: OpenSSL 3.0.13 30 Jan 2024 mcrypt: N LANG:  WP Proxy: disabled ZipArchive::addFile: Y
+0000.002 (0) Free space on disk containing Updraft's temporary directory: 105814.8 MB
+0000.006 (0) Tasks: Backup files: 1 (schedule: unset) Backup DB: 1 (schedule: unset)
+0000.008 (0) Requesting semaphore lock (fd) (apparently not via scheduler)
+0000.010 (0) Semaphore (fd, VBVKDT_options) was stuck, set lock time to 2026-01-14 20:53:28
+0000.010 (0) Semaphore (fd, VBVKDT_options) reset to 1
+0000.011 (0) Set semaphore last lock (fd) time to 2026-01-14 20:53:28
+0000.012 (0) Semaphore lock (fd) complete
+0000.014 (0) Backup run: resumption=0, nonce=58990a49dd9c, file_nonce=58990a49dd9c begun at=1768424008 (0s ago), job type=backup
+0000.015 (0) Scheduling a resumption (1) after 300 seconds (1768424308) in case this run gets aborted
+0000.034 (0) PHP event: code E_WARNING: file_exists(): open_basedir restriction in effect. File(/proc/user_beancounters) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 188, wp-content/plugins/updraftplus/backup.php)
+0000.035 (0) Checking if we have a zip executable available
+0000.035 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/usr/bin/zip) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1825, wp-content/plugins/updraftplus/class-updraftplus.php)
+0000.036 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/bin/zip) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1825, wp-content/plugins/updraftplus/class-updraftplus.php)
+0000.036 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/usr/local/bin/zip) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1825, wp-content/plugins/updraftplus/class-updraftplus.php)
+0000.037 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/usr/sfw/bin/zip) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1825, wp-content/plugins/updraftplus/class-updraftplus.php)
+0000.037 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/usr/xdg4/bin/zip) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1825, wp-content/plugins/updraftplus/class-updraftplus.php)
+0000.038 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/opt/bin/zip) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1825, wp-content/plugins/updraftplus/class-updraftplus.php)
+0000.039 (0) Creation of backups of directories: beginning
+0000.041 (0) Beginning creation of dump of plugins (split every: 400 MB)
+0000.044 (0) PHP event: Could not ask cPanel about disk space (open_basedir) - this is not an error (line 420, wp-content/plugins/updraftplus/class-updraftplus.php)
+0002.542 (0) Total entities for the zip file: 2465 directories, 11938 files (0 skipped as non-modified), 202.4 MB
+0002.549 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 2.0 seconds have passed since the last write (0.2 MB, 11 (11) files added so far); re-opening (prior size: 0 KB)
+0002.620 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 100 files added (on-disk size: 525.6 KB)
+0002.652 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 200 files added (on-disk size: 525.6 KB)
+0002.693 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 300 files added (on-disk size: 525.6 KB)
+0002.735 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 400 files added (on-disk size: 525.6 KB)
+0002.771 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 500 files added (on-disk size: 525.6 KB)
+0002.805 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 600 files added (on-disk size: 525.6 KB)
+0002.841 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 700 files added (on-disk size: 525.6 KB)
+0002.883 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 800 files added (on-disk size: 525.6 KB)
+0002.922 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 900 files added (on-disk size: 525.6 KB)
+0002.958 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1000 files added (on-disk size: 525.6 KB)
+0002.963 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (8.2 MB, 11938 files batched, 1001 (1012) added so far); re-opening (prior size: 525.6 KB)
+0003.701 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1100 files added (on-disk size: 3633.5 KB)
+0003.736 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1200 files added (on-disk size: 3633.5 KB)
+0003.767 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1300 files added (on-disk size: 3633.5 KB)
+0003.799 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1400 files added (on-disk size: 3633.5 KB)
+0003.833 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1500 files added (on-disk size: 3633.5 KB)
+0003.869 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1600 files added (on-disk size: 3633.5 KB)
+0003.898 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1700 files added (on-disk size: 3633.5 KB)
+0003.926 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1800 files added (on-disk size: 3633.5 KB)
+0003.954 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 1900 files added (on-disk size: 3633.5 KB)
+0003.974 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 25 MB added on this batch (25.1 MB, 11938 files batched, 951 (1963) added so far); re-opening (prior size: 3633.5 KB)
+0005.363 (0) A useful amount of data was added after this amount of zip processing: 1.8 s (normalised: 1.8 s, rate: 14170.6 KB/s)
+0005.365 (0) Performance is good - will increase the amount of data we attempt to batch (time=1.8145639896393, normalised_time=1.8065540494094, max_time=5.363874912262, data points known=1, old_max_bytes=26214400, new_max_bytes=87064320)
+0005.393 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2000 files added (on-disk size: 11307.9 KB)
+0005.428 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2100 files added (on-disk size: 11307.9 KB)
+0005.466 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2200 files added (on-disk size: 11307.9 KB)
+0005.495 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2300 files added (on-disk size: 11307.9 KB)
+0005.527 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2400 files added (on-disk size: 11307.9 KB)
+0005.562 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2500 files added (on-disk size: 11307.9 KB)
+0005.597 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2600 files added (on-disk size: 11307.9 KB)
+0005.628 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2700 files added (on-disk size: 11307.9 KB)
+0005.661 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2800 files added (on-disk size: 11307.9 KB)
+0005.694 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 2900 files added (on-disk size: 11307.9 KB)
+0005.716 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (18.3 MB, 11938 files batched, 1001 (2964) added so far); re-opening (prior size: 11307.9 KB)
+0006.658 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3000 files added (on-disk size: 16532.4 KB)
+0006.691 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3100 files added (on-disk size: 16532.4 KB)
+0006.724 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3200 files added (on-disk size: 16532.4 KB)
+0006.753 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3300 files added (on-disk size: 16532.4 KB)
+0006.783 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3400 files added (on-disk size: 16532.4 KB)
+0006.818 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3500 files added (on-disk size: 16532.4 KB)
+0006.853 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3600 files added (on-disk size: 16532.4 KB)
+0006.887 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3700 files added (on-disk size: 16532.4 KB)
+0006.926 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3800 files added (on-disk size: 16532.4 KB)
+0006.966 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 3900 files added (on-disk size: 16532.4 KB)
+0006.989 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (23.4 MB, 11938 files batched, 1001 (3965) added so far); re-opening (prior size: 16532.4 KB)
+0008.427 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4000 files added (on-disk size: 21431.3 KB)
+0008.457 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4100 files added (on-disk size: 21431.3 KB)
+0008.491 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4200 files added (on-disk size: 21431.3 KB)
+0008.520 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4300 files added (on-disk size: 21431.3 KB)
+0008.553 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4400 files added (on-disk size: 21431.3 KB)
+0008.587 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4500 files added (on-disk size: 21431.3 KB)
+0008.622 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4600 files added (on-disk size: 21431.3 KB)
+0008.658 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4700 files added (on-disk size: 21431.3 KB)
+0008.697 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4800 files added (on-disk size: 21431.3 KB)
+0008.733 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 4900 files added (on-disk size: 21431.3 KB)
+0008.756 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (40.5 MB, 11938 files batched, 1001 (4966) added so far); re-opening (prior size: 21431.3 KB)
+0011.007 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5000 files added (on-disk size: 34325.2 KB)
+0011.044 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5100 files added (on-disk size: 34325.2 KB)
+0011.082 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5200 files added (on-disk size: 34325.2 KB)
+0011.118 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5300 files added (on-disk size: 34325.2 KB)
+0011.151 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5400 files added (on-disk size: 34325.2 KB)
+0011.182 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5500 files added (on-disk size: 34325.2 KB)
+0011.212 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5600 files added (on-disk size: 34325.2 KB)
+0011.244 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5700 files added (on-disk size: 34325.2 KB)
+0011.276 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5800 files added (on-disk size: 34325.2 KB)
+0011.307 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 5900 files added (on-disk size: 34325.2 KB)
+0011.327 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (17.7 MB, 11938 files batched, 1001 (5967) added so far); re-opening (prior size: 34325.2 KB)
+0012.606 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6000 files added (on-disk size: 39368.2 KB)
+0012.637 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6100 files added (on-disk size: 39368.2 KB)
+0012.667 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6200 files added (on-disk size: 39368.2 KB)
+0012.697 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6300 files added (on-disk size: 39368.2 KB)
+0012.728 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6400 files added (on-disk size: 39368.2 KB)
+0012.762 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6500 files added (on-disk size: 39368.2 KB)
+0012.796 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6600 files added (on-disk size: 39368.2 KB)
+0012.830 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6700 files added (on-disk size: 39368.2 KB)
+0012.864 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6800 files added (on-disk size: 39368.2 KB)
+0012.899 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 6900 files added (on-disk size: 39368.2 KB)
+0012.923 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (6.5 MB, 11938 files batched, 1001 (6968) added so far); re-opening (prior size: 39368.2 KB)
+0013.509 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7000 files added (on-disk size: 41541.3 KB)
+0013.542 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7100 files added (on-disk size: 41541.3 KB)
+0013.576 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7200 files added (on-disk size: 41541.3 KB)
+0013.610 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7300 files added (on-disk size: 41541.3 KB)
+0013.644 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7400 files added (on-disk size: 41541.3 KB)
+0013.678 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7500 files added (on-disk size: 41541.3 KB)
+0013.712 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7600 files added (on-disk size: 41541.3 KB)
+0013.746 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7700 files added (on-disk size: 41541.3 KB)
+0013.782 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7800 files added (on-disk size: 41541.3 KB)
+0013.814 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 7900 files added (on-disk size: 41541.3 KB)
+0013.836 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (7 MB, 11938 files batched, 1001 (7969) added so far); re-opening (prior size: 41541.3 KB)
+0014.323 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8000 files added (on-disk size: 43772.5 KB)
+0014.359 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8100 files added (on-disk size: 43772.5 KB)
+0014.395 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8200 files added (on-disk size: 43772.5 KB)
+0014.429 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8300 files added (on-disk size: 43772.5 KB)
+0014.460 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8400 files added (on-disk size: 43772.5 KB)
+0014.497 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8500 files added (on-disk size: 43772.5 KB)
+0014.535 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8600 files added (on-disk size: 43772.5 KB)
+0014.566 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8700 files added (on-disk size: 43772.5 KB)
+0014.603 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8800 files added (on-disk size: 43772.5 KB)
+0014.639 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 8900 files added (on-disk size: 43772.5 KB)
+0014.664 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (10.7 MB, 11938 files batched, 1001 (8970) added so far); re-opening (prior size: 43772.5 KB)
+0015.205 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9000 files added (on-disk size: 48917.7 KB)
+0015.237 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9100 files added (on-disk size: 48917.7 KB)
+0015.274 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9200 files added (on-disk size: 48917.7 KB)
+0015.309 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9300 files added (on-disk size: 48917.7 KB)
+0015.345 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9400 files added (on-disk size: 48917.7 KB)
+0015.382 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9500 files added (on-disk size: 48917.7 KB)
+0015.420 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9600 files added (on-disk size: 48917.7 KB)
+0015.456 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9700 files added (on-disk size: 48917.7 KB)
+0015.491 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9800 files added (on-disk size: 48917.7 KB)
+0015.524 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 9900 files added (on-disk size: 48917.7 KB)
+0015.544 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (14.9 MB, 11938 files batched, 1001 (9971) added so far); re-opening (prior size: 48917.7 KB)
+0016.420 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10000 files added (on-disk size: 53425.2 KB)
+0016.448 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10100 files added (on-disk size: 53425.2 KB)
+0016.476 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10200 files added (on-disk size: 53425.2 KB)
+0016.503 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10300 files added (on-disk size: 53425.2 KB)
+0016.530 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10400 files added (on-disk size: 53425.2 KB)
+0016.561 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10500 files added (on-disk size: 53425.2 KB)
+0016.592 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10600 files added (on-disk size: 53425.2 KB)
+0016.623 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10700 files added (on-disk size: 53425.2 KB)
+0016.658 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10800 files added (on-disk size: 53425.2 KB)
+0016.693 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 10900 files added (on-disk size: 53425.2 KB)
+0016.717 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (14.7 MB, 11938 files batched, 1001 (10972) added so far); re-opening (prior size: 53425.2 KB)
+0017.651 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11000 files added (on-disk size: 59919.4 KB)
+0017.684 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11100 files added (on-disk size: 59919.4 KB)
+0017.719 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11200 files added (on-disk size: 59919.4 KB)
+0017.755 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11300 files added (on-disk size: 59919.4 KB)
+0017.791 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11400 files added (on-disk size: 59919.4 KB)
+0017.825 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11500 files added (on-disk size: 59919.4 KB)
+0017.854 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11600 files added (on-disk size: 59919.4 KB)
+0017.884 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11700 files added (on-disk size: 59919.4 KB)
+0017.919 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11800 files added (on-disk size: 59919.4 KB)
+0017.955 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.tmp: 11900 files added (on-disk size: 59919.4 KB)
+0019.153 (0) Creating zip file manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.list-temp.tmp)
+0019.176 (0) Successfully created zip file manifest (size: 1090214)
+0019.622 (0) Created plugins zip (0) - 64230.5 KB in 19.6 s (3281 KB/s) (sha1: ed8a21ef507df5a322b98f1a02417c194918dbd2, sha256: 44b62d3e054a737a00d3eb12253ac4a3c043ec9e627d8678852c32d1103b14e2)
+0019.631 (0) Cloud backup selection (1/1): none with instance (1/1) (last)
+0019.632 (0) No remote despatch: user chose no remote backup service
+0019.632 (0) Recording as successfully uploaded: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip
+0019.633 (0) Deleting zip manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip.list.tmp)
+0019.635 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0019.637 (0) Number of backup sets in history: 1; groups (db): 1
+0019.637 (0) Examining (for databases) backup set with group_id=0, nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0019.638 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0019.638 (0) Number of backup sets in history: 1; groups (files): 1
+0019.639 (0) Examining (for files) backup set with nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0019.639 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0019.639 (0) Retain: saving new backup history (sets now: 1) and finishing retain operation
+0019.643 (0) Beginning creation of dump of themes (split every: 400 MB)
+0019.645 (0) PHP event: Could not ask cPanel about disk space (open_basedir) - this is not an error (line 420, wp-content/plugins/updraftplus/class-updraftplus.php)
+0020.127 (0) Total entities for the zip file: 429 directories, 2131 files (0 skipped as non-modified), 52.5 MB
+0020.164 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 100 files added (on-disk size: 0 KB)
+0020.208 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 200 files added (on-disk size: 0 KB)
+0020.251 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 300 files added (on-disk size: 0 KB)
+0020.294 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 400 files added (on-disk size: 0 KB)
+0020.336 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 500 files added (on-disk size: 0 KB)
+0020.377 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 600 files added (on-disk size: 0 KB)
+0020.419 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 700 files added (on-disk size: 0 KB)
+0020.463 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 800 files added (on-disk size: 0 KB)
+0020.504 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 900 files added (on-disk size: 0 KB)
+0020.541 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1000 files added (on-disk size: 0 KB)
+0020.542 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (9.4 MB, 2131 files batched, 1001 (1001) added so far); re-opening (prior size: 0 KB)
+0021.124 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1100 files added (on-disk size: 3497.3 KB)
+0021.159 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1200 files added (on-disk size: 3497.3 KB)
+0021.187 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1300 files added (on-disk size: 3497.3 KB)
+0021.220 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1400 files added (on-disk size: 3497.3 KB)
+0021.250 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1500 files added (on-disk size: 3497.3 KB)
+0021.281 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1600 files added (on-disk size: 3497.3 KB)
+0021.313 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1700 files added (on-disk size: 3497.3 KB)
+0021.345 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1800 files added (on-disk size: 3497.3 KB)
+0021.375 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 1900 files added (on-disk size: 3497.3 KB)
+0021.403 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 2000 files added (on-disk size: 3497.3 KB)
+0021.404 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 1000 files added on this batch (35.3 MB, 2131 files batched, 1001 (2002) added so far); re-opening (prior size: 3497.3 KB)
+0023.355 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.tmp: 2100 files added (on-disk size: 13718.2 KB)
+0023.610 (0) Creating zip file manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.list-temp.tmp)
+0023.615 (0) Successfully created zip file manifest (size: 197886)
+0023.765 (0) Created themes zip (0) - 21545.9 KB in 4.1 s (5231.8 KB/s) (sha1: 884d421b31c4232a5b0e5cae069244412789b67f, sha256: 0d79656e28252516954897c625a0798daea30c6169434913e65b7b833223f53f)
+0023.768 (0) Cloud backup selection (1/1): none with instance (1/1) (last)
+0023.769 (0) No remote despatch: user chose no remote backup service
+0023.769 (0) Recording as successfully uploaded: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip
+0023.770 (0) Deleting zip manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip.list.tmp)
+0023.771 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0023.772 (0) Number of backup sets in history: 1; groups (db): 1
+0023.773 (0) Examining (for databases) backup set with group_id=0, nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0023.773 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0023.774 (0) Number of backup sets in history: 1; groups (files): 1
+0023.774 (0) Examining (for files) backup set with nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0023.774 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0023.775 (0) Retain: saving new backup history (sets now: 1) and finishing retain operation
+0023.778 (0) Exclusion option setting (uploads): backup*,*backups,backwpup*,wp-clone,snapshots,wp-staging
+0023.779 (0) Looking for candidates to backup in: /var/www/vhosts/robo-guru.de/httpdocs/wp-content/uploads
+0023.779 (0) finding files: ACg8ocJe81U9dPrUf2_ZIeNvIAFF2sX1FT4DtD730zl36Nd4YTw7s360-c-I5lvic.png: adding to list (1)
+0023.780 (0) finding files: et_temp: adding to list (2)
+0023.780 (0) finding files: astra-sites: adding to list (3)
+0023.781 (0) finding files: astra: adding to list (4)
+0023.781 (0) finding files: ACg8ocInC2D4U-9U3bQo6RCrqtPE56-FHVKL2IwXbV9PYxv2Yodu3-jmdws360-c-OLYjiC.png: adding to list (5)
+0023.782 (0) finding files: bb-reactions-media: adding to list (6)
+0023.782 (0) finding files: sureforms: adding to list (7)
+0023.782 (0) finding files: ACg8ocJe81U9dPrUf2_ZIeNvIAFF2sX1FT4DtD730zl36Nd4YTw7s360-c-oBzzSI.png: adding to list (8)
+0023.783 (0) finding files: rank-math: adding to list (9)
+0023.783 (0) finding files: bb_videos: adding to list (10)
+0023.784 (0) finding files: 2014: adding to list (11)
+0023.784 (0) finding files: 2023: adding to list (12)
+0023.785 (0) finding files: 2018: adding to list (13)
+0023.785 (0) finding files: group-avatars: adding to list (14)
+0023.786 (0) finding files: astra-docs: adding to list (15)
+0023.786 (0) finding files: 2021: adding to list (16)
+0023.787 (0) finding files: rg-pdf-thumbs: adding to list (17)
+0023.787 (0) finding files: ast-block-templates-json: adding to list (18)
+0023.787 (0) finding files: wpforo: adding to list (19)
+0023.788 (0) finding files: slider_imports: adding to list (20)
+0023.788 (0) finding files: wpcf7_uploads: adding to list (21)
+0023.789 (0) finding files: 2015: adding to list (22)
+0023.789 (0) finding files: redux: adding to list (23)
+0023.790 (0) finding files: wc-logs: adding to list (24)
+0023.790 (0) finding files: suremails: adding to list (25)
+0023.791 (0) finding files: ACg8ocInC2D4U-9U3bQo6RCrqtPE56-FHVKL2IwXbV9PYxv2Yodu3-jmdws360-c-xAEmtY.png: adding to list (26)
+0023.791 (0) finding files: buddypress: adding to list (27)
+0023.792 (0) finding files: 2019: adding to list (28)
+0023.792 (0) finding files: bb_medias: adding to list (29)
+0023.793 (0) finding files: uag-plugin: adding to list (30)
+0023.793 (0) finding files: wpb-fonts: adding to list (31)
+0023.794 (0) finding files: revslider: adding to list (32)
+0023.794 (0) finding files: 2022: adding to list (33)
+0023.795 (0) finding files: woocommerce_uploads: adding to list (34)
+0023.795 (0) finding files: astra-addon: adding to list (35)
+0023.796 (0) finding files: presto-player-private: adding to list (36)
+0023.796 (0) finding files: surerank: adding to list (37)
+0023.797 (0) finding files: avatars: adding to list (38)
+0023.797 (0) finding files: bb-platform-previews: adding to list (39)
+0023.797 (0) finding files: ACg8ocInC2D4U-9U3bQo6RCrqtPE56-FHVKL2IwXbV9PYxv2Yodu3-jmdws360-c-E7trbc.png: adding to list (40)
+0023.798 (0) finding files: woocommerce-placeholder.webp: adding to list (41)
+0023.798 (0) finding files: 2024: adding to list (42)
+0023.799 (0) finding files: 2020: adding to list (43)
+0023.799 (0) finding files: fonts: adding to list (44)
+0023.800 (0) finding files: custom_styles: adding to list (45)
+0023.800 (0) finding files: bb_documents: adding to list (46)
+0023.801 (0) finding files: 2026: adding to list (47)
+0023.801 (0) finding files: ai-builder: adding to list (48)
+0023.802 (0) finding files: 2025: adding to list (49)
+0023.802 (0) Beginning creation of dump of uploads (split every: 400 MB)
+0023.804 (0) PHP event: Could not ask cPanel about disk space (open_basedir) - this is not an error (line 420, wp-content/plugins/updraftplus/class-updraftplus.php)
+0024.047 (0) Total entities for the zip file: 139 directories, 1880 files (0 skipped as non-modified), 1295.3 MB
+0024.074 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 100 files added (on-disk size: 0 KB)
+0024.101 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 200 files added (on-disk size: 0 KB)
+0024.128 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 300 files added (on-disk size: 0 KB)
+0024.154 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 400 files added (on-disk size: 0 KB)
+0024.183 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 500 files added (on-disk size: 0 KB)
+0024.209 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 600 files added (on-disk size: 0 KB)
+0024.236 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 700 files added (on-disk size: 0 KB)
+0024.263 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 800 files added (on-disk size: 0 KB)
+0024.279 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 83 MB added on this batch (167.1 MB, 1880 files batched, 857 (857) added so far); re-opening (prior size: 0 KB)
+0025.529 (0) A useful amount of data was added after this amount of zip processing: 2 s (normalised: 1 s, rate: 86414.2 KB/s)
+0025.530 (0) Performance is good - will increase the amount of data we attempt to batch (time=1.980015039444, normalised_time=0.98391001004991, max_time=25.529546022415, data points known=1, old_max_bytes=87064320, new_max_bytes=209715200)
+0025.547 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 900 files added (on-disk size: 166650 KB)
+0025.574 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.tmp: 1000 files added (on-disk size: 166650 KB)
+0025.590 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 200 MB added on this batch (269.3 MB, 1880 files batched, 202 (1059) added so far); re-opening (prior size: 166650 KB)
+0027.055 (0) A useful amount of data was added after this amount of zip processing: 2.5 s (normalised: 1.9 s, rate: 110011.2 KB/s)
+0027.056 (0) Performance is good - but we will not increase the amount of data we batch, as we are already at the present limit (time=2.5062661170959, normalised_time=1.8616284383066, max_time=27.055956840515, data points known=1, max_bytes=209715200)
+0027.058 (0) Zip size is at/near split limit (432 MB / 400 MB) - bumping index (from: 0)
+0030.074 (0) Creating zip file manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.list-temp.tmp)
+0030.077 (0) Successfully created zip file manifest (size: 63217)
+0030.078 (0) Created uploads zip (0) - 442360.8 KB in 3.3 s (135984.3 KB/s) (checksums: sha1: 0830cb1e8092fe28bf8340f7fdba9ab7093ec6b4, sha256: 13717beb26acf51f792e5bf960db678fcec0aed2492d215b3dcbc3c637d1f5b1)
+0030.082 (0) Cloud backup selection (1/1): none with instance (1/1) (last)
+0030.083 (0) No remote despatch: user chose no remote backup service
+0030.083 (0) Recording as successfully uploaded: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip
+0030.085 (0) Deleting zip manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip.list.tmp)
+0030.086 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0030.087 (0) Number of backup sets in history: 1; groups (db): 1
+0030.087 (0) Examining (for databases) backup set with group_id=0, nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0030.088 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0030.088 (0) Number of backup sets in history: 1; groups (files): 1
+0030.089 (0) Examining (for files) backup set with nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0030.089 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0030.089 (0) Retain: saving new backup history (sets now: 1) and finishing retain operation
+0030.092 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 2.0 seconds have passed since the last write (0 MB, 1 (1060) files added so far); re-opening (prior size: 0 KB)
+0030.104 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads2.zip.tmp: 1100 files added (on-disk size: 38.1 KB)
+0030.131 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads2.zip.tmp: 1200 files added (on-disk size: 38.1 KB)
+0030.143 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 200 MB added on this batch (280.6 MB, 1880 files batched, 182 (1242) added so far); re-opening (prior size: 38.1 KB)
+0031.382 (0) A useful amount of data was added after this amount of zip processing: 1.8 s (normalised: 1.3 s, rate: 156741.7 KB/s)
+0031.383 (0) Performance is good - but we will not increase the amount of data we batch, as we are already at the present limit (time=1.8332300186157, normalised_time=1.3066079620071, max_time=31.382699966431, data points known=1, max_bytes=209715200)
+0031.401 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads2.zip.tmp: 1300 files added (on-disk size: 287225.2 KB)
+0031.428 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads2.zip.tmp: 1400 files added (on-disk size: 287225.2 KB)
+0031.436 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 200 MB added on this batch (207.5 MB, 1880 files batched, 186 (1428) added so far); re-opening (prior size: 287225.2 KB)
+0032.925 (0) A useful amount of data was added after this amount of zip processing: 2.4 s (normalised: 2.3 s, rate: 89419.3 KB/s)
+0032.926 (0) Performance is good - but we will not increase the amount of data we batch, as we are already at the present limit (time=2.3761999607086, normalised_time=2.2903334890264, max_time=32.925726890564, data points known=1, max_bytes=209715200)
+0032.927 (0) Zip size is at/near split limit (487.3 MB / 400 MB) - bumping index (from: 1)
+0036.451 (0) Creating zip file manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads2.zip.list-temp.tmp)
+0036.452 (0) Successfully created zip file manifest (size: 25131)
+0036.454 (0) Created uploads zip (1) - 498983.9 KB in 2.8 s (175151.7 KB/s) (checksums: sha1: 3453d76430ddc7dcbc64fed233e51c9285a2d2d6, sha256: e1c4a8710e871811fb412ff424d99bf1120b4ca3d82c2ff7ecfa49713b33d8a5)
+0036.458 (0) Cloud backup selection (1/1): none with instance (1/1) (last)
+0036.459 (0) No remote despatch: user chose no remote backup service
+0036.460 (0) Recording as successfully uploaded: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads2.zip
+0036.461 (0) Deleting zip manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads2.zip.list.tmp)
+0036.462 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0036.463 (0) Number of backup sets in history: 1; groups (db): 1
+0036.464 (0) Examining (for databases) backup set with group_id=0, nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0036.464 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0036.465 (0) Number of backup sets in history: 1; groups (files): 1
+0036.465 (0) Examining (for files) backup set with nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0036.465 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0036.466 (0) Retain: saving new backup history (sets now: 1) and finishing retain operation
+0036.468 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 2.0 seconds have passed since the last write (0.2 MB, 1 (1429) files added so far); re-opening (prior size: 0 KB)
+0036.493 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads3.zip.tmp: 1500 files added (on-disk size: 188 KB)
+0036.524 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads3.zip.tmp: 1600 files added (on-disk size: 188 KB)
+0036.557 (0) Adding batch to zip file (UpdraftPlus_ZipArchive): over 200 MB added on this batch (209.8 MB, 1880 files batched, 271 (1700) added so far); re-opening (prior size: 188 KB)
+0037.693 (0) A useful amount of data was added after this amount of zip processing: 2.1 s (normalised: 2 s, rate: 100218.8 KB/s)
+0037.693 (0) Performance is good - but we will not increase the amount of data we batch, as we are already at the present limit (time=2.1437261104584, normalised_time=2.0435279241786, max_time=37.693213939667, data points known=1, max_bytes=209715200)
+0037.695 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads3.zip.tmp: 1700 files added (on-disk size: 213137 KB)
+0037.723 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads3.zip.tmp: 1800 files added (on-disk size: 213137 KB)
+0039.069 (0) Creating zip file manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads3.zip.list-temp.tmp)
+0039.070 (0) Successfully created zip file manifest (size: 30678)
+0041.729 (0) Created uploads zip (2) - 377544.4 KB in 5.3 s (71578.8 KB/s) (sha1: 4dc27316c47d0b41bb77587bc1ef786d1da31f70, sha256: e0245e964a330c284d26dba2e585eb37bddf59d9b57a40d2a73047f18a9066cd)
+0041.732 (0) Cloud backup selection (1/1): none with instance (1/1) (last)
+0041.733 (0) No remote despatch: user chose no remote backup service
+0041.734 (0) Recording as successfully uploaded: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads3.zip
+0041.735 (0) Deleting zip manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads3.zip.list.tmp)
+0041.736 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0041.737 (0) Number of backup sets in history: 1; groups (db): 1
+0041.737 (0) Examining (for databases) backup set with group_id=0, nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0041.737 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0041.738 (0) Number of backup sets in history: 1; groups (files): 1
+0041.738 (0) Examining (for files) backup set with nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0041.738 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0041.739 (0) Retain: saving new backup history (sets now: 1) and finishing retain operation
+0041.743 (0) Beginning creation of dump of mu-plugins (split every: 400 MB)
+0041.745 (0) PHP event: Could not ask cPanel about disk space (open_basedir) - this is not an error (line 420, wp-content/plugins/updraftplus/class-updraftplus.php)
+0041.747 (0) Total entities for the zip file: 1 directories, 1 files (0 skipped as non-modified), 0 MB
+0041.750 (0) Creating zip file manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-mu-plugins.zip.list-temp.tmp)
+0041.750 (0) Successfully created zip file manifest (size: 77)
+0041.753 (0) Created mu-plugins zip (0) - 0.8 KB in 0 s (121.9 KB/s) (sha1: a1e5c57dff1296fc995712bcba860198e7d78f0d, sha256: 5f7f35756c7fac53beb7f64f518363d4f858fa8affb2a759c94bb756112f1e52)
+0041.755 (0) Cloud backup selection (1/1): none with instance (1/1) (last)
+0041.756 (0) No remote despatch: user chose no remote backup service
+0041.756 (0) Recording as successfully uploaded: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-mu-plugins.zip
+0041.757 (0) Deleting zip manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-mu-plugins.zip.list.tmp)
+0041.758 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0041.759 (0) Number of backup sets in history: 1; groups (db): 1
+0041.760 (0) Examining (for databases) backup set with group_id=0, nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0041.760 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0041.760 (0) Number of backup sets in history: 1; groups (files): 1
+0041.760 (0) Examining (for files) backup set with nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0041.760 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0041.761 (0) Retain: saving new backup history (sets now: 1) and finishing retain operation
+0041.764 (0) Beginning backup of other directories found in the content directory (index: 0)
+0041.765 (0) Exclusion option setting (others): upgrade,cache,updraft,backup*,*backups,mysql.sql,debug.log
+0041.765 (0) Looking for candidates to backup in: /var/www/vhosts/robo-guru.de/httpdocs/wp-content
+0041.766 (0) finding files: advanced-cache.php: adding to list (1)
+0041.766 (0) finding files: languages: adding to list (2)
+0041.767 (0) finding files: debug.log: skipping: excluded by options
+0041.767 (0) finding files: uploads: skipping: this is the uploads directory
+0041.767 (0) finding files: astra-local-fonts: adding to list (3)
+0041.768 (0) finding files: themes: skipping: this is the themes directory
+0041.768 (0) finding files: upgrade-temp-backup: adding to list (4)
+0041.769 (0) finding files: mu-plugins: skipping: this is the mu-plugins directory
+0041.769 (0) finding files: upgrade: skipping: excluded by options
+0041.770 (0) finding files: updraft: skipping: this is the updraft directory
+0041.770 (0) finding files: plugins: skipping: this is the plugins directory
+0041.770 (0) finding files: cache: skipping: excluded by options
+0041.771 (0) finding files: wp-rocket-config: adding to list (5)
+0041.771 (0) finding files: index.php: adding to list (6)
+0041.774 (0) PHP event: Could not ask cPanel about disk space (open_basedir) - this is not an error (line 420, wp-content/plugins/updraftplus/class-updraftplus.php)
+0041.810 (0) Total entities for the zip file: 10 directories, 330 files (0 skipped as non-modified), 14.7 MB
+0041.833 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-others.zip.tmp: 100 files added (on-disk size: 0 KB)
+0041.858 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-others.zip.tmp: 200 files added (on-disk size: 0 KB)
+0041.882 (0) Zip: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-others.zip.tmp: 300 files added (on-disk size: 0 KB)
+0043.066 (0) Creating zip file manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-others.zip.list-temp.tmp)
+0043.068 (0) Successfully created zip file manifest (size: 24440)
+0043.101 (0) Created others zip (0) - 4423.8 KB in 1.3 s (3335.9 KB/s) (sha1: a5aa60add2155720e4ee4e80be1565d81ed540f4, sha256: 79db702c806cd84484464ab4f0c170eb28f63d32368ae9f9c7b42214ea84eac8)
+0043.104 (0) Cloud backup selection (1/1): none with instance (1/1) (last)
+0043.104 (0) No remote despatch: user chose no remote backup service
+0043.105 (0) Recording as successfully uploaded: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-others.zip
+0043.106 (0) Deleting zip manifest (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-others.zip.list.tmp)
+0043.108 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0043.109 (0) Number of backup sets in history: 1; groups (db): 1
+0043.109 (0) Examining (for databases) backup set with group_id=0, nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0043.109 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0043.110 (0) Number of backup sets in history: 1; groups (files): 1
+0043.110 (0) Examining (for files) backup set with nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0043.110 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0043.111 (0) Retain: saving new backup history (sets now: 1) and finishing retain operation
+0043.115 (0) Saving backup status to database (elements: 12)
+0043.117 (0) Beginning creation of database dump (WordPress DB)
+0043.118 (0) SQL compatibility mode is: ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+0043.119 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/usr/bin/mysqldump) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1708, wp-content/plugins/updraftplus/class-updraftplus.php)
+0043.120 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/bin/mysqldump) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1708, wp-content/plugins/updraftplus/class-updraftplus.php)
+0043.120 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/usr/local/bin/mysqldump) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1708, wp-content/plugins/updraftplus/class-updraftplus.php)
+0043.121 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/usr/sfw/bin/mysqldump) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1708, wp-content/plugins/updraftplus/class-updraftplus.php)
+0043.121 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/usr/xdg4/bin/mysqldump) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1708, wp-content/plugins/updraftplus/class-updraftplus.php)
+0043.122 (0) PHP event: code E_WARNING: is_executable(): open_basedir restriction in effect. File(/opt/bin/mysqldump) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 1708, wp-content/plugins/updraftplus/class-updraftplus.php)
+0043.132 (0) Table VBVKDT_options: Total expected rows (approximate): 1533
+0043.195 (0) Table VBVKDT_options: Rows added in this batch (next record: 61343): 1645 (uncompressed bytes in this segment=2481813) in 0.06 seconds
+0043.199 (0) Table VBVKDT_options: finishing file(s) (2, 409.1 KB)
+0043.202 (0) Table VBVKDT_users: Total expected rows (via COUNT): 9
+0043.202 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.204 (0) Table VBVKDT_users: Rows added in this batch (next record: 21): 9 (uncompressed bytes in this segment=2793) in 0.00 seconds
+0043.206 (0) Table VBVKDT_users: finishing file(s) (2, 1.4 KB)
+0043.210 (0) Table VBVKDT_usermeta: Total expected rows (via COUNT): 378
+0043.210 (0) Table is relatively small; fetch_rows will thus be: 500 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.214 (0) Table VBVKDT_usermeta: Rows added in this batch (next record: 905): 378 (uncompressed bytes in this segment=38802) in 0.01 seconds
+0043.217 (0) Table VBVKDT_usermeta: finishing file(s) (2, 11.4 KB)
+0043.221 (0) Table VBVKDT_actionscheduler_actions: Total expected rows (via COUNT): 793
+0043.232 (0) Table VBVKDT_actionscheduler_actions: Rows added in this batch (next record: 8275): 793 (uncompressed bytes in this segment=288523) in 0.01 seconds
+0043.236 (0) Table VBVKDT_actionscheduler_actions: finishing file(s) (2, 24.3 KB)
+0043.238 (0) Table VBVKDT_actionscheduler_claims: Total expected rows (via COUNT): 1
+0043.239 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.240 (0) Table VBVKDT_actionscheduler_claims: Rows added in this batch (next record: 8033): 1 (uncompressed bytes in this segment=734) in 0.00 seconds
+0043.243 (0) Table VBVKDT_actionscheduler_claims: finishing file(s) (2, 0.4 KB)
+0043.245 (0) Table VBVKDT_actionscheduler_groups: Total expected rows (via COUNT): 13
+0043.245 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.246 (0) Table VBVKDT_actionscheduler_groups: Rows added in this batch (next record: 13): 13 (uncompressed bytes in this segment=964) in 0.00 seconds
+0043.249 (0) Table VBVKDT_actionscheduler_groups: finishing file(s) (2, 0.5 KB)
+0043.251 (0) Table VBVKDT_actionscheduler_logs: Total expected rows (approximate): 2372
+0043.264 (0) Table VBVKDT_actionscheduler_logs: Rows added in this batch (next record: 23402): 2372 (uncompressed bytes in this segment=218215) in 0.01 seconds
+0043.267 (0) Table VBVKDT_actionscheduler_logs: finishing file(s) (2, 20.3 KB)
+0043.270 (0) Table VBVKDT_commentmeta: Total expected rows (via COUNT): 0
+0043.271 (0) Table VBVKDT_commentmeta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=676) in 0.00 seconds
+0043.274 (0) Table VBVKDT_commentmeta: finishing file(s) (2, 0.4 KB)
+0043.277 (0) Table VBVKDT_comments: Total expected rows (via COUNT): 0
+0043.278 (0) Table VBVKDT_comments: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1646) in 0.00 seconds
+0043.280 (0) Table VBVKDT_comments: finishing file(s) (2, 0.5 KB)
+0043.284 (0) Table VBVKDT_links: Total expected rows (via COUNT): 0
+0043.285 (0) Table VBVKDT_links: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1051) in 0.00 seconds
+0043.287 (0) Table VBVKDT_links: finishing file(s) (2, 0.5 KB)
+0043.304 (0) Table VBVKDT_postmeta: Total expected rows (approximate): 7386
+0043.396 (0) Table VBVKDT_postmeta: Rows added in this batch (next record: 19781): 7249 (uncompressed bytes in this segment=3163419) in 0.11 seconds
+0043.400 (0) Table VBVKDT_postmeta: finishing file(s) (2, 432.8 KB)
+0043.404 (0) Table VBVKDT_posts: Total expected rows (via COUNT): 765
+0043.429 (0) Table VBVKDT_posts: Rows added in this batch (next record: 14906): 765 (uncompressed bytes in this segment=606060) in 0.03 seconds
+0043.434 (0) Table VBVKDT_posts: finishing file(s) (2, 104.9 KB)
+0043.438 (0) Table VBVKDT_signups: Total expected rows (via COUNT): 4
+0043.438 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.440 (0) Table VBVKDT_signups: Rows added in this batch (next record: 5): 4 (uncompressed bytes in this segment=2569) in 0.00 seconds
+0043.443 (0) Table VBVKDT_signups: finishing file(s) (2, 1.2 KB)
+0043.445 (0) Table VBVKDT_term_relationships: Total expected rows (approximate): 328
+0043.447 (0) Table VBVKDT_term_relationships: Rows added in this batch (next record: 100000): 328 (uncompressed bytes in this segment=6144) in 0.00 seconds
+0043.449 (0) Table VBVKDT_term_relationships: finishing file(s) (2, 1.4 KB)
+0043.453 (0) Table VBVKDT_term_taxonomy: Total expected rows (via COUNT): 262
+0043.453 (0) Table is relatively small; fetch_rows will thus be: 500 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.456 (0) Table VBVKDT_term_taxonomy: Rows added in this batch (next record: 286): 262 (uncompressed bytes in this segment=14154) in 0.00 seconds
+0043.458 (0) Table VBVKDT_term_taxonomy: finishing file(s) (2, 3.8 KB)
+0043.462 (0) Table VBVKDT_termmeta: Total expected rows (via COUNT): 213
+0043.463 (0) Table is relatively small; fetch_rows will thus be: 250 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.465 (0) Table VBVKDT_termmeta: Rows added in this batch (next record: 256): 213 (uncompressed bytes in this segment=118390) in 0.00 seconds
+0043.468 (0) Table VBVKDT_termmeta: finishing file(s) (2, 3.3 KB)
+0043.471 (0) Table VBVKDT_terms: Total expected rows (via COUNT): 262
+0043.471 (0) Table is relatively small; fetch_rows will thus be: 500 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.474 (0) Table VBVKDT_terms: Rows added in this batch (next record: 286): 262 (uncompressed bytes in this segment=11644) in 0.00 seconds
+0043.477 (0) Table VBVKDT_terms: finishing file(s) (2, 3.8 KB)
+0043.480 (0) Table VBVKDT_bb_activity_topic_relationship: Total expected rows (via COUNT): 0
+0043.481 (0) Table VBVKDT_bb_activity_topic_relationship: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1091) in 0.00 seconds
+0043.483 (0) Table VBVKDT_bb_activity_topic_relationship: finishing file(s) (2, 0.4 KB)
+0043.487 (0) Table VBVKDT_bb_background_job_queue: Total expected rows (via COUNT): 0
+0043.487 (0) Table VBVKDT_bb_background_job_queue: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1047) in 0.00 seconds
+0043.490 (0) Table VBVKDT_bb_background_job_queue: finishing file(s) (2, 0.5 KB)
+0043.494 (0) Table VBVKDT_bb_background_process_logs: Total expected rows (via COUNT): 0
+0043.495 (0) Table VBVKDT_bb_background_process_logs: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1277) in 0.00 seconds
+0043.497 (0) Table VBVKDT_bb_background_process_logs: finishing file(s) (2, 0.5 KB)
+0043.500 (0) Table VBVKDT_bb_drm_events: Total expected rows (via COUNT): 0
+0043.501 (0) Table VBVKDT_bb_drm_events: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=883) in 0.00 seconds
+0043.503 (0) Table VBVKDT_bb_drm_events: finishing file(s) (2, 0.4 KB)
+0043.507 (0) Table VBVKDT_bb_email_queue: Total expected rows (via COUNT): 0
+0043.507 (0) Table VBVKDT_bb_email_queue: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=668) in 0.00 seconds
+0043.510 (0) Table VBVKDT_bb_email_queue: finishing file(s) (2, 0.4 KB)
+0043.513 (0) Table VBVKDT_bb_notifications_subscriptions: Total expected rows (via COUNT): 10
+0043.514 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.515 (0) Table VBVKDT_bb_notifications_subscriptions: Rows added in this batch (next record: 68): 10 (uncompressed bytes in this segment=1712) in 0.00 seconds
+0043.517 (0) Table VBVKDT_bb_notifications_subscriptions: finishing file(s) (2, 0.7 KB)
+0043.520 (0) Table VBVKDT_bb_poll_options: Total expected rows (via COUNT): 0
+0043.522 (0) Table VBVKDT_bb_poll_options: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=955) in 0.00 seconds
+0043.524 (0) Table VBVKDT_bb_poll_options: finishing file(s) (2, 0.4 KB)
+0043.527 (0) Table VBVKDT_bb_poll_votes: Total expected rows (via COUNT): 0
+0043.527 (0) Table VBVKDT_bb_poll_votes: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=747) in 0.00 seconds
+0043.530 (0) Table VBVKDT_bb_poll_votes: finishing file(s) (2, 0.4 KB)
+0043.533 (0) Table VBVKDT_bb_polls: Total expected rows (via COUNT): 0
+0043.534 (0) Table VBVKDT_bb_polls: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1111) in 0.00 seconds
+0043.536 (0) Table VBVKDT_bb_polls: finishing file(s) (2, 0.5 KB)
+0043.540 (0) Table VBVKDT_bb_reactions_data: Total expected rows (via COUNT): 57
+0043.541 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.542 (0) Table VBVKDT_bb_reactions_data: Rows added in this batch (next record: 57): 57 (uncompressed bytes in this segment=7631) in 0.00 seconds
+0043.545 (0) Table VBVKDT_bb_reactions_data: finishing file(s) (2, 1 KB)
+0043.548 (0) Table VBVKDT_bb_social_sign_on_users: Total expected rows (via COUNT): 4
+0043.549 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.551 (0) Table VBVKDT_bb_social_sign_on_users: Rows added in this batch (next record: 7): 4 (uncompressed bytes in this segment=1533) in 0.00 seconds
+0043.553 (0) Table VBVKDT_bb_social_sign_on_users: finishing file(s) (2, 0.7 KB)
+0043.556 (0) Table VBVKDT_bb_topic_history: Total expected rows (via COUNT): 0
+0043.558 (0) Table VBVKDT_bb_topic_history: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1119) in 0.00 seconds
+0043.560 (0) Table VBVKDT_bb_topic_history: finishing file(s) (2, 0.5 KB)
+0043.564 (0) Table VBVKDT_bb_topic_relationships: Total expected rows (via COUNT): 0
+0043.565 (0) Table VBVKDT_bb_topic_relationships: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1298) in 0.00 seconds
+0043.568 (0) Table VBVKDT_bb_topic_relationships: finishing file(s) (2, 0.5 KB)
+0043.570 (0) Table VBVKDT_bb_topics: Total expected rows (via COUNT): 0
+0043.571 (0) Table VBVKDT_bb_topics: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=542) in 0.00 seconds
+0043.573 (0) Table VBVKDT_bb_topics: finishing file(s) (2, 0.4 KB)
+0043.576 (0) Table VBVKDT_bb_user_reactions: Total expected rows (via COUNT): 15
+0043.577 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.578 (0) Table VBVKDT_bb_user_reactions: Rows added in this batch (next record: 16): 15 (uncompressed bytes in this segment=1724) in 0.00 seconds
+0043.580 (0) Table VBVKDT_bb_user_reactions: finishing file(s) (2, 0.6 KB)
+0043.583 (0) Table VBVKDT_bb_xprofile_visibility: Total expected rows (via COUNT): 35
+0043.583 (0) Table is relatively small; fetch_rows will thus be: 50 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.585 (0) Table VBVKDT_bb_xprofile_visibility: Rows added in this batch (next record: 73): 35 (uncompressed bytes in this segment=2527) in 0.00 seconds
+0043.588 (0) Table VBVKDT_bb_xprofile_visibility: finishing file(s) (2, 0.7 KB)
+0043.591 (0) Table VBVKDT_bp_activity: Total expected rows (via COUNT): 61
+0043.592 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.594 (0) Table VBVKDT_bp_activity: Rows added in this batch (next record: 368): 61 (uncompressed bytes in this segment=14368) in 0.00 seconds
+0043.597 (0) Table VBVKDT_bp_activity: finishing file(s) (2, 3.9 KB)
+0043.601 (0) Table VBVKDT_bp_activity_meta: Total expected rows (via COUNT): 143
+0043.601 (0) Table is relatively small; fetch_rows will thus be: 250 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.603 (0) Table VBVKDT_bp_activity_meta: Rows added in this batch (next record: 303): 143 (uncompressed bytes in this segment=8036) in 0.00 seconds
+0043.606 (0) Table VBVKDT_bp_activity_meta: finishing file(s) (2, 2.2 KB)
+0043.609 (0) Table VBVKDT_bp_document: Total expected rows (via COUNT): 11
+0043.610 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.611 (0) Table VBVKDT_bp_document: Rows added in this batch (next record: 41): 11 (uncompressed bytes in this segment=3369) in 0.00 seconds
+0043.614 (0) Table VBVKDT_bp_document: finishing file(s) (2, 1 KB)
+0043.616 (0) Table VBVKDT_bp_document_folder: Total expected rows (via COUNT): 15
+0043.617 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.618 (0) Table VBVKDT_bp_document_folder: Rows added in this batch (next record: 19): 15 (uncompressed bytes in this segment=2224) in 0.00 seconds
+0043.620 (0) Table VBVKDT_bp_document_folder: finishing file(s) (2, 0.8 KB)
+0043.624 (0) Table VBVKDT_bp_document_folder_meta: Total expected rows (via COUNT): 0
+0043.626 (0) Table VBVKDT_bp_document_folder_meta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=689) in 0.00 seconds
+0043.629 (0) Table VBVKDT_bp_document_folder_meta: finishing file(s) (2, 0.4 KB)
+0043.632 (0) Table VBVKDT_bp_document_meta: Total expected rows (via COUNT): 22
+0043.633 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.635 (0) Table VBVKDT_bp_document_meta: Rows added in this batch (next record: 82): 22 (uncompressed bytes in this segment=1802) in 0.00 seconds
+0043.638 (0) Table VBVKDT_bp_document_meta: finishing file(s) (2, 0.7 KB)
+0043.640 (0) Table VBVKDT_bp_follow: Total expected rows (via COUNT): 8
+0043.641 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.642 (0) Table VBVKDT_bp_follow: Rows added in this batch (next record: 8): 8 (uncompressed bytes in this segment=700) in 0.00 seconds
+0043.644 (0) Table VBVKDT_bp_follow: finishing file(s) (2, 0.4 KB)
+0043.646 (0) Table VBVKDT_bp_friends: Total expected rows (via COUNT): 8
+0043.647 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.648 (0) Table VBVKDT_bp_friends: Rows added in this batch (next record: 56): 8 (uncompressed bytes in this segment=1116) in 0.00 seconds
+0043.650 (0) Table VBVKDT_bp_friends: finishing file(s) (2, 0.5 KB)
+0043.653 (0) Table VBVKDT_bp_groups: Total expected rows (via COUNT): 1
+0043.654 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.654 (0) Table VBVKDT_bp_groups: Rows added in this batch (next record: 9): 1 (uncompressed bytes in this segment=1021) in 0.00 seconds
+0043.657 (0) Table VBVKDT_bp_groups: finishing file(s) (2, 0.5 KB)
+0043.661 (0) Table VBVKDT_bp_groups_groupmeta: Total expected rows (via COUNT): 12
+0043.661 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.662 (0) Table VBVKDT_bp_groups_groupmeta: Rows added in this batch (next record: 36): 12 (uncompressed bytes in this segment=1211) in 0.00 seconds
+0043.665 (0) Table VBVKDT_bp_groups_groupmeta: finishing file(s) (2, 0.6 KB)
+0043.669 (0) Table VBVKDT_bp_groups_membermeta: Total expected rows (via COUNT): 46
+0043.669 (0) Table is relatively small; fetch_rows will thus be: 50 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.671 (0) Table VBVKDT_bp_groups_membermeta: Rows added in this batch (next record: 46): 46 (uncompressed bytes in this segment=2927) in 0.00 seconds
+0043.674 (0) Table VBVKDT_bp_groups_membermeta: finishing file(s) (2, 0.7 KB)
+0043.677 (0) Table VBVKDT_bp_groups_members: Total expected rows (via COUNT): 5
+0043.678 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.679 (0) Table VBVKDT_bp_groups_members: Rows added in this batch (next record: 63): 5 (uncompressed bytes in this segment=1512) in 0.00 seconds
+0043.682 (0) Table VBVKDT_bp_groups_members: finishing file(s) (2, 0.6 KB)
+0043.686 (0) Table VBVKDT_bp_invitations: Total expected rows (via COUNT): 0
+0043.687 (0) Table VBVKDT_bp_invitations: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1190) in 0.00 seconds
+0043.690 (0) Table VBVKDT_bp_invitations: finishing file(s) (2, 0.5 KB)
+0043.695 (0) Table VBVKDT_bp_invitations_invitemeta: Total expected rows (via COUNT): 0
+0043.696 (0) Table VBVKDT_bp_invitations_invitemeta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=701) in 0.00 seconds
+0043.699 (0) Table VBVKDT_bp_invitations_invitemeta: finishing file(s) (2, 0.4 KB)
+0043.702 (0) Table VBVKDT_bp_media: Total expected rows (via COUNT): 5
+0043.703 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.704 (0) Table VBVKDT_bp_media: Rows added in this batch (next record: 5): 5 (uncompressed bytes in this segment=2265) in 0.00 seconds
+0043.707 (0) Table VBVKDT_bp_media: finishing file(s) (2, 0.8 KB)
+0043.710 (0) Table VBVKDT_bp_media_albums: Total expected rows (via COUNT): 0
+0043.711 (0) Table VBVKDT_bp_media_albums: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=654) in 0.00 seconds
+0043.713 (0) Table VBVKDT_bp_media_albums: finishing file(s) (2, 0.4 KB)
+0043.717 (0) Table VBVKDT_bp_messages_messages: Total expected rows (via COUNT): 134
+0043.717 (0) Table is relatively small; fetch_rows will thus be: 250 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.720 (0) Table VBVKDT_bp_messages_messages: Rows added in this batch (next record: 134): 134 (uncompressed bytes in this segment=11663) in 0.00 seconds
+0043.723 (0) Table VBVKDT_bp_messages_messages: finishing file(s) (2, 4 KB)
+0043.726 (0) Table VBVKDT_bp_messages_meta: Total expected rows (via COUNT): 309
+0043.727 (0) Table is relatively small; fetch_rows will thus be: 500 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.730 (0) Table VBVKDT_bp_messages_meta: Rows added in this batch (next record: 455): 309 (uncompressed bytes in this segment=12153) in 0.01 seconds
+0043.733 (0) Table VBVKDT_bp_messages_meta: finishing file(s) (2, 2.2 KB)
+0043.737 (0) Table VBVKDT_bp_messages_notices: Total expected rows (via COUNT): 0
+0043.738 (0) Table VBVKDT_bp_messages_notices: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=660) in 0.00 seconds
+0043.741 (0) Table VBVKDT_bp_messages_notices: finishing file(s) (2, 0.4 KB)
+0043.744 (0) Table VBVKDT_bp_messages_recipients: Total expected rows (via COUNT): 53
+0043.745 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.747 (0) Table VBVKDT_bp_messages_recipients: Rows added in this batch (next record: 53): 53 (uncompressed bytes in this segment=2379) in 0.00 seconds
+0043.749 (0) Table VBVKDT_bp_messages_recipients: finishing file(s) (2, 0.7 KB)
+0043.753 (0) Table VBVKDT_bp_moderation: Total expected rows (via COUNT): 0
+0043.754 (0) Table VBVKDT_bp_moderation: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=769) in 0.00 seconds
+0043.757 (0) Table VBVKDT_bp_moderation: finishing file(s) (2, 0.4 KB)
+0043.761 (0) Table VBVKDT_bp_moderation_meta: Total expected rows (via COUNT): 0
+0043.763 (0) Table VBVKDT_bp_moderation_meta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=671) in 0.00 seconds
+0043.766 (0) Table VBVKDT_bp_moderation_meta: finishing file(s) (2, 0.4 KB)
+0043.768 (0) Table VBVKDT_bp_notifications: Total expected rows (via COUNT): 74
+0043.769 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.771 (0) Table VBVKDT_bp_notifications: Rows added in this batch (next record: 1224): 74 (uncompressed bytes in this segment=7133) in 0.00 seconds
+0043.773 (0) Table VBVKDT_bp_notifications: finishing file(s) (2, 1.6 KB)
+0043.777 (0) Table VBVKDT_bp_notifications_meta: Total expected rows (via COUNT): 97
+0043.778 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.779 (0) Table VBVKDT_bp_notifications_meta: Rows added in this batch (next record: 1227): 97 (uncompressed bytes in this segment=3878) in 0.00 seconds
+0043.782 (0) Table VBVKDT_bp_notifications_meta: finishing file(s) (2, 1 KB)
+0043.785 (0) Table VBVKDT_bp_optouts: Total expected rows (via COUNT): 0
+0043.787 (0) Table VBVKDT_bp_optouts: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=688) in 0.00 seconds
+0043.789 (0) Table VBVKDT_bp_optouts: finishing file(s) (2, 0.4 KB)
+0043.792 (0) Table VBVKDT_bp_suspend: Total expected rows (via COUNT): 9
+0043.793 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.794 (0) Table VBVKDT_bp_suspend: Rows added in this batch (next record: 9): 9 (uncompressed bytes in this segment=1732) in 0.00 seconds
+0043.797 (0) Table VBVKDT_bp_suspend: finishing file(s) (2, 0.6 KB)
+0043.800 (0) Table VBVKDT_bp_suspend_details: Total expected rows (via COUNT): 1
+0043.800 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.801 (0) Table VBVKDT_bp_suspend_details: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=704) in 0.00 seconds
+0043.804 (0) Table VBVKDT_bp_suspend_details: finishing file(s) (2, 0.4 KB)
+0043.808 (0) Table VBVKDT_bp_suspend_meta: Total expected rows (via COUNT): 0
+0043.810 (0) Table VBVKDT_bp_suspend_meta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=644) in 0.00 seconds
+0043.813 (0) Table VBVKDT_bp_suspend_meta: finishing file(s) (2, 0.4 KB)
+0043.816 (0) Table VBVKDT_bp_user_blogs: Total expected rows (via COUNT): 4
+0043.817 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.819 (0) Table VBVKDT_bp_user_blogs: Rows added in this batch (next record: 4): 4 (uncompressed bytes in this segment=680) in 0.00 seconds
+0043.821 (0) Table VBVKDT_bp_user_blogs: finishing file(s) (2, 0.4 KB)
+0043.825 (0) Table VBVKDT_bp_user_blogs_blogmeta: Total expected rows (via COUNT): 8
+0043.826 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.827 (0) Table VBVKDT_bp_user_blogs_blogmeta: Rows added in this batch (next record: 8): 8 (uncompressed bytes in this segment=1055) in 0.00 seconds
+0043.831 (0) Table VBVKDT_bp_user_blogs_blogmeta: finishing file(s) (2, 0.6 KB)
+0043.835 (0) Table VBVKDT_bp_xprofile_data: Total expected rows (via COUNT): 33
+0043.835 (0) Table is relatively small; fetch_rows will thus be: 50 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.837 (0) Table VBVKDT_bp_xprofile_data: Rows added in this batch (next record: 126): 33 (uncompressed bytes in this segment=2571) in 0.00 seconds
+0043.841 (0) Table VBVKDT_bp_xprofile_data: finishing file(s) (2, 0.9 KB)
+0043.845 (0) Table VBVKDT_bp_xprofile_fields: Total expected rows (via COUNT): 3
+0043.846 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.848 (0) Table VBVKDT_bp_xprofile_fields: Rows added in this batch (next record: 3): 3 (uncompressed bytes in this segment=1384) in 0.00 seconds
+0043.851 (0) Table VBVKDT_bp_xprofile_fields: finishing file(s) (2, 0.6 KB)
+0043.855 (0) Table VBVKDT_bp_xprofile_groups: Total expected rows (via COUNT): 1
+0043.855 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.856 (0) Table VBVKDT_bp_xprofile_groups: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=768) in 0.00 seconds
+0043.859 (0) Table VBVKDT_bp_xprofile_groups: finishing file(s) (2, 0.4 KB)
+0043.862 (0) Table VBVKDT_bp_xprofile_meta: Total expected rows (via COUNT): 6
+0043.863 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.864 (0) Table VBVKDT_bp_xprofile_meta: Rows added in this batch (next record: 17): 6 (uncompressed bytes in this segment=1054) in 0.00 seconds
+0043.867 (0) Table VBVKDT_bp_xprofile_meta: finishing file(s) (2, 0.5 KB)
+0043.871 (0) Table VBVKDT_bp_zoom_meeting_meta: Total expected rows (via COUNT): 0
+0043.872 (0) Table VBVKDT_bp_zoom_meeting_meta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=674) in 0.00 seconds
+0043.875 (0) Table VBVKDT_bp_zoom_meeting_meta: finishing file(s) (2, 0.4 KB)
+0043.878 (0) Table VBVKDT_bp_zoom_meetings: Total expected rows (via COUNT): 0
+0043.879 (0) Table VBVKDT_bp_zoom_meetings: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1535) in 0.00 seconds
+0043.882 (0) Table VBVKDT_bp_zoom_meetings: finishing file(s) (2, 0.6 KB)
+0043.885 (0) Table VBVKDT_bp_zoom_recordings: Total expected rows (via COUNT): 0
+0043.886 (0) Table VBVKDT_bp_zoom_recordings: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=809) in 0.00 seconds
+0043.888 (0) Table VBVKDT_bp_zoom_recordings: finishing file(s) (2, 0.4 KB)
+0043.892 (0) Table VBVKDT_bp_zoom_webinar_meta: Total expected rows (via COUNT): 0
+0043.894 (0) Table VBVKDT_bp_zoom_webinar_meta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=674) in 0.00 seconds
+0043.897 (0) Table VBVKDT_bp_zoom_webinar_meta: finishing file(s) (2, 0.4 KB)
+0043.900 (0) Table VBVKDT_bp_zoom_webinar_recordings: Total expected rows (via COUNT): 0
+0043.902 (0) Table VBVKDT_bp_zoom_webinar_recordings: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=857) in 0.00 seconds
+0043.904 (0) Table VBVKDT_bp_zoom_webinar_recordings: finishing file(s) (2, 0.4 KB)
+0043.908 (0) Table VBVKDT_bp_zoom_webinars: Total expected rows (via COUNT): 0
+0043.908 (0) Table VBVKDT_bp_zoom_webinars: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1485) in 0.00 seconds
+0043.911 (0) Table VBVKDT_bp_zoom_webinars: finishing file(s) (2, 0.6 KB)
+0043.913 (0) Table VBVKDT_cartflows_ca_cart_abandonment: Total expected rows (approximate): 0
+0043.914 (0) Table VBVKDT_cartflows_ca_cart_abandonment: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=1040) in 0.00 seconds
+0043.917 (0) Table VBVKDT_cartflows_ca_cart_abandonment: finishing file(s) (2, 0.5 KB)
+0043.920 (0) Table VBVKDT_cartflows_ca_email_history: Total expected rows (via COUNT): 0
+0043.921 (0) Table VBVKDT_cartflows_ca_email_history: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1134) in 0.00 seconds
+0043.924 (0) Table VBVKDT_cartflows_ca_email_history: finishing file(s) (2, 0.5 KB)
+0043.927 (0) Table VBVKDT_cartflows_ca_email_templates: Total expected rows (via COUNT): 3
+0043.928 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.929 (0) Table VBVKDT_cartflows_ca_email_templates: Rows added in this batch (next record: 3): 3 (uncompressed bytes in this segment=2636) in 0.00 seconds
+0043.932 (0) Table VBVKDT_cartflows_ca_email_templates: finishing file(s) (2, 1.2 KB)
+0043.936 (0) Table VBVKDT_cartflows_ca_email_templates_meta: Total expected rows (via COUNT): 27
+0043.936 (0) Table is relatively small; fetch_rows will thus be: 50 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.938 (0) Table VBVKDT_cartflows_ca_email_templates_meta: Rows added in this batch (next record: 27): 27 (uncompressed bytes in this segment=1960) in 0.00 seconds
+0043.941 (0) Table VBVKDT_cartflows_ca_email_templates_meta: finishing file(s) (2, 0.7 KB)
+0043.944 (0) Table VBVKDT_chaty_contact_form_leads: Total expected rows (via COUNT): 0
+0043.945 (0) Table VBVKDT_chaty_contact_form_leads: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=805) in 0.00 seconds
+0043.948 (0) Table VBVKDT_chaty_contact_form_leads: finishing file(s) (2, 0.4 KB)
+0043.952 (0) Table VBVKDT_jetpack_sync_queue: Total expected rows (via COUNT): 1
+0043.952 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.954 (0) Table VBVKDT_jetpack_sync_queue: Rows added in this batch (next record: 1985): 1 (uncompressed bytes in this segment=3200) in 0.00 seconds
+0043.957 (0) Table VBVKDT_jetpack_sync_queue: finishing file(s) (2, 1.1 KB)
+0043.961 (0) Table VBVKDT_presto_player_audio_presets: Total expected rows (via COUNT): 4
+0043.961 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.963 (0) Table VBVKDT_presto_player_audio_presets: Rows added in this batch (next record: 4): 4 (uncompressed bytes in this segment=2977) in 0.00 seconds
+0043.966 (0) Table VBVKDT_presto_player_audio_presets: finishing file(s) (2, 0.8 KB)
+0043.969 (0) Table VBVKDT_presto_player_email_collection: Total expected rows (via COUNT): 0
+0043.970 (0) Table VBVKDT_presto_player_email_collection: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1316) in 0.00 seconds
+0043.973 (0) Table VBVKDT_presto_player_email_collection: finishing file(s) (2, 0.5 KB)
+0043.977 (0) Table VBVKDT_presto_player_presets: Total expected rows (via COUNT): 5
+0043.977 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.979 (0) Table VBVKDT_presto_player_presets: Rows added in this batch (next record: 5): 5 (uncompressed bytes in this segment=3841) in 0.00 seconds
+0043.982 (0) Table VBVKDT_presto_player_presets: finishing file(s) (2, 1.1 KB)
+0043.986 (0) Table VBVKDT_presto_player_videos: Total expected rows (via COUNT): 1
+0043.986 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0043.987 (0) Table VBVKDT_presto_player_videos: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=1409) in 0.00 seconds
+0043.990 (0) Table VBVKDT_presto_player_videos: finishing file(s) (2, 0.6 KB)
+0043.993 (0) Table VBVKDT_presto_player_visits: Total expected rows (via COUNT): 0
+0043.994 (0) Table VBVKDT_presto_player_visits: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1006) in 0.00 seconds
+0043.996 (0) Table VBVKDT_presto_player_visits: finishing file(s) (2, 0.5 KB)
+0044.000 (0) Table VBVKDT_presto_player_webhooks: Total expected rows (via COUNT): 0
+0044.000 (0) Table VBVKDT_presto_player_webhooks: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=944) in 0.00 seconds
+0044.003 (0) Table VBVKDT_presto_player_webhooks: finishing file(s) (2, 0.4 KB)
+0044.005 (0) Table VBVKDT_rank_math_404_logs: Total expected rows (via COUNT): 94
+0044.006 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.008 (0) Table VBVKDT_rank_math_404_logs: Rows added in this batch (next record: 94): 94 (uncompressed bytes in this segment=10476) in 0.00 seconds
+0044.011 (0) Table VBVKDT_rank_math_404_logs: finishing file(s) (2, 2.3 KB)
+0044.013 (0) Table VBVKDT_rank_math_analytics_gsc: Total expected rows (via COUNT): 69
+0044.014 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.015 (0) Table VBVKDT_rank_math_analytics_gsc: Rows added in this batch (next record: 150): 69 (uncompressed bytes in this segment=6076) in 0.00 seconds
+0044.018 (0) Table VBVKDT_rank_math_analytics_gsc: finishing file(s) (2, 1.2 KB)
+0044.022 (0) Table VBVKDT_rank_math_analytics_inspections: Total expected rows (via COUNT): 0
+0044.023 (0) Table VBVKDT_rank_math_analytics_inspections: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1522) in 0.00 seconds
+0044.026 (0) Table VBVKDT_rank_math_analytics_inspections: finishing file(s) (2, 0.6 KB)
+0044.029 (0) Table VBVKDT_rank_math_analytics_keyword_manager: Total expected rows (via COUNT): 1
+0044.030 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.032 (0) Table VBVKDT_rank_math_analytics_keyword_manager: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=850) in 0.00 seconds
+0044.035 (0) Table VBVKDT_rank_math_analytics_keyword_manager: finishing file(s) (2, 0.4 KB)
+0044.038 (0) Table VBVKDT_rank_math_analytics_objects: Total expected rows (via COUNT): 68
+0044.039 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.042 (0) Table VBVKDT_rank_math_analytics_objects: Rows added in this batch (next record: 101): 68 (uncompressed bytes in this segment=13677) in 0.00 seconds
+0044.046 (0) Table VBVKDT_rank_math_analytics_objects: finishing file(s) (2, 3.5 KB)
+0044.049 (0) Table VBVKDT_rank_math_internal_links: Total expected rows (via COUNT): 90
+0044.050 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.051 (0) Table VBVKDT_rank_math_internal_links: Rows added in this batch (next record: 1290): 90 (uncompressed bytes in this segment=8437) in 0.00 seconds
+0044.053 (0) Table VBVKDT_rank_math_internal_links: finishing file(s) (2, 1.6 KB)
+0044.056 (0) Table VBVKDT_rank_math_internal_meta: Total expected rows (via COUNT): 479
+0044.057 (0) Table is relatively small; fetch_rows will thus be: 500 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.060 (0) Table VBVKDT_rank_math_internal_meta: Rows added in this batch (next record: 14760): 479 (uncompressed bytes in this segment=9789) in 0.00 seconds
+0044.062 (0) Table VBVKDT_rank_math_internal_meta: finishing file(s) (2, 1.6 KB)
+0044.066 (0) Table VBVKDT_rank_math_redirections: Total expected rows (via COUNT): 0
+0044.067 (0) Table VBVKDT_rank_math_redirections: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=971) in 0.00 seconds
+0044.070 (0) Table VBVKDT_rank_math_redirections: finishing file(s) (2, 0.5 KB)
+0044.074 (0) Table VBVKDT_rank_math_redirections_cache: Total expected rows (via COUNT): 0
+0044.074 (0) Table VBVKDT_rank_math_redirections_cache: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=864) in 0.00 seconds
+0044.077 (0) Table VBVKDT_rank_math_redirections_cache: finishing file(s) (2, 0.4 KB)
+0044.083 (0) Table VBVKDT_revslider_css: Total expected rows (via COUNT): 113
+0044.083 (0) Table is relatively small; fetch_rows will thus be: 200 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.086 (0) Table VBVKDT_revslider_css: Rows added in this batch (next record: 113): 113 (uncompressed bytes in this segment=92943) in 0.01 seconds
+0044.089 (0) Table VBVKDT_revslider_css: finishing file(s) (2, 5.1 KB)
+0044.092 (0) Table VBVKDT_revslider_layer_animations: Total expected rows (via COUNT): 0
+0044.093 (0) Table VBVKDT_revslider_layer_animations: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=601) in 0.00 seconds
+0044.096 (0) Table VBVKDT_revslider_layer_animations: finishing file(s) (2, 0.3 KB)
+0044.099 (0) Table VBVKDT_revslider_navigations: Total expected rows (via COUNT): 0
+0044.100 (0) Table VBVKDT_revslider_navigations: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=678) in 0.00 seconds
+0044.103 (0) Table VBVKDT_revslider_navigations: finishing file(s) (2, 0.4 KB)
+0044.107 (0) Table VBVKDT_revslider_sliders: Total expected rows (via COUNT): 2
+0044.107 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.109 (0) Table VBVKDT_revslider_sliders: Rows added in this batch (next record: 2): 2 (uncompressed bytes in this segment=13880) in 0.00 seconds
+0044.112 (0) Table VBVKDT_revslider_sliders: finishing file(s) (2, 2.8 KB)
+0044.116 (0) Table VBVKDT_revslider_sliders7: Total expected rows (via COUNT): 2
+0044.117 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.118 (0) Table VBVKDT_revslider_sliders7: Rows added in this batch (next record: 2): 2 (uncompressed bytes in this segment=4537) in 0.00 seconds
+0044.121 (0) Table VBVKDT_revslider_sliders7: finishing file(s) (2, 1.5 KB)
+0044.126 (0) Table VBVKDT_revslider_slides: Total expected rows (via COUNT): 2
+0044.126 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.128 (0) Table VBVKDT_revslider_slides: Rows added in this batch (next record: 2): 2 (uncompressed bytes in this segment=28266) in 0.00 seconds
+0044.131 (0) Table VBVKDT_revslider_slides: finishing file(s) (2, 3 KB)
+0044.135 (0) Table VBVKDT_revslider_slides7: Total expected rows (via COUNT): 2
+0044.136 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.137 (0) Table VBVKDT_revslider_slides7: Rows added in this batch (next record: 2): 2 (uncompressed bytes in this segment=21276) in 0.00 seconds
+0044.140 (0) Table VBVKDT_revslider_slides7: finishing file(s) (2, 2.7 KB)
+0044.144 (0) Table VBVKDT_revslider_static_slides: Total expected rows (via COUNT): 0
+0044.145 (0) Table VBVKDT_revslider_static_slides: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=657) in 0.00 seconds
+0044.148 (0) Table VBVKDT_revslider_static_slides: finishing file(s) (2, 0.4 KB)
+0044.151 (0) Table VBVKDT_robo_ai_chatbot_leads: Total expected rows (via COUNT): 0
+0044.152 (0) Table VBVKDT_robo_ai_chatbot_leads: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=879) in 0.00 seconds
+0044.155 (0) Table VBVKDT_robo_ai_chatbot_leads: finishing file(s) (2, 0.4 KB)
+0044.158 (0) Table VBVKDT_robo_ai_chatbot_logs: Total expected rows (via COUNT): 8
+0044.159 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.160 (0) Table VBVKDT_robo_ai_chatbot_logs: Rows added in this batch (next record: 8): 8 (uncompressed bytes in this segment=3408) in 0.00 seconds
+0044.163 (0) Table VBVKDT_robo_ai_chatbot_logs: finishing file(s) (2, 0.9 KB)
+0044.168 (0) Table VBVKDT_robo_finder_leads: Total expected rows (via COUNT): 1
+0044.168 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.170 (0) Table VBVKDT_robo_finder_leads: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=1050) in 0.00 seconds
+0044.173 (0) Table VBVKDT_robo_finder_leads: finishing file(s) (2, 0.6 KB)
+0044.177 (0) Table VBVKDT_rt_rtm_activity: Total expected rows (approximate): 0
+0044.178 (0) Table VBVKDT_rt_rtm_activity: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=629) in 0.00 seconds
+0044.180 (0) Table VBVKDT_rt_rtm_activity: finishing file(s) (2, 0.3 KB)
+0044.183 (0) Table VBVKDT_rt_rtm_api: Total expected rows (via COUNT): 0
+0044.184 (0) Table VBVKDT_rt_rtm_api: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=689) in 0.00 seconds
+0044.187 (0) Table VBVKDT_rt_rtm_api: finishing file(s) (2, 0.4 KB)
+0044.190 (0) Table VBVKDT_rt_rtm_media: Total expected rows (via COUNT): 1
+0044.191 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.192 (0) Table VBVKDT_rt_rtm_media: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=1797) in 0.00 seconds
+0044.195 (0) Table VBVKDT_rt_rtm_media: finishing file(s) (2, 0.6 KB)
+0044.197 (0) Table VBVKDT_rt_rtm_media_interaction: Total expected rows (via COUNT): 0
+0044.199 (0) Table VBVKDT_rt_rtm_media_interaction: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=731) in 0.00 seconds
+0044.201 (0) Table VBVKDT_rt_rtm_media_interaction: finishing file(s) (2, 0.4 KB)
+0044.205 (0) Table VBVKDT_rt_rtm_media_meta: Total expected rows (via COUNT): 0
+0044.206 (0) Table VBVKDT_rt_rtm_media_meta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=589) in 0.00 seconds
+0044.209 (0) Table VBVKDT_rt_rtm_media_meta: finishing file(s) (2, 0.4 KB)
+0044.213 (0) Table VBVKDT_smtp2go_api_logs: Total expected rows (via COUNT): 75
+0044.214 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.216 (0) Table VBVKDT_smtp2go_api_logs: Rows added in this batch (next record: 75): 75 (uncompressed bytes in this segment=20535) in 0.00 seconds
+0044.219 (0) Table VBVKDT_smtp2go_api_logs: finishing file(s) (2, 4.3 KB)
+0044.223 (0) Table VBVKDT_srfm_entries: Total expected rows (via COUNT): 28
+0044.223 (0) Table is relatively small; fetch_rows will thus be: 50 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.225 (0) Table VBVKDT_srfm_entries: Rows added in this batch (next record: 28): 28 (uncompressed bytes in this segment=40471) in 0.00 seconds
+0044.229 (0) Table VBVKDT_srfm_entries: finishing file(s) (2, 4 KB)
+0044.232 (0) Table VBVKDT_srfm_payments: Total expected rows (via COUNT): 0
+0044.233 (0) Table VBVKDT_srfm_payments: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1446) in 0.00 seconds
+0044.236 (0) Table VBVKDT_srfm_payments: finishing file(s) (2, 0.6 KB)
+0044.241 (0) Table VBVKDT_suretriggers_webhook_requests: Total expected rows (via COUNT): 7
+0044.241 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.243 (0) Table VBVKDT_suretriggers_webhook_requests: Rows added in this batch (next record: 7): 7 (uncompressed bytes in this segment=18574) in 0.00 seconds
+0044.246 (0) Table VBVKDT_suretriggers_webhook_requests: finishing file(s) (2, 2.7 KB)
+0044.250 (0) Table VBVKDT_wc_admin_note_actions: Total expected rows (via COUNT): 81
+0044.250 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.252 (0) Table VBVKDT_wc_admin_note_actions: Rows added in this batch (next record: 1377): 81 (uncompressed bytes in this segment=15327) in 0.00 seconds
+0044.255 (0) Table VBVKDT_wc_admin_note_actions: finishing file(s) (2, 2.8 KB)
+0044.259 (0) Table VBVKDT_wc_admin_notes: Total expected rows (via COUNT): 56
+0044.260 (0) Table is relatively small; fetch_rows will thus be: 100 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.262 (0) Table VBVKDT_wc_admin_notes: Rows added in this batch (next record: 56): 56 (uncompressed bytes in this segment=28019) in 0.00 seconds
+0044.265 (0) Table VBVKDT_wc_admin_notes: finishing file(s) (2, 6.1 KB)
+0044.267 (0) Table VBVKDT_wc_category_lookup: Total expected rows (approximate): 4
+0044.268 (0) Table VBVKDT_wc_category_lookup: Rows added in this batch (next record: 1000): 4 (uncompressed bytes in this segment=650) in 0.00 seconds
+0044.271 (0) Table VBVKDT_wc_category_lookup: finishing file(s) (2, 0.4 KB)
+0044.274 (0) Table VBVKDT_wc_customer_lookup: Total expected rows (via COUNT): 0
+0044.275 (0) Table VBVKDT_wc_customer_lookup: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1042) in 0.00 seconds
+0044.277 (0) Table VBVKDT_wc_customer_lookup: finishing file(s) (2, 0.5 KB)
+0044.280 (0) Table VBVKDT_wc_download_log: Total expected rows (via COUNT): 0
+0044.281 (0) Table VBVKDT_wc_download_log: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=740) in 0.00 seconds
+0044.283 (0) Table VBVKDT_wc_download_log: finishing file(s) (2, 0.4 KB)
+0044.286 (0) Table VBVKDT_wc_order_addresses: Total expected rows (via COUNT): 0
+0044.287 (0) Table VBVKDT_wc_order_addresses: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1082) in 0.00 seconds
+0044.289 (0) Table VBVKDT_wc_order_addresses: finishing file(s) (2, 0.5 KB)
+0044.291 (0) Table VBVKDT_wc_order_coupon_lookup: Total expected rows (approximate): 0
+0044.292 (0) Table VBVKDT_wc_order_coupon_lookup: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=739) in 0.00 seconds
+0044.294 (0) Table VBVKDT_wc_order_coupon_lookup: finishing file(s) (2, 0.4 KB)
+0044.297 (0) Table VBVKDT_wc_order_operational_data: Total expected rows (via COUNT): 0
+0044.297 (0) Table VBVKDT_wc_order_operational_data: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1423) in 0.00 seconds
+0044.300 (0) Table VBVKDT_wc_order_operational_data: finishing file(s) (2, 0.6 KB)
+0044.302 (0) Table VBVKDT_wc_order_product_lookup: Total expected rows (approximate): 0
+0044.303 (0) Table VBVKDT_wc_order_product_lookup: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=1323) in 0.00 seconds
+0044.305 (0) Table VBVKDT_wc_order_product_lookup: finishing file(s) (2, 0.5 KB)
+0044.308 (0) Table VBVKDT_wc_order_stats: Total expected rows (via COUNT): 0
+0044.308 (0) Table VBVKDT_wc_order_stats: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1282) in 0.00 seconds
+0044.311 (0) Table VBVKDT_wc_order_stats: finishing file(s) (2, 0.5 KB)
+0044.313 (0) Table VBVKDT_wc_order_tax_lookup: Total expected rows (approximate): 0
+0044.314 (0) Table VBVKDT_wc_order_tax_lookup: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=817) in 0.00 seconds
+0044.316 (0) Table VBVKDT_wc_order_tax_lookup: finishing file(s) (2, 0.4 KB)
+0044.318 (0) Table VBVKDT_wc_orders: Total expected rows (via COUNT): 0
+0044.319 (0) Table VBVKDT_wc_orders: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1441) in 0.00 seconds
+0044.321 (0) Table VBVKDT_wc_orders: finishing file(s) (2, 0.6 KB)
+0044.324 (0) Table VBVKDT_wc_orders_meta: Total expected rows (via COUNT): 0
+0044.325 (0) Table VBVKDT_wc_orders_meta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=726) in 0.00 seconds
+0044.327 (0) Table VBVKDT_wc_orders_meta: finishing file(s) (2, 0.4 KB)
+0044.330 (0) Table VBVKDT_wc_product_attributes_lookup: Total expected rows (approximate): 0
+0044.331 (0) Table VBVKDT_wc_product_attributes_lookup: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=855) in 0.00 seconds
+0044.333 (0) Table VBVKDT_wc_product_attributes_lookup: finishing file(s) (2, 0.4 KB)
+0044.336 (0) Table VBVKDT_wc_product_download_directories: Total expected rows (via COUNT): 2
+0044.336 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.338 (0) Table VBVKDT_wc_product_download_directories: Rows added in this batch (next record: 2): 2 (uncompressed bytes in this segment=919) in 0.00 seconds
+0044.340 (0) Table VBVKDT_wc_product_download_directories: finishing file(s) (2, 0.5 KB)
+0044.344 (0) Table VBVKDT_wc_product_meta_lookup: Total expected rows (via COUNT): 12
+0044.344 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.345 (0) Table VBVKDT_wc_product_meta_lookup: Rows added in this batch (next record: 3682): 12 (uncompressed bytes in this segment=2578) in 0.00 seconds
+0044.348 (0) Table VBVKDT_wc_product_meta_lookup: finishing file(s) (2, 0.7 KB)
+0044.350 (0) Table VBVKDT_wc_rate_limits: Total expected rows (via COUNT): 0
+0044.352 (0) Table VBVKDT_wc_rate_limits: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=691) in 0.00 seconds
+0044.354 (0) Table VBVKDT_wc_rate_limits: finishing file(s) (2, 0.4 KB)
+0044.357 (0) Table VBVKDT_wc_reserved_stock: Total expected rows (approximate): 0
+0044.357 (0) Table VBVKDT_wc_reserved_stock: Rows added in this batch (next record: 0): 0 (uncompressed bytes in this segment=687) in 0.00 seconds
+0044.360 (0) Table VBVKDT_wc_reserved_stock: finishing file(s) (2, 0.4 KB)
+0044.363 (0) Table VBVKDT_wc_tax_rate_classes: Total expected rows (via COUNT): 2
+0044.363 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.365 (0) Table VBVKDT_wc_tax_rate_classes: Rows added in this batch (next record: 2): 2 (uncompressed bytes in this segment=792) in 0.00 seconds
+0044.367 (0) Table VBVKDT_wc_tax_rate_classes: finishing file(s) (2, 0.4 KB)
+0044.370 (0) Table VBVKDT_wc_webhooks: Total expected rows (via COUNT): 0
+0044.372 (0) Table VBVKDT_wc_webhooks: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1095) in 0.00 seconds
+0044.374 (0) Table VBVKDT_wc_webhooks: finishing file(s) (2, 0.5 KB)
+0044.378 (0) Table VBVKDT_woocommerce_api_keys: Total expected rows (via COUNT): 0
+0044.379 (0) Table VBVKDT_woocommerce_api_keys: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=897) in 0.00 seconds
+0044.382 (0) Table VBVKDT_woocommerce_api_keys: finishing file(s) (2, 0.4 KB)
+0044.385 (0) Table VBVKDT_woocommerce_attribute_taxonomies: Total expected rows (via COUNT): 0
+0044.386 (0) Table VBVKDT_woocommerce_attribute_taxonomies: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=859) in 0.00 seconds
+0044.388 (0) Table VBVKDT_woocommerce_attribute_taxonomies: finishing file(s) (2, 0.4 KB)
+0044.391 (0) Table VBVKDT_woocommerce_downloadable_product_permissions: Total expected rows (via COUNT): 0
+0044.392 (0) Table VBVKDT_woocommerce_downloadable_product_permissions: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1434) in 0.00 seconds
+0044.395 (0) Table VBVKDT_woocommerce_downloadable_product_permissions: finishing file(s) (2, 0.5 KB)
+0044.398 (0) Table VBVKDT_woocommerce_log: Total expected rows (via COUNT): 0
+0044.399 (0) Table VBVKDT_woocommerce_log: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=666) in 0.00 seconds
+0044.402 (0) Table VBVKDT_woocommerce_log: finishing file(s) (2, 0.4 KB)
+0044.406 (0) Table VBVKDT_woocommerce_order_itemmeta: Total expected rows (via COUNT): 0
+0044.407 (0) Table VBVKDT_woocommerce_order_itemmeta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=746) in 0.00 seconds
+0044.410 (0) Table VBVKDT_woocommerce_order_itemmeta: finishing file(s) (2, 0.4 KB)
+0044.413 (0) Table VBVKDT_woocommerce_order_items: Total expected rows (via COUNT): 0
+0044.415 (0) Table VBVKDT_woocommerce_order_items: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=701) in 0.00 seconds
+0044.418 (0) Table VBVKDT_woocommerce_order_items: finishing file(s) (2, 0.4 KB)
+0044.423 (0) Table VBVKDT_woocommerce_payment_tokenmeta: Total expected rows (via COUNT): 0
+0044.424 (0) Table VBVKDT_woocommerce_payment_tokenmeta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=773) in 0.00 seconds
+0044.427 (0) Table VBVKDT_woocommerce_payment_tokenmeta: finishing file(s) (2, 0.4 KB)
+0044.430 (0) Table VBVKDT_woocommerce_payment_tokens: Total expected rows (via COUNT): 0
+0044.432 (0) Table VBVKDT_woocommerce_payment_tokens: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=768) in 0.00 seconds
+0044.434 (0) Table VBVKDT_woocommerce_payment_tokens: finishing file(s) (2, 0.4 KB)
+0044.438 (0) Table VBVKDT_woocommerce_sessions: Total expected rows (via COUNT): 1
+0044.439 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.440 (0) Table VBVKDT_woocommerce_sessions: Rows added in this batch (next record: 3): 1 (uncompressed bytes in this segment=1629) in 0.00 seconds
+0044.443 (0) Table VBVKDT_woocommerce_sessions: finishing file(s) (2, 0.7 KB)
+0044.446 (0) Table VBVKDT_woocommerce_shipping_zone_locations: Total expected rows (via COUNT): 0
+0044.448 (0) Table VBVKDT_woocommerce_shipping_zone_locations: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=828) in 0.00 seconds
+0044.450 (0) Table VBVKDT_woocommerce_shipping_zone_locations: finishing file(s) (2, 0.4 KB)
+0044.453 (0) Table VBVKDT_woocommerce_shipping_zone_methods: Total expected rows (via COUNT): 0
+0044.454 (0) Table VBVKDT_woocommerce_shipping_zone_methods: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=766) in 0.00 seconds
+0044.456 (0) Table VBVKDT_woocommerce_shipping_zone_methods: finishing file(s) (2, 0.4 KB)
+0044.460 (0) Table VBVKDT_woocommerce_shipping_zones: Total expected rows (via COUNT): 0
+0044.460 (0) Table VBVKDT_woocommerce_shipping_zones: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=626) in 0.00 seconds
+0044.463 (0) Table VBVKDT_woocommerce_shipping_zones: finishing file(s) (2, 0.4 KB)
+0044.466 (0) Table VBVKDT_woocommerce_tax_rate_locations: Total expected rows (via COUNT): 0
+0044.467 (0) Table VBVKDT_woocommerce_tax_rate_locations: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=810) in 0.00 seconds
+0044.469 (0) Table VBVKDT_woocommerce_tax_rate_locations: finishing file(s) (2, 0.4 KB)
+0044.472 (0) Table VBVKDT_woocommerce_tax_rates: Total expected rows (via COUNT): 0
+0044.473 (0) Table VBVKDT_woocommerce_tax_rates: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1166) in 0.00 seconds
+0044.475 (0) Table VBVKDT_woocommerce_tax_rates: finishing file(s) (2, 0.5 KB)
+0044.479 (0) Table VBVKDT_wpforo_accesses: Total expected rows (via COUNT): 5
+0044.479 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.481 (0) Table VBVKDT_wpforo_accesses: Rows added in this batch (next record: 5): 5 (uncompressed bytes in this segment=3376) in 0.00 seconds
+0044.484 (0) Table VBVKDT_wpforo_accesses: finishing file(s) (2, 0.8 KB)
+0044.488 (0) Table VBVKDT_wpforo_activity: Total expected rows (via COUNT): 0
+0044.489 (0) Table VBVKDT_wpforo_activity: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1176) in 0.00 seconds
+0044.492 (0) Table VBVKDT_wpforo_activity: finishing file(s) (2, 0.5 KB)
+0044.495 (0) Table VBVKDT_wpforo_boards: Total expected rows (via COUNT): 1
+0044.496 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.497 (0) Table VBVKDT_wpforo_boards: Rows added in this batch (next record: 0): 1 (uncompressed bytes in this segment=1886) in 0.00 seconds
+0044.499 (0) Table VBVKDT_wpforo_boards: finishing file(s) (2, 0.8 KB)
+0044.503 (0) Table VBVKDT_wpforo_bookmarks: Total expected rows (via COUNT): 0
+0044.504 (0) Table VBVKDT_wpforo_bookmarks: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=823) in 0.00 seconds
+0044.506 (0) Table VBVKDT_wpforo_bookmarks: finishing file(s) (2, 0.4 KB)
+0044.509 (0) Table VBVKDT_wpforo_follows: Total expected rows (via COUNT): 0
+0044.510 (0) Table VBVKDT_wpforo_follows: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=921) in 0.00 seconds
+0044.512 (0) Table VBVKDT_wpforo_follows: finishing file(s) (2, 0.5 KB)
+0044.516 (0) Table VBVKDT_wpforo_forums: Total expected rows (via COUNT): 2
+0044.516 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.518 (0) Table VBVKDT_wpforo_forums: Rows added in this batch (next record: 2): 2 (uncompressed bytes in this segment=2267) in 0.00 seconds
+0044.521 (0) Table VBVKDT_wpforo_forums: finishing file(s) (2, 0.8 KB)
+0044.523 (0) Table VBVKDT_wpforo_languages: Total expected rows (via COUNT): 1
+0044.524 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.525 (0) Table VBVKDT_wpforo_languages: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=695) in 0.00 seconds
+0044.527 (0) Table VBVKDT_wpforo_languages: finishing file(s) (2, 0.4 KB)
+0044.530 (0) Table VBVKDT_wpforo_logs: Total expected rows (via COUNT): 0
+0044.531 (0) Table VBVKDT_wpforo_logs: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=619) in 0.00 seconds
+0044.533 (0) Table VBVKDT_wpforo_logs: finishing file(s) (2, 0.4 KB)
+0044.536 (0) Table VBVKDT_wpforo_phrases: Total expected rows (via COUNT): 870
+0044.544 (0) Table VBVKDT_wpforo_phrases: Rows added in this batch (next record: 870): 870 (uncompressed bytes in this segment=68120) in 0.01 seconds
+0044.547 (0) Table VBVKDT_wpforo_phrases: finishing file(s) (2, 13.1 KB)
+0044.551 (0) Table VBVKDT_wpforo_post_revisions: Total expected rows (via COUNT): 0
+0044.552 (0) Table VBVKDT_wpforo_post_revisions: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=945) in 0.00 seconds
+0044.555 (0) Table VBVKDT_wpforo_post_revisions: finishing file(s) (2, 0.4 KB)
+0044.557 (0) Table VBVKDT_wpforo_postmeta: Total expected rows (via COUNT): 0
+0044.559 (0) Table VBVKDT_wpforo_postmeta: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1058) in 0.00 seconds
+0044.561 (0) Table VBVKDT_wpforo_postmeta: finishing file(s) (2, 0.5 KB)
+0044.565 (0) Table VBVKDT_wpforo_posts: Total expected rows (via COUNT): 0
+0044.567 (0) Table VBVKDT_wpforo_posts: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=2004) in 0.00 seconds
+0044.570 (0) Table VBVKDT_wpforo_posts: finishing file(s) (2, 0.7 KB)
+0044.573 (0) Table VBVKDT_wpforo_profiles: Total expected rows (via COUNT): 2
+0044.574 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.575 (0) Table VBVKDT_wpforo_profiles: Rows added in this batch (next record: 2): 2 (uncompressed bytes in this segment=2022) in 0.00 seconds
+0044.578 (0) Table VBVKDT_wpforo_profiles: finishing file(s) (2, 0.7 KB)
+0044.581 (0) Table VBVKDT_wpforo_reactions: Total expected rows (via COUNT): 0
+0044.582 (0) Table VBVKDT_wpforo_reactions: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=908) in 0.00 seconds
+0044.585 (0) Table VBVKDT_wpforo_reactions: finishing file(s) (2, 0.4 KB)
+0044.588 (0) Table VBVKDT_wpforo_subscribes: Total expected rows (via COUNT): 0
+0044.588 (0) Table VBVKDT_wpforo_subscribes: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=928) in 0.00 seconds
+0044.591 (0) Table VBVKDT_wpforo_subscribes: finishing file(s) (2, 0.5 KB)
+0044.593 (0) Table VBVKDT_wpforo_tags: Total expected rows (via COUNT): 0
+0044.594 (0) Table VBVKDT_wpforo_tags: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=639) in 0.00 seconds
+0044.596 (0) Table VBVKDT_wpforo_tags: finishing file(s) (2, 0.4 KB)
+0044.599 (0) Table VBVKDT_wpforo_topics: Total expected rows (via COUNT): 0
+0044.599 (0) Table VBVKDT_wpforo_topics: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=2053) in 0.00 seconds
+0044.602 (0) Table VBVKDT_wpforo_topics: finishing file(s) (2, 0.7 KB)
+0044.605 (0) Table VBVKDT_wpforo_usergroups: Total expected rows (via COUNT): 5
+0044.606 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.607 (0) Table VBVKDT_wpforo_usergroups: Rows added in this batch (next record: 5): 5 (uncompressed bytes in this segment=4144) in 0.00 seconds
+0044.610 (0) Table VBVKDT_wpforo_usergroups: finishing file(s) (2, 0.9 KB)
+0044.613 (0) Table VBVKDT_wpforo_visits: Total expected rows (via COUNT): 3
+0044.614 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.614 (0) Table VBVKDT_wpforo_visits: Rows added in this batch (next record: 91): 3 (uncompressed bytes in this segment=1200) in 0.00 seconds
+0044.617 (0) Table VBVKDT_wpforo_visits: finishing file(s) (2, 0.6 KB)
+0044.621 (0) Table VBVKDT_wpr_above_the_fold: Total expected rows (via COUNT): 5
+0044.621 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.622 (0) Table VBVKDT_wpr_above_the_fold: Rows added in this batch (next record: 6): 5 (uncompressed bytes in this segment=5933) in 0.00 seconds
+0044.625 (0) Table VBVKDT_wpr_above_the_fold: finishing file(s) (2, 1.1 KB)
+0044.629 (0) Table VBVKDT_wpr_lazy_render_content: Total expected rows (via COUNT): 5
+0044.629 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.630 (0) Table VBVKDT_wpr_lazy_render_content: Rows added in this batch (next record: 6): 5 (uncompressed bytes in this segment=1923) in 0.00 seconds
+0044.633 (0) Table VBVKDT_wpr_lazy_render_content: finishing file(s) (2, 0.7 KB)
+0044.636 (0) Table VBVKDT_wpr_performance_monitoring: Total expected rows (via COUNT): 3
+0044.637 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.637 (0) Table VBVKDT_wpr_performance_monitoring: Rows added in this batch (next record: 3): 3 (uncompressed bytes in this segment=2706) in 0.00 seconds
+0044.640 (0) Table VBVKDT_wpr_performance_monitoring: finishing file(s) (2, 1 KB)
+0044.644 (0) Table VBVKDT_wpr_preconnect_external_domains: Total expected rows (via COUNT): 1
+0044.644 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.645 (0) Table VBVKDT_wpr_preconnect_external_domains: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=1336) in 0.00 seconds
+0044.648 (0) Table VBVKDT_wpr_preconnect_external_domains: finishing file(s) (2, 0.6 KB)
+0044.651 (0) Table VBVKDT_wpr_preload_fonts: Total expected rows (via COUNT): 1
+0044.652 (0) Table is relatively small; fetch_rows will thus be: 20 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.653 (0) Table VBVKDT_wpr_preload_fonts: Rows added in this batch (next record: 1): 1 (uncompressed bytes in this segment=1198) in 0.00 seconds
+0044.655 (0) Table VBVKDT_wpr_preload_fonts: finishing file(s) (2, 0.6 KB)
+0044.658 (0) Table VBVKDT_wpr_rocket_cache: Total expected rows (via COUNT): 111
+0044.658 (0) Table is relatively small; fetch_rows will thus be: 200 (allow_further_reductions=1, is_first_fetch=1, known_bigger_than_table=1)
+0044.660 (0) Table VBVKDT_wpr_rocket_cache: Rows added in this batch (next record: 1550): 111 (uncompressed bytes in this segment=14064) in 0.00 seconds
+0044.663 (0) Table VBVKDT_wpr_rocket_cache: finishing file(s) (2, 2.4 KB)
+0044.666 (0) Table VBVKDT_wpr_rucss_used_css: Total expected rows (via COUNT): 0
+0044.667 (0) Table VBVKDT_wpr_rucss_used_css: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1403) in 0.00 seconds
+0044.670 (0) Table VBVKDT_wpr_rucss_used_css: finishing file(s) (2, 0.6 KB)
+0044.673 (0) Table VBVKDT_youzify_activity_polls_votes: Total expected rows (via COUNT): 0
+0044.674 (0) Table VBVKDT_youzify_activity_polls_votes: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=694) in 0.00 seconds
+0044.676 (0) Table VBVKDT_youzify_activity_polls_votes: finishing file(s) (2, 0.4 KB)
+0044.679 (0) Table VBVKDT_youzify_bookmarks: Total expected rows (via COUNT): 0
+0044.679 (0) Table VBVKDT_youzify_bookmarks: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=662) in 0.00 seconds
+0044.682 (0) Table VBVKDT_youzify_bookmarks: finishing file(s) (2, 0.4 KB)
+0044.684 (0) Table VBVKDT_youzify_hashtags: Total expected rows (via COUNT): 0
+0044.685 (0) Table VBVKDT_youzify_hashtags: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=561) in 0.00 seconds
+0044.687 (0) Table VBVKDT_youzify_hashtags: finishing file(s) (2, 0.3 KB)
+0044.690 (0) Table VBVKDT_youzify_hashtags_items: Total expected rows (via COUNT): 0
+0044.691 (0) Table VBVKDT_youzify_hashtags_items: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=685) in 0.00 seconds
+0044.693 (0) Table VBVKDT_youzify_hashtags_items: finishing file(s) (2, 0.4 KB)
+0044.696 (0) Table VBVKDT_youzify_media: Total expected rows (via COUNT): 0
+0044.697 (0) Table VBVKDT_youzify_media: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=849) in 0.00 seconds
+0044.700 (0) Table VBVKDT_youzify_media: finishing file(s) (2, 0.4 KB)
+0044.703 (0) Table VBVKDT_youzify_reviews: Total expected rows (via COUNT): 0
+0044.704 (0) Table VBVKDT_youzify_reviews: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=674) in 0.00 seconds
+0044.707 (0) Table VBVKDT_youzify_reviews: finishing file(s) (2, 0.4 KB)
+0044.710 (0) Table VBVKDT_youzify_social_login_users: Total expected rows (via COUNT): 0
+0044.710 (0) Table VBVKDT_youzify_social_login_users: Rows added in this batch (next record: -1): 0 (uncompressed bytes in this segment=1450) in 0.00 seconds
+0044.712 (0) Table VBVKDT_youzify_social_login_users: finishing file(s) (2, 0.5 KB)
+0044.713 (0) PHP event: code E_WARNING: filemtime(): stat failed for /var/www/vhosts/robo-guru.de/httpdocs/wp-content/updraft/backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db.gz (line 1923, wp-content/plugins/updraftplus/backup.php)
+0044.715 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_options.table.tmpr61344.gz (1/181/fopen): adding to final database dump
+0044.719 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_options.table.gz (2/181/fopen): adding to final database dump
+0044.719 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_users.table.tmpr22.gz (3/181/fopen): adding to final database dump
+0044.720 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_users.table.gz (4/181/fopen): adding to final database dump
+0044.721 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_usermeta.table.tmpr906.gz (5/181/fopen): adding to final database dump
+0044.721 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_usermeta.table.gz (6/181/fopen): adding to final database dump
+0044.722 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_actionscheduler_actions.table.tmpr8276.gz (7/181/fopen): adding to final database dump
+0044.723 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_actionscheduler_actions.table.gz (8/181/fopen): adding to final database dump
+0044.723 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_actionscheduler_claims.table.tmpr8034.gz (9/181/fopen): adding to final database dump
+0044.724 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_actionscheduler_claims.table.gz (10/181/fopen): adding to final database dump
+0044.724 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_actionscheduler_groups.table.tmpr14.gz (11/181/fopen): adding to final database dump
+0044.725 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_actionscheduler_groups.table.gz (12/181/fopen): adding to final database dump
+0044.725 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_actionscheduler_logs.table.tmpr23403.gz (13/181/fopen): adding to final database dump
+0044.726 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_actionscheduler_logs.table.gz (14/181/fopen): adding to final database dump
+0044.727 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_commentmeta.table.tmpr0.gz (15/181/fopen): adding to final database dump
+0044.727 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_commentmeta.table.gz (16/181/fopen): adding to final database dump
+0044.728 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_comments.table.tmpr0.gz (17/181/fopen): adding to final database dump
+0044.729 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_comments.table.gz (18/181/fopen): adding to final database dump
+0044.729 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_links.table.tmpr0.gz (19/181/fopen): adding to final database dump
+0044.730 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_links.table.gz (20/181/fopen): adding to final database dump
+0044.731 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_postmeta.table.tmpr19782.gz (21/181/fopen): adding to final database dump
+0044.737 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_postmeta.table.gz (22/181/fopen): adding to final database dump
+0044.738 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_posts.table.tmpr14907.gz (23/181/fopen): adding to final database dump
+0044.739 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_posts.table.gz (24/181/fopen): adding to final database dump
+0044.740 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_signups.table.tmpr6.gz (25/181/fopen): adding to final database dump
+0044.740 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_signups.table.gz (26/181/fopen): adding to final database dump
+0044.741 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_term_relationships.table.tmpr100001.gz (27/181/fopen): adding to final database dump
+0044.742 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_term_relationships.table.gz (28/181/fopen): adding to final database dump
+0044.742 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_term_taxonomy.table.tmpr287.gz (29/181/fopen): adding to final database dump
+0044.743 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_term_taxonomy.table.gz (30/181/fopen): adding to final database dump
+0044.743 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_termmeta.table.tmpr257.gz (31/181/fopen): adding to final database dump
+0044.744 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_termmeta.table.gz (32/181/fopen): adding to final database dump
+0044.744 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_terms.table.tmpr287.gz (33/181/fopen): adding to final database dump
+0044.745 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_terms.table.gz (34/181/fopen): adding to final database dump
+0044.746 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_activity_topic_relationship.table.tmpr0.gz (35/181/fopen): adding to final database dump
+0044.746 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_activity_topic_relationship.table.gz (36/181/fopen): adding to final database dump
+0044.747 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_background_job_queue.table.tmpr0.gz (37/181/fopen): adding to final database dump
+0044.747 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_background_job_queue.table.gz (38/181/fopen): adding to final database dump
+0044.748 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_background_process_logs.table.tmpr0.gz (39/181/fopen): adding to final database dump
+0044.748 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_background_process_logs.table.gz (40/181/fopen): adding to final database dump
+0044.749 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_drm_events.table.tmpr0.gz (41/181/fopen): adding to final database dump
+0044.749 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_drm_events.table.gz (42/181/fopen): adding to final database dump
+0044.750 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_email_queue.table.tmpr0.gz (43/181/fopen): adding to final database dump
+0044.751 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_email_queue.table.gz (44/181/fopen): adding to final database dump
+0044.751 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_notifications_subscriptions.table.tmpr69.gz (45/181/fopen): adding to final database dump
+0044.752 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_notifications_subscriptions.table.gz (46/181/fopen): adding to final database dump
+0044.752 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_poll_options.table.tmpr0.gz (47/181/fopen): adding to final database dump
+0044.753 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_poll_options.table.gz (48/181/fopen): adding to final database dump
+0044.753 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_poll_votes.table.tmpr0.gz (49/181/fopen): adding to final database dump
+0044.754 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_poll_votes.table.gz (50/181/fopen): adding to final database dump
+0044.754 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_polls.table.tmpr0.gz (51/181/fopen): adding to final database dump
+0044.755 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_polls.table.gz (52/181/fopen): adding to final database dump
+0044.756 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_reactions_data.table.tmpr58.gz (53/181/fopen): adding to final database dump
+0044.756 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_reactions_data.table.gz (54/181/fopen): adding to final database dump
+0044.757 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_social_sign_on_users.table.tmpr8.gz (55/181/fopen): adding to final database dump
+0044.757 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_social_sign_on_users.table.gz (56/181/fopen): adding to final database dump
+0044.758 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_topic_history.table.tmpr0.gz (57/181/fopen): adding to final database dump
+0044.758 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_topic_history.table.gz (58/181/fopen): adding to final database dump
+0044.759 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_topic_relationships.table.tmpr0.gz (59/181/fopen): adding to final database dump
+0044.759 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_topic_relationships.table.gz (60/181/fopen): adding to final database dump
+0044.760 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_topics.table.tmpr0.gz (61/181/fopen): adding to final database dump
+0044.760 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_topics.table.gz (62/181/fopen): adding to final database dump
+0044.761 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_user_reactions.table.tmpr17.gz (63/181/fopen): adding to final database dump
+0044.761 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_user_reactions.table.gz (64/181/fopen): adding to final database dump
+0044.762 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_xprofile_visibility.table.tmpr74.gz (65/181/fopen): adding to final database dump
+0044.762 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bb_xprofile_visibility.table.gz (66/181/fopen): adding to final database dump
+0044.763 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_activity.table.tmpr369.gz (67/181/fopen): adding to final database dump
+0044.763 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_activity.table.gz (68/181/fopen): adding to final database dump
+0044.764 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_activity_meta.table.tmpr304.gz (69/181/fopen): adding to final database dump
+0044.765 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_activity_meta.table.gz (70/181/fopen): adding to final database dump
+0044.765 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_document.table.tmpr42.gz (71/181/fopen): adding to final database dump
+0044.766 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_document.table.gz (72/181/fopen): adding to final database dump
+0044.766 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_document_folder.table.tmpr20.gz (73/181/fopen): adding to final database dump
+0044.767 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_document_folder.table.gz (74/181/fopen): adding to final database dump
+0044.767 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_document_folder_meta.table.tmpr0.gz (75/181/fopen): adding to final database dump
+0044.768 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_document_folder_meta.table.gz (76/181/fopen): adding to final database dump
+0044.768 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_document_meta.table.tmpr83.gz (77/181/fopen): adding to final database dump
+0044.769 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_document_meta.table.gz (78/181/fopen): adding to final database dump
+0044.769 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_follow.table.tmpr9.gz (79/181/fopen): adding to final database dump
+0044.770 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_follow.table.gz (80/181/fopen): adding to final database dump
+0044.770 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_friends.table.tmpr57.gz (81/181/fopen): adding to final database dump
+0044.771 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_friends.table.gz (82/181/fopen): adding to final database dump
+0044.772 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_groups.table.tmpr10.gz (83/181/fopen): adding to final database dump
+0044.772 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_groups.table.gz (84/181/fopen): adding to final database dump
+0044.773 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_groups_groupmeta.table.tmpr37.gz (85/181/fopen): adding to final database dump
+0044.773 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_groups_groupmeta.table.gz (86/181/fopen): adding to final database dump
+0044.774 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_groups_membermeta.table.tmpr47.gz (87/181/fopen): adding to final database dump
+0044.774 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_groups_membermeta.table.gz (88/181/fopen): adding to final database dump
+0044.775 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_groups_members.table.tmpr64.gz (89/181/fopen): adding to final database dump
+0044.776 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_groups_members.table.gz (90/181/fopen): adding to final database dump
+0044.776 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_invitations.table.tmpr0.gz (91/181/fopen): adding to final database dump
+0044.777 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_invitations.table.gz (92/181/fopen): adding to final database dump
+0044.777 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_invitations_invitemeta.table.tmpr0.gz (93/181/fopen): adding to final database dump
+0044.778 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_invitations_invitemeta.table.gz (94/181/fopen): adding to final database dump
+0044.778 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_media.table.tmpr6.gz (95/181/fopen): adding to final database dump
+0044.779 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_media.table.gz (96/181/fopen): adding to final database dump
+0044.779 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_media_albums.table.tmpr0.gz (97/181/fopen): adding to final database dump
+0044.780 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_media_albums.table.gz (98/181/fopen): adding to final database dump
+0044.781 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_messages_messages.table.tmpr135.gz (99/181/fopen): adding to final database dump
+0044.782 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_messages_messages.table.gz (100/181/fopen): adding to final database dump
+0044.783 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_messages_meta.table.tmpr456.gz (101/181/fopen): adding to final database dump
+0044.783 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_messages_meta.table.gz (102/181/fopen): adding to final database dump
+0044.784 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_messages_notices.table.tmpr0.gz (103/181/fopen): adding to final database dump
+0044.784 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_messages_notices.table.gz (104/181/fopen): adding to final database dump
+0044.785 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_messages_recipients.table.tmpr54.gz (105/181/fopen): adding to final database dump
+0044.786 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_messages_recipients.table.gz (106/181/fopen): adding to final database dump
+0044.786 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_moderation.table.tmpr0.gz (107/181/fopen): adding to final database dump
+0044.787 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_moderation.table.gz (108/181/fopen): adding to final database dump
+0044.787 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_moderation_meta.table.tmpr0.gz (109/181/fopen): adding to final database dump
+0044.788 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_moderation_meta.table.gz (110/181/fopen): adding to final database dump
+0044.788 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_notifications.table.tmpr1225.gz (111/181/fopen): adding to final database dump
+0044.789 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_notifications.table.gz (112/181/fopen): adding to final database dump
+0044.790 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_notifications_meta.table.tmpr1228.gz (113/181/fopen): adding to final database dump
+0044.790 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_notifications_meta.table.gz (114/181/fopen): adding to final database dump
+0044.791 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_optouts.table.tmpr0.gz (115/181/fopen): adding to final database dump
+0044.791 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_optouts.table.gz (116/181/fopen): adding to final database dump
+0044.792 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_suspend.table.tmpr10.gz (117/181/fopen): adding to final database dump
+0044.792 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_suspend.table.gz (118/181/fopen): adding to final database dump
+0044.793 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_suspend_details.table.tmpr2.gz (119/181/fopen): adding to final database dump
+0044.793 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_suspend_details.table.gz (120/181/fopen): adding to final database dump
+0044.794 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_suspend_meta.table.tmpr0.gz (121/181/fopen): adding to final database dump
+0044.795 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_suspend_meta.table.gz (122/181/fopen): adding to final database dump
+0044.795 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_user_blogs.table.tmpr5.gz (123/181/fopen): adding to final database dump
+0044.796 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_user_blogs.table.gz (124/181/fopen): adding to final database dump
+0044.796 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_user_blogs_blogmeta.table.tmpr9.gz (125/181/fopen): adding to final database dump
+0044.797 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_user_blogs_blogmeta.table.gz (126/181/fopen): adding to final database dump
+0044.798 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_xprofile_data.table.tmpr127.gz (127/181/fopen): adding to final database dump
+0044.798 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_xprofile_data.table.gz (128/181/fopen): adding to final database dump
+0044.799 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_xprofile_fields.table.tmpr4.gz (129/181/fopen): adding to final database dump
+0044.799 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_xprofile_fields.table.gz (130/181/fopen): adding to final database dump
+0044.800 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_xprofile_groups.table.tmpr2.gz (131/181/fopen): adding to final database dump
+0044.801 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_xprofile_groups.table.gz (132/181/fopen): adding to final database dump
+0044.801 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_xprofile_meta.table.tmpr18.gz (133/181/fopen): adding to final database dump
+0044.802 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_xprofile_meta.table.gz (134/181/fopen): adding to final database dump
+0044.802 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_meeting_meta.table.tmpr0.gz (135/181/fopen): adding to final database dump
+0044.803 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_meeting_meta.table.gz (136/181/fopen): adding to final database dump
+0044.803 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_meetings.table.tmpr0.gz (137/181/fopen): adding to final database dump
+0044.804 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_meetings.table.gz (138/181/fopen): adding to final database dump
+0044.804 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_recordings.table.tmpr0.gz (139/181/fopen): adding to final database dump
+0044.805 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_recordings.table.gz (140/181/fopen): adding to final database dump
+0044.806 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_webinar_meta.table.tmpr0.gz (141/181/fopen): adding to final database dump
+0044.806 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_webinar_meta.table.gz (142/181/fopen): adding to final database dump
+0044.807 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_webinar_recordings.table.tmpr0.gz (143/181/fopen): adding to final database dump
+0044.807 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_webinar_recordings.table.gz (144/181/fopen): adding to final database dump
+0044.808 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_webinars.table.tmpr0.gz (145/181/fopen): adding to final database dump
+0044.809 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_bp_zoom_webinars.table.gz (146/181/fopen): adding to final database dump
+0044.809 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_cartflows_ca_cart_abandonment.table.tmpr1.gz (147/181/fopen): adding to final database dump
+0044.810 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_cartflows_ca_cart_abandonment.table.gz (148/181/fopen): adding to final database dump
+0044.810 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_cartflows_ca_email_history.table.tmpr0.gz (149/181/fopen): adding to final database dump
+0044.811 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_cartflows_ca_email_history.table.gz (150/181/fopen): adding to final database dump
+0044.811 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_cartflows_ca_email_templates.table.tmpr4.gz (151/181/fopen): adding to final database dump
+0044.812 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_cartflows_ca_email_templates.table.gz (152/181/fopen): adding to final database dump
+0044.813 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_cartflows_ca_email_templates_meta.table.tmpr28.gz (153/181/fopen): adding to final database dump
+0044.813 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_cartflows_ca_email_templates_meta.table.gz (154/181/fopen): adding to final database dump
+0044.814 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_chaty_contact_form_leads.table.tmpr0.gz (155/181/fopen): adding to final database dump
+0044.814 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_chaty_contact_form_leads.table.gz (156/181/fopen): adding to final database dump
+0044.815 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_jetpack_sync_queue.table.tmpr1986.gz (157/181/fopen): adding to final database dump
+0044.816 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_jetpack_sync_queue.table.gz (158/181/fopen): adding to final database dump
+0044.816 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_audio_presets.table.tmpr5.gz (159/181/fopen): adding to final database dump
+0044.817 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_audio_presets.table.gz (160/181/fopen): adding to final database dump
+0044.817 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_email_collection.table.tmpr0.gz (161/181/fopen): adding to final database dump
+0044.818 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_email_collection.table.gz (162/181/fopen): adding to final database dump
+0044.818 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_presets.table.tmpr6.gz (163/181/fopen): adding to final database dump
+0044.819 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_presets.table.gz (164/181/fopen): adding to final database dump
+0044.820 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_videos.table.tmpr2.gz (165/181/fopen): adding to final database dump
+0044.820 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_videos.table.gz (166/181/fopen): adding to final database dump
+0044.821 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_visits.table.tmpr0.gz (167/181/fopen): adding to final database dump
+0044.821 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_visits.table.gz (168/181/fopen): adding to final database dump
+0044.822 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_webhooks.table.tmpr0.gz (169/181/fopen): adding to final database dump
+0044.823 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_presto_player_webhooks.table.gz (170/181/fopen): adding to final database dump
+0044.823 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_404_logs.table.tmpr95.gz (171/181/fopen): adding to final database dump
+0044.824 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_404_logs.table.gz (172/181/fopen): adding to final database dump
+0044.824 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_analytics_gsc.table.tmpr151.gz (173/181/fopen): adding to final database dump
+0044.825 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_analytics_gsc.table.gz (174/181/fopen): adding to final database dump
+0044.825 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_analytics_inspections.table.tmpr0.gz (175/181/fopen): adding to final database dump
+0044.826 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_analytics_inspections.table.gz (176/181/fopen): adding to final database dump
+0044.826 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_analytics_keyword_manager.table.tmpr2.gz (177/181/fopen): adding to final database dump
+0044.827 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_analytics_keyword_manager.table.gz (178/181/fopen): adding to final database dump
+0044.828 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_analytics_objects.table.tmpr102.gz (179/181/fopen): adding to final database dump
+0044.828 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_analytics_objects.table.gz (180/181/fopen): adding to final database dump
+0044.829 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_internal_links.table.tmpr1291.gz (181/181/fopen): adding to final database dump
+0044.829 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_internal_links.table.gz (182/181/fopen): adding to final database dump
+0044.830 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_internal_meta.table.tmpr14761.gz (183/181/fopen): adding to final database dump
+0044.831 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_internal_meta.table.gz (184/181/fopen): adding to final database dump
+0044.831 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_redirections.table.tmpr0.gz (185/181/fopen): adding to final database dump
+0044.832 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_redirections.table.gz (186/181/fopen): adding to final database dump
+0044.832 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_redirections_cache.table.tmpr0.gz (187/181/fopen): adding to final database dump
+0044.833 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rank_math_redirections_cache.table.gz (188/181/fopen): adding to final database dump
+0044.833 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_css.table.tmpr114.gz (189/181/fopen): adding to final database dump
+0044.834 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_css.table.gz (190/181/fopen): adding to final database dump
+0044.835 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_layer_animations.table.tmpr0.gz (191/181/fopen): adding to final database dump
+0044.835 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_layer_animations.table.gz (192/181/fopen): adding to final database dump
+0044.836 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_navigations.table.tmpr0.gz (193/181/fopen): adding to final database dump
+0044.836 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_navigations.table.gz (194/181/fopen): adding to final database dump
+0044.837 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_sliders.table.tmpr3.gz (195/181/fopen): adding to final database dump
+0044.838 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_sliders.table.gz (196/181/fopen): adding to final database dump
+0044.838 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_sliders7.table.tmpr3.gz (197/181/fopen): adding to final database dump
+0044.839 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_sliders7.table.gz (198/181/fopen): adding to final database dump
+0044.839 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_slides.table.tmpr3.gz (199/181/fopen): adding to final database dump
+0044.841 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_slides.table.gz (200/181/fopen): adding to final database dump
+0044.841 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_slides7.table.tmpr3.gz (201/181/fopen): adding to final database dump
+0044.842 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_slides7.table.gz (202/181/fopen): adding to final database dump
+0044.842 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_static_slides.table.tmpr0.gz (203/181/fopen): adding to final database dump
+0044.843 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_revslider_static_slides.table.gz (204/181/fopen): adding to final database dump
+0044.844 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_robo_ai_chatbot_leads.table.tmpr0.gz (205/181/fopen): adding to final database dump
+0044.844 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_robo_ai_chatbot_leads.table.gz (206/181/fopen): adding to final database dump
+0044.845 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_robo_ai_chatbot_logs.table.tmpr9.gz (207/181/fopen): adding to final database dump
+0044.845 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_robo_ai_chatbot_logs.table.gz (208/181/fopen): adding to final database dump
+0044.846 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_robo_finder_leads.table.tmpr2.gz (209/181/fopen): adding to final database dump
+0044.846 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_robo_finder_leads.table.gz (210/181/fopen): adding to final database dump
+0044.847 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_activity.table.tmpr1.gz (211/181/fopen): adding to final database dump
+0044.848 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_activity.table.gz (212/181/fopen): adding to final database dump
+0044.848 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_api.table.tmpr0.gz (213/181/fopen): adding to final database dump
+0044.849 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_api.table.gz (214/181/fopen): adding to final database dump
+0044.849 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_media.table.tmpr2.gz (215/181/fopen): adding to final database dump
+0044.850 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_media.table.gz (216/181/fopen): adding to final database dump
+0044.850 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_media_interaction.table.tmpr0.gz (217/181/fopen): adding to final database dump
+0044.851 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_media_interaction.table.gz (218/181/fopen): adding to final database dump
+0044.852 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_media_meta.table.tmpr0.gz (219/181/fopen): adding to final database dump
+0044.852 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_rt_rtm_media_meta.table.gz (220/181/fopen): adding to final database dump
+0044.853 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_smtp2go_api_logs.table.tmpr76.gz (221/181/fopen): adding to final database dump
+0044.853 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_smtp2go_api_logs.table.gz (222/181/fopen): adding to final database dump
+0044.854 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_srfm_entries.table.tmpr29.gz (223/181/fopen): adding to final database dump
+0044.855 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_srfm_entries.table.gz (224/181/fopen): adding to final database dump
+0044.855 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_srfm_payments.table.tmpr0.gz (225/181/fopen): adding to final database dump
+0044.856 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_srfm_payments.table.gz (226/181/fopen): adding to final database dump
+0044.856 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_suretriggers_webhook_requests.table.tmpr8.gz (227/181/fopen): adding to final database dump
+0044.857 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_suretriggers_webhook_requests.table.gz (228/181/fopen): adding to final database dump
+0044.857 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_admin_note_actions.table.tmpr1378.gz (229/181/fopen): adding to final database dump
+0044.858 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_admin_note_actions.table.gz (230/181/fopen): adding to final database dump
+0044.859 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_admin_notes.table.tmpr57.gz (231/181/fopen): adding to final database dump
+0044.859 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_admin_notes.table.gz (232/181/fopen): adding to final database dump
+0044.860 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_category_lookup.table.tmpr1001.gz (233/181/fopen): adding to final database dump
+0044.860 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_category_lookup.table.gz (234/181/fopen): adding to final database dump
+0044.861 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_customer_lookup.table.tmpr0.gz (235/181/fopen): adding to final database dump
+0044.862 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_customer_lookup.table.gz (236/181/fopen): adding to final database dump
+0044.862 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_download_log.table.tmpr0.gz (237/181/fopen): adding to final database dump
+0044.863 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_download_log.table.gz (238/181/fopen): adding to final database dump
+0044.863 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_addresses.table.tmpr0.gz (239/181/fopen): adding to final database dump
+0044.864 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_addresses.table.gz (240/181/fopen): adding to final database dump
+0044.864 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_coupon_lookup.table.tmpr1.gz (241/181/fopen): adding to final database dump
+0044.865 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_coupon_lookup.table.gz (242/181/fopen): adding to final database dump
+0044.866 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_operational_data.table.tmpr0.gz (243/181/fopen): adding to final database dump
+0044.866 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_operational_data.table.gz (244/181/fopen): adding to final database dump
+0044.867 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_product_lookup.table.tmpr1.gz (245/181/fopen): adding to final database dump
+0044.867 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_product_lookup.table.gz (246/181/fopen): adding to final database dump
+0044.868 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_stats.table.tmpr0.gz (247/181/fopen): adding to final database dump
+0044.869 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_stats.table.gz (248/181/fopen): adding to final database dump
+0044.869 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_tax_lookup.table.tmpr1.gz (249/181/fopen): adding to final database dump
+0044.870 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_order_tax_lookup.table.gz (250/181/fopen): adding to final database dump
+0044.870 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_orders.table.tmpr0.gz (251/181/fopen): adding to final database dump
+0044.871 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_orders.table.gz (252/181/fopen): adding to final database dump
+0044.871 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_orders_meta.table.tmpr0.gz (253/181/fopen): adding to final database dump
+0044.872 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_orders_meta.table.gz (254/181/fopen): adding to final database dump
+0044.872 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_product_attributes_lookup.table.tmpr1.gz (255/181/fopen): adding to final database dump
+0044.873 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_product_attributes_lookup.table.gz (256/181/fopen): adding to final database dump
+0044.873 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_product_download_directories.table.tmpr3.gz (257/181/fopen): adding to final database dump
+0044.874 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_product_download_directories.table.gz (258/181/fopen): adding to final database dump
+0044.874 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_product_meta_lookup.table.tmpr3683.gz (259/181/fopen): adding to final database dump
+0044.875 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_product_meta_lookup.table.gz (260/181/fopen): adding to final database dump
+0044.875 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_rate_limits.table.tmpr0.gz (261/181/fopen): adding to final database dump
+0044.876 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_rate_limits.table.gz (262/181/fopen): adding to final database dump
+0044.876 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_reserved_stock.table.tmpr1.gz (263/181/fopen): adding to final database dump
+0044.877 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_reserved_stock.table.gz (264/181/fopen): adding to final database dump
+0044.877 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_tax_rate_classes.table.tmpr3.gz (265/181/fopen): adding to final database dump
+0044.878 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_tax_rate_classes.table.gz (266/181/fopen): adding to final database dump
+0044.878 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_webhooks.table.tmpr0.gz (267/181/fopen): adding to final database dump
+0044.879 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wc_webhooks.table.gz (268/181/fopen): adding to final database dump
+0044.879 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_api_keys.table.tmpr0.gz (269/181/fopen): adding to final database dump
+0044.880 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_api_keys.table.gz (270/181/fopen): adding to final database dump
+0044.881 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_attribute_taxonomies.table.tmpr0.gz (271/181/fopen): adding to final database dump
+0044.881 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_attribute_taxonomies.table.gz (272/181/fopen): adding to final database dump
+0044.882 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_downloadable_product_permissions.table.tmpr0.gz (273/181/fopen): adding to final database dump
+0044.882 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_downloadable_product_permissions.table.gz (274/181/fopen): adding to final database dump
+0044.883 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_log.table.tmpr0.gz (275/181/fopen): adding to final database dump
+0044.883 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_log.table.gz (276/181/fopen): adding to final database dump
+0044.884 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_order_itemmeta.table.tmpr0.gz (277/181/fopen): adding to final database dump
+0044.884 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_order_itemmeta.table.gz (278/181/fopen): adding to final database dump
+0044.885 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_order_items.table.tmpr0.gz (279/181/fopen): adding to final database dump
+0044.885 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_order_items.table.gz (280/181/fopen): adding to final database dump
+0044.886 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_payment_tokenmeta.table.tmpr0.gz (281/181/fopen): adding to final database dump
+0044.886 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_payment_tokenmeta.table.gz (282/181/fopen): adding to final database dump
+0044.887 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_payment_tokens.table.tmpr0.gz (283/181/fopen): adding to final database dump
+0044.888 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_payment_tokens.table.gz (284/181/fopen): adding to final database dump
+0044.888 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_sessions.table.tmpr4.gz (285/181/fopen): adding to final database dump
+0044.889 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_sessions.table.gz (286/181/fopen): adding to final database dump
+0044.889 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_shipping_zone_locations.table.tmpr0.gz (287/181/fopen): adding to final database dump
+0044.890 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_shipping_zone_locations.table.gz (288/181/fopen): adding to final database dump
+0044.890 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_shipping_zone_methods.table.tmpr0.gz (289/181/fopen): adding to final database dump
+0044.891 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_shipping_zone_methods.table.gz (290/181/fopen): adding to final database dump
+0044.891 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_shipping_zones.table.tmpr0.gz (291/181/fopen): adding to final database dump
+0044.892 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_shipping_zones.table.gz (292/181/fopen): adding to final database dump
+0044.892 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_tax_rate_locations.table.tmpr0.gz (293/181/fopen): adding to final database dump
+0044.893 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_tax_rate_locations.table.gz (294/181/fopen): adding to final database dump
+0044.894 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_tax_rates.table.tmpr0.gz (295/181/fopen): adding to final database dump
+0044.894 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_woocommerce_tax_rates.table.gz (296/181/fopen): adding to final database dump
+0044.895 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_accesses.table.tmpr6.gz (297/181/fopen): adding to final database dump
+0044.895 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_accesses.table.gz (298/181/fopen): adding to final database dump
+0044.896 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_activity.table.tmpr0.gz (299/181/fopen): adding to final database dump
+0044.897 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_activity.table.gz (300/181/fopen): adding to final database dump
+0044.898 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_boards.table.tmpr1.gz (301/181/fopen): adding to final database dump
+0044.898 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_boards.table.gz (302/181/fopen): adding to final database dump
+0044.899 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_bookmarks.table.tmpr0.gz (303/181/fopen): adding to final database dump
+0044.899 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_bookmarks.table.gz (304/181/fopen): adding to final database dump
+0044.900 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_follows.table.tmpr0.gz (305/181/fopen): adding to final database dump
+0044.900 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_follows.table.gz (306/181/fopen): adding to final database dump
+0044.901 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_forums.table.tmpr3.gz (307/181/fopen): adding to final database dump
+0044.901 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_forums.table.gz (308/181/fopen): adding to final database dump
+0044.902 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_languages.table.tmpr2.gz (309/181/fopen): adding to final database dump
+0044.903 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_languages.table.gz (310/181/fopen): adding to final database dump
+0044.903 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_logs.table.tmpr0.gz (311/181/fopen): adding to final database dump
+0044.904 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_logs.table.gz (312/181/fopen): adding to final database dump
+0044.904 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_phrases.table.tmpr871.gz (313/181/fopen): adding to final database dump
+0044.905 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_phrases.table.gz (314/181/fopen): adding to final database dump
+0044.905 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_post_revisions.table.tmpr0.gz (315/181/fopen): adding to final database dump
+0044.906 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_post_revisions.table.gz (316/181/fopen): adding to final database dump
+0044.906 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_postmeta.table.tmpr0.gz (317/181/fopen): adding to final database dump
+0044.907 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_postmeta.table.gz (318/181/fopen): adding to final database dump
+0044.908 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_posts.table.tmpr0.gz (319/181/fopen): adding to final database dump
+0044.908 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_posts.table.gz (320/181/fopen): adding to final database dump
+0044.909 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_profiles.table.tmpr3.gz (321/181/fopen): adding to final database dump
+0044.909 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_profiles.table.gz (322/181/fopen): adding to final database dump
+0044.910 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_reactions.table.tmpr0.gz (323/181/fopen): adding to final database dump
+0044.910 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_reactions.table.gz (324/181/fopen): adding to final database dump
+0044.911 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_subscribes.table.tmpr0.gz (325/181/fopen): adding to final database dump
+0044.911 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_subscribes.table.gz (326/181/fopen): adding to final database dump
+0044.912 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_tags.table.tmpr0.gz (327/181/fopen): adding to final database dump
+0044.912 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_tags.table.gz (328/181/fopen): adding to final database dump
+0044.913 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_topics.table.tmpr0.gz (329/181/fopen): adding to final database dump
+0044.913 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_topics.table.gz (330/181/fopen): adding to final database dump
+0044.914 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_usergroups.table.tmpr6.gz (331/181/fopen): adding to final database dump
+0044.915 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_usergroups.table.gz (332/181/fopen): adding to final database dump
+0044.915 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_visits.table.tmpr92.gz (333/181/fopen): adding to final database dump
+0044.916 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpforo_visits.table.gz (334/181/fopen): adding to final database dump
+0044.916 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_above_the_fold.table.tmpr7.gz (335/181/fopen): adding to final database dump
+0044.917 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_above_the_fold.table.gz (336/181/fopen): adding to final database dump
+0044.917 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_lazy_render_content.table.tmpr7.gz (337/181/fopen): adding to final database dump
+0044.918 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_lazy_render_content.table.gz (338/181/fopen): adding to final database dump
+0044.918 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_performance_monitoring.table.tmpr4.gz (339/181/fopen): adding to final database dump
+0044.919 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_performance_monitoring.table.gz (340/181/fopen): adding to final database dump
+0044.919 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_preconnect_external_domains.table.tmpr2.gz (341/181/fopen): adding to final database dump
+0044.920 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_preconnect_external_domains.table.gz (342/181/fopen): adding to final database dump
+0044.920 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_preload_fonts.table.tmpr2.gz (343/181/fopen): adding to final database dump
+0044.921 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_preload_fonts.table.gz (344/181/fopen): adding to final database dump
+0044.922 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_rocket_cache.table.tmpr1551.gz (345/181/fopen): adding to final database dump
+0044.922 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_rocket_cache.table.gz (346/181/fopen): adding to final database dump
+0044.923 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_rucss_used_css.table.tmpr0.gz (347/181/fopen): adding to final database dump
+0044.923 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_wpr_rucss_used_css.table.gz (348/181/fopen): adding to final database dump
+0044.924 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_activity_polls_votes.table.tmpr0.gz (349/181/fopen): adding to final database dump
+0044.924 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_activity_polls_votes.table.gz (350/181/fopen): adding to final database dump
+0044.925 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_bookmarks.table.tmpr0.gz (351/181/fopen): adding to final database dump
+0044.925 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_bookmarks.table.gz (352/181/fopen): adding to final database dump
+0044.926 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_hashtags.table.tmpr0.gz (353/181/fopen): adding to final database dump
+0044.927 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_hashtags.table.gz (354/181/fopen): adding to final database dump
+0044.927 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_hashtags_items.table.tmpr0.gz (355/181/fopen): adding to final database dump
+0044.928 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_hashtags_items.table.gz (356/181/fopen): adding to final database dump
+0044.928 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_media.table.tmpr0.gz (357/181/fopen): adding to final database dump
+0044.929 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_media.table.gz (358/181/fopen): adding to final database dump
+0044.929 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_reviews.table.tmpr0.gz (359/181/fopen): adding to final database dump
+0044.930 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_reviews.table.gz (360/181/fopen): adding to final database dump
+0044.931 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_social_login_users.table.tmpr0.gz (361/181/fopen): adding to final database dump
+0044.931 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db-table-VBVKDT_youzify_social_login_users.table.gz (362/181/fopen): adding to final database dump
+0044.935 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db.gz: finished writing out complete database file (1167.3 KB)
+0044.968 (0) Total database tables backed up: 181 (backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db.gz, size: 1195443, sha1: 3ed0eea1d00c2dbf8ede3ff69a306f4dbdada1f9, sha256: 02670c626cd84e9b35b0c4c6b0b74689c4ff6f43e09193dd085f91b68cc282b1)
+0044.972 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-plugins.zip: plugins: This file has already been successfully processed
+0044.972 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-themes.zip: themes: This file has already been successfully processed
+0044.973 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads.zip: uploads: This file has already been successfully processed
+0044.973 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads2.zip: uploads: This file has already been successfully processed
+0044.974 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-uploads3.zip: uploads: This file has already been successfully processed
+0044.974 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-mu-plugins.zip: mu-plugins: This file has already been successfully processed
+0044.975 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-others.zip: others: This file has already been successfully processed
+0044.975 (0) backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db.gz: db: This file has not yet been successfully uploaded: will queue
+0044.976 (0) Saving backup history. Total backup size: 1.3 GB
+0044.977 (0) Requesting upload of the files that have not yet been successfully uploaded (1)
+0044.979 (0) Cloud backup selection (1/1): none with instance (1/1) (last)
+0044.979 (0) No remote despatch: user chose no remote backup service
+0044.980 (0) Recording as successfully uploaded: backup_2026-01-14-2153_RoboGuru_58990a49dd9c-db.gz
+0044.982 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0044.983 (0) Number of backup sets in history: 2; groups (db): 1
+0044.983 (0) Examining (for databases) backup set with group_id=0, nonce=58990a49dd9c, datestamp=1768424008 (Jan 14 2026 20:53:28)
+0044.983 (0) This backup set is the backup set just made, so will not be deleted.
+0044.983 (0) Examining (for databases) backup set with group_id=0, nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0044.983 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0044.984 (0) Number of backup sets in history: 2; groups (files): 1
+0044.984 (0) Examining (for files) backup set with nonce=58990a49dd9c, datestamp=1768424008 (Jan 14 2026 20:53:28)
+0044.984 (0) This backup set is the backup set just made, so will not be deleted.
+0044.985 (0) This backup set is the backup set just made, so will not be deleted.
+0044.985 (0) This backup set is the backup set just made, so will not be deleted.
+0044.985 (0) This backup set is the backup set just made, so will not be deleted.
+0044.985 (0) This backup set is the backup set just made, so will not be deleted.
+0044.985 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0044.985 (0) Examining (for files) backup set with nonce=04ff0aab768f, datestamp=1767997061 (Jan 09 2026 22:17:41)
+0044.985 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0044.985 (0) Retain: saving new backup history (sets now: 2) and finishing retain operation
+0044.987 (0) Resume backup (58990a49dd9c, 0): finish run
+0044.988 (0) Decremented the semaphore (fd) by 1
+0044.989 (0) Semaphore (fd) unlocked
+0044.990 (0) There were no errors in the uploads, so the 'resume' event (1) is being unscheduled
+0044.993 (0) No email will/can be sent - the user has not configured an email address.
+0044.994 (0) The backup succeeded and is now complete

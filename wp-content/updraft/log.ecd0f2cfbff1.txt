@@ -1,0 +1,785 @@
+0000.002 () Opened log file at time: Fri, 09 Jan 2026 23:02:10 +0000 on https://robo-guru.de
+0000.002 () UpdraftPlus WordPress backup plugin (https://updraftplus.com): 2.25.9 WP: 6.9 PHP: 8.3.6 (fpm-fcgi, Linux agitated-mclean.217-154-80-227.plesk.page 6.8.0-90-generic #91-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 18 14:14:30 UTC 2025 x86_64) MySQL: 10.11.13-MariaDB-0ubuntu0.24.04.1 (max packet size=16777216) WPLANG: de_DE_formal Server: Apache safe_mode: 0 max_execution_time: 30 memory_limit: 128M (used: 16.9M | 18M) multisite: N openssl: OpenSSL 3.0.13 30 Jan 2024 mcrypt: N LANG:  WP Proxy: disabled ZipArchive::addFile: Y
+0000.002 () Free space on disk containing Updraft's temporary directory: 107127.8 MB
+0000.022 () Restore setup, now closing connection and starting restore over AJAX.
+0000.001 () Opened log file at time: Fri, 09 Jan 2026 23:02:11 +0000 on https://robo-guru.de
+0000.002 () UpdraftPlus WordPress backup plugin (https://updraftplus.com): 2.25.9 WP: 6.9 PHP: 8.3.6 (fpm-fcgi, Linux agitated-mclean.217-154-80-227.plesk.page 6.8.0-90-generic #91-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 18 14:14:30 UTC 2025 x86_64) MySQL: 10.11.13-MariaDB-0ubuntu0.24.04.1 (max packet size=16777216) WPLANG: de_DE_formal Server: Apache safe_mode: 0 max_execution_time: 30 memory_limit: 128M (used: 13.2M | 18M) multisite: N openssl: OpenSSL 3.0.13 30 Jan 2024 mcrypt: N LANG:  WP Proxy: disabled ZipArchive::addFile: Y
+0000.002 () Free space on disk containing Updraft's temporary directory: 107127.8 MB
+0000.002 () Ensuring WP_Filesystem is setup for a restore
+0000.003 () WP_Filesystem is setup and ready for a restore
+0000.005 () Restore job started. Entities to restore: db. Restore options: {"updraft_restorer_charset":"utf8mb3","include_unspecified_tables":false,"tables_to_restore":["y21z_options","y21z_users","y21z_usermeta","y21z_actionscheduler_actions","y21z_actionscheduler_claims","y21z_actionscheduler_groups","y21z_actionscheduler_logs","y21z_commentmeta","y21z_comments","y21z_links","y21z_postmeta","y21z_posts","y21z_signups","y21z_term_relationships","y21z_term_taxonomy","y21z_termmeta","y21z_terms","y21z_bb_activity_topic_relationship","y21z_bb_background_job_queue","y21z_bb_background_process_logs","y21z_bb_drm_events","y21z_bb_email_queue","y21z_bb_notifications_subscriptions","y21z_bb_poll_options","y21z_bb_poll_votes","y21z_bb_polls","y21z_bb_reactions_data","y21z_bb_social_sign_on_users","y21z_bb_topic_history","y21z_bb_topic_relationships","y21z_bb_topics","y21z_bb_user_reactions","y21z_bb_xprofile_visibility","y21z_bp_activity","y21z_bp_activity_meta","y21z_bp_document","y21z_bp_document_folder","y21z_bp_document_folder_meta","y21z_bp_document_meta","y21z_bp_follow","y21z_bp_friends","y21z_bp_groups","y21z_bp_groups_groupmeta","y21z_bp_groups_membermeta","y21z_bp_groups_members","y21z_bp_invitations","y21z_bp_invitations_invitemeta","y21z_bp_media","y21z_bp_media_albums","y21z_bp_messages_messages","y21z_bp_messages_meta","y21z_bp_messages_notices","y21z_bp_messages_recipients","y21z_bp_moderation","y21z_bp_moderation_meta","y21z_bp_notifications","y21z_bp_notifications_meta","y21z_bp_optouts","y21z_bp_suspend","y21z_bp_suspend_details","y21z_bp_suspend_meta","y21z_bp_user_blogs","y21z_bp_user_blogs_blogmeta","y21z_bp_xprofile_data","y21z_bp_xprofile_fields","y21z_bp_xprofile_groups","y21z_bp_xprofile_meta","y21z_bp_zoom_meeting_meta","y21z_bp_zoom_meetings","y21z_bp_zoom_recordings","y21z_bp_zoom_webinar_meta","y21z_bp_zoom_webinar_recordings","y21z_bp_zoom_webinars","y21z_cartflows_ca_cart_abandonment","y21z_cartflows_ca_email_history","y21z_cartflows_ca_email_templates","y21z_cartflows_ca_email_templates_meta","y21z_chaty_contact_form_leads","y21z_jetpack_sync_queue","y21z_presto_player_audio_presets","y21z_presto_player_email_collection","y21z_presto_player_presets","y21z_presto_player_videos","y21z_presto_player_visits","y21z_presto_player_webhooks","y21z_rank_math_404_logs","y21z_rank_math_analytics_gsc","y21z_rank_math_analytics_inspections","y21z_rank_math_analytics_keyword_manager","y21z_rank_math_analytics_objects","y21z_rank_math_internal_links","y21z_rank_math_internal_meta","y21z_rank_math_redirections","y21z_rank_math_redirections_cache","y21z_revslider_css","y21z_revslider_layer_animations","y21z_revslider_navigations","y21z_revslider_sliders","y21z_revslider_sliders7","y21z_revslider_slides","y21z_revslider_slides7","y21z_revslider_static_slides","y21z_robo_ai_chatbot_leads","y21z_robo_ai_chatbot_logs","y21z_robo_finder_leads","y21z_rt_rtm_activity","y21z_rt_rtm_api","y21z_rt_rtm_media","y21z_rt_rtm_media_interaction","y21z_rt_rtm_media_meta","y21z_sfsi_jobqueue","y21z_sfsi_shorten_links","y21z_smtp2go_api_logs","y21z_srfm_entries","y21z_srfm_payments","y21z_suretriggers_webhook_requests","y21z_wc_admin_note_actions","y21z_wc_admin_notes","y21z_wc_category_lookup","y21z_wc_customer_lookup","y21z_wc_download_log","y21z_wc_order_addresses","y21z_wc_order_coupon_lookup","y21z_wc_order_operational_data","y21z_wc_order_product_lookup","y21z_wc_order_stats","y21z_wc_order_tax_lookup","y21z_wc_orders","y21z_wc_orders_meta","y21z_wc_product_attributes_lookup","y21z_wc_product_download_directories","y21z_wc_product_meta_lookup","y21z_wc_rate_limits","y21z_wc_reserved_stock","y21z_wc_tax_rate_classes","y21z_wc_webhooks","y21z_woocommerce_api_keys","y21z_woocommerce_attribute_taxonomies","y21z_woocommerce_downloadable_product_permissions","y21z_woocommerce_log","y21z_woocommerce_order_itemmeta","y21z_woocommerce_order_items","y21z_woocommerce_payment_tokenmeta","y21z_woocommerce_payment_tokens","y21z_woocommerce_sessions","y21z_woocommerce_shipping_zone_locations","y21z_woocommerce_shipping_zone_methods","y21z_woocommerce_shipping_zones","y21z_woocommerce_tax_rate_locations","y21z_woocommerce_tax_rates","y21z_wpforo_accesses","y21z_wpforo_activity","y21z_wpforo_boards","y21z_wpforo_bookmarks","y21z_wpforo_follows","y21z_wpforo_forums","y21z_wpforo_languages","y21z_wpforo_logs","y21z_wpforo_phrases","y21z_wpforo_post_revisions","y21z_wpforo_postmeta","y21z_wpforo_posts","y21z_wpforo_profiles","y21z_wpforo_reactions","y21z_wpforo_subscribes","y21z_wpforo_tags","y21z_wpforo_topics","y21z_wpforo_usergroups","y21z_wpforo_visits","y21z_wpr_above_the_fold","y21z_wpr_lazy_render_content","y21z_wpr_performance_monitoring","y21z_wpr_preconnect_external_domains","y21z_wpr_preload_fonts","y21z_wpr_rocket_cache","y21z_wpr_rucss_used_css","y21z_youzify_activity_polls_votes","y21z_youzify_bookmarks","y21z_youzify_hashtags","y21z_youzify_hashtags_items","y21z_youzify_media","y21z_youzify_reviews","y21z_youzify_social_login_users"],"tables_to_skip":[],"updraft_encryptionphrase":"","updraft_restorer_wpcore_includewpconfig":false,"updraft_incremental_restore_point":-1}
+0000.007 () PHP event: code E_WARNING: mkdir(): File exists (line 558, wp-admin/includes/class-wp-filesystem-direct.php)
+0000.007 () Will not delete any archives after unpacking them, because there was no cloud storage for this backup
+0000.008 () Entity: db
+0000.008 () restore_backup(backup_file=backup_2026-01-09-2317_RoboGuru_04ff0aab768f-db.gz, type=db, info=a:0:{}, last_one=1)
+0000.008 () Entpacke Sicherung... (backup_2026-01-09-2317_RoboGuru_04ff0aab768f-db.gz, 1.7 Mb)
+0000.009 () PHP event: code E_WARNING: mkdir(): File exists (line 558, wp-admin/includes/class-wp-filesystem-direct.php)
+0000.011 () Database successfully unpacked
+0000.011 () Datenbank wiederherstellen (bei großen Websites kann das dauern - wenn der Vorgang in einen Timeout läuft (was passieren kann, wenn ihr Webhoster die Ressourcen limitiert) sollten Sie andere Methoden, wie z.B. phpMyAdmin, nutzen) ...
+0000.011 () Using direct MySQL access; value of use_mysqli is: 1
+0000.012 () SQL compatibility mode is: NO_AUTO_VALUE_ON_ZERO,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+0000.025 () Tried to raise max_allowed_packet from 16 MB to 32 MB, but failed (Access denied; you need (at least one of) the SUPER privilege(s) for this operation, b:0;)
+0000.025 () Max packet size: 16 MB
+0000.025 () Entering maintenance mode
+0000.025 () Anschalten des Wartungsmodus &#8230;
+0000.032 () Backup of: https://robo-guru.de
+0000.032 () Content URL: https://robo-guru.de/wp-content
+0000.033 () Uploads URL: https://robo-guru.de/wp-content/uploads
+0000.033 () Old table prefix: y21z_
+0000.033 () Old ABSPATH: /var/www/vhosts/h750349.web244.dogado.net/robo-gurude/
+0000.033 () UpdraftPlus plugin slug: updraftplus/updraftplus.php
+0000.033 () Site information: multisite=0
+0000.033 () Site information: sql_mode=
+0000.034 () Skipped execution of SQL statement (unwanted or internally handled type=18): /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+0000.034 () New table prefix: p5_
+0000.037 () Processing table (InnoDB): y21z_options - will restore as: p5_options
+0000.152 () Atomic restore: dropping original table (VBVKDT_options)
+0000.154 () Atomic restore: renaming new table (p5_options) to final table name (VBVKDT_options)
+0000.156 () Restoring prior UD configuration (table: VBVKDT_options; keys: 4)
+0000.163 () Table prefix has changed: changing options table field(s) accordingly (options)
+0000.163 () Options table fields changed OK
+0000.166 () Search and replacing table: VBVKDT_options: rows: 1812
+0000.266 () Processing table (InnoDB): y21z_users - will restore as: p5_users
+0000.274 () Atomic restore: dropping original table (VBVKDT_users)
+0000.276 () Atomic restore: renaming new table (p5_users) to final table name (VBVKDT_users)
+0000.278 () Search and replacing table: VBVKDT_users: rows: 8
+0000.278 () Processing table (InnoDB): y21z_usermeta - will restore as: p5_usermeta
+0000.290 () Atomic restore: dropping original table (VBVKDT_usermeta)
+0000.291 () Atomic restore: renaming new table (p5_usermeta) to final table name (VBVKDT_usermeta)
+0000.293 () Table prefix has changed: changing usermeta table field(s) accordingly
+0000.294 () Usermeta table fields changed OK
+0000.295 () Search and replacing table: VBVKDT_usermeta: rows: 357
+0000.298 () Processing table (InnoDB): y21z_actionscheduler_actions - will restore as: p5_actionscheduler_actions
+0000.372 () Atomic restore: dropping original table (VBVKDT_actionscheduler_actions)
+0000.374 () Atomic restore: renaming new table (p5_actionscheduler_actions) to final table name (VBVKDT_actionscheduler_actions)
+0000.377 () Search and replacing table: VBVKDT_actionscheduler_actions: rows: 1067
+0000.396 () Processing table (InnoDB): y21z_actionscheduler_claims - will restore as: p5_actionscheduler_claims
+0000.402 () Atomic restore: dropping original table (VBVKDT_actionscheduler_claims)
+0000.403 () Atomic restore: renaming new table (p5_actionscheduler_claims) to final table name (VBVKDT_actionscheduler_claims)
+0000.405 () Search and replacing table: VBVKDT_actionscheduler_claims: rows: 1
+0000.406 () Processing table (InnoDB): y21z_actionscheduler_groups - will restore as: p5_actionscheduler_groups
+0000.412 () Atomic restore: dropping original table (VBVKDT_actionscheduler_groups)
+0000.413 () Atomic restore: renaming new table (p5_actionscheduler_groups) to final table name (VBVKDT_actionscheduler_groups)
+0000.415 () Search and replacing table: VBVKDT_actionscheduler_groups: rows: 13
+0000.416 () Processing table (InnoDB): y21z_actionscheduler_logs - will restore as: p5_actionscheduler_logs
+0000.466 () Atomic restore: dropping original table (VBVKDT_actionscheduler_logs)
+0000.468 () Atomic restore: renaming new table (p5_actionscheduler_logs) to final table name (VBVKDT_actionscheduler_logs)
+0000.471 () Search and replacing table: VBVKDT_actionscheduler_logs: rows: 3188
+0000.491 () Processing table (InnoDB): y21z_commentmeta - will restore as: p5_commentmeta
+0000.498 () Atomic restore: dropping original table (VBVKDT_commentmeta)
+0000.500 () Atomic restore: renaming new table (p5_commentmeta) to final table name (VBVKDT_commentmeta)
+0000.503 () Search and replacing table: VBVKDT_commentmeta: rows: 0
+0000.503 () Processing table (InnoDB): y21z_comments - will restore as: p5_comments
+0000.512 () Atomic restore: dropping original table (VBVKDT_comments)
+0000.514 () Atomic restore: renaming new table (p5_comments) to final table name (VBVKDT_comments)
+0000.517 () Search and replacing table: VBVKDT_comments: rows: 1
+0000.517 () Processing table (InnoDB): y21z_links - will restore as: p5_links
+0000.522 () Atomic restore: dropping original table (VBVKDT_links)
+0000.523 () Atomic restore: renaming new table (p5_links) to final table name (VBVKDT_links)
+0000.526 () Search and replacing table: VBVKDT_links: rows: 0
+0000.526 () Processing table (InnoDB): y21z_postmeta - will restore as: p5_postmeta
+0000.673 () Database queries processed: 50 in 0.66 seconds
+0000.795 () Atomic restore: dropping original table (VBVKDT_postmeta)
+0000.796 () Atomic restore: renaming new table (p5_postmeta) to final table name (VBVKDT_postmeta)
+0000.800 () Search and replacing table: VBVKDT_postmeta: rows: 8322
+0000.847 () Searching and replacing reached row: 5000
+0000.876 () Processing table (InnoDB): y21z_posts - will restore as: p5_posts
+0001.481 () Atomic restore: dropping original table (VBVKDT_posts)
+0001.490 () Atomic restore: renaming new table (p5_posts) to final table name (VBVKDT_posts)
+0001.493 () Skipping search/replace on GUID column in posts table
+0001.494 () Search and replacing table: VBVKDT_posts: rows: 1379
+0001.669 () Processing table (InnoDB): y21z_signups - will restore as: p5_signups
+0001.677 () Atomic restore: dropping original table (VBVKDT_signups)
+0001.679 () Atomic restore: renaming new table (p5_signups) to final table name (VBVKDT_signups)
+0001.682 () Search and replacing table: VBVKDT_signups: rows: 4
+0001.682 () Processing table (InnoDB): y21z_term_relationships - will restore as: p5_term_relationships
+0001.690 () Atomic restore: dropping original table (VBVKDT_term_relationships)
+0001.691 () Atomic restore: renaming new table (p5_term_relationships) to final table name (VBVKDT_term_relationships)
+0001.694 () Search and replacing table: VBVKDT_term_relationships: rows: 326
+0001.697 () Processing table (InnoDB): y21z_term_taxonomy - will restore as: p5_term_taxonomy
+0001.705 () Atomic restore: dropping original table (VBVKDT_term_taxonomy)
+0001.706 () Atomic restore: renaming new table (p5_term_taxonomy) to final table name (VBVKDT_term_taxonomy)
+0001.708 () Search and replacing table: VBVKDT_term_taxonomy: rows: 262
+0001.710 () Processing table (InnoDB): y21z_termmeta - will restore as: p5_termmeta
+0001.724 () Atomic restore: dropping original table (VBVKDT_termmeta)
+0001.725 () Atomic restore: renaming new table (p5_termmeta) to final table name (VBVKDT_termmeta)
+0001.728 () Search and replacing table: VBVKDT_termmeta: rows: 213
+0001.731 () Processing table (InnoDB): y21z_terms - will restore as: p5_terms
+0001.739 () Atomic restore: dropping original table (VBVKDT_terms)
+0001.740 () Atomic restore: renaming new table (p5_terms) to final table name (VBVKDT_terms)
+0001.742 () Search and replacing table: VBVKDT_terms: rows: 262
+0001.744 () Processing table (InnoDB): y21z_bb_activity_topic_relationship - will restore as: p5_bb_activity_topic_relationship
+0001.753 () Atomic restore: dropping original table (VBVKDT_bb_activity_topic_relationship)
+0001.755 () Atomic restore: renaming new table (p5_bb_activity_topic_relationship) to final table name (VBVKDT_bb_activity_topic_relationship)
+0001.757 () Search and replacing table: VBVKDT_bb_activity_topic_relationship: rows: 0
+0001.757 () Processing table (InnoDB): y21z_bb_background_job_queue - will restore as: p5_bb_background_job_queue
+0001.768 () Atomic restore: dropping original table (VBVKDT_bb_background_job_queue)
+0001.770 () Atomic restore: renaming new table (p5_bb_background_job_queue) to final table name (VBVKDT_bb_background_job_queue)
+0001.772 () Search and replacing table: VBVKDT_bb_background_job_queue: rows: 0
+0001.772 () Processing table (InnoDB): y21z_bb_background_process_logs - will restore as: p5_bb_background_process_logs
+0001.783 () Atomic restore: dropping original table (VBVKDT_bb_background_process_logs)
+0001.784 () Atomic restore: renaming new table (p5_bb_background_process_logs) to final table name (VBVKDT_bb_background_process_logs)
+0001.786 () Search and replacing table: VBVKDT_bb_background_process_logs: rows: 36
+0001.788 () Processing table (InnoDB): y21z_bb_drm_events - will restore as: p5_bb_drm_events
+0001.799 () Atomic restore: dropping original table (VBVKDT_bb_drm_events)
+0001.801 () Atomic restore: renaming new table (p5_bb_drm_events) to final table name (VBVKDT_bb_drm_events)
+0001.804 () Search and replacing table: VBVKDT_bb_drm_events: rows: 0
+0001.804 () Processing table (InnoDB): y21z_bb_email_queue - will restore as: p5_bb_email_queue
+0001.809 () Atomic restore: dropping original table (VBVKDT_bb_email_queue)
+0001.811 () Atomic restore: renaming new table (p5_bb_email_queue) to final table name (VBVKDT_bb_email_queue)
+0001.813 () Search and replacing table: VBVKDT_bb_email_queue: rows: 0
+0001.813 () Processing table (InnoDB): y21z_bb_notifications_subscriptions - will restore as: p5_bb_notifications_subscriptions
+0001.823 () Atomic restore: dropping original table (VBVKDT_bb_notifications_subscriptions)
+0001.825 () Atomic restore: renaming new table (p5_bb_notifications_subscriptions) to final table name (VBVKDT_bb_notifications_subscriptions)
+0001.828 () Search and replacing table: VBVKDT_bb_notifications_subscriptions: rows: 10
+0001.828 () Processing table (InnoDB): y21z_bb_poll_options - will restore as: p5_bb_poll_options
+0001.836 () Atomic restore: dropping original table (VBVKDT_bb_poll_options)
+0001.837 () Database queries processed: 100 in 1.82 seconds
+0001.837 () Atomic restore: renaming new table (p5_bb_poll_options) to final table name (VBVKDT_bb_poll_options)
+0001.841 () Search and replacing table: VBVKDT_bb_poll_options: rows: 0
+0001.841 () Processing table (InnoDB): y21z_bb_poll_votes - will restore as: p5_bb_poll_votes
+0001.849 () Atomic restore: dropping original table (VBVKDT_bb_poll_votes)
+0001.850 () Atomic restore: renaming new table (p5_bb_poll_votes) to final table name (VBVKDT_bb_poll_votes)
+0001.852 () Search and replacing table: VBVKDT_bb_poll_votes: rows: 0
+0001.852 () Processing table (InnoDB): y21z_bb_polls - will restore as: p5_bb_polls
+0001.860 () Atomic restore: dropping original table (VBVKDT_bb_polls)
+0001.861 () Atomic restore: renaming new table (p5_bb_polls) to final table name (VBVKDT_bb_polls)
+0001.864 () Search and replacing table: VBVKDT_bb_polls: rows: 0
+0001.864 () Processing table (InnoDB): y21z_bb_reactions_data - will restore as: p5_bb_reactions_data
+0001.871 () Atomic restore: dropping original table (VBVKDT_bb_reactions_data)
+0001.873 () Atomic restore: renaming new table (p5_bb_reactions_data) to final table name (VBVKDT_bb_reactions_data)
+0001.875 () Search and replacing table: VBVKDT_bb_reactions_data: rows: 57
+0001.876 () Processing table (InnoDB): y21z_bb_social_sign_on_users - will restore as: p5_bb_social_sign_on_users
+0001.882 () Atomic restore: dropping original table (VBVKDT_bb_social_sign_on_users)
+0001.884 () Atomic restore: renaming new table (p5_bb_social_sign_on_users) to final table name (VBVKDT_bb_social_sign_on_users)
+0001.886 () Search and replacing table: VBVKDT_bb_social_sign_on_users: rows: 3
+0001.886 () Processing table (InnoDB): y21z_bb_topic_history - will restore as: p5_bb_topic_history
+0001.897 () Atomic restore: dropping original table (VBVKDT_bb_topic_history)
+0001.899 () Atomic restore: renaming new table (p5_bb_topic_history) to final table name (VBVKDT_bb_topic_history)
+0001.901 () Search and replacing table: VBVKDT_bb_topic_history: rows: 0
+0001.901 () Processing table (InnoDB): y21z_bb_topic_relationships - will restore as: p5_bb_topic_relationships
+0001.910 () Atomic restore: dropping original table (VBVKDT_bb_topic_relationships)
+0001.912 () Atomic restore: renaming new table (p5_bb_topic_relationships) to final table name (VBVKDT_bb_topic_relationships)
+0001.914 () Search and replacing table: VBVKDT_bb_topic_relationships: rows: 0
+0001.914 () Processing table (InnoDB): y21z_bb_topics - will restore as: p5_bb_topics
+0001.920 () Atomic restore: dropping original table (VBVKDT_bb_topics)
+0001.921 () Atomic restore: renaming new table (p5_bb_topics) to final table name (VBVKDT_bb_topics)
+0001.924 () Search and replacing table: VBVKDT_bb_topics: rows: 0
+0001.924 () Processing table (InnoDB): y21z_bb_user_reactions - will restore as: p5_bb_user_reactions
+0001.931 () Atomic restore: dropping original table (VBVKDT_bb_user_reactions)
+0001.933 () Atomic restore: renaming new table (p5_bb_user_reactions) to final table name (VBVKDT_bb_user_reactions)
+0001.935 () Search and replacing table: VBVKDT_bb_user_reactions: rows: 15
+0001.936 () Processing table (InnoDB): y21z_bb_xprofile_visibility - will restore as: p5_bb_xprofile_visibility
+0001.943 () Atomic restore: dropping original table (VBVKDT_bb_xprofile_visibility)
+0001.945 () Atomic restore: renaming new table (p5_bb_xprofile_visibility) to final table name (VBVKDT_bb_xprofile_visibility)
+0001.947 () Search and replacing table: VBVKDT_bb_xprofile_visibility: rows: 32
+0001.948 () Processing table (InnoDB): y21z_bp_activity - will restore as: p5_bp_activity
+0001.968 () Atomic restore: dropping original table (VBVKDT_bp_activity)
+0001.975 () Atomic restore: renaming new table (p5_bp_activity) to final table name (VBVKDT_bp_activity)
+0001.978 () Search and replacing table: VBVKDT_bp_activity: rows: 80
+0001.979 () Processing table (InnoDB): y21z_bp_activity_meta - will restore as: p5_bp_activity_meta
+0001.987 () Atomic restore: dropping original table (VBVKDT_bp_activity_meta)
+0001.989 () Atomic restore: renaming new table (p5_bp_activity_meta) to final table name (VBVKDT_bp_activity_meta)
+0001.992 () Search and replacing table: VBVKDT_bp_activity_meta: rows: 235
+0001.993 () Processing table (InnoDB): y21z_bp_document - will restore as: p5_bp_document
+0002.008 () Atomic restore: dropping original table (VBVKDT_bp_document)
+0002.010 () Atomic restore: renaming new table (p5_bp_document) to final table name (VBVKDT_bp_document)
+0002.013 () Search and replacing table: VBVKDT_bp_document: rows: 32
+0002.013 () Processing table (InnoDB): y21z_bp_document_folder - will restore as: p5_bp_document_folder
+0002.019 () Atomic restore: dropping original table (VBVKDT_bp_document_folder)
+0002.021 () Atomic restore: renaming new table (p5_bp_document_folder) to final table name (VBVKDT_bp_document_folder)
+0002.023 () Search and replacing table: VBVKDT_bp_document_folder: rows: 15
+0002.024 () Processing table (InnoDB): y21z_bp_document_folder_meta - will restore as: p5_bp_document_folder_meta
+0002.029 () Atomic restore: dropping original table (VBVKDT_bp_document_folder_meta)
+0002.030 () Atomic restore: renaming new table (p5_bp_document_folder_meta) to final table name (VBVKDT_bp_document_folder_meta)
+0002.033 () Search and replacing table: VBVKDT_bp_document_folder_meta: rows: 0
+0002.033 () Processing table (InnoDB): y21z_bp_document_meta - will restore as: p5_bp_document_meta
+0002.039 () Atomic restore: dropping original table (VBVKDT_bp_document_meta)
+0002.040 () Atomic restore: renaming new table (p5_bp_document_meta) to final table name (VBVKDT_bp_document_meta)
+0002.043 () Search and replacing table: VBVKDT_bp_document_meta: rows: 64
+0002.043 () Processing table (InnoDB): y21z_bp_follow - will restore as: p5_bp_follow
+0002.048 () Atomic restore: dropping original table (VBVKDT_bp_follow)
+0002.050 () Atomic restore: renaming new table (p5_bp_follow) to final table name (VBVKDT_bp_follow)
+0002.052 () Search and replacing table: VBVKDT_bp_follow: rows: 8
+0002.052 () Processing table (InnoDB): y21z_bp_friends - will restore as: p5_bp_friends
+0002.058 () Atomic restore: dropping original table (VBVKDT_bp_friends)
+0002.060 () Atomic restore: renaming new table (p5_bp_friends) to final table name (VBVKDT_bp_friends)
+0002.062 () Search and replacing table: VBVKDT_bp_friends: rows: 7
+0002.063 () Processing table (InnoDB): y21z_bp_groups - will restore as: p5_bp_groups
+0002.069 () Atomic restore: dropping original table (VBVKDT_bp_groups)
+0002.070 () Atomic restore: renaming new table (p5_bp_groups) to final table name (VBVKDT_bp_groups)
+0002.073 () Search and replacing table: VBVKDT_bp_groups: rows: 1
+0002.073 () Processing table (InnoDB): y21z_bp_groups_groupmeta - will restore as: p5_bp_groups_groupmeta
+0002.078 () Database queries processed: 150 in 2.07 seconds
+0002.079 () Atomic restore: dropping original table (VBVKDT_bp_groups_groupmeta)
+0002.080 () Atomic restore: renaming new table (p5_bp_groups_groupmeta) to final table name (VBVKDT_bp_groups_groupmeta)
+0002.082 () Search and replacing table: VBVKDT_bp_groups_groupmeta: rows: 12
+0002.083 () Processing table (InnoDB): y21z_bp_groups_membermeta - will restore as: p5_bp_groups_membermeta
+0002.089 () Atomic restore: dropping original table (VBVKDT_bp_groups_membermeta)
+0002.090 () Atomic restore: renaming new table (p5_bp_groups_membermeta) to final table name (VBVKDT_bp_groups_membermeta)
+0002.092 () Search and replacing table: VBVKDT_bp_groups_membermeta: rows: 46
+0002.093 () Processing table (InnoDB): y21z_bp_groups_members - will restore as: p5_bp_groups_members
+0002.100 () Atomic restore: dropping original table (VBVKDT_bp_groups_members)
+0002.102 () Atomic restore: renaming new table (p5_bp_groups_members) to final table name (VBVKDT_bp_groups_members)
+0002.104 () Search and replacing table: VBVKDT_bp_groups_members: rows: 5
+0002.104 () Processing table (InnoDB): y21z_bp_invitations - will restore as: p5_bp_invitations
+0002.113 () Atomic restore: dropping original table (VBVKDT_bp_invitations)
+0002.114 () Atomic restore: renaming new table (p5_bp_invitations) to final table name (VBVKDT_bp_invitations)
+0002.117 () Search and replacing table: VBVKDT_bp_invitations: rows: 0
+0002.117 () Processing table (InnoDB): y21z_bp_invitations_invitemeta - will restore as: p5_bp_invitations_invitemeta
+0002.122 () Atomic restore: dropping original table (VBVKDT_bp_invitations_invitemeta)
+0002.124 () Atomic restore: renaming new table (p5_bp_invitations_invitemeta) to final table name (VBVKDT_bp_invitations_invitemeta)
+0002.126 () Search and replacing table: VBVKDT_bp_invitations_invitemeta: rows: 0
+0002.126 () Processing table (InnoDB): y21z_bp_media - will restore as: p5_bp_media
+0002.141 () Atomic restore: dropping original table (VBVKDT_bp_media)
+0002.142 () Atomic restore: renaming new table (p5_bp_media) to final table name (VBVKDT_bp_media)
+0002.145 () Search and replacing table: VBVKDT_bp_media: rows: 4
+0002.146 () Processing table (InnoDB): y21z_bp_media_albums - will restore as: p5_bp_media_albums
+0002.150 () Atomic restore: dropping original table (VBVKDT_bp_media_albums)
+0002.152 () Atomic restore: renaming new table (p5_bp_media_albums) to final table name (VBVKDT_bp_media_albums)
+0002.154 () Search and replacing table: VBVKDT_bp_media_albums: rows: 0
+0002.154 () Processing table (InnoDB): y21z_bp_messages_messages - will restore as: p5_bp_messages_messages
+0002.163 () Atomic restore: dropping original table (VBVKDT_bp_messages_messages)
+0002.164 () Atomic restore: renaming new table (p5_bp_messages_messages) to final table name (VBVKDT_bp_messages_messages)
+0002.167 () Search and replacing table: VBVKDT_bp_messages_messages: rows: 131
+0002.168 () Processing table (InnoDB): y21z_bp_messages_meta - will restore as: p5_bp_messages_meta
+0002.178 () Atomic restore: dropping original table (VBVKDT_bp_messages_meta)
+0002.180 () Atomic restore: renaming new table (p5_bp_messages_meta) to final table name (VBVKDT_bp_messages_meta)
+0002.183 () Search and replacing table: VBVKDT_bp_messages_meta: rows: 303
+0002.185 () Processing table (InnoDB): y21z_bp_messages_notices - will restore as: p5_bp_messages_notices
+0002.190 () Atomic restore: dropping original table (VBVKDT_bp_messages_notices)
+0002.192 () Atomic restore: renaming new table (p5_bp_messages_notices) to final table name (VBVKDT_bp_messages_notices)
+0002.194 () Search and replacing table: VBVKDT_bp_messages_notices: rows: 0
+0002.194 () Processing table (InnoDB): y21z_bp_messages_recipients - will restore as: p5_bp_messages_recipients
+0002.203 () Atomic restore: dropping original table (VBVKDT_bp_messages_recipients)
+0002.205 () Atomic restore: renaming new table (p5_bp_messages_recipients) to final table name (VBVKDT_bp_messages_recipients)
+0002.208 () Search and replacing table: VBVKDT_bp_messages_recipients: rows: 51
+0002.208 () Processing table (InnoDB): y21z_bp_moderation - will restore as: p5_bp_moderation
+0002.214 () Atomic restore: dropping original table (VBVKDT_bp_moderation)
+0002.216 () Atomic restore: renaming new table (p5_bp_moderation) to final table name (VBVKDT_bp_moderation)
+0002.218 () Search and replacing table: VBVKDT_bp_moderation: rows: 0
+0002.218 () Processing table (InnoDB): y21z_bp_moderation_meta - will restore as: p5_bp_moderation_meta
+0002.224 () Atomic restore: dropping original table (VBVKDT_bp_moderation_meta)
+0002.226 () Atomic restore: renaming new table (p5_bp_moderation_meta) to final table name (VBVKDT_bp_moderation_meta)
+0002.228 () Search and replacing table: VBVKDT_bp_moderation_meta: rows: 0
+0002.228 () Processing table (InnoDB): y21z_bp_notifications - will restore as: p5_bp_notifications
+0002.238 () Atomic restore: dropping original table (VBVKDT_bp_notifications)
+0002.239 () Atomic restore: renaming new table (p5_bp_notifications) to final table name (VBVKDT_bp_notifications)
+0002.242 () Search and replacing table: VBVKDT_bp_notifications: rows: 78
+0002.243 () Processing table (InnoDB): y21z_bp_notifications_meta - will restore as: p5_bp_notifications_meta
+0002.250 () Atomic restore: dropping original table (VBVKDT_bp_notifications_meta)
+0002.252 () Atomic restore: renaming new table (p5_bp_notifications_meta) to final table name (VBVKDT_bp_notifications_meta)
+0002.254 () Search and replacing table: VBVKDT_bp_notifications_meta: rows: 101
+0002.255 () Processing table (InnoDB): y21z_bp_optouts - will restore as: p5_bp_optouts
+0002.260 () Atomic restore: dropping original table (VBVKDT_bp_optouts)
+0002.261 () Atomic restore: renaming new table (p5_bp_optouts) to final table name (VBVKDT_bp_optouts)
+0002.264 () Search and replacing table: VBVKDT_bp_optouts: rows: 0
+0002.264 () Processing table (InnoDB): y21z_bp_suspend - will restore as: p5_bp_suspend
+0002.272 () Atomic restore: dropping original table (VBVKDT_bp_suspend)
+0002.273 () Atomic restore: renaming new table (p5_bp_suspend) to final table name (VBVKDT_bp_suspend)
+0002.277 () Search and replacing table: VBVKDT_bp_suspend: rows: 9
+0002.277 () Processing table (InnoDB): y21z_bp_suspend_details - will restore as: p5_bp_suspend_details
+0002.283 () Atomic restore: dropping original table (VBVKDT_bp_suspend_details)
+0002.284 () Atomic restore: renaming new table (p5_bp_suspend_details) to final table name (VBVKDT_bp_suspend_details)
+0002.287 () Search and replacing table: VBVKDT_bp_suspend_details: rows: 1
+0002.287 () Processing table (InnoDB): y21z_bp_suspend_meta - will restore as: p5_bp_suspend_meta
+0002.292 () Atomic restore: dropping original table (VBVKDT_bp_suspend_meta)
+0002.293 () Atomic restore: renaming new table (p5_bp_suspend_meta) to final table name (VBVKDT_bp_suspend_meta)
+0002.296 () Search and replacing table: VBVKDT_bp_suspend_meta: rows: 0
+0002.296 () Processing table (InnoDB): y21z_bp_user_blogs - will restore as: p5_bp_user_blogs
+0002.302 () Atomic restore: dropping original table (VBVKDT_bp_user_blogs)
+0002.303 () Database queries processed: 200 in 2.29 seconds
+0002.303 () Atomic restore: renaming new table (p5_bp_user_blogs) to final table name (VBVKDT_bp_user_blogs)
+0002.305 () Search and replacing table: VBVKDT_bp_user_blogs: rows: 4
+0002.306 () Processing table (InnoDB): y21z_bp_user_blogs_blogmeta - will restore as: p5_bp_user_blogs_blogmeta
+0002.311 () Atomic restore: dropping original table (VBVKDT_bp_user_blogs_blogmeta)
+0002.312 () Atomic restore: renaming new table (p5_bp_user_blogs_blogmeta) to final table name (VBVKDT_bp_user_blogs_blogmeta)
+0002.314 () Search and replacing table: VBVKDT_bp_user_blogs_blogmeta: rows: 8
+0002.315 () Processing table (InnoDB): y21z_bp_xprofile_data - will restore as: p5_bp_xprofile_data
+0002.321 () Atomic restore: dropping original table (VBVKDT_bp_xprofile_data)
+0002.323 () Atomic restore: renaming new table (p5_bp_xprofile_data) to final table name (VBVKDT_bp_xprofile_data)
+0002.325 () Search and replacing table: VBVKDT_bp_xprofile_data: rows: 30
+0002.325 () Processing table (InnoDB): y21z_bp_xprofile_fields - will restore as: p5_bp_xprofile_fields
+0002.333 () Atomic restore: dropping original table (VBVKDT_bp_xprofile_fields)
+0002.334 () Atomic restore: renaming new table (p5_bp_xprofile_fields) to final table name (VBVKDT_bp_xprofile_fields)
+0002.336 () Search and replacing table: VBVKDT_bp_xprofile_fields: rows: 3
+0002.337 () Processing table (InnoDB): y21z_bp_xprofile_groups - will restore as: p5_bp_xprofile_groups
+0002.342 () Atomic restore: dropping original table (VBVKDT_bp_xprofile_groups)
+0002.343 () Atomic restore: renaming new table (p5_bp_xprofile_groups) to final table name (VBVKDT_bp_xprofile_groups)
+0002.345 () Search and replacing table: VBVKDT_bp_xprofile_groups: rows: 1
+0002.345 () Processing table (InnoDB): y21z_bp_xprofile_meta - will restore as: p5_bp_xprofile_meta
+0002.351 () Atomic restore: dropping original table (VBVKDT_bp_xprofile_meta)
+0002.353 () Atomic restore: renaming new table (p5_bp_xprofile_meta) to final table name (VBVKDT_bp_xprofile_meta)
+0002.355 () Search and replacing table: VBVKDT_bp_xprofile_meta: rows: 6
+0002.355 () Processing table (InnoDB): y21z_bp_zoom_meeting_meta - will restore as: p5_bp_zoom_meeting_meta
+0002.360 () Atomic restore: dropping original table (VBVKDT_bp_zoom_meeting_meta)
+0002.362 () Atomic restore: renaming new table (p5_bp_zoom_meeting_meta) to final table name (VBVKDT_bp_zoom_meeting_meta)
+0002.364 () Search and replacing table: VBVKDT_bp_zoom_meeting_meta: rows: 0
+0002.364 () Processing table (InnoDB): y21z_bp_zoom_meetings - will restore as: p5_bp_zoom_meetings
+0002.370 () Atomic restore: dropping original table (VBVKDT_bp_zoom_meetings)
+0002.372 () Atomic restore: renaming new table (p5_bp_zoom_meetings) to final table name (VBVKDT_bp_zoom_meetings)
+0002.374 () Search and replacing table: VBVKDT_bp_zoom_meetings: rows: 0
+0002.374 () Processing table (InnoDB): y21z_bp_zoom_recordings - will restore as: p5_bp_zoom_recordings
+0002.380 () Atomic restore: dropping original table (VBVKDT_bp_zoom_recordings)
+0002.381 () Atomic restore: renaming new table (p5_bp_zoom_recordings) to final table name (VBVKDT_bp_zoom_recordings)
+0002.383 () Search and replacing table: VBVKDT_bp_zoom_recordings: rows: 0
+0002.383 () Processing table (InnoDB): y21z_bp_zoom_webinar_meta - will restore as: p5_bp_zoom_webinar_meta
+0002.388 () Atomic restore: dropping original table (VBVKDT_bp_zoom_webinar_meta)
+0002.390 () Atomic restore: renaming new table (p5_bp_zoom_webinar_meta) to final table name (VBVKDT_bp_zoom_webinar_meta)
+0002.392 () Search and replacing table: VBVKDT_bp_zoom_webinar_meta: rows: 0
+0002.392 () Processing table (InnoDB): y21z_bp_zoom_webinar_recordings - will restore as: p5_bp_zoom_webinar_recordings
+0002.397 () Atomic restore: dropping original table (VBVKDT_bp_zoom_webinar_recordings)
+0002.399 () Atomic restore: renaming new table (p5_bp_zoom_webinar_recordings) to final table name (VBVKDT_bp_zoom_webinar_recordings)
+0002.401 () Search and replacing table: VBVKDT_bp_zoom_webinar_recordings: rows: 0
+0002.401 () Processing table (InnoDB): y21z_bp_zoom_webinars - will restore as: p5_bp_zoom_webinars
+0002.407 () Atomic restore: dropping original table (VBVKDT_bp_zoom_webinars)
+0002.408 () Atomic restore: renaming new table (p5_bp_zoom_webinars) to final table name (VBVKDT_bp_zoom_webinars)
+0002.410 () Search and replacing table: VBVKDT_bp_zoom_webinars: rows: 0
+0002.410 () Processing table (InnoDB): y21z_cartflows_ca_cart_abandonment - will restore as: p5_cartflows_ca_cart_abandonment
+0002.415 () Atomic restore: dropping original table (VBVKDT_cartflows_ca_cart_abandonment)
+0002.416 () Atomic restore: renaming new table (p5_cartflows_ca_cart_abandonment) to final table name (VBVKDT_cartflows_ca_cart_abandonment)
+0002.418 () Search and replacing table: VBVKDT_cartflows_ca_cart_abandonment: rows: 0
+0002.420 () Processing table (InnoDB): y21z_cartflows_ca_email_history - will restore as: VBVKDT_cartflows_ca_email_history
+0002.426 () Search and replacing table: VBVKDT_cartflows_ca_email_history: rows: 0
+0002.426 () Processing table (InnoDB): y21z_cartflows_ca_email_templates - will restore as: p5_cartflows_ca_email_templates
+0002.430 () Atomic restore: dropping original table (VBVKDT_cartflows_ca_email_templates)
+0002.432 () Atomic restore: renaming new table (p5_cartflows_ca_email_templates) to final table name (VBVKDT_cartflows_ca_email_templates)
+0002.434 () Search and replacing table: VBVKDT_cartflows_ca_email_templates: rows: 3
+0002.435 () Processing table (InnoDB): y21z_cartflows_ca_email_templates_meta - will restore as: VBVKDT_cartflows_ca_email_templates_meta
+0002.441 () Search and replacing table: VBVKDT_cartflows_ca_email_templates_meta: rows: 27
+0002.442 () Processing table (InnoDB): y21z_chaty_contact_form_leads - will restore as: p5_chaty_contact_form_leads
+0002.446 () Atomic restore: dropping original table (VBVKDT_chaty_contact_form_leads)
+0002.447 () Atomic restore: renaming new table (p5_chaty_contact_form_leads) to final table name (VBVKDT_chaty_contact_form_leads)
+0002.449 () Search and replacing table: VBVKDT_chaty_contact_form_leads: rows: 0
+0002.450 () Processing table (InnoDB): y21z_jetpack_sync_queue - will restore as: p5_jetpack_sync_queue
+0002.456 () Atomic restore: dropping original table (VBVKDT_jetpack_sync_queue)
+0002.458 () Atomic restore: renaming new table (p5_jetpack_sync_queue) to final table name (VBVKDT_jetpack_sync_queue)
+0002.460 () Search and replacing table: VBVKDT_jetpack_sync_queue: rows: 1
+0002.460 () Processing table (InnoDB): y21z_presto_player_audio_presets - will restore as: p5_presto_player_audio_presets
+0002.466 () Atomic restore: dropping original table (VBVKDT_presto_player_audio_presets)
+0002.467 () Atomic restore: renaming new table (p5_presto_player_audio_presets) to final table name (VBVKDT_presto_player_audio_presets)
+0002.469 () Search and replacing table: VBVKDT_presto_player_audio_presets: rows: 4
+0002.470 () Processing table (InnoDB): y21z_presto_player_email_collection - will restore as: p5_presto_player_email_collection
+0002.475 () Atomic restore: dropping original table (VBVKDT_presto_player_email_collection)
+0002.476 () Atomic restore: renaming new table (p5_presto_player_email_collection) to final table name (VBVKDT_presto_player_email_collection)
+0002.478 () Search and replacing table: VBVKDT_presto_player_email_collection: rows: 0
+0002.478 () Processing table (InnoDB): y21z_presto_player_presets - will restore as: p5_presto_player_presets
+0002.484 () Atomic restore: dropping original table (VBVKDT_presto_player_presets)
+0002.485 () Database queries processed: 250 in 2.47 seconds
+0002.485 () Atomic restore: renaming new table (p5_presto_player_presets) to final table name (VBVKDT_presto_player_presets)
+0002.488 () Search and replacing table: VBVKDT_presto_player_presets: rows: 5
+0002.488 () Processing table (InnoDB): y21z_presto_player_videos - will restore as: p5_presto_player_videos
+0002.495 () Atomic restore: dropping original table (VBVKDT_presto_player_videos)
+0002.496 () Atomic restore: renaming new table (p5_presto_player_videos) to final table name (VBVKDT_presto_player_videos)
+0002.499 () Search and replacing table: VBVKDT_presto_player_videos: rows: 1
+0002.499 () Processing table (InnoDB): y21z_presto_player_visits - will restore as: p5_presto_player_visits
+0002.505 () Atomic restore: dropping original table (VBVKDT_presto_player_visits)
+0002.507 () Atomic restore: renaming new table (p5_presto_player_visits) to final table name (VBVKDT_presto_player_visits)
+0002.509 () Search and replacing table: VBVKDT_presto_player_visits: rows: 0
+0002.509 () Processing table (InnoDB): y21z_presto_player_webhooks - will restore as: p5_presto_player_webhooks
+0002.514 () Atomic restore: dropping original table (VBVKDT_presto_player_webhooks)
+0002.515 () Atomic restore: renaming new table (p5_presto_player_webhooks) to final table name (VBVKDT_presto_player_webhooks)
+0002.518 () Search and replacing table: VBVKDT_presto_player_webhooks: rows: 0
+0002.518 () Processing table (InnoDB): y21z_rank_math_404_logs - will restore as: p5_rank_math_404_logs
+0002.524 () Atomic restore: dropping original table (VBVKDT_rank_math_404_logs)
+0002.526 () Atomic restore: renaming new table (p5_rank_math_404_logs) to final table name (VBVKDT_rank_math_404_logs)
+0002.528 () Search and replacing table: VBVKDT_rank_math_404_logs: rows: 64
+0002.529 () Processing table (InnoDB): y21z_rank_math_analytics_gsc - will restore as: p5_rank_math_analytics_gsc
+0002.537 () Atomic restore: dropping original table (VBVKDT_rank_math_analytics_gsc)
+0002.538 () Atomic restore: renaming new table (p5_rank_math_analytics_gsc) to final table name (VBVKDT_rank_math_analytics_gsc)
+0002.540 () Search and replacing table: VBVKDT_rank_math_analytics_gsc: rows: 69
+0002.541 () Processing table (InnoDB): y21z_rank_math_analytics_inspections - will restore as: p5_rank_math_analytics_inspections
+0002.548 () Atomic restore: dropping original table (VBVKDT_rank_math_analytics_inspections)
+0002.549 () Atomic restore: renaming new table (p5_rank_math_analytics_inspections) to final table name (VBVKDT_rank_math_analytics_inspections)
+0002.551 () Search and replacing table: VBVKDT_rank_math_analytics_inspections: rows: 0
+0002.551 () Processing table (InnoDB): y21z_rank_math_analytics_keyword_manager - will restore as: p5_rank_math_analytics_keyword_manager
+0002.556 () Atomic restore: dropping original table (VBVKDT_rank_math_analytics_keyword_manager)
+0002.557 () Atomic restore: renaming new table (p5_rank_math_analytics_keyword_manager) to final table name (VBVKDT_rank_math_analytics_keyword_manager)
+0002.559 () Search and replacing table: VBVKDT_rank_math_analytics_keyword_manager: rows: 1
+0002.559 () Processing table (InnoDB): y21z_rank_math_analytics_objects - will restore as: p5_rank_math_analytics_objects
+0002.565 () Atomic restore: dropping original table (VBVKDT_rank_math_analytics_objects)
+0002.566 () Atomic restore: renaming new table (p5_rank_math_analytics_objects) to final table name (VBVKDT_rank_math_analytics_objects)
+0002.569 () Search and replacing table: VBVKDT_rank_math_analytics_objects: rows: 68
+0002.570 () Processing table (InnoDB): y21z_rank_math_internal_links - will restore as: p5_rank_math_internal_links
+0002.577 () Atomic restore: dropping original table (VBVKDT_rank_math_internal_links)
+0002.578 () Atomic restore: renaming new table (p5_rank_math_internal_links) to final table name (VBVKDT_rank_math_internal_links)
+0002.580 () Search and replacing table: VBVKDT_rank_math_internal_links: rows: 89
+0002.581 () Processing table (InnoDB): y21z_rank_math_internal_meta - will restore as: p5_rank_math_internal_meta
+0002.588 () Atomic restore: dropping original table (VBVKDT_rank_math_internal_meta)
+0002.590 () Atomic restore: renaming new table (p5_rank_math_internal_meta) to final table name (VBVKDT_rank_math_internal_meta)
+0002.592 () Search and replacing table: VBVKDT_rank_math_internal_meta: rows: 479
+0002.594 () Processing table (InnoDB): y21z_rank_math_redirections - will restore as: p5_rank_math_redirections
+0002.600 () Atomic restore: dropping original table (VBVKDT_rank_math_redirections)
+0002.601 () Atomic restore: renaming new table (p5_rank_math_redirections) to final table name (VBVKDT_rank_math_redirections)
+0002.604 () Search and replacing table: VBVKDT_rank_math_redirections: rows: 0
+0002.604 () Processing table (InnoDB): y21z_rank_math_redirections_cache - will restore as: p5_rank_math_redirections_cache
+0002.609 () Atomic restore: dropping original table (VBVKDT_rank_math_redirections_cache)
+0002.610 () Atomic restore: renaming new table (p5_rank_math_redirections_cache) to final table name (VBVKDT_rank_math_redirections_cache)
+0002.612 () Search and replacing table: VBVKDT_rank_math_redirections_cache: rows: 0
+0002.612 () Processing table (InnoDB): y21z_revslider_css - will restore as: p5_revslider_css
+0002.623 () Atomic restore: dropping original table (VBVKDT_revslider_css)
+0002.625 () Atomic restore: renaming new table (p5_revslider_css) to final table name (VBVKDT_revslider_css)
+0002.627 () Search and replacing table: VBVKDT_revslider_css: rows: 113
+0002.632 () Processing table (InnoDB): y21z_revslider_layer_animations - will restore as: p5_revslider_layer_animations
+0002.638 () Atomic restore: dropping original table (VBVKDT_revslider_layer_animations)
+0002.639 () Atomic restore: renaming new table (p5_revslider_layer_animations) to final table name (VBVKDT_revslider_layer_animations)
+0002.641 () Search and replacing table: VBVKDT_revslider_layer_animations: rows: 0
+0002.641 () Processing table (InnoDB): y21z_revslider_navigations - will restore as: p5_revslider_navigations
+0002.646 () Atomic restore: dropping original table (VBVKDT_revslider_navigations)
+0002.647 () Atomic restore: renaming new table (p5_revslider_navigations) to final table name (VBVKDT_revslider_navigations)
+0002.650 () Search and replacing table: VBVKDT_revslider_navigations: rows: 0
+0002.650 () Processing table (InnoDB): y21z_revslider_sliders - will restore as: p5_revslider_sliders
+0002.656 () Atomic restore: dropping original table (VBVKDT_revslider_sliders)
+0002.657 () Atomic restore: renaming new table (p5_revslider_sliders) to final table name (VBVKDT_revslider_sliders)
+0002.659 () Search and replacing table: VBVKDT_revslider_sliders: rows: 2
+0002.661 () Processing table (InnoDB): y21z_revslider_sliders7 - will restore as: p5_revslider_sliders7
+0002.666 () Atomic restore: dropping original table (VBVKDT_revslider_sliders7)
+0002.667 () Atomic restore: renaming new table (p5_revslider_sliders7) to final table name (VBVKDT_revslider_sliders7)
+0002.670 () Search and replacing table: VBVKDT_revslider_sliders7: rows: 2
+0002.670 () Processing table (InnoDB): y21z_revslider_slides - will restore as: p5_revslider_slides
+0002.687 () Atomic restore: dropping original table (VBVKDT_revslider_slides)
+0002.689 () Atomic restore: renaming new table (p5_revslider_slides) to final table name (VBVKDT_revslider_slides)
+0002.691 () Search and replacing table: VBVKDT_revslider_slides: rows: 2
+0002.693 () Processing table (InnoDB): y21z_revslider_slides7 - will restore as: p5_revslider_slides7
+0002.700 () Atomic restore: dropping original table (VBVKDT_revslider_slides7)
+0002.701 () Atomic restore: renaming new table (p5_revslider_slides7) to final table name (VBVKDT_revslider_slides7)
+0002.703 () Search and replacing table: VBVKDT_revslider_slides7: rows: 2
+0002.707 () Processing table (InnoDB): y21z_revslider_static_slides - will restore as: p5_revslider_static_slides
+0002.712 () Atomic restore: dropping original table (VBVKDT_revslider_static_slides)
+0002.713 () Atomic restore: renaming new table (p5_revslider_static_slides) to final table name (VBVKDT_revslider_static_slides)
+0002.715 () Search and replacing table: VBVKDT_revslider_static_slides: rows: 0
+0002.715 () Processing table (InnoDB): y21z_robo_ai_chatbot_leads - will restore as: p5_robo_ai_chatbot_leads
+0002.719 () Atomic restore: dropping original table (VBVKDT_robo_ai_chatbot_leads)
+0002.721 () Atomic restore: renaming new table (p5_robo_ai_chatbot_leads) to final table name (VBVKDT_robo_ai_chatbot_leads)
+0002.723 () Search and replacing table: VBVKDT_robo_ai_chatbot_leads: rows: 0
+0002.723 () Processing table (InnoDB): y21z_robo_ai_chatbot_logs - will restore as: p5_robo_ai_chatbot_logs
+0002.736 () Atomic restore: dropping original table (VBVKDT_robo_ai_chatbot_logs)
+0002.738 () Atomic restore: renaming new table (p5_robo_ai_chatbot_logs) to final table name (VBVKDT_robo_ai_chatbot_logs)
+0002.740 () Search and replacing table: VBVKDT_robo_ai_chatbot_logs: rows: 8
+0002.741 () Processing table (InnoDB): y21z_robo_finder_leads - will restore as: p5_robo_finder_leads
+0002.745 () Atomic restore: dropping original table (VBVKDT_robo_finder_leads)
+0002.747 () Atomic restore: renaming new table (p5_robo_finder_leads) to final table name (VBVKDT_robo_finder_leads)
+0002.749 () Search and replacing table: VBVKDT_robo_finder_leads: rows: 1
+0002.749 () Processing table (InnoDB): y21z_rt_rtm_activity - will restore as: p5_rt_rtm_activity
+0002.759 () Atomic restore: dropping original table (VBVKDT_rt_rtm_activity)
+0002.761 () Atomic restore: renaming new table (p5_rt_rtm_activity) to final table name (VBVKDT_rt_rtm_activity)
+0002.764 () Search and replacing table: VBVKDT_rt_rtm_activity: rows: 0
+0002.764 () Processing table (InnoDB): y21z_rt_rtm_api - will restore as: p5_rt_rtm_api
+0002.768 () Atomic restore: dropping original table (VBVKDT_rt_rtm_api)
+0002.770 () Atomic restore: renaming new table (p5_rt_rtm_api) to final table name (VBVKDT_rt_rtm_api)
+0002.772 () Search and replacing table: VBVKDT_rt_rtm_api: rows: 0
+0002.772 () Processing table (InnoDB): y21z_rt_rtm_media - will restore as: p5_rt_rtm_media
+0002.781 () Atomic restore: dropping original table (VBVKDT_rt_rtm_media)
+0002.783 () Atomic restore: renaming new table (p5_rt_rtm_media) to final table name (VBVKDT_rt_rtm_media)
+0002.786 () Search and replacing table: VBVKDT_rt_rtm_media: rows: 1
+0002.786 () Processing table (InnoDB): y21z_rt_rtm_media_interaction - will restore as: p5_rt_rtm_media_interaction
+0002.791 () Atomic restore: dropping original table (VBVKDT_rt_rtm_media_interaction)
+0002.792 () Atomic restore: renaming new table (p5_rt_rtm_media_interaction) to final table name (VBVKDT_rt_rtm_media_interaction)
+0002.794 () Search and replacing table: VBVKDT_rt_rtm_media_interaction: rows: 0
+0002.794 () Processing table (InnoDB): y21z_rt_rtm_media_meta - will restore as: p5_rt_rtm_media_meta
+0002.798 () Atomic restore: dropping original table (VBVKDT_rt_rtm_media_meta)
+0002.799 () Atomic restore: renaming new table (p5_rt_rtm_media_meta) to final table name (VBVKDT_rt_rtm_media_meta)
+0002.801 () Search and replacing table: VBVKDT_rt_rtm_media_meta: rows: 0
+0002.801 () Processing table (MyISAM): y21z_sfsi_jobqueue - will restore as: p5_sfsi_jobqueue
+0002.805 () Atomic restore: dropping original table (VBVKDT_sfsi_jobqueue)
+0002.806 () Atomic restore: renaming new table (p5_sfsi_jobqueue) to final table name (VBVKDT_sfsi_jobqueue)
+0002.808 () Search and replacing table: VBVKDT_sfsi_jobqueue: rows: 0
+0002.808 () Processing table (InnoDB): y21z_sfsi_shorten_links - will restore as: p5_sfsi_shorten_links
+0002.812 () Atomic restore: dropping original table (VBVKDT_sfsi_shorten_links)
+0002.813 () Atomic restore: renaming new table (p5_sfsi_shorten_links) to final table name (VBVKDT_sfsi_shorten_links)
+0002.815 () Search and replacing table: VBVKDT_sfsi_shorten_links: rows: 0
+0002.815 () Processing table (InnoDB): y21z_smtp2go_api_logs - will restore as: p5_smtp2go_api_logs
+0002.822 () Atomic restore: dropping original table (VBVKDT_smtp2go_api_logs)
+0002.823 () Atomic restore: renaming new table (p5_smtp2go_api_logs) to final table name (VBVKDT_smtp2go_api_logs)
+0002.825 () Search and replacing table: VBVKDT_smtp2go_api_logs: rows: 62
+0002.827 () Processing table (InnoDB): y21z_srfm_entries - will restore as: p5_srfm_entries
+0002.836 () Atomic restore: dropping original table (VBVKDT_srfm_entries)
+0002.838 () Atomic restore: renaming new table (p5_srfm_entries) to final table name (VBVKDT_srfm_entries)
+0002.840 () Search and replacing table: VBVKDT_srfm_entries: rows: 28
+0002.853 () Processing table (InnoDB): y21z_srfm_payments - will restore as: p5_srfm_payments
+0002.858 () Atomic restore: dropping original table (VBVKDT_srfm_payments)
+0002.860 () Atomic restore: renaming new table (p5_srfm_payments) to final table name (VBVKDT_srfm_payments)
+0002.862 () Search and replacing table: VBVKDT_srfm_payments: rows: 0
+0002.862 () Processing table (InnoDB): y21z_suretriggers_webhook_requests - will restore as: p5_suretriggers_webhook_requests
+0002.869 () Atomic restore: dropping original table (VBVKDT_suretriggers_webhook_requests)
+0002.870 () Atomic restore: renaming new table (p5_suretriggers_webhook_requests) to final table name (VBVKDT_suretriggers_webhook_requests)
+0002.873 () Search and replacing table: VBVKDT_suretriggers_webhook_requests: rows: 7
+0002.874 () Processing table (InnoDB): y21z_wc_admin_note_actions - will restore as: p5_wc_admin_note_actions
+0002.881 () Atomic restore: dropping original table (VBVKDT_wc_admin_note_actions)
+0002.882 () Atomic restore: renaming new table (p5_wc_admin_note_actions) to final table name (VBVKDT_wc_admin_note_actions)
+0002.885 () Search and replacing table: VBVKDT_wc_admin_note_actions: rows: 81
+0002.886 () Processing table (InnoDB): y21z_wc_admin_notes - will restore as: p5_wc_admin_notes
+0002.894 () Atomic restore: dropping original table (VBVKDT_wc_admin_notes)
+0002.895 () Atomic restore: renaming new table (p5_wc_admin_notes) to final table name (VBVKDT_wc_admin_notes)
+0002.898 () Search and replacing table: VBVKDT_wc_admin_notes: rows: 56
+0002.921 () Processing table (InnoDB): y21z_wc_category_lookup - will restore as: p5_wc_category_lookup
+0002.927 () Atomic restore: dropping original table (VBVKDT_wc_category_lookup)
+0002.928 () Atomic restore: renaming new table (p5_wc_category_lookup) to final table name (VBVKDT_wc_category_lookup)
+0002.931 () Search and replacing table: VBVKDT_wc_category_lookup: rows: 4
+0002.931 () Processing table (InnoDB): y21z_wc_customer_lookup - will restore as: p5_wc_customer_lookup
+0002.937 () Atomic restore: dropping original table (VBVKDT_wc_customer_lookup)
+0002.938 () Atomic restore: renaming new table (p5_wc_customer_lookup) to final table name (VBVKDT_wc_customer_lookup)
+0002.940 () Search and replacing table: VBVKDT_wc_customer_lookup: rows: 0
+0002.941 () Processing table (InnoDB): y21z_wc_download_log - will restore as: p5_wc_download_log
+0002.946 () Atomic restore: dropping original table (VBVKDT_wc_download_log)
+0002.948 () Atomic restore: renaming new table (p5_wc_download_log) to final table name (VBVKDT_wc_download_log)
+0002.951 () Search and replacing table: VBVKDT_wc_download_log: rows: 0
+0002.951 () Processing table (InnoDB): y21z_wc_order_addresses - will restore as: p5_wc_order_addresses
+0002.959 () Atomic restore: dropping original table (VBVKDT_wc_order_addresses)
+0002.961 () Atomic restore: renaming new table (p5_wc_order_addresses) to final table name (VBVKDT_wc_order_addresses)
+0002.964 () Search and replacing table: VBVKDT_wc_order_addresses: rows: 0
+0002.964 () Processing table (InnoDB): y21z_wc_order_coupon_lookup - will restore as: p5_wc_order_coupon_lookup
+0002.970 () Atomic restore: dropping original table (VBVKDT_wc_order_coupon_lookup)
+0002.971 () Atomic restore: renaming new table (p5_wc_order_coupon_lookup) to final table name (VBVKDT_wc_order_coupon_lookup)
+0002.974 () Search and replacing table: VBVKDT_wc_order_coupon_lookup: rows: 0
+0002.974 () Processing table (InnoDB): y21z_wc_order_operational_data - will restore as: p5_wc_order_operational_data
+0002.980 () Atomic restore: dropping original table (VBVKDT_wc_order_operational_data)
+0002.981 () Atomic restore: renaming new table (p5_wc_order_operational_data) to final table name (VBVKDT_wc_order_operational_data)
+0002.984 () Search and replacing table: VBVKDT_wc_order_operational_data: rows: 0
+0002.984 () Processing table (InnoDB): y21z_wc_order_product_lookup - will restore as: p5_wc_order_product_lookup
+0002.991 () Atomic restore: dropping original table (VBVKDT_wc_order_product_lookup)
+0002.993 () Atomic restore: renaming new table (p5_wc_order_product_lookup) to final table name (VBVKDT_wc_order_product_lookup)
+0002.995 () Search and replacing table: VBVKDT_wc_order_product_lookup: rows: 0
+0002.995 () Processing table (InnoDB): y21z_wc_order_stats - will restore as: p5_wc_order_stats
+0003.002 () Atomic restore: dropping original table (VBVKDT_wc_order_stats)
+0003.003 () Atomic restore: renaming new table (p5_wc_order_stats) to final table name (VBVKDT_wc_order_stats)
+0003.006 () Search and replacing table: VBVKDT_wc_order_stats: rows: 0
+0003.006 () Processing table (InnoDB): y21z_wc_order_tax_lookup - will restore as: p5_wc_order_tax_lookup
+0003.011 () Atomic restore: dropping original table (VBVKDT_wc_order_tax_lookup)
+0003.013 () Atomic restore: renaming new table (p5_wc_order_tax_lookup) to final table name (VBVKDT_wc_order_tax_lookup)
+0003.015 () Search and replacing table: VBVKDT_wc_order_tax_lookup: rows: 0
+0003.015 () Processing table (InnoDB): y21z_wc_orders - will restore as: p5_wc_orders
+0003.024 () Atomic restore: dropping original table (VBVKDT_wc_orders)
+0003.025 () Atomic restore: renaming new table (p5_wc_orders) to final table name (VBVKDT_wc_orders)
+0003.028 () Search and replacing table: VBVKDT_wc_orders: rows: 0
+0003.028 () Processing table (InnoDB): y21z_wc_orders_meta - will restore as: p5_wc_orders_meta
+0003.033 () Atomic restore: dropping original table (VBVKDT_wc_orders_meta)
+0003.034 () Atomic restore: renaming new table (p5_wc_orders_meta) to final table name (VBVKDT_wc_orders_meta)
+0003.037 () Search and replacing table: VBVKDT_wc_orders_meta: rows: 0
+0003.037 () Processing table (InnoDB): y21z_wc_product_attributes_lookup - will restore as: p5_wc_product_attributes_lookup
+0003.042 () Atomic restore: dropping original table (VBVKDT_wc_product_attributes_lookup)
+0003.043 () Atomic restore: renaming new table (p5_wc_product_attributes_lookup) to final table name (VBVKDT_wc_product_attributes_lookup)
+0003.046 () Search and replacing table: VBVKDT_wc_product_attributes_lookup: rows: 0
+0003.046 () Processing table (InnoDB): y21z_wc_product_download_directories - will restore as: p5_wc_product_download_directories
+0003.051 () Atomic restore: dropping original table (VBVKDT_wc_product_download_directories)
+0003.052 () Atomic restore: renaming new table (p5_wc_product_download_directories) to final table name (VBVKDT_wc_product_download_directories)
+0003.054 () Search and replacing table: VBVKDT_wc_product_download_directories: rows: 2
+0003.054 () Processing table (InnoDB): y21z_wc_product_meta_lookup - will restore as: p5_wc_product_meta_lookup
+0003.063 () Atomic restore: dropping original table (VBVKDT_wc_product_meta_lookup)
+0003.063 () Atomic restore: renaming new table (p5_wc_product_meta_lookup) to final table name (VBVKDT_wc_product_meta_lookup)
+0003.066 () Search and replacing table: VBVKDT_wc_product_meta_lookup: rows: 12
+0003.066 () Processing table (InnoDB): y21z_wc_rate_limits - will restore as: p5_wc_rate_limits
+0003.071 () Atomic restore: dropping original table (VBVKDT_wc_rate_limits)
+0003.072 () Atomic restore: renaming new table (p5_wc_rate_limits) to final table name (VBVKDT_wc_rate_limits)
+0003.074 () Search and replacing table: VBVKDT_wc_rate_limits: rows: 0
+0003.074 () Processing table (InnoDB): y21z_wc_reserved_stock - will restore as: p5_wc_reserved_stock
+0003.078 () Atomic restore: dropping original table (VBVKDT_wc_reserved_stock)
+0003.079 () Atomic restore: renaming new table (p5_wc_reserved_stock) to final table name (VBVKDT_wc_reserved_stock)
+0003.081 () Search and replacing table: VBVKDT_wc_reserved_stock: rows: 0
+0003.081 () Processing table (InnoDB): y21z_wc_tax_rate_classes - will restore as: p5_wc_tax_rate_classes
+0003.086 () Atomic restore: dropping original table (VBVKDT_wc_tax_rate_classes)
+0003.087 () Atomic restore: renaming new table (p5_wc_tax_rate_classes) to final table name (VBVKDT_wc_tax_rate_classes)
+0003.089 () Search and replacing table: VBVKDT_wc_tax_rate_classes: rows: 2
+0003.090 () Processing table (InnoDB): y21z_wc_webhooks - will restore as: p5_wc_webhooks
+0003.094 () Atomic restore: dropping original table (VBVKDT_wc_webhooks)
+0003.095 () Atomic restore: renaming new table (p5_wc_webhooks) to final table name (VBVKDT_wc_webhooks)
+0003.098 () Search and replacing table: VBVKDT_wc_webhooks: rows: 0
+0003.098 () Processing table (InnoDB): y21z_woocommerce_api_keys - will restore as: p5_woocommerce_api_keys
+0003.103 () Atomic restore: dropping original table (VBVKDT_woocommerce_api_keys)
+0003.104 () Atomic restore: renaming new table (p5_woocommerce_api_keys) to final table name (VBVKDT_woocommerce_api_keys)
+0003.107 () Search and replacing table: VBVKDT_woocommerce_api_keys: rows: 0
+0003.107 () Processing table (InnoDB): y21z_woocommerce_attribute_taxonomies - will restore as: p5_woocommerce_attribute_taxonomies
+0003.112 () Atomic restore: dropping original table (VBVKDT_woocommerce_attribute_taxonomies)
+0003.113 () Atomic restore: renaming new table (p5_woocommerce_attribute_taxonomies) to final table name (VBVKDT_woocommerce_attribute_taxonomies)
+0003.116 () Search and replacing table: VBVKDT_woocommerce_attribute_taxonomies: rows: 0
+0003.116 () Processing table (InnoDB): y21z_woocommerce_downloadable_product_permissions - will restore as: p5_woocommerce_downloadable_product_permissions
+0003.122 () Atomic restore: dropping original table (VBVKDT_woocommerce_downloadable_product_permissions)
+0003.123 () Atomic restore: renaming new table (p5_woocommerce_downloadable_product_permissions) to final table name (VBVKDT_woocommerce_downloadable_product_permissions)
+0003.126 () Search and replacing table: VBVKDT_woocommerce_downloadable_product_permissions: rows: 0
+0003.126 () Processing table (InnoDB): y21z_woocommerce_log - will restore as: p5_woocommerce_log
+0003.130 () Atomic restore: dropping original table (VBVKDT_woocommerce_log)
+0003.131 () Atomic restore: renaming new table (p5_woocommerce_log) to final table name (VBVKDT_woocommerce_log)
+0003.134 () Search and replacing table: VBVKDT_woocommerce_log: rows: 0
+0003.134 () Processing table (InnoDB): y21z_woocommerce_order_itemmeta - will restore as: p5_woocommerce_order_itemmeta
+0003.139 () Atomic restore: dropping original table (VBVKDT_woocommerce_order_itemmeta)
+0003.140 () Atomic restore: renaming new table (p5_woocommerce_order_itemmeta) to final table name (VBVKDT_woocommerce_order_itemmeta)
+0003.142 () Search and replacing table: VBVKDT_woocommerce_order_itemmeta: rows: 0
+0003.142 () Processing table (InnoDB): y21z_woocommerce_order_items - will restore as: p5_woocommerce_order_items
+0003.147 () Atomic restore: dropping original table (VBVKDT_woocommerce_order_items)
+0003.149 () Atomic restore: renaming new table (p5_woocommerce_order_items) to final table name (VBVKDT_woocommerce_order_items)
+0003.151 () Search and replacing table: VBVKDT_woocommerce_order_items: rows: 0
+0003.151 () Processing table (InnoDB): y21z_woocommerce_payment_tokenmeta - will restore as: p5_woocommerce_payment_tokenmeta
+0003.157 () Atomic restore: dropping original table (VBVKDT_woocommerce_payment_tokenmeta)
+0003.158 () Atomic restore: renaming new table (p5_woocommerce_payment_tokenmeta) to final table name (VBVKDT_woocommerce_payment_tokenmeta)
+0003.160 () Search and replacing table: VBVKDT_woocommerce_payment_tokenmeta: rows: 0
+0003.160 () Processing table (InnoDB): y21z_woocommerce_payment_tokens - will restore as: p5_woocommerce_payment_tokens
+0003.165 () Atomic restore: dropping original table (VBVKDT_woocommerce_payment_tokens)
+0003.166 () Atomic restore: renaming new table (p5_woocommerce_payment_tokens) to final table name (VBVKDT_woocommerce_payment_tokens)
+0003.169 () Search and replacing table: VBVKDT_woocommerce_payment_tokens: rows: 0
+0003.169 () Processing table (InnoDB): y21z_woocommerce_sessions - will restore as: p5_woocommerce_sessions
+0003.175 () Atomic restore: dropping original table (VBVKDT_woocommerce_sessions)
+0003.176 () Atomic restore: renaming new table (p5_woocommerce_sessions) to final table name (VBVKDT_woocommerce_sessions)
+0003.178 () Search and replacing table: VBVKDT_woocommerce_sessions: rows: 1
+0003.178 () Processing table (InnoDB): y21z_woocommerce_shipping_zone_locations - will restore as: p5_woocommerce_shipping_zone_locations
+0003.185 () Atomic restore: dropping original table (VBVKDT_woocommerce_shipping_zone_locations)
+0003.186 () Atomic restore: renaming new table (p5_woocommerce_shipping_zone_locations) to final table name (VBVKDT_woocommerce_shipping_zone_locations)
+0003.189 () Search and replacing table: VBVKDT_woocommerce_shipping_zone_locations: rows: 0
+0003.189 () Processing table (InnoDB): y21z_woocommerce_shipping_zone_methods - will restore as: p5_woocommerce_shipping_zone_methods
+0003.195 () Atomic restore: dropping original table (VBVKDT_woocommerce_shipping_zone_methods)
+0003.196 () Atomic restore: renaming new table (p5_woocommerce_shipping_zone_methods) to final table name (VBVKDT_woocommerce_shipping_zone_methods)
+0003.199 () Search and replacing table: VBVKDT_woocommerce_shipping_zone_methods: rows: 0
+0003.199 () Processing table (InnoDB): y21z_woocommerce_shipping_zones - will restore as: p5_woocommerce_shipping_zones
+0003.204 () Atomic restore: dropping original table (VBVKDT_woocommerce_shipping_zones)
+0003.205 () Atomic restore: renaming new table (p5_woocommerce_shipping_zones) to final table name (VBVKDT_woocommerce_shipping_zones)
+0003.207 () Search and replacing table: VBVKDT_woocommerce_shipping_zones: rows: 0
+0003.207 () Processing table (InnoDB): y21z_woocommerce_tax_rate_locations - will restore as: p5_woocommerce_tax_rate_locations
+0003.213 () Atomic restore: dropping original table (VBVKDT_woocommerce_tax_rate_locations)
+0003.214 () Atomic restore: renaming new table (p5_woocommerce_tax_rate_locations) to final table name (VBVKDT_woocommerce_tax_rate_locations)
+0003.217 () Search and replacing table: VBVKDT_woocommerce_tax_rate_locations: rows: 0
+0003.217 () Processing table (InnoDB): y21z_woocommerce_tax_rates - will restore as: p5_woocommerce_tax_rates
+0003.224 () Atomic restore: dropping original table (VBVKDT_woocommerce_tax_rates)
+0003.225 () Atomic restore: renaming new table (p5_woocommerce_tax_rates) to final table name (VBVKDT_woocommerce_tax_rates)
+0003.228 () Search and replacing table: VBVKDT_woocommerce_tax_rates: rows: 0
+0003.228 () Processing table (MyISAM): y21z_wpforo_accesses - will restore as: p5_wpforo_accesses
+0003.233 () Atomic restore: dropping original table (VBVKDT_wpforo_accesses)
+0003.234 () Atomic restore: renaming new table (p5_wpforo_accesses) to final table name (VBVKDT_wpforo_accesses)
+0003.235 () Search and replacing table: VBVKDT_wpforo_accesses: rows: 5
+0003.236 () Processing table (InnoDB): y21z_wpforo_activity - will restore as: p5_wpforo_activity
+0003.243 () Atomic restore: dropping original table (VBVKDT_wpforo_activity)
+0003.244 () Atomic restore: renaming new table (p5_wpforo_activity) to final table name (VBVKDT_wpforo_activity)
+0003.246 () Search and replacing table: VBVKDT_wpforo_activity: rows: 0
+0003.246 () Processing table (InnoDB): y21z_wpforo_boards - will restore as: p5_wpforo_boards
+0003.253 () Atomic restore: dropping original table (VBVKDT_wpforo_boards)
+0003.254 () Atomic restore: renaming new table (p5_wpforo_boards) to final table name (VBVKDT_wpforo_boards)
+0003.257 () Search and replacing table: VBVKDT_wpforo_boards: rows: 1
+0003.257 () Processing table (InnoDB): y21z_wpforo_bookmarks - will restore as: p5_wpforo_bookmarks
+0003.263 () Atomic restore: dropping original table (VBVKDT_wpforo_bookmarks)
+0003.265 () Atomic restore: renaming new table (p5_wpforo_bookmarks) to final table name (VBVKDT_wpforo_bookmarks)
+0003.267 () Search and replacing table: VBVKDT_wpforo_bookmarks: rows: 0
+0003.267 () Processing table (InnoDB): y21z_wpforo_follows - will restore as: p5_wpforo_follows
+0003.275 () Atomic restore: dropping original table (VBVKDT_wpforo_follows)
+0003.276 () Atomic restore: renaming new table (p5_wpforo_follows) to final table name (VBVKDT_wpforo_follows)
+0003.278 () Search and replacing table: VBVKDT_wpforo_follows: rows: 0
+0003.278 () Processing table (InnoDB): y21z_wpforo_forums - will restore as: p5_wpforo_forums
+0003.287 () Atomic restore: dropping original table (VBVKDT_wpforo_forums)
+0003.288 () Atomic restore: renaming new table (p5_wpforo_forums) to final table name (VBVKDT_wpforo_forums)
+0003.290 () Search and replacing table: VBVKDT_wpforo_forums: rows: 2
+0003.291 () Processing table (MyISAM): y21z_wpforo_languages - will restore as: p5_wpforo_languages
+0003.295 () Atomic restore: dropping original table (VBVKDT_wpforo_languages)
+0003.296 () Atomic restore: renaming new table (p5_wpforo_languages) to final table name (VBVKDT_wpforo_languages)
+0003.298 () Search and replacing table: VBVKDT_wpforo_languages: rows: 1
+0003.298 () Processing table (InnoDB): y21z_wpforo_logs - will restore as: p5_wpforo_logs
+0003.303 () Atomic restore: dropping original table (VBVKDT_wpforo_logs)
+0003.304 () Atomic restore: renaming new table (p5_wpforo_logs) to final table name (VBVKDT_wpforo_logs)
+0003.306 () Search and replacing table: VBVKDT_wpforo_logs: rows: 0
+0003.307 () Processing table (MyISAM): y21z_wpforo_phrases - will restore as: p5_wpforo_phrases
+0003.321 () Atomic restore: dropping original table (VBVKDT_wpforo_phrases)
+0003.322 () Atomic restore: renaming new table (p5_wpforo_phrases) to final table name (VBVKDT_wpforo_phrases)
+0003.324 () Search and replacing table: VBVKDT_wpforo_phrases: rows: 870
+0003.329 () Processing table (InnoDB): y21z_wpforo_post_revisions - will restore as: p5_wpforo_post_revisions
+0003.335 () Atomic restore: dropping original table (VBVKDT_wpforo_post_revisions)
+0003.336 () Atomic restore: renaming new table (p5_wpforo_post_revisions) to final table name (VBVKDT_wpforo_post_revisions)
+0003.338 () Search and replacing table: VBVKDT_wpforo_post_revisions: rows: 0
+0003.338 () Processing table (InnoDB): y21z_wpforo_postmeta - will restore as: p5_wpforo_postmeta
+0003.346 () Atomic restore: dropping original table (VBVKDT_wpforo_postmeta)
+0003.348 () Atomic restore: renaming new table (p5_wpforo_postmeta) to final table name (VBVKDT_wpforo_postmeta)
+0003.351 () Search and replacing table: VBVKDT_wpforo_postmeta: rows: 0
+0003.351 () Processing table (InnoDB): y21z_wpforo_posts - will restore as: p5_wpforo_posts
+0003.370 () Atomic restore: dropping original table (VBVKDT_wpforo_posts)
+0003.372 () Atomic restore: renaming new table (p5_wpforo_posts) to final table name (VBVKDT_wpforo_posts)
+0003.374 () Search and replacing table: VBVKDT_wpforo_posts: rows: 0
+0003.374 () Processing table (InnoDB): y21z_wpforo_profiles - will restore as: p5_wpforo_profiles
+0003.382 () Atomic restore: dropping original table (VBVKDT_wpforo_profiles)
+0003.383 () Atomic restore: renaming new table (p5_wpforo_profiles) to final table name (VBVKDT_wpforo_profiles)
+0003.385 () Search and replacing table: VBVKDT_wpforo_profiles: rows: 2
+0003.386 () Processing table (InnoDB): y21z_wpforo_reactions - will restore as: p5_wpforo_reactions
+0003.392 () Atomic restore: dropping original table (VBVKDT_wpforo_reactions)
+0003.393 () Atomic restore: renaming new table (p5_wpforo_reactions) to final table name (VBVKDT_wpforo_reactions)
+0003.395 () Search and replacing table: VBVKDT_wpforo_reactions: rows: 0
+0003.395 () Processing table (InnoDB): y21z_wpforo_subscribes - will restore as: p5_wpforo_subscribes
+0003.402 () Atomic restore: dropping original table (VBVKDT_wpforo_subscribes)
+0003.403 () Atomic restore: renaming new table (p5_wpforo_subscribes) to final table name (VBVKDT_wpforo_subscribes)
+0003.406 () Search and replacing table: VBVKDT_wpforo_subscribes: rows: 0
+0003.406 () Processing table (MyISAM): y21z_wpforo_tags - will restore as: p5_wpforo_tags
+0003.411 () Atomic restore: dropping original table (VBVKDT_wpforo_tags)
+0003.412 () Atomic restore: renaming new table (p5_wpforo_tags) to final table name (VBVKDT_wpforo_tags)
+0003.414 () Search and replacing table: VBVKDT_wpforo_tags: rows: 0
+0003.414 () Processing table (InnoDB): y21z_wpforo_topics - will restore as: p5_wpforo_topics
+0003.428 () Atomic restore: dropping original table (VBVKDT_wpforo_topics)
+0003.430 () Atomic restore: renaming new table (p5_wpforo_topics) to final table name (VBVKDT_wpforo_topics)
+0003.433 () Search and replacing table: VBVKDT_wpforo_topics: rows: 0
+0003.433 () Processing table (MyISAM): y21z_wpforo_usergroups - will restore as: p5_wpforo_usergroups
+0003.437 () Atomic restore: dropping original table (VBVKDT_wpforo_usergroups)
+0003.438 () Atomic restore: renaming new table (p5_wpforo_usergroups) to final table name (VBVKDT_wpforo_usergroups)
+0003.440 () Search and replacing table: VBVKDT_wpforo_usergroups: rows: 5
+0003.441 () Processing table (InnoDB): y21z_wpforo_visits - will restore as: p5_wpforo_visits
+0003.449 () Atomic restore: dropping original table (VBVKDT_wpforo_visits)
+0003.450 () Atomic restore: renaming new table (p5_wpforo_visits) to final table name (VBVKDT_wpforo_visits)
+0003.453 () Search and replacing table: VBVKDT_wpforo_visits: rows: 3
+0003.453 () Processing table (InnoDB): y21z_wpr_above_the_fold - will restore as: p5_wpr_above_the_fold
+0003.460 () Atomic restore: dropping original table (VBVKDT_wpr_above_the_fold)
+0003.461 () Atomic restore: renaming new table (p5_wpr_above_the_fold) to final table name (VBVKDT_wpr_above_the_fold)
+0003.463 () Search and replacing table: VBVKDT_wpr_above_the_fold: rows: 5
+0003.464 () Processing table (InnoDB): y21z_wpr_lazy_render_content - will restore as: p5_wpr_lazy_render_content
+0003.471 () Atomic restore: dropping original table (VBVKDT_wpr_lazy_render_content)
+0003.472 () Atomic restore: renaming new table (p5_wpr_lazy_render_content) to final table name (VBVKDT_wpr_lazy_render_content)
+0003.474 () Search and replacing table: VBVKDT_wpr_lazy_render_content: rows: 5
+0003.475 () Processing table (InnoDB): y21z_wpr_performance_monitoring - will restore as: p5_wpr_performance_monitoring
+0003.483 () Atomic restore: dropping original table (VBVKDT_wpr_performance_monitoring)
+0003.484 () Atomic restore: renaming new table (p5_wpr_performance_monitoring) to final table name (VBVKDT_wpr_performance_monitoring)
+0003.487 () Search and replacing table: VBVKDT_wpr_performance_monitoring: rows: 3
+0003.487 () Processing table (InnoDB): y21z_wpr_preconnect_external_domains - will restore as: p5_wpr_preconnect_external_domains
+0003.494 () Atomic restore: dropping original table (VBVKDT_wpr_preconnect_external_domains)
+0003.495 () Atomic restore: renaming new table (p5_wpr_preconnect_external_domains) to final table name (VBVKDT_wpr_preconnect_external_domains)
+0003.498 () Search and replacing table: VBVKDT_wpr_preconnect_external_domains: rows: 5
+0003.498 () Processing table (InnoDB): y21z_wpr_preload_fonts - will restore as: p5_wpr_preload_fonts
+0003.505 () Atomic restore: dropping original table (VBVKDT_wpr_preload_fonts)
+0003.506 () Atomic restore: renaming new table (p5_wpr_preload_fonts) to final table name (VBVKDT_wpr_preload_fonts)
+0003.508 () Search and replacing table: VBVKDT_wpr_preload_fonts: rows: 0
+0003.508 () Processing table (InnoDB): y21z_wpr_rocket_cache - will restore as: p5_wpr_rocket_cache
+0003.516 () Atomic restore: dropping original table (VBVKDT_wpr_rocket_cache)
+0003.517 () Atomic restore: renaming new table (p5_wpr_rocket_cache) to final table name (VBVKDT_wpr_rocket_cache)
+0003.519 () Search and replacing table: VBVKDT_wpr_rocket_cache: rows: 107
+0003.520 () Processing table (InnoDB): y21z_wpr_rucss_used_css - will restore as: p5_wpr_rucss_used_css
+0003.527 () Atomic restore: dropping original table (VBVKDT_wpr_rucss_used_css)
+0003.529 () Atomic restore: renaming new table (p5_wpr_rucss_used_css) to final table name (VBVKDT_wpr_rucss_used_css)
+0003.531 () Search and replacing table: VBVKDT_wpr_rucss_used_css: rows: 0
+0003.531 () Processing table (InnoDB): y21z_youzify_activity_polls_votes - will restore as: p5_youzify_activity_polls_votes
+0003.535 () Atomic restore: dropping original table (VBVKDT_youzify_activity_polls_votes)
+0003.536 () Atomic restore: renaming new table (p5_youzify_activity_polls_votes) to final table name (VBVKDT_youzify_activity_polls_votes)
+0003.539 () Search and replacing table: VBVKDT_youzify_activity_polls_votes: rows: 0
+0003.539 () Processing table (InnoDB): y21z_youzify_bookmarks - will restore as: p5_youzify_bookmarks
+0003.543 () Atomic restore: dropping original table (VBVKDT_youzify_bookmarks)
+0003.544 () Atomic restore: renaming new table (p5_youzify_bookmarks) to final table name (VBVKDT_youzify_bookmarks)
+0003.546 () Search and replacing table: VBVKDT_youzify_bookmarks: rows: 0
+0003.546 () Processing table (InnoDB): y21z_youzify_hashtags - will restore as: p5_youzify_hashtags
+0003.550 () Atomic restore: dropping original table (VBVKDT_youzify_hashtags)
+0003.552 () Atomic restore: renaming new table (p5_youzify_hashtags) to final table name (VBVKDT_youzify_hashtags)
+0003.554 () Search and replacing table: VBVKDT_youzify_hashtags: rows: 0
+0003.554 () Processing table (InnoDB): y21z_youzify_hashtags_items - will restore as: p5_youzify_hashtags_items
+0003.558 () Atomic restore: dropping original table (VBVKDT_youzify_hashtags_items)
+0003.559 () Atomic restore: renaming new table (p5_youzify_hashtags_items) to final table name (VBVKDT_youzify_hashtags_items)
+0003.561 () Search and replacing table: VBVKDT_youzify_hashtags_items: rows: 0
+0003.562 () Processing table (InnoDB): y21z_youzify_media - will restore as: p5_youzify_media
+0003.566 () Atomic restore: dropping original table (VBVKDT_youzify_media)
+0003.567 () Atomic restore: renaming new table (p5_youzify_media) to final table name (VBVKDT_youzify_media)
+0003.569 () Search and replacing table: VBVKDT_youzify_media: rows: 0
+0003.569 () Processing table (InnoDB): y21z_youzify_reviews - will restore as: p5_youzify_reviews
+0003.573 () Atomic restore: dropping original table (VBVKDT_youzify_reviews)
+0003.574 () Atomic restore: renaming new table (p5_youzify_reviews) to final table name (VBVKDT_youzify_reviews)
+0003.577 () Search and replacing table: VBVKDT_youzify_reviews: rows: 0
+0003.577 () Processing table (InnoDB): y21z_youzify_social_login_users - will restore as: p5_youzify_social_login_users
+0003.579 () Skipped execution of SQL statement (unwanted or internally handled type=18): /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+0003.626 () Unlocking database and leaving maintenance mode
+0003.626 () Abschalten des Wartungsmodus &#8230;
+0003.627 () Atomic restore: dropping original table (VBVKDT_youzify_social_login_users)
+0003.628 () Atomic restore: renaming new table (p5_youzify_social_login_users) to final table name (VBVKDT_youzify_social_login_users)
+0003.631 () Search and replacing table: VBVKDT_youzify_social_login_users: rows: 0
+0003.631 () Finished: lines processed: 492 in 3.62 seconds
+0003.632 () Räume auf ...
+0003.632 () Begin search and replace (updraftplus_restored_db)
+0003.632 () [Database-replace-site-url] Database: search and replace site URL
+0003.632 () This option was not selected.
+0003.654 () Purging cache directory: /var/www/vhosts/robo-guru.de/httpdocs/wp-content/cache
+0003.657 () Restore successful!
+0003.657 () Restore successful

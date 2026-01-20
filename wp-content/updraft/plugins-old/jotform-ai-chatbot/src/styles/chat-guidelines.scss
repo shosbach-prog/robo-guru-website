@@ -1,0 +1,28 @@
+.chat-guidelines {
+  position: relative;
+  .jfInput {
+    input {
+      padding-inline-end: 48px;
+    }
+  }
+  &-delete-btn {
+    position: absolute;
+    right: 12px;
+    top: 0;
+    background: transparent;
+    padding: 4px;
+    &:hover {
+      background: transparent;
+      svg {
+        fill: #454e80;
+      }
+    }
+    svg {
+      fill: #6c73a8;
+      transition: 0.3s all;
+    }
+  }
+  &-new-btn {
+    width: 100%;
+  }
+}

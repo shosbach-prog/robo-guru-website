@@ -1,0 +1,67 @@
+.jfTextarea-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid var(--jfv-navy-100);
+  background: var(--jfv-white);
+  outline: 2px solid transparent;
+  outline-offset: 0;
+  transition: border-color 0.3s;
+  color: var(--jfv-navy-700);
+  // resize: vertical;
+  overflow: auto;
+
+  &:hover {
+    border-color: var(--jfv-navy-300);
+  }
+
+  &:focus-within {
+    border-color: var(--jfv-blue-500);
+    outline-color: var(--jfv-blue-200);
+  }
+  &:has(:disabled) {
+    background: var(--jfv-navy-50);
+    border-color: transparent;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  &--counter {
+    font-size: 14px;
+    color: var(--jfv-navy-200);
+    padding: 0 12px 8px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  textarea {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 12px;
+    color: currentColor;
+    background: transparent;
+    resize: none;
+    // wp style override
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    @media screen and (max-width: 480px) {
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    &:focus {
+      border: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+    }
+
+    &::placeholder {
+      color: var(--jfv-navy-200);
+    }
+  }
+}

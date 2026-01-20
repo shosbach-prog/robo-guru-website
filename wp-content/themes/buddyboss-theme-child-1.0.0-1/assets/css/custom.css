@@ -1,0 +1,220 @@
+/* =========================================================
+   Robo-Guru UI (BuddyBoss Child)
+   Premium styling for Robo Finder pages with minimal icons.
+   ========================================================= */
+
+:root{
+  --rg-max: 1200px;
+  --rg-gutter: clamp(16px, 2vw, 28px);
+  --rg-radius: 18px;
+  --rg-border: rgba(17,17,17,.12);
+  --rg-shadow: 0 10px 30px rgba(0,0,0,.06);
+  --rg-bg: #ffffff;
+  --rg-surface: #f7f7f8;
+  --rg-text: #111;
+  --rg-muted: rgba(17,17,17,.72);
+  --rg-good-bg: rgba(0, 180, 170, .10);
+  --rg-good-bd: rgba(0, 180, 170, .30);
+  --rg-bad-bg: rgba(255, 140, 0, .10);
+  --rg-bad-bd: rgba(255, 140, 0, .32);
+}
+
+/* Keep styles scoped to Robo Finder templates/classes */
+body.post-type-archive-robo_robot .rg-wrap,
+body.single-robo_robot .rg-single__inner,
+body.page .rg-wrap{
+  max-width: var(--rg-max);
+  margin: 0 auto;
+}
+
+/* Cards / surfaces */
+.rg-card{
+  background: var(--rg-bg);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--rg-radius);
+  box-shadow: var(--rg-shadow);
+  padding: 18px;
+}
+.rg-card + .rg-card{ margin-top: 16px; }
+
+/* Buttons */
+.rg-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--rg-border);
+  text-decoration:none;
+  font-weight: 600;
+  line-height:1;
+  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
+}
+.rg-btn:hover{ transform: translateY(-1px); }
+.rg-btn--primary{
+  background: #111;
+  color:#fff;
+  border-color:#111;
+}
+.rg-btn--ghost{
+  background: transparent;
+  color: #111;
+}
+.rg-btn--full{ width:100%; }
+
+/* Pills / chips */
+.rg-pill{
+  display:inline-flex;
+  align-items:center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--rg-border);
+  background: #fff;
+  font-size: 12px;
+  color: var(--rg-muted);
+}
+.rg-pill--soft{ background: var(--rg-surface); }
+.rg-pill--outline{ background: transparent; }
+
+.rg-chip{
+  display:inline-flex;
+  align-items:center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: var(--rg-surface);
+  border: 1px solid rgba(17,17,17,.08);
+  font-size: 13px;
+  color: var(--rg-text);
+}
+
+/* HERO */
+.rg-single__hero{
+  padding: 34px 0 14px;
+  background: linear-gradient(180deg, rgba(17,17,17,.04), rgba(17,17,17,0));
+}
+.rg-single__inner{
+  max-width: var(--rg-max);
+  padding: 0 var(--rg-gutter);
+}
+.rg-single__kicker{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 10px; }
+.rg-single__title{
+  margin: 0 0 6px;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.08;
+}
+.rg-single__tagline{ margin: 0 0 14px; color: var(--rg-muted); font-size: 16px; }
+.rg-single__highlights{ display:flex; flex-wrap:wrap; gap:8px; margin: 10px 0 18px; }
+.rg-single__ctaRow{ display:flex; gap:10px; flex-wrap:wrap; }
+
+/* MAIN GRID */
+.rg-single__main{ padding: 16px 0 26px; }
+.rg-single__grid{
+  display:grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items:start;
+}
+@media (max-width: 980px){
+  .rg-single__grid{ grid-template-columns: 1fr; }
+}
+
+/* Gallery */
+.rg-card--gallery{ padding: 14px; }
+.rg-gallery__main{
+  border-radius: 14px;
+  overflow:hidden;
+  border: 1px solid rgba(17,17,17,.08);
+  background: var(--rg-surface);
+}
+.rg-gallery__img{ width:100%; height:auto; display:block; }
+.rg-gallery__thumbs{ display:flex; gap:10px; padding-top: 12px; overflow:auto; }
+.rg-gallery__thumbBtn{ border:0; background:transparent; padding:0; cursor:pointer; }
+.rg-gallery__thumb{
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(17,17,17,.12);
+  opacity: .92;
+  transition: transform .08s ease, opacity .12s ease;
+}
+.rg-gallery__thumbBtn:hover .rg-gallery__thumb{ transform: translateY(-1px); opacity: 1; }
+.rg-gallery__thumb.is-active{ outline: 2px solid rgba(17,17,17,.65); outline-offset: 2px; }
+
+/* Suitable blocks */
+.rg-suitWrap{ display:grid; gap:12px; margin-top: 12px; }
+@media (min-width: 980px){
+  .rg-suitWrap{ grid-template-columns: 1fr 1fr; }
+}
+.rg-suit{
+  border-radius: var(--rg-radius);
+  padding: 16px;
+  border: 1px solid var(--rg-border);
+}
+.rg-suit h3{ margin: 0 0 10px; font-size: 16px; }
+.rg-suit ul{ margin: 0; padding-left: 18px; }
+.rg-suit li{ margin: 6px 0; color: var(--rg-text); }
+.rg-suit--good{ background: var(--rg-good-bg); border-color: var(--rg-good-bd); }
+.rg-suit--bad{ background: var(--rg-bad-bg); border-color: var(--rg-bad-bd); }
+
+/* Facts */
+.rg-card--facts{ position: sticky; top: 18px; }
+@media (max-width: 980px){ .rg-card--facts{ position: static; } }
+.rg-card__head{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.rg-card__head h2{ margin: 0; font-size: 18px; }
+
+.rg-facts{ margin: 12px 0 0; }
+.rg-fact{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(17,17,17,.08);
+}
+.rg-fact:first-child{ border-top: 0; }
+.rg-fact dt{ color: var(--rg-muted); font-size: 13px; }
+.rg-fact dd{ margin: 0; font-weight: 700; }
+.rg-unit{ font-weight: 600; color: var(--rg-muted); }
+
+.rg-ctaCard{
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(17,17,17,.08);
+}
+.rg-ctaCard__txt strong{ display:block; margin-bottom: 6px; }
+.rg-ctaCard__txt p{ margin: 0 0 12px; color: var(--rg-muted); }
+
+/* FAQ */
+.rg-faq h2{ margin-top: 0; }
+.rg-faq__item{
+  border: 1px solid rgba(17,17,17,.10);
+  border-radius: 14px;
+  padding: 8px 12px;
+  background: #fff;
+}
+.rg-faq__item + .rg-faq__item{ margin-top: 10px; }
+.rg-faq__item summary{
+  cursor:pointer;
+  font-weight: 700;
+  list-style: none;
+}
+.rg-faq__item summary::-webkit-details-marker{ display:none; }
+.rg-faq__answer{ color: var(--rg-muted); padding: 10px 2px 4px; }
+
+/* Archive helpers (works with our archive template classes) */
+.rg-filters input,
+.rg-filters select{
+  border-radius: 14px !important;
+  border: 1px solid rgba(17,17,17,.12) !important;
+  background:#fff !important;
+}
+.rg-grid .rg-card{ box-shadow: var(--rg-shadow); }
+
+/* Compare bar (if present) */
+#rg-compare-link{ font-weight: 700; }
+
+/* Make WP default content nicer inside rg-card */
+.rg-content :where(p,ul,ol){ color: var(--rg-muted); }
+.rg-content h3{ margin-top: 16px; }

@@ -1,0 +1,69 @@
+/* =========================================================
+   Robo Finder Pro – Single Robot: Mobile Video/Embed Fix
+   Target: /roboter/<slug>/ (post type: robo_robot)
+   Goal: ensure Gutenberg embeds/iframes/videos are visible
+         and responsive on mobile, even with theme overlays.
+   ========================================================= */
+
+/* --- Safe reset: never hide media on mobile --- */
+@media (max-width: 782px){
+  body.single-robo_robot .rf-single-content iframe,
+  body.single-robo_robot .rf-single-content video,
+  body.single-robo_robot .rf-single-content .wp-block-video,
+  body.single-robo_robot .rf-single-content .wp-block-embed,
+  body.single-robo_robot .rf-single-content .wp-block-embed__wrapper{
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    height:auto !important;
+    max-height:none !important;
+  }
+}
+
+/* --- Responsive embeds (YouTube/Vimeo/others) --- */
+body.single-robo_robot .rf-single-content .wp-block-embed__wrapper{
+  position:relative;
+  width:100%;
+  max-width:100%;
+}
+
+/* If theme doesn't apply aspect ratio, enforce 16:9 */
+body.single-robo_robot .rf-single-content .wp-block-embed__wrapper{
+  aspect-ratio:16/9;
+}
+
+body.single-robo_robot .rf-single-content .wp-block-embed__wrapper > iframe,
+body.single-robo_robot .rf-single-content .wp-block-embed__wrapper > video{
+  position:absolute;
+  inset:0;
+  width:100% !important;
+  height:100% !important;
+  border:0;
+}
+
+/* --- HTML5 <video> that is not inside embed wrapper --- */
+body.single-robo_robot .rf-single-content video{
+  width:100% !important;
+  height:auto !important;
+  max-width:100% !important;
+}
+
+/* --- Make consent/placeholder overlays clickable on mobile (z-index / pointer-events) --- */
+@media (max-width: 782px){
+  body.single-robo_robot .rf-single-content .cmplz-placeholder,
+  body.single-robo_robot .rf-single-content .cmplz-blocked-content-container,
+  body.single-robo_robot .rf-single-content .cookie-notice-container,
+  body.single-robo_robot .rf-single-content .video-consent,
+  body.single-robo_robot .rf-single-content .consent-overlay,
+  body.single-robo_robot .rf-single-content .embed-consent{
+    position:relative;
+    z-index:50;
+    pointer-events:auto;
+  }
+}
+
+/* --- If a theme sets overflow:hidden on blocks, keep embeds visible --- */
+body.single-robo_robot .rf-single-content .wp-block-embed,
+body.single-robo_robot .rf-single-content .wp-block-video{
+  overflow:visible;
+}

@@ -1,0 +1,43 @@
+.jfInputColor {
+  position: relative;
+  &--picker {
+    position: absolute;
+    height: 100%;
+    right: 8px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    button {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      border: 0;
+      outline: 0;
+      border: 1px solid rgba(10, 21, 81, 0.2);
+    }
+    &:not(.isSelected) {
+      button {
+        background: var(--jfv-white);
+      }
+    }
+    .sketch-picker {
+      position: absolute;
+      top: 36px;
+      right: 0;
+      z-index: 2;
+    }
+  }
+  &--popover {
+    z-index: 3;
+    background: var(--jfv-white);
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 8px 16px;
+  }
+  .jfInput {
+    input {
+      text-transform: uppercase;
+    }
+  }
+}

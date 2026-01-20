@@ -1,0 +1,291 @@
+*** Jotform AI Chatbot Changelog ***
+
+2026-01-05 - version 3.6.3
+* Fixed - Chatbot rendering issues
+
+2026-01-05 - version 3.6.2
+* Updated - Chatbot is no longer rendered on 404 pages
+* Updated - Minor UI improvements
+
+2025-12-30 - version 3.6.1
+* Updated - Custom avatar upload feature improved
+* Updated - Minor UI improvements
+
+2025-12-29 - version 3.6.0
+* Added - Custom avatar upload feature
+* Updated - Minor UI improvements
+
+2025-12-19 - version 3.5.3
+* Added - Link to feedback form
+* Updated - Minor UI improvements
+
+2025-12-12 - version 3.5.2
+* Updated - Minor UI improvements
+* Updated - Minor UX improvements
+
+2025-12-05 - version 3.5.1
+* Updated - Screenshots
+* Fixed - Auto-sync stability for post/page updates
+
+2025-12-01 - version 3.5.0
+* Updated - Major UI improvements
+* Updated - Major UX improvements
+* Updated - Banner asset
+* Fixed - Auto-sync stability for post/page updates
+
+2025-11-19 - version 3.4.4
+* Fixed - Getting plugin version
+
+2025-11-11 - version 3.4.3
+* Updated - Readme.txt file is updated for external service list
+* Updated - Codebase refactor
+
+2025-11-11 - version 3.4.2
+* Updated - Codebase refactor
+
+2025-10-07 - version 3.4.1
+* Fixed - Escaping and sanitization issues on codebase
+* Fixed - Accessibility issues
+* Updated - Minor UI improvements
+
+2025-10-03 - version 3.4.0
+* Added - changelog.txt file
+* Added - Tutorial video for WooCommerce connection
+
+2025-10-01 - version 3.3.9
+* Fixed - Issues with WooCommerce integration
+* Updated - Minor UI improvements
+
+2025-09-26 - version 3.3.8
+* Fixed - Cache issues
+
+2025-09-26 - version 3.3.7
+* Fixed - Cache issues
+* Updated - Readme.txt file
+
+2025-09-22 - version 3.3.6
+* Updated - Setup and installation videos
+
+2025-09-22 - version 3.3.5
+* Updated - Minor UI improvements
+* Updated - Readme.txt file
+
+2025-09-18 - version 3.3.4
+* Updated - Readme.txt file
+
+2025-09-18 - version 3.3.3
+* Updated - Readme.txt file
+
+2025-09-17 - version 3.3.2
+* Updated - Minor UI improvements
+
+2025-09-17 - version 3.3.1
+* Updated - FAQ section for clarity
+
+2025-09-17 - version 3.3.0
+* Added - WooCommerce integration
+
+2025-09-16 - version 3.2.3
+* Updated - Improvements on login and signup flows
+
+2025-09-15 - version 3.2.2
+* Updated - Plugin title for improved clarity and visibility
+
+2025-09-15 - version 3.2.1
+* Fixed - Chatbot render issue
+
+2025-09-12 - version 3.2.0
+* Added - Jotform Enterprise user login support
+
+2025-09-10 - version 3.1.4
+* Fixed - Cache issues
+* Updated - Minor UI improvements
+
+2025-09-03 - version 3.1.3
+* Fixed - Minor adjustments to plugin installation process
+
+2025-09-02 - version 3.1.2
+* Updated - Improved chatbot publish/unpublish flow
+* Fixed - Minor adjustments to plugin installation process
+
+2025-08-29 - version 3.1.1
+* Updated - Minor optimization to reduce performance-related issues
+
+2025-08-29 - version 3.1.0
+* Updated - Major optimization to reduce performance-related issues
+
+2025-08-28 - version 3.0.0
+* Added - Conversations page to view and manage user chatbots
+* Added - Advanced Visibility section to control when and where your chatbot appears
+* Updated - Major UI improvements for a cleaner look
+* Updated - Major UX improvements with better flow, cleaner errors, smoother interactions
+* Updated - More chatbot controls: fine-tune limits, tone, and escalation rules
+
+2025-08-18 - version 2.5.0
+* Updated - New layout option for chatbot customization
+
+2025-08-14 - version 2.4.4
+* Updated - Minor UI improvements
+* Updated - Knowledgebase experience
+* Updated - Installation video in readme
+
+2025-08-11 - version 2.4.3
+* Updated - Deactivation modal with reason submission form
+
+2025-07-28 - version 2.4.2
+* Fixed - Auto-sync stability for post/page updates
+* Fixed - Minor UI improvements
+
+2025-07-25 - version 2.4.1
+* Fixed - Chatbot create wizard improvements
+
+2025-07-22 - version 2.4.0
+* Added - Auto-sync updated posts/pages to chatbot knowledgebase
+
+2025-07-07 - version 2.3.3
+* Updated - Tutorial video in readme
+* Updated - Help guide link in plugin footer
+
+2025-06-26 - version 2.3.2
+* Updated - Plugin page link in action links
+
+2025-06-24 - version 2.3.1
+* Updated - Help guide and learn more links
+
+2025-06-20 - version 2.3.0
+* Fixed - Chatbot create wizard improvements
+* Updated - Readme.txt file
+
+2025-06-13 - version 2.2.9
+* Fixed - Missing version query in asset link
+
+2025-06-13 - version 2.2.8
+* Fixed - Optimized API requests by user region
+* Fixed - UI improvements in chatbot create wizard
+* Updated - Readme.txt file
+
+2025-06-12 - version 2.2.7
+* Fixed - Optimized API requests by user region
+
+2025-06-11 - version 2.2.6
+* Fixed - Temporary UI issue due to plugin conflicts
+
+2025-06-04 - version 2.2.5
+* Updated - Minor improvements in chatbot creation flow
+* Updated - Plugin description and tags for clarity
+
+2025-05-28 - version 2.2.4
+* Updated - Plugin icon replaced from SVG to GIF
+
+2025-05-20 - version 2.2.3
+* Updated - Plugin title for clarity and visibility
+
+2025-05-13 - version 2.2.2
+* Updated - Plugin title, description, and tags for clarity and visibility
+
+2025-04-29 - version 2.2.1
+* Updated - Tested up to WordPress 6.8 and readme.txt file
+
+2025-04-21 - version 2.2.0
+* Updated - Agent creation performance improvements
+
+2025-04-07 - version 2.1.0
+* Updated - General performance improvements
+
+2025-03-28 - version 2.0.4
+* Updated - Frontend codebase refactor
+
+2025-03-21 - version 2.0.3
+* Updated - UI updates on chatbot embed
+* Updated - Readme.txt file
+
+2025-03-21 - version 2.0.2
+* Updated - Step descriptions in chatbot create wizard
+* Updated - Readme.txt file
+
+2025-03-19 - version 2.0.1
+* Fixed - Minor API bug
+
+2025-03-18 - version 2.0.0
+* Updated - AI persona section added to chatbot create wizard
+* Updated - Readme.txt file
+
+2025-03-18 - version 1.9.2
+* Updated - Readme.txt file
+
+2025-03-18 - version 1.9.1
+* Updated - Readme.txt file
+
+2025-03-18 - version 1.9.0
+* Updated - Avatar selection section in chatbot create wizard
+* Updated - UI updates in theme section
+
+2025-03-14 - version 1.8.0
+* Fixed - More cases of regional data issues resolved
+
+2025-03-11 - version 1.7.3
+* Fixed - Regional data issue
+
+2025-03-07 - version 1.7.2
+* Fixed - Edit and delete issues in knowledge base section
+
+2025-03-03 - version 1.7.1
+* Fixed - Preserve existing data on knowledge base edit
+* Fixed - Encoding issue for non-Latin-1 characters
+
+2025-02-28 - version 1.7.0
+* Updated - Beta Program Terms and Conditions not required
+* Updated - Readme.txt file
+
+2025-02-25 - version 1.6.1
+* Updated - Theme color scheme
+
+2025-02-14 - version 1.6.0
+* Updated - Custom URL support
+
+2025-02-12 - version 1.5.7
+* Fixed - Issue of getting stuck at initial step
+
+2025-02-11 - version 1.5.6
+* Updated - Create chatbot from existing agents
+* Updated - Jotform API base support for EU deployments
+* Updated - Screenshots
+
+2025-02-06 - version 1.5.5
+* Updated - Auto suggestion feature for prompt screen
+* Updated - Readme.txt with new tags
+
+2025-02-04 - version 1.5.4
+* Fixed - Create wizard settings generation issue
+
+2025-02-04 - version 1.5.3
+* Updated - Custom page selection options for chatbot
+* Updated - Screenshots
+
+2025-02-04 - version 1.5.2
+* Updated - Improved chatbot training with site data
+
+2025-02-03 - version 1.5.1
+* Updated - Chatbot wizard app
+
+2025-02-03 - version 1.5.0
+* Updated - Improved chatbot training with site data
+* Updated - Banner asset
+
+2025-02-03 - version 1.4.1
+* Updated - Readme.txt file
+* Updated - Plugin meta registration on Jotform
+
+2025-01-31 - version 1.4.0
+* Fixed - Page selection issue
+
+2025-01-31 - version 1.3.2
+* Updated - Readme.txt file
+
+2025-01-31 - version 1.3.1
+* Updated - Readme.txt file
+* Updated - Plugin screenshots
+
+2025-01-30 - version 1.3.0
+* Updated - Readme.txt file and added changelog section
+* Fixed - Chatbot embed code decoding issue

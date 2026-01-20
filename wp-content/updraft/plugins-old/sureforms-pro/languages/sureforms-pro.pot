@@ -1,0 +1,5686 @@
+# Copyright (C) 2026 SureForms
+# This file is distributed under the GPL v2.
+msgid ""
+msgstr ""
+"Project-Id-Version: SureForms Pro 2.3.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sureforms-pro\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-01-05T09:07:30+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: sureforms-pro\n"
+
+#. Plugin Name of the plugin
+#: sureforms-pro.php
+msgid "SureForms Pro"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: sureforms-pro.php
+msgid "https://sureforms.com/"
+msgstr ""
+
+#. Description of the plugin
+#: sureforms-pro.php
+msgid "Enhance SureForms with new features and blocks, as well as extended functionality for existing blocks."
+msgstr ""
+
+#. Author of the plugin
+#: sureforms-pro.php
+msgid "SureForms"
+msgstr ""
+
+#: admin/admin.php:54
+#: dist/activateLicensePopup.js:1
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Activate License"
+msgstr ""
+
+#: admin/licensing.php:80
+msgid "Invalid nonce."
+msgstr ""
+
+#: admin/licensing.php:81
+msgid "You do not have permission to activate license."
+msgstr ""
+
+#: admin/licensing.php:82
+msgid "Please enter a valid license key"
+msgstr ""
+
+#: admin/licensing.php:114
+msgid "Incorrect License key for this product."
+msgstr ""
+
+#: admin/licensing.php:125
+msgid "License activated successfully."
+msgstr ""
+
+#: admin/licensing.php:154
+msgid "License deactivated successfully."
+msgstr ""
+
+#: inc/business/custom-app/load.php:102
+msgid "Your audio files are ready!"
+msgstr ""
+
+#: inc/business/custom-app/load.php:103
+msgid "Your image files are ready!"
+msgstr ""
+
+#: inc/business/custom-app/load.php:104
+msgid "Your files are ready!"
+msgstr ""
+
+#: inc/business/custom-app/load.php:105
+#: inc/extensions/page-break.php:120
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Back"
+msgstr ""
+
+#: inc/business/custom-app/load.php:106
+msgid "Download All"
+msgstr ""
+
+#: inc/business/custom-app/load.php:107
+msgid "Copy Text"
+msgstr ""
+
+#: inc/business/custom-app/load.php:108
+msgid "Copied"
+msgstr ""
+
+#: inc/business/custom-app/load.php:109
+msgid "Something went wrong. We could not get the result at the moment. Please reload the page and try again later."
+msgstr ""
+
+#: inc/business/custom-app/load.php:161
+#: inc/business/custom-app/load.php:228
+#: inc/business/custom-app/load.php:251
+#: assets/js/unminified/package/business/srfm-custom-app.js:37
+#: dist/package/business/srfmCustomApp.js:1
+msgid "We are generating your response"
+msgstr ""
+
+#: inc/business/custom-app/load.php:287
+#: inc/business/custom-app/load.php:488
+#: inc/extensions/entries-management.php:232
+#: inc/extensions/hooks.php:250
+#: inc/extensions/hooks.php:315
+#: inc/extensions/hooks.php:386
+#: inc/extensions/hooks.php:468
+#: inc/extensions/hooks.php:549
+#: inc/extensions/hooks.php:702
+#: inc/extensions/hooks.php:1922
+#: inc/global-settings.php:85
+#: inc/global-settings.php:147
+#: inc/pro/native-integrations/services/config-manager.php:383
+#: inc/pro/native-integrations/services/config-manager.php:457
+#: inc/pro/save-resume/init.php:265
+#: inc/pro/save-resume/init.php:410
+msgid "Nonce verification failed."
+msgstr ""
+
+#: inc/business/custom-app/load.php:294
+msgid "No attachment files found."
+msgstr ""
+
+#: inc/business/custom-app/load.php:301
+msgid "Your server does not support ZipArchive library."
+msgstr ""
+
+#: inc/business/custom-app/load.php:310
+msgid "Failed to create ZIP file."
+msgstr ""
+
+#: inc/business/custom-app/load.php:362
+msgid "Failed to zip all the files."
+msgstr ""
+
+#. Translators: %s is the number of corrupt files.
+#: inc/business/custom-app/load.php:365
+msgctxt "Number of corrupt files"
+msgid "%s file is either corrupt or does not exists."
+msgid_plural "%s files are either corrupt or does not exists."
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/business/custom-app/load.php:382
+msgid "Attachment file not found"
+msgstr ""
+
+#: inc/business/custom-app/load.php:391
+msgid "Selected file is not downloadable or does not exists."
+msgstr ""
+
+#: inc/business/custom-app/load.php:464
+msgid "Token cannot be empty. You must provide a valid token."
+msgstr ""
+
+#: inc/business/custom-app/load.php:470
+msgid "Request must be made only from the OttoKit platform."
+msgstr ""
+
+#: inc/business/custom-app/load.php:481
+msgid "Provided token seems invalid. You must provide a valid token."
+msgstr ""
+
+#: inc/business/custom-app/load.php:496
+msgid "Response data body cannot be empty."
+msgstr ""
+
+#: inc/business/custom-app/load.php:524
+msgid "Unknown File Size"
+msgstr ""
+
+#: inc/business/custom-post-type/init.php:168
+msgid "Invalid or missing post type."
+msgstr ""
+
+#: inc/business/custom-post-type/init.php:195
+msgid "Invalid taxonomy specified."
+msgstr ""
+
+#. translators: %s is the singular name of the taxonomy
+#: inc/business/custom-post-type/init.php:226
+msgid "Add New %s"
+msgstr ""
+
+#: inc/business/custom-post-type/init.php:480
+msgid "WordPress Post Types"
+msgstr ""
+
+#: inc/business/custom-post-type/init.php:516
+msgid "Custom Post Types"
+msgstr ""
+
+#: inc/business/custom-post-type/init.php:559
+msgid "Logged In User"
+msgstr ""
+
+#: inc/business/custom-post-type/init.php:857
+msgid "Untitled"
+msgstr ""
+
+#: inc/business/pdf/pdf.php:79
+#: inc/business/pdf/pdf.php:176
+msgid "Security check failed."
+msgstr ""
+
+#: inc/business/pdf/pdf.php:92
+msgid "Unable to download the PDF library. Please check your internet connection or try again later."
+msgstr ""
+
+#: inc/business/pdf/pdf.php:109
+msgid "Unable to create the root library directory. Please check folder permissions."
+msgstr ""
+
+#: inc/business/pdf/pdf.php:120
+msgid "Unable to remove the existing PDF library folder. Please check permissions."
+msgstr ""
+
+#: inc/business/pdf/pdf.php:130
+msgid "Failed to prepare the PDF library folder. Make sure your server has proper write permissions."
+msgstr ""
+
+#. translators: %s: Error message from the exception
+#: inc/business/pdf/pdf.php:144
+msgid "Failed to extract the PDF library: %s"
+msgstr ""
+
+#: inc/business/pdf/pdf.php:162
+msgid "PDF library downloaded and installed successfully."
+msgstr ""
+
+#: inc/business/pdf/pdf.php:191
+msgid "PDF library folder does not exist."
+msgstr ""
+
+#: inc/business/pdf/pdf.php:200
+msgid "Unable to delete the PDF library folder. Please check folder permissions."
+msgstr ""
+
+#: inc/business/pdf/pdf.php:207
+msgid "PDF library deleted successfully."
+msgstr ""
+
+#: inc/business/pdf/pdf.php:451
+#: inc/pro/signature/init.php:87
+msgid "Signature Image"
+msgstr ""
+
+#: inc/business/pdf/pdf.php:476
+#: dist/entry.js:177
+msgid "PDF Files"
+msgstr ""
+
+#: inc/business/pdf/utils.php:85
+msgid "Download PDF"
+msgstr ""
+
+#: inc/business/repeater/init.php:385
+#: inc/business/repeater/init.php:454
+#: inc/business/repeater/init.php:576
+msgid "Repeater"
+msgstr ""
+
+#: inc/business/repeater/init.php:882
+msgid "Sample text entry 1"
+msgstr ""
+
+#: inc/business/repeater/init.php:885
+msgid "Sample textarea entry 1"
+msgstr ""
+
+#: inc/business/repeater/init.php:893
+msgid "Sample text entry 2"
+msgstr ""
+
+#: inc/business/repeater/init.php:896
+msgid "Sample textarea entry 2"
+msgstr ""
+
+#: inc/business/repeater/init.php:904
+msgid "Sample text entry 3"
+msgstr ""
+
+#: inc/business/repeater/init.php:907
+msgid "Sample textarea entry 3"
+msgstr ""
+
+#: inc/business/repeater/repeater-markup.php:74
+msgid "Repeater Field"
+msgstr ""
+
+#: inc/business/repeater/repeater-markup.php:166
+msgid "Repeater item added."
+msgstr ""
+
+#: inc/business/repeater/repeater-markup.php:167
+msgid "Repeater item removed."
+msgstr ""
+
+#: inc/business/repeater/repeater-markup.php:181
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "Add"
+msgstr ""
+
+#: inc/business/repeater/repeater-markup.php:184
+#: dist/entry.js:180
+msgid "Remove"
+msgstr ""
+
+#: inc/business/user-registration/init.php:89
+#: inc/business/user-registration/init.php:157
+msgid "Your password strength is weak."
+msgstr ""
+
+#: inc/business/user-registration/init.php:90
+#: inc/business/user-registration/init.php:158
+msgid "Your password strength is moderate."
+msgstr ""
+
+#: inc/business/user-registration/init.php:91
+#: inc/business/user-registration/init.php:159
+msgid "Your password strength is strong."
+msgstr ""
+
+#: inc/business/user-registration/init.php:92
+#: inc/business/user-registration/init.php:160
+msgid "Your password strength is very strong."
+msgstr ""
+
+#: inc/business/user-registration/init.php:93
+#: inc/business/user-registration/init.php:161
+msgid "Confirmation password does not match."
+msgstr ""
+
+#: inc/business/user-registration/init.php:156
+#: inc/pro/signature/init.php:328
+msgid "This field is required."
+msgstr ""
+
+#: inc/business/user-registration/init.php:430
+msgid "Nonce Verification Failed"
+msgstr ""
+
+#: inc/business/user-registration/init.php:439
+msgid "You are already logged in."
+msgstr ""
+
+#: inc/business/user-registration/init.php:477
+msgid "Login successful."
+msgstr ""
+
+#: inc/business/user-registration/init.php:517
+msgid "Login URL"
+msgstr ""
+
+#: inc/business/user-registration/init.php:518
+msgid "Registration URL"
+msgstr ""
+
+#: inc/business/user-registration/init.php:519
+msgid "Forgot Password URL"
+msgstr ""
+
+#: inc/business/user-registration/init.php:520
+msgid "Logout URL"
+msgstr ""
+
+#: inc/business/user-registration/init.php:778
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:157
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Add Custom Meta"
+msgstr ""
+
+#: inc/business/user-registration/login/login-markup.php:48
+msgid "Login"
+msgstr ""
+
+#: inc/business/user-registration/password/password-markup.php:82
+#: inc/extensions/additional-form-restrictions.php:437
+#: inc/fields/password-markup.php:56
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:58
+#: assets/js/unminified/package/business/user-registration/register/editor/edit.js:86
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:47
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Password"
+msgstr ""
+
+#. translators: Placeholder %s represents the label being confirmed.
+#: inc/business/user-registration/password/password-markup.php:88
+#: inc/business/user-registration/password/password-markup.php:93
+#: inc/fields/password-markup.php:62
+msgid "Confirm %s"
+msgstr ""
+
+#: inc/business/user-registration/password/password-markup.php:136
+msgid "Show password"
+msgstr ""
+
+#: inc/business/user-registration/password/password-markup.php:142
+msgid "Hide password"
+msgstr ""
+
+#: inc/business/user-registration/password/password-markup.php:171
+msgid "Show confirm password"
+msgstr ""
+
+#: inc/business/user-registration/password/password-markup.php:177
+msgid "Hide confirm password"
+msgstr ""
+
+#: inc/business/user-registration/processor.php:160
+msgid "Username is required."
+msgstr ""
+
+#: inc/business/user-registration/processor.php:164
+msgid "Valid email is required."
+msgstr ""
+
+#: inc/business/user-registration/processor.php:171
+msgid "Username already exists."
+msgstr ""
+
+#: inc/business/user-registration/processor.php:175
+msgid "Email address already exists."
+msgstr ""
+
+#: inc/business/user-registration/processor.php:209
+msgid "User not found for update."
+msgstr ""
+
+#. translators: %s: site name
+#: inc/business/user-registration/processor.php:355
+msgid "Welcome to %s"
+msgstr ""
+
+#. translators: %1$s: user's name, %2$s: site name, %3$s: login URL
+#: inc/business/user-registration/processor.php:361
+msgid ""
+"Hello %1$s,\n"
+"\n"
+"Thank you for registering on %2$s. You can now log in using your username and password.\n"
+"\n"
+"Login: %3$s"
+msgstr ""
+
+#: inc/business/user-registration/register/register-markup.php:31
+#: assets/js/unminified/package/business/user-registration/register/editor/edit.js:39
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Register"
+msgstr ""
+
+#: inc/extensions/additional-form-restrictions.php:99
+#: dist/formSettings.js:194
+msgid "We're sorry, this form isn't accessible from your IP address."
+msgstr ""
+
+#: inc/extensions/additional-form-restrictions.php:105
+#: dist/formSettings.js:194
+msgid "We're sorry, this form isn't available in your region right now."
+msgstr ""
+
+#: inc/extensions/additional-form-restrictions.php:110
+#: dist/formSettings.js:194
+msgid "Your submission contains restricted keywords."
+msgstr ""
+
+#: inc/extensions/additional-form-restrictions.php:114
+#: dist/formSettings.js:194
+msgid "This form is only available to logged-in users. Please sign in to proceed."
+msgstr ""
+
+#: inc/extensions/additional-form-restrictions.php:118
+msgid "This form is password-protected. To view it, please enter the password below."
+msgstr ""
+
+#: inc/extensions/additional-form-restrictions.php:119
+msgid "Incorrect password. Please try again!"
+msgstr ""
+
+#: inc/extensions/additional-form-restrictions.php:394
+#: dist/formSettings.js:194
+msgid "Incorrect password. Please try again."
+msgstr ""
+
+#: inc/extensions/additional-form-restrictions.php:441
+#: dist/formSettings.js:194
+msgid "Enter password"
+msgstr ""
+
+#: inc/extensions/additional-form-restrictions.php:450
+msgid "Enter"
+msgstr ""
+
+#: inc/extensions/entries-management.php:117
+msgid "File not found."
+msgstr ""
+
+#: inc/extensions/entries-management.php:123
+msgid "Failed to delete file."
+msgstr ""
+
+#. translators: %1$s is the file basename and %2$s is the user display name.
+#: inc/extensions/entries-management.php:128
+msgid "File \"%1$s\" deleted by %2$s"
+msgstr ""
+
+#: inc/extensions/entries-management.php:230
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: inc/extensions/entries-management.php:231
+msgid "Invalid request."
+msgstr ""
+
+#: inc/extensions/field-validation.php:264
+#: inc/extensions/field-validation.php:444
+msgid "Field is not valid."
+msgstr ""
+
+#: inc/extensions/field-validation.php:507
+msgid "Invalid date format."
+msgstr ""
+
+#: inc/extensions/field-validation.php:521
+msgid "Past dates are not allowed. Please select today or a future date."
+msgstr ""
+
+#: inc/extensions/hooks.php:260
+msgid "Entry ID and Log ID are required."
+msgstr ""
+
+#: inc/extensions/hooks.php:269
+#: inc/extensions/hooks.php:334
+#: inc/extensions/hooks.php:408
+#: inc/extensions/hooks.php:494
+#: inc/extensions/hooks.php:604
+#: inc/extensions/hooks.php:1931
+msgid "Entry not found."
+msgstr ""
+
+#: inc/extensions/hooks.php:278
+msgid "Log not found."
+msgstr ""
+
+#: inc/extensions/hooks.php:295
+msgid "Failed to delete log."
+msgstr ""
+
+#: inc/extensions/hooks.php:325
+msgid "Entry ID and Note ID are required."
+msgstr ""
+
+#: inc/extensions/hooks.php:353
+msgid "Note not found."
+msgstr ""
+
+#: inc/extensions/hooks.php:366
+msgid "Failed to delete note."
+msgstr ""
+
+#: inc/extensions/hooks.php:399
+#: inc/extensions/hooks.php:478
+msgid "Entry ID is required."
+msgstr ""
+
+#: inc/extensions/hooks.php:485
+msgid "Note content is required."
+msgstr ""
+
+#: inc/extensions/hooks.php:523
+msgid "Failed to add note."
+msgstr ""
+
+#: inc/extensions/hooks.php:556
+msgid "Permission denied."
+msgstr ""
+
+#: inc/extensions/hooks.php:584
+msgid "Entry ID(s) are required."
+msgstr ""
+
+#: inc/extensions/hooks.php:593
+msgid "You must provide a valid email for the recipient."
+msgstr ""
+
+#: inc/extensions/hooks.php:615
+msgid "No email notifications found for this form."
+msgstr ""
+
+#. translators: Here %1$s is email notification label and %2$s is the user display name.
+#: inc/extensions/hooks.php:643
+msgid "Resend email notification \"%1$s\" initiated by %2$s."
+msgstr ""
+
+#. translators: Here, %s is email address.
+#: inc/extensions/hooks.php:658
+msgid "Email notification recipient: %s"
+msgstr ""
+
+#. translators: Here, %s is email address.
+#: inc/extensions/hooks.php:658
+msgid "Failed sending email notification to %s"
+msgstr ""
+
+#: inc/extensions/hooks.php:676
+msgid "No active email notifications found."
+msgstr ""
+
+#: inc/extensions/hooks.php:684
+msgid "Email notification sent successfully."
+msgstr ""
+
+#: inc/extensions/hooks.php:711
+msgid "Form ID is required."
+msgstr ""
+
+#: inc/extensions/hooks.php:820
+#: inc/pro/conversational-form.php:209
+msgid "Help Us Gather Valuable Insights!"
+msgstr ""
+
+#: inc/extensions/hooks.php:821
+#: inc/pro/conversational-form.php:212
+msgid "Answer a few quick questions to share your thoughts and make your voice heard."
+msgstr ""
+
+#: inc/extensions/hooks.php:823
+#: inc/pro/conversational-form.php:215
+msgid "Get Started"
+msgstr ""
+
+#: inc/extensions/hooks.php:1765
+msgid "Form ID is missing"
+msgstr ""
+
+#: inc/extensions/hooks.php:1778
+msgid "File types are not allowed"
+msgstr ""
+
+#: inc/extensions/hooks.php:1846
+msgid "File is not uploaded"
+msgstr ""
+
+#: inc/extensions/hooks.php:1905
+msgid "Form data must be an array."
+msgstr ""
+
+#. translators: Here %s means the users display name.
+#: inc/extensions/hooks.php:1940
+msgid "Entry edited by %s"
+msgstr ""
+
+#: inc/extensions/hooks.php:2102
+msgid "No changes detected - entry remains the same."
+msgstr ""
+
+#: inc/extensions/hooks.php:2109
+msgid "Failed to update entry data."
+msgstr ""
+
+#: inc/extensions/hooks.php:2116
+#: dist/entry.js:189
+msgid "Entry updated successfully."
+msgstr ""
+
+#: inc/extensions/page-break.php:116
+#: inc/extensions/page-break.php:156
+msgid "Page Break Label"
+msgstr ""
+
+#: inc/extensions/page-break.php:119
+#: inc/pro/conversational-form.php:959
+#: inc/pro/save-resume/init.php:670
+#: dist/entry.js:177
+msgid "Next"
+msgstr ""
+
+#: inc/extensions/page-break.php:261
+#: inc/pro/save-resume/init.php:690
+msgid "Go to Previous Page"
+msgstr ""
+
+#: inc/extensions/page-break.php:264
+#: inc/pro/save-resume/init.php:708
+msgid "Go to Next Page"
+msgstr ""
+
+#: inc/extensions/page-break.php:348
+#: inc/pro/conversational-form.php:290
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Welcome Screen Image"
+msgstr ""
+
+#: inc/fields/date-picker-markup.php:65
+msgid "Date"
+msgstr ""
+
+#: inc/fields/hidden-markup.php:39
+msgid "Hidden Field"
+msgstr ""
+
+#: inc/fields/rating-markup.php:89
+msgid "Rating"
+msgstr ""
+
+#. translators: %d represents the number of stars.
+#: inc/fields/rating-markup.php:118
+msgid "%d star"
+msgid_plural "%d stars"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/fields/rating-markup.php:124
+msgid "Poor Smiley"
+msgstr ""
+
+#: inc/fields/rating-markup.php:125
+msgid "Fair Smiley"
+msgstr ""
+
+#: inc/fields/rating-markup.php:126
+msgid "Good Smiley"
+msgstr ""
+
+#: inc/fields/rating-markup.php:127
+msgid "Very Good Smiley"
+msgstr ""
+
+#: inc/fields/rating-markup.php:128
+msgid "Excellent Smiley"
+msgstr ""
+
+#: inc/fields/rating-markup.php:133
+#: dist/entry.js:180
+msgid "Thumbs Up"
+msgstr ""
+
+#: inc/fields/rating-markup.php:134
+#: dist/entry.js:180
+msgid "Thumbs Down"
+msgstr ""
+
+#: inc/fields/slider-markup.php:111
+msgid "Slider"
+msgstr ""
+
+#: inc/fields/time-picker-markup.php:57
+msgid "Time"
+msgstr ""
+
+#: inc/fields/upload-markup.php:65
+msgid "Upload"
+msgstr ""
+
+#: inc/fields/upload-markup.php:105
+#: dist/blocks.js:180
+msgid "Click to upload or drag and drop"
+msgstr ""
+
+#: inc/global-settings.php:106
+msgid "Error Saving Settings!"
+msgstr ""
+
+#: inc/global-settings.php:106
+msgid "Global Settings"
+msgstr ""
+
+#: inc/global-settings.php:110
+msgid "Settings Saved Successfully."
+msgstr ""
+
+#: inc/integrations/webhooks.php:280
+msgid "(no title)"
+msgstr ""
+
+#. translators: Here %1$s is webhook name
+#: inc/integrations/webhooks.php:299
+msgid "Webhook \"%1$s\" was not triggered - conditions not met."
+msgstr ""
+
+#: inc/integrations/webhooks.php:305
+msgid "No message"
+msgstr ""
+
+#. translators: Here %1$s is webhook name
+#: inc/integrations/webhooks.php:320
+msgid "Webhook \"%1$s\" triggered successfully."
+msgstr ""
+
+#. translators: Here %1$s is webhook name, %2$s is webhook response code and %3$s is webhook response message.
+#: inc/integrations/webhooks.php:327
+msgid "Webhook \"%1$s\" failed to trigger - Response code: %2$s, Message: \"%3$s\"."
+msgstr ""
+
+#: inc/integrations/webhooks.php:345
+msgid "Webhook status notification"
+msgstr ""
+
+#: inc/pro/conversational-form.php:616
+#: inc/pro/conversational-form.php:684
+msgid "Conversational Form Background"
+msgstr ""
+
+#: inc/pro/conversational-form.php:627
+msgid "Link to homepage"
+msgstr ""
+
+#: inc/pro/conversational-form.php:628
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:434
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Site Logo"
+msgstr ""
+
+#. translators: %1$s: opening wrapper tag for the text, %2$s: opening tag for the bold text, %3$s: closing tag for the bold text, %4$s: closing wrapper tag
+#: inc/pro/conversational-form.php:963
+msgid "%1$sPress %2$sEnter%3$s%4$s"
+msgstr ""
+
+#: inc/pro/native-integrations.php:215
+#: inc/pro/native-integrations/services/config-manager.php:84
+msgid "Invalid security token. Please refresh the page and try again."
+msgstr ""
+
+#: inc/pro/native-integrations.php:228
+#: inc/pro/native-integrations/services/config-manager.php:396
+msgid "Integration name is required."
+msgstr ""
+
+#: inc/pro/native-integrations.php:240
+#: inc/pro/native-integrations/oauth-handler.php:66
+#: inc/pro/native-integrations/oauth-handler.php:339
+#: inc/pro/native-integrations/services/field-manager.php:73
+#: inc/pro/native-integrations/services/workflow-processor.php:145
+#: inc/pro/native-integrations/services/workflow-processor.php:866
+msgid "Integration configuration not found."
+msgstr ""
+
+#: inc/pro/native-integrations.php:262
+msgid "Plugin detection configuration is missing."
+msgstr ""
+
+#. translators: %s: Integration name.
+#. translators: %s: Plugin name from integration config.
+#: inc/pro/native-integrations.php:281
+#: inc/pro/native-integrations/wordpress-provider.php:50
+msgid "%s plugin is active and ready for integration!"
+msgstr ""
+
+#. translators: %s: Integration name.
+#. translators: %s: Plugin name
+#. translators: %s: Plugin name from integration config.
+#: inc/pro/native-integrations.php:293
+#: inc/pro/native-integrations/services/workflow-processor.php:697
+#: inc/pro/native-integrations/wordpress-provider.php:60
+msgid "%s plugin is not installed or not active."
+msgstr ""
+
+#: inc/pro/native-integrations.php:307
+msgid "Credentials are required for this integration."
+msgstr ""
+
+#: inc/pro/native-integrations/generic-provider.php:46
+msgid "Test endpoint URL not configured."
+msgstr ""
+
+#: inc/pro/native-integrations/generic-provider.php:64
+msgid "Credentials are required."
+msgstr ""
+
+#. translators: %s: The error message returned from the failed connection attempt.
+#: inc/pro/native-integrations/generic-provider.php:95
+msgid "Connection failed: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/generic-provider.php:106
+msgid "Connection successful!"
+msgstr ""
+
+#: inc/pro/native-integrations/generic-provider.php:113
+msgid "Connection failed. Please check your credentials."
+msgstr ""
+
+#. translators: %s: The exception error message from the failed connection test.
+#. translators: %s: Exception message
+#: inc/pro/native-integrations/generic-provider.php:124
+#: inc/pro/native-integrations/services/connection-tester.php:106
+msgid "Connection test error: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/fluentcrm/actions.php:51
+#: inc/pro/native-integrations/integrations/mailerpress/actions.php:51
+msgid "Subscribed"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/fluentcrm/actions.php:52
+#: inc/pro/native-integrations/integrations/mailerpress/actions.php:52
+msgid "Unsubscribed"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/fluentcrm/actions.php:53
+#: inc/pro/native-integrations/integrations/mailerpress/actions.php:53
+msgid "Pending"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/fluentcrm/actions.php:54
+#: inc/pro/native-integrations/integrations/mailerpress/actions.php:54
+msgid "Bounced"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/fluentcrm/actions.php:55
+#: inc/pro/native-integrations/integrations/mailerpress/actions.php:55
+msgid "Complained"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/fluentcrm/actions/add-contact.php:179
+msgid "Contact added/updated successfully."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/fluentcrm/actions/add-contact.php:188
+#: inc/pro/native-integrations/integrations/mailerpress/actions/add-contact.php:249
+msgid "Failed to add/update contact: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/fluentcrm/actions/remove-contact.php:83
+#: inc/pro/native-integrations/integrations/mailerpress/actions/remove-contact.php:91
+msgid "Contact removed from lists successfully."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/fluentcrm/actions/remove-contact.php:92
+#: inc/pro/native-integrations/integrations/mailerpress/actions/remove-contact.php:100
+msgid "Failed to remove contact: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-agent.php:112
+msgid "Agent created successfully."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-agent.php:125
+msgid "Failed to create agent: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-booking.php:234
+msgid "Booking created successfully."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-booking.php:243
+msgid "Failed to create booking: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-coupon.php:80
+msgid "Coupon created successfully."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-coupon.php:98
+msgid "Failed to create coupon: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-customer.php:71
+msgid ""
+"\n"
+"\n"
+"[TEST CUSTOMER - Created by SureForms workflow test]"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-customer.php:109
+msgid "Failed to update customer."
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-customer.php:119
+msgid "Customer updated successfully!"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-customer.php:147
+msgid "Failed to create customer."
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-customer.php:157
+msgid "Customer created successfully!"
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-customer.php:167
+msgid "Customer creation failed: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-order.php:164
+msgid "Order created successfully."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/latepoint/actions/create-order.php:173
+msgid "Failed to create order: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/update-booking.php:222
+msgid "Booking updated successfully."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/latepoint/actions/update-booking.php:231
+msgid "Failed to update booking: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/latepoint/actions/update-coupon.php:91
+msgid "Coupon updated successfully."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/latepoint/actions/update-coupon.php:109
+msgid "Failed to update coupon: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/mailerpress/actions/add-contact.php:235
+msgid "Contact updated successfully."
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/mailerpress/actions/add-contact.php:236
+msgid "Contact created successfully."
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/mailerpress/actions/delete-contact.php:120
+msgid "Contact deleted successfully."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/mailerpress/actions/delete-contact.php:129
+msgid "Failed to delete contact: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/mailpoet/actions/add-subscriber.php:58
+#: inc/pro/native-integrations/integrations/mailpoet/actions/remove-subscriber.php:58
+msgid "MailPoet API is unavailable. Please ensure MailPoet is installed and activated."
+msgstr ""
+
+#. translators: %s: Email address.
+#: inc/pro/native-integrations/integrations/mailpoet/actions/add-subscriber.php:116
+msgid "Subscriber with email %s already exists in MailPoet."
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/mailpoet/actions/add-subscriber.php:141
+msgid "Subscriber added successfully!"
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/mailpoet/actions/add-subscriber.php:149
+#: inc/pro/native-integrations/integrations/mailpoet/actions/remove-subscriber.php:141
+msgid "MailPoet API error: %s"
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/mailpoet/actions/add-subscriber.php:158
+msgid "Failed to add subscriber: %s"
+msgstr ""
+
+#. translators: %s: Email address.
+#: inc/pro/native-integrations/integrations/mailpoet/actions/remove-subscriber.php:85
+msgid "Subscriber with email %s does not exist in MailPoet."
+msgstr ""
+
+#. translators: %s: Email address.
+#: inc/pro/native-integrations/integrations/mailpoet/actions/remove-subscriber.php:114
+msgid "Subscriber %s is not subscribed to any of the selected lists."
+msgstr ""
+
+#: inc/pro/native-integrations/integrations/mailpoet/actions/remove-subscriber.php:133
+msgid "Subscriber removed from list(s) successfully!"
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/integrations/mailpoet/actions/remove-subscriber.php:150
+msgid "Failed to remove subscriber: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:60
+#: inc/pro/native-integrations/oauth-handler.php:118
+#: inc/pro/native-integrations/services/config-manager.php:165
+msgid "Integration type is required."
+msgstr ""
+
+#. translators: %s: Exception message
+#: inc/pro/native-integrations/oauth-handler.php:93
+msgid "Failed to get authorization URL: %s"
+msgstr ""
+
+#. translators: %s: Error message
+#: inc/pro/native-integrations/oauth-handler.php:132
+msgid "Token refresh failed: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:143
+msgid "OAuth tokens refreshed successfully."
+msgstr ""
+
+#. translators: %s: Exception message
+#: inc/pro/native-integrations/oauth-handler.php:157
+msgid "Token refresh error: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:182
+msgid "Missing required parameters."
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:205
+msgid "Failed to store OAuth tokens."
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:214
+msgid "OAuth authentication successful!"
+msgstr ""
+
+#. translators: %s: Exception message
+#: inc/pro/native-integrations/oauth-handler.php:229
+msgid "OAuth callback error: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:272
+msgid "OAuth token expired and no middleware configured for refresh."
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:278
+msgid "OAuth token expired and no refresh token available. Please re-authorize."
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:321
+msgid "No OAuth tokens found for this integration."
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:328
+msgid "No refresh token available. Please re-authorize."
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:365
+msgid "Failed to store refreshed tokens."
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:429
+msgid "Middleware URL not configured."
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:453
+msgid "Invalid response from middleware."
+msgstr ""
+
+#: inc/pro/native-integrations/oauth-handler.php:459
+#: inc/pro/native-integrations/oauth-handler.php:460
+msgid "Middleware request failed."
+msgstr ""
+
+#. translators: %s: Integration type
+#: inc/pro/native-integrations/services/config-manager.php:203
+msgid "Integration configuration not found for: %s"
+msgstr ""
+
+#. translators: %s: Exception message
+#: inc/pro/native-integrations/services/config-manager.php:238
+msgid "Failed to load configuration: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/services/config-manager.php:476
+msgid "Integration name and configuration data are required."
+msgstr ""
+
+#: inc/pro/native-integrations/services/config-manager.php:516
+msgid "Integration configuration saved successfully."
+msgstr ""
+
+#: inc/pro/native-integrations/services/config-manager.php:524
+msgid "Failed to save integration configuration."
+msgstr ""
+
+#: inc/pro/native-integrations/services/config-manager.php:545
+msgid "Integration ID or type is required for deletion."
+msgstr ""
+
+#: inc/pro/native-integrations/services/config-manager.php:565
+msgid "Integration deleted successfully."
+msgstr ""
+
+#: inc/pro/native-integrations/services/config-manager.php:574
+#: dist/formSettings.js:189
+msgid "Failed to delete integration."
+msgstr ""
+
+#: inc/pro/native-integrations/services/connection-tester.php:60
+msgid "Please provide valid credentials before testing the connection."
+msgstr ""
+
+#: inc/pro/native-integrations/services/connection-tester.php:130
+msgid "Test endpoint URL is required."
+msgstr ""
+
+#. translators: %s: Error message
+#: inc/pro/native-integrations/services/connection-tester.php:170
+msgid "Connection test failed: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/services/connection-tester.php:194
+msgid "Connection test successful! Integration is properly configured."
+msgstr ""
+
+#. translators: %s: HTTP status code
+#: inc/pro/native-integrations/services/connection-tester.php:204
+msgid "Connection test failed. HTTP Status: %d"
+msgstr ""
+
+#: inc/pro/native-integrations/services/field-manager.php:60
+msgid "Integration name and action are required."
+msgstr ""
+
+#: inc/pro/native-integrations/services/field-manager.php:85
+#: inc/pro/native-integrations/services/workflow-processor.php:158
+#: inc/pro/native-integrations/services/workflow-processor.php:872
+#: inc/pro/native-integrations/wordpress-provider.php:153
+msgid "Action configuration not found."
+msgstr ""
+
+#: inc/pro/native-integrations/services/field-manager.php:104
+msgid "No credentials found. Please configure the integration first."
+msgstr ""
+
+#. translators: %s: Exception message
+#: inc/pro/native-integrations/services/field-manager.php:150
+msgid "Failed to get dynamic fields: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:132
+msgid "Integration and workflow configuration are required."
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:171
+msgid "Integration is not configured or enabled."
+msgstr ""
+
+#. translators: %s: Error message
+#: inc/pro/native-integrations/services/workflow-processor.php:187
+#: inc/pro/native-integrations/services/workflow-processor.php:883
+msgid "Failed to get credentials: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:210
+msgid "No endpoint URL configured for this action."
+msgstr ""
+
+#. translators: %s: Error message from the API response
+#. translators: %s: Exception error message
+#: inc/pro/native-integrations/services/workflow-processor.php:282
+#: inc/pro/native-integrations/services/workflow-processor.php:357
+msgid "Test failed: %s"
+msgstr ""
+
+#. translators: %s: Workflow name
+#: inc/pro/native-integrations/services/workflow-processor.php:300
+msgid "Workflow \"%s\" tested successfully! The integration is working correctly."
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:301
+#: inc/pro/native-integrations/services/workflow-processor.php:752
+msgid "Unnamed workflow"
+msgstr ""
+
+#. translators: %d: HTTP status code
+#: inc/pro/native-integrations/services/workflow-processor.php:331
+#: inc/pro/native-integrations/services/workflow-processor.php:1192
+#: inc/pro/native-integrations/transformers/kit-transformer.php:268
+msgid "HTTP %d error"
+msgstr ""
+
+#. translators: %1$s: Error message, %2$d: HTTP status code
+#: inc/pro/native-integrations/services/workflow-processor.php:339
+msgid "Test failed: %1$s (HTTP %2$d)"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:684
+msgid "Failed to create provider instance for testing."
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:723
+#: inc/pro/native-integrations/utils/integration-utils.php:362
+msgid "Provider does not support action execution."
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:736
+msgid "Invalid response from action execution."
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:743
+msgid "No response message available."
+msgstr ""
+
+#. translators: %s: Workflow name
+#: inc/pro/native-integrations/services/workflow-processor.php:751
+msgid "WordPress plugin workflow \"%s\" tested successfully! The integration is working correctly."
+msgstr ""
+
+#. translators: %s: Error message
+#. translators: %s: Exception error message
+#: inc/pro/native-integrations/services/workflow-processor.php:767
+#: inc/pro/native-integrations/services/workflow-processor.php:784
+msgid "WordPress plugin workflow test failed: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:841
+msgid "Integration is disabled or not configured."
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:853
+msgid "Unnamed"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:856
+msgid "Workflow was not triggered - conditions not met."
+msgstr ""
+
+#. translators: %s: HTTP error message
+#: inc/pro/native-integrations/services/workflow-processor.php:1164
+msgid "HTTP request failed: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:1178
+msgid "Request completed successfully."
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:1351
+msgid "Unknown Workflow"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:1353
+msgid "No details available"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:1369
+msgid "Success"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:1369
+msgid "Failed"
+msgstr ""
+
+#. translators: %1$d: Number of successful workflows, %2$d: Total number of workflows
+#: inc/pro/native-integrations/services/workflow-processor.php:1384
+msgid "Summary: %1$d of %2$d workflows executed successfully"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:1392
+msgid "Native Integrations - All workflows executed successfully"
+msgstr ""
+
+#: inc/pro/native-integrations/services/workflow-processor.php:1393
+msgid "Native Integrations - Some workflows failed"
+msgstr ""
+
+#. translators: %1$s: operation name, %2$s: error message
+#: inc/pro/native-integrations/transformers/kit-transformer.php:236
+#: inc/pro/native-integrations/transformers/kit-transformer.php:277
+msgid "Kit %1$s failed: %2$s"
+msgstr ""
+
+#. translators: %s: operation name
+#: inc/pro/native-integrations/transformers/kit-transformer.php:252
+msgid "Kit %s completed successfully."
+msgstr ""
+
+#: inc/pro/native-integrations/utils/integration-utils.php:354
+msgid "Failed to create provider instance."
+msgstr ""
+
+#: inc/pro/native-integrations/utils/integration-utils.php:462
+msgid "No credentials found for this integration."
+msgstr ""
+
+#: inc/pro/native-integrations/utils/integration-utils.php:472
+msgid "Failed to decrypt integration credentials."
+msgstr ""
+
+#: inc/pro/native-integrations/utils/integration-utils.php:483
+msgid "Configuration manager is required to create an OAuth handler."
+msgstr ""
+
+#. translators: %s: Integration name.
+#: inc/pro/native-integrations/wordpress-action.php:76
+msgid "%s plugin is not active."
+msgstr ""
+
+#. translators: %s: Error message.
+#: inc/pro/native-integrations/wordpress-action.php:93
+#: inc/pro/native-integrations/wordpress-provider.php:212
+msgid "Action execution failed: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/wordpress-action.php:122
+msgid "Invalid data provided."
+msgstr ""
+
+#. translators: %s: Comma-separated list of missing fields.
+#: inc/pro/native-integrations/wordpress-action.php:137
+msgid "Missing required fields: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/wordpress-provider.php:39
+msgid "Plugin detection configuration missing."
+msgstr ""
+
+#: inc/pro/native-integrations/wordpress-provider.php:161
+msgid "No handler specified for this action."
+msgstr ""
+
+#. translators: %s: Action name.
+#: inc/pro/native-integrations/wordpress-provider.php:188
+msgid "No handler responded to action: %s"
+msgstr ""
+
+#: inc/pro/native-integrations/wordpress-provider.php:203
+msgid "Action executed successfully."
+msgstr ""
+
+#: inc/pro/native-integrations/wordpress-provider.php:221
+msgid "Invalid handler configuration. Expected action-based handler with type and action specified."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:80
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:22
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:42
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:159
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:215
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:267
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Save & Progress"
+msgstr ""
+
+#: inc/pro/save-resume/init.php:254
+msgid "Form data is not found."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:273
+msgid "Form Id is missing."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:297
+msgid "Invalid form data."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:307
+msgid "Save and Resume is not enabled for this form."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:335
+msgid "Could not generate unique ID for saving form. Please try again."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:397
+msgid "Invalid request data."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:436
+#: inc/translatable.php:104
+#: assets/js/unminified/package/pro/save-resume/save-resume-frontend.js:1748
+#: dist/entry.js:177
+#: dist/package/pro/saveResumeFrontend.js:1
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:444
+msgid "Invalid token."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:452
+msgid "Form ID is missing."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:462
+msgid "Invalid or expired token."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:474
+msgid "Form not found."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:499
+#: inc/pro/save-resume/init.php:1280
+msgid "Resume Your Form"
+msgstr ""
+
+#. translators: %s: Form title
+#: inc/pro/save-resume/init.php:514
+msgid "Resume Your Form: %s"
+msgstr ""
+
+#: inc/pro/save-resume/init.php:581
+#: inc/translatable.php:106
+#: assets/js/unminified/package/pro/save-resume/save-resume-frontend.js:1805
+#: dist/package/pro/saveResumeFrontend.js:1
+msgid "Email sent successfully!"
+msgstr ""
+
+#: inc/pro/save-resume/init.php:586
+msgid "Email could not be sent. This may be due to email server configuration."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:612
+msgid "However, you can still copy the resume link above."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:669
+#: dist/entry.js:177
+msgid "Previous"
+msgstr ""
+
+#: inc/pro/save-resume/init.php:818
+msgid "Invalid or Expired Link"
+msgstr ""
+
+#: inc/pro/save-resume/init.php:819
+msgid "The resume link you used is invalid or has expired. Please start a new form submission."
+msgstr ""
+
+#: inc/pro/save-resume/init.php:996
+#: assets/js/unminified/package/pro/zapier-integration.js:32
+#: dist/package/pro/nativeIntegrations.js:1
+#: dist/package/pro/zapierIntegration.js:1
+msgid "Copy to clipboard"
+msgstr ""
+
+#: inc/pro/save-resume/init.php:1018
+msgid "Enter your email address"
+msgstr ""
+
+#: inc/pro/save-resume/init.php:1032
+msgid "Send Link"
+msgstr ""
+
+#: inc/pro/save-resume/init.php:1111
+#: inc/pro/save-resume/utils.php:47
+msgid "Save & Continue"
+msgstr ""
+
+#: inc/pro/save-resume/init.php:1257
+msgid "Saves your current progress and provides a link to resume later."
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:108
+msgid "We've Saved Your Progress!"
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:108
+msgid "Your responses are safe! Use the link below to return and complete your form at any time within the next 30 days."
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:108
+msgid "Or, you can just enter your email, and we'll send the link straight to your inbox."
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:123
+msgid "Link Sent Successfully!"
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:123
+msgid "We've sent a copy of your save link to"
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:123
+msgid "Check your inbox and spam folder, just in case, to continue your form later."
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:138
+msgid "Hey There!"
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:138
+msgid "Thank you for using SureForms!"
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:138
+msgid "Your progress for the form has been saved successfully."
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:138
+msgid "Click the button below anytime within the next 30 days to resume and complete your form from any device:"
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:138
+msgid "Please note: This link is unique to you, so keep it safe. It will expire in 30 days and should not be shared with others."
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:138
+msgid "Best,"
+msgstr ""
+
+#: inc/pro/save-resume/utils.php:138
+msgid "The SureForms Team"
+msgstr ""
+
+#: inc/pro/signature/init.php:86
+msgid "Opens signature image in a new window"
+msgstr ""
+
+#. translators: %s represents the maximum file size allowed in MB
+#: inc/pro/signature/init.php:269
+#: inc/pro/signature/init.php:330
+#: inc/translatable.php:95
+msgid "File size should not exceed %s MB."
+msgstr ""
+
+#: inc/pro/signature/init.php:270
+#: inc/pro/signature/init.php:331
+#: inc/translatable.php:97
+msgid "File type not allowed."
+msgstr ""
+
+#: inc/pro/signature/init.php:271
+msgid "Please enter a valid signature!"
+msgstr ""
+
+#: inc/pro/signature/init.php:332
+msgid "Please enter a valid signature value!"
+msgstr ""
+
+#: inc/pro/signature/signature-markup.php:50
+#: dist/entry.js:174
+msgid "Signature"
+msgstr ""
+
+#: inc/pro/signature/signature-markup.php:81
+msgid "Clear Signature"
+msgstr ""
+
+#: inc/pro/signature/signature-markup.php:90
+msgid "Upload Signature"
+msgstr ""
+
+#: inc/translatable.php:48
+#: dist/blocks.js:180
+msgid "AM"
+msgstr ""
+
+#: inc/translatable.php:49
+#: dist/blocks.js:180
+msgid "PM"
+msgstr ""
+
+#. translators: %s represents the file size in MB
+#: inc/translatable.php:52
+msgid "%s MB"
+msgstr ""
+
+#. translators: %s represents the item to be deleted
+#: inc/translatable.php:55
+msgid "Delete %s"
+msgstr ""
+
+#. translators: %s represents the name of the deleted file
+#: inc/translatable.php:58
+msgid "Deleted %s file"
+msgstr ""
+
+#. translators: %1$s represents the current page number, %2$s represents the total page number
+#: inc/translatable.php:61
+msgid "Page %1$s of %2$s"
+msgstr ""
+
+#. translators: %1$s represents the selected rating value in format value (for star icon shape) + label
+#: inc/translatable.php:64
+msgid "You have selected %s."
+msgstr ""
+
+#. translators: %s represents the selected option
+#: inc/translatable.php:67
+msgid "You have selected %s"
+msgstr ""
+
+#: inc/translatable.php:69
+msgid "Past dates are not allowed."
+msgstr ""
+
+#. translators: %s represents the maximum number of files allowed
+#: inc/translatable.php:100
+msgid "You can only upload up to %s files."
+msgstr ""
+
+#: inc/translatable.php:103
+#: assets/js/unminified/package/pro/save-resume/save-resume-frontend.js:1733
+#: dist/package/pro/saveResumeFrontend.js:1
+msgid "Please enter your email address."
+msgstr ""
+
+#: inc/translatable.php:105
+#: assets/js/unminified/package/pro/save-resume/save-resume-frontend.js:1761
+#: dist/package/pro/saveResumeFrontend.js:1
+msgid "Sending…"
+msgstr ""
+
+#: inc/translatable.php:107
+msgid "Failed to send email. Please try again!"
+msgstr ""
+
+#: inc/translatable.php:108
+msgid "An error occurred. Please try again!"
+msgstr ""
+
+#: plugin-loader.php:288
+msgid "Activate the SureForms Plugin"
+msgstr ""
+
+#. translators: %s: SureForms Pro Product Name.
+#: plugin-loader.php:290
+msgid "Before you can use all the features of %s, you need to activate the SureForms plugin first."
+msgstr ""
+
+#: plugin-loader.php:291
+msgid "Activate Now"
+msgstr ""
+
+#: plugin-loader.php:299
+msgid "Install and Activate the SureForms Plugin"
+msgstr ""
+
+#. translators: %s: SureForms Pro Product Name.
+#: plugin-loader.php:301
+msgid "Before you can use all the features of %s, you need to install and activate the SureForms plugin first."
+msgstr ""
+
+#: plugin-loader.php:302
+msgid "Install SureForms"
+msgstr ""
+
+#: plugin-loader.php:331
+msgid "SureForms Pro is not working because you are using an old version of SureForms."
+msgstr ""
+
+#: plugin-loader.php:332
+msgid "Update SureForms Now"
+msgstr ""
+
+#: assets/js/unminified/conditional-emails/EmailConditionalLogic.js:60
+#: assets/js/unminified/package/pro/native-integrations/components/IntegrationsConditionalLogic.js:17
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "Add Trigger Conditions"
+msgstr ""
+
+#: assets/js/unminified/conditional-emails/EmailConditionalLogic.js:61
+#: dist/srfmConditionalEmails.js:171
+msgid "Send emails based on what users fill out. Choose who gets notified and when, automatically."
+msgstr ""
+
+#: assets/js/unminified/conditional-emails/EmailConditionalLogic.js:65
+#: dist/srfmConditionalEmails.js:171
+msgid "Trigger email when "
+msgstr ""
+
+#: assets/js/unminified/conditional-emails/EmailConditionalLogic.js:66
+#: assets/js/unminified/package/pro/native-integrations/components/IntegrationsConditionalLogic.js:23
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid " of the conditions match"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/calculation-admin.js:23
+#: dist/package/business/srfmCalculationAdmin.js:1
+msgid "Quickly build AI-powered calculation forms, such as mortgage or loan calculators, with ease."
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/calculation-admin.js:35
+#: assets/js/unminified/package/pro/srfm-conversational-form-admin.js:72
+#: dist/package/business/srfmCalculationAdmin.js:1
+#: dist/package/pro/srfmConversationalFormAdmin.js:1
+#: dist/package/pro/srfmConversationalForms.js:1
+msgid "Read More"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/calculation-admin.js:61
+#: dist/package/business/srfmCalculationAdmin.js:1
+msgid "Website cost calculator to estimate project pricing"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/calculation-admin.js:67
+#: dist/package/business/srfmCalculationAdmin.js:1
+msgid "Loan calculator to find monthly repayment amount"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/calculation-admin.js:73
+#: dist/package/business/srfmCalculationAdmin.js:1
+msgid "BMI calculator to check body health instantly"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/calculation-admin.js:79
+#: dist/package/business/srfmCalculationAdmin.js:1
+msgid "Product price calculator to total custom item costs"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/calculation-admin.js:85
+#: dist/package/business/srfmCalculationAdmin.js:1
+msgid "Service quote calculator to estimate client charges"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/calculation-admin.js:102
+#: dist/package/business/srfmCalculationAdmin.js:1
+msgid "E.g. Create a tip calculator that helps users calculate the tip amount based on the bill total and tip percentage."
+msgstr ""
+
+#. translators: abbreviation for units
+#: assets/js/unminified/package/business/calculation/components/calculation-popup.js:56
+#: dist/package/business/srfmCalculation.js:189
+msgid "Configure Calculation"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/calculation.js:118
+#: dist/package/business/srfmCalculation.js:189
+msgid "Enable Calculation"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/calculation.js:130
+#: dist/package/business/srfmCalculation.js:189
+msgid "Rounding"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/index.js:162
+#: dist/package/business/srfmCalculation.js:189
+msgid "Use the {calculation-result} placeholder in the heading block’s content or description to dynamically display the computed result based on the given formula."
+msgstr ""
+
+#. translators: %s is replaced by the Payment block label.
+#: assets/js/unminified/package/business/calculation/components/utils.js:186
+#: dist/package/business/srfmCalculation.js:186
+msgid "Formula is valid "
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/utils.js:189
+#: dist/package/business/srfmCalculation.js:186
+msgid "Formula is invalid "
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/utils.js:214
+#: assets/js/unminified/package/business/calculation/components/utils.js:330
+#: dist/package/business/srfmCalculation.js:186
+msgid "Formula"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/utils.js:229
+#: dist/package/business/srfmCalculation.js:186
+msgid "Collapse Editor"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/utils.js:334
+#: dist/package/business/srfmCalculation.js:186
+msgid "Expand Editor"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/utils.js:421
+#: dist/package/business/srfmCalculation.js:186
+msgid "Show Values"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/utils.js:434
+#: dist/package/business/srfmCalculation.js:186
+msgid "Hide Button"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/utils.js:457
+#: dist/package/business/srfmCalculation.js:186
+msgid "Number Format"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/utils.js:467
+#: dist/package/business/srfmCalculation.js:186
+msgid "US Style (Eg: 9,999.99)"
+msgstr ""
+
+#: assets/js/unminified/package/business/calculation/components/utils.js:471
+#: dist/package/business/srfmCalculation.js:186
+msgid "EU Style (Eg: 9.999,99)"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/CptConditionalLogic.js:28
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Trigger post feed when "
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:16
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Featured Image Mapping"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:29
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Image"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:30
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Select Featured Image"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:41
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Select Image"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:62
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Alt Text"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:72
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:104
+#: assets/js/unminified/package/business/custom-post-type/components/PostGeneralPanel.js:62
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:99
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:175
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-meta-key-value-pair.js:297
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:271
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1079
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1106
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1148
+#: dist/blocks.js:182
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmCustomPostType.js:174
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Form input tags"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:76
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:108
+#: assets/js/unminified/package/business/custom-post-type/components/PostGeneralPanel.js:69
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:103
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:182
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1083
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1110
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1152
+#: dist/blocks.js:182
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmCustomPostType.js:174
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Generic tags"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:88
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Enter alt text for featured image"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:94
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Caption"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/FeaturedImagePanel.js:120
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Enter caption for featured image"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedEditor.js:152
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:195
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:116
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:167
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Please fill out the required field."
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedEditor.js:234
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:22
+#: assets/js/unminified/package/business/custom-post-type/index.js:37
+#: assets/js/unminified/package/business/custom-post-type/index.js:48
+#: assets/js/unminified/package/business/custom-post-type/index.js:69
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Post Feed"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedEditor.js:237
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:148
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:157
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:212
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:121
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:126
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:223
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:225
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:189
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:270
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:277
+#: dist/blocks.js:182
+#: dist/entry.js:177
+#: dist/entry.js:189
+#: dist/formSettings.js:7
+#: dist/formSettings.js:10
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:1
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistration.js:7
+#: dist/package/business/srfmUserRegistration.js:10
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Cancel"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedEditor.js:246
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Feed Name"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedEditor.js:262
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Enter feed name"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:23
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:361
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:240
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:265
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-meta-key-value-pair.js:331
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:341
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmCustomPostType.js:174
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Add New"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:26
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Automatically create WordPress posts from form submissions."
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:34
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:211
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:277
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:81
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:208
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Status"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:37
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:62
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:280
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:208
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:85
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Name"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:40
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:283
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:93
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistration.js:7
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Actions"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:60
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Post Feed Mapping"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:66
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Set up field mapping to generate posts automatically."
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:107
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:192
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:233
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Duplicate"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:120
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:197
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:247
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistration.js:7
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Edit"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:141
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:114
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:263
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Are you sure to delete this?"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:165
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:177
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:131
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:136
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:285
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:292
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Confirm"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostFeedPage.js:200
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:154
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:230
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:232
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:313
+#: dist/blocks.js:182
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/business/srfmUserRegistration.js:7
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Delete"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostGeneralPanel.js:15
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Title"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostGeneralPanel.js:16
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Content"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostGeneralPanel.js:17
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Excerpt"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostGeneralPanel.js:24
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Post Field Mapping"
+msgstr ""
+
+#. translators: %s is a translatable field name.
+#: assets/js/unminified/package/business/custom-post-type/components/PostGeneralPanel.js:34
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Post %s"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:41
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Post Settings"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:45
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Visibility"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:49
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Public"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:64
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Protected"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:85
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Post Password"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:139
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Post Type"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:140
+#: assets/js/unminified/package/business/custom-post-type/index.js:322
+#: assets/js/unminified/package/business/custom-post-type/index.js:334
+#: dist/package/business/srfmCustomPostType.js:171
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Select Post Type"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:156
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Post"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:212
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Select Post Status"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:224
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Draft"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:270
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Date & Time"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:274
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Select Date"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:284
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:293
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:308
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Entry Date & Time"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:289
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:320
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:400
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Custom Date & Time"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:349
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Author"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:350
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Select Author"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:363
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "Logged in User"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/PostSettingsPanel.js:409
+#: dist/package/business/srfmCustomPostType.js:171
+msgid "If no date is provided, the entry date will be used by default. If a future date is specified, the post will be scheduled to go live at that date and time."
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:19
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Taxonomies"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:57
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:79
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:127
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:227
+#: dist/package/business/srfmCustomPostType.js:174
+#: dist/package/business/srfmCustomPostType.js:177
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Select Taxonomy Value"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:65
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:88
+#: dist/package/business/srfmCustomPostType.js:174
+#: dist/package/business/srfmCustomPostType.js:177
+msgid "Field Value"
+msgstr ""
+
+#. translators: %s is the singular label of the taxonomy.
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:73
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:96
+#: dist/package/business/srfmCustomPostType.js:177
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Assign %s"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:163
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Generic Smart Tags"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:301
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Enter Custom Value"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:318
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:81
+#: dist/package/business/srfmCustomPostType.js:174
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Switch to select"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/TaxonomyPanel.js:368
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "No taxonomies found."
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:25
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Post Meta"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:31
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Map your custom fields with form submissions. You can also create a custom meta key from here if needed."
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:67
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Enter Post Meta Key"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:118
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:131
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Select Post Meta Key"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:208
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "Select a Field or Type Custom value"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:227
+#: dist/package/business/srfmCustomPostType.js:174
+msgid "No post meta found."
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/index.js:293
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Enable Taxonomies"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/index.js:353
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Select Taxonomy"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/index.js:374
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "No Taxonomies available for this Post Type"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/index.js:388
+#: assets/js/unminified/package/business/custom-post-type/index.js:394
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Select Taxonomy Type"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/index.js:396
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "All"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/index.js:399
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Selected"
+msgstr ""
+
+#: assets/js/unminified/package/business/custom-post-type/index.js:436
+#: dist/package/business/srfmCustomPostType.js:180
+msgid "Terms"
+msgstr ""
+
+#. Translators: %s is the taxonomy label
+#. translators: %s is the field label.
+#: assets/js/unminified/package/business/custom-post-type/index.js:443
+#: dist/entry.js:183
+#: dist/package/business/srfmCustomPostType.js:183
+msgid "Select %s"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/context.js:36
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:105
+#: dist/package/business/srfmPdf.js:171
+msgid "New Template"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/context.js:153
+#: dist/package/business/srfmPdf.js:171
+msgid "Name is required"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/context.js:154
+#: dist/package/business/srfmPdf.js:171
+msgid "PDF content is required"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/library-download.js:47
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:264
+#: assets/js/unminified/package/business/pdf/index.js:39
+#: assets/js/unminified/package/business/pdf/index.js:89
+#: dist/package/business/srfmPdf.js:171
+msgid "PDF Generation"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/library-download.js:49
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:269
+#: dist/package/business/srfmPdf.js:171
+msgid "Generate and customize PDF copies of form submissions."
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/library-download.js:75
+#: dist/package/business/srfmPdf.js:171
+msgid "Get Everything You Need for Perfect PDFs"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/library-download.js:85
+#: dist/package/business/srfmPdf.js:171
+msgid "To make your PDFs look clean and professional, SureForms needs a quick one-time setup. Just download the resources below—SureForms handles the rest."
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/library-download.js:104
+#: dist/package/business/srfmPdf.js:171
+msgid "Downloading…"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/library-download.js:105
+#: dist/package/business/srfmPdf.js:171
+msgid "Get PDF Resources"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:27
+#: dist/package/business/srfmPdf.js:171
+msgid "A1 (594 x 841mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:28
+#: dist/package/business/srfmPdf.js:171
+msgid "A2 (420 x 594mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:29
+#: dist/package/business/srfmPdf.js:171
+msgid "A3 (297 x 420mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:30
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:112
+#: dist/package/business/srfmPdf.js:171
+msgid "A4 (210 x 297mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:31
+#: dist/package/business/srfmPdf.js:171
+msgid "A5 (148 x 210mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:32
+#: dist/package/business/srfmPdf.js:171
+msgid "A6 (105 x 148mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:33
+#: dist/package/business/srfmPdf.js:171
+msgid "A7 (74 x 105mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:34
+#: dist/package/business/srfmPdf.js:171
+msgid "A8 (52 x 74mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:35
+#: dist/package/business/srfmPdf.js:171
+msgid "A9 (37 x 52mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:36
+#: dist/package/business/srfmPdf.js:171
+msgid "A10 (26 x 37mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:37
+#: dist/package/business/srfmPdf.js:171
+msgid "B0 (1414 x 1000mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:38
+#: dist/package/business/srfmPdf.js:171
+msgid "B1 (1000 x 707mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:39
+#: dist/package/business/srfmPdf.js:171
+msgid "B2 (707 x 500mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:40
+#: dist/package/business/srfmPdf.js:171
+msgid "B3 (500 x 353mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:41
+#: dist/package/business/srfmPdf.js:171
+msgid "B4 (353 x 250mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:42
+#: dist/package/business/srfmPdf.js:171
+msgid "B5 (250 x 176mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:43
+#: dist/package/business/srfmPdf.js:171
+msgid "B6 (176 x 125mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:44
+#: dist/package/business/srfmPdf.js:171
+msgid "B7 (125 x 88mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:45
+#: dist/package/business/srfmPdf.js:171
+msgid "B8 (88 x 62mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:46
+#: dist/package/business/srfmPdf.js:171
+msgid "B9 (62 x 44mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:47
+#: dist/package/business/srfmPdf.js:171
+msgid "B10 (44 x 31mm)"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:48
+#: dist/package/business/srfmPdf.js:171
+msgid "201 x 297mm"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:52
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:131
+#: dist/package/business/srfmPdf.js:171
+msgid "Portrait"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:53
+#: dist/package/business/srfmPdf.js:171
+msgid "Landscape"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:71
+#: dist/package/business/srfmPdf.js:171
+msgid "Enter template name"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:83
+#: dist/package/business/srfmPdf.js:171
+msgid "Template"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:104
+#: dist/package/business/srfmPdf.js:171
+msgid "Paper Size"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:124
+#: dist/package/business/srfmPdf.js:171
+msgid "Paper Orientation"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:147
+#: dist/package/business/srfmPdf.js:171
+msgid "PDF Password"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:156
+#: dist/package/business/srfmPdf.js:171
+msgid "Enter template password"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-configuration.js:181
+#: dist/package/business/srfmPdf.js:171
+msgid "PDF Configuration"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:83
+#: dist/package/business/srfmPdf.js:171
+msgid "No PDF Template found"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:86
+#: dist/package/business/srfmPdf.js:171
+msgid "Create a PDF Template to start generating PDFs from your form submissions"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:167
+#: dist/package/business/srfmPdf.js:171
+msgid "PDF Status"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:216
+#: dist/package/business/srfmPdf.js:171
+msgid "Are you sure you want to delete the PDF library? This will remove all PDF resources and you will need to download them again."
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/components/pdf-generation.js:257
+#: dist/package/business/srfmPdf.js:171
+msgid "Delete PDF Library"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/index.js:63
+#: dist/package/business/srfmPdf.js:171
+msgid "PDF Item"
+msgstr ""
+
+#: assets/js/unminified/package/business/pdf/index.js:70
+#: dist/package/business/srfmPdf.js:171
+msgid "PDF"
+msgstr ""
+
+#. translators: abbreviation for units
+#: assets/js/unminified/package/business/repeater/editor/edit.js:88
+#: assets/js/unminified/package/business/user-registration/link/edit.js:84
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:115
+#: assets/js/unminified/package/business/user-registration/password/editor/settings.js:40
+#: assets/js/unminified/package/pro/signature/editor/edit.js:66
+#: dist/blocks.js:172
+#: dist/blocks.js:180
+#: dist/blocks.js:182
+#: dist/package/business/repeaterAdmin.js:174
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+#: dist/package/pro/signatureAdmin.js:174
+msgid "Attributes"
+msgstr ""
+
+#: assets/js/unminified/package/business/repeater/editor/edit.js:92
+#: assets/js/unminified/package/business/user-registration/password/editor/settings.js:105
+#: assets/js/unminified/package/pro/signature/editor/edit.js:95
+#: dist/blocks.js:180
+#: dist/blocks.js:182
+#: dist/package/business/repeaterAdmin.js:174
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+#: dist/package/pro/signatureAdmin.js:174
+msgid "Help Text"
+msgstr ""
+
+#: assets/js/unminified/package/business/repeater/editor/edit.js:104
+#: dist/package/business/repeaterAdmin.js:174
+msgid "Minimum Inputs"
+msgstr ""
+
+#: assets/js/unminified/package/business/repeater/editor/edit.js:123
+#: dist/package/business/repeaterAdmin.js:174
+msgid "Maximum Inputs"
+msgstr ""
+
+#: assets/js/unminified/package/business/srfm-custom-app.js:11
+#: dist/package/business/srfmCustomApp.js:1
+msgid "OttoKit Response"
+msgstr ""
+
+#: assets/js/unminified/package/business/srfm-custom-app.js:13
+#: dist/package/business/srfmCustomApp.js:1
+msgid "Show OttoKit Response"
+msgstr ""
+
+#: assets/js/unminified/package/business/srfm-custom-app.js:16
+#: dist/package/business/srfmCustomApp.js:1
+msgid "Below Form"
+msgstr ""
+
+#: assets/js/unminified/package/business/srfm-custom-app.js:20
+#: dist/package/business/srfmCustomApp.js:1
+msgid "Confirmation Page"
+msgstr ""
+
+#: assets/js/unminified/package/business/srfm-custom-app.js:34
+#: dist/package/business/srfmCustomApp.js:1
+msgid "Response Loading Text"
+msgstr ""
+
+#: assets/js/unminified/package/business/srfm-custom-app.js:50
+#: dist/package/business/srfmCustomApp.js:1
+msgid "Response Wait Time ( Seconds )"
+msgstr ""
+
+#: assets/js/unminified/package/business/srfm-custom-app.js:64
+#: dist/package/business/srfmCustomApp.js:1
+msgid "Maximum duration the form will wait to receive a response from OttoKit. If your OttoKit workflow will take longer to send a response, increase the wait time accordingly."
+msgstr ""
+
+#: assets/js/unminified/package/business/srfm-custom-app.js:74
+#: dist/package/business/srfmCustomApp.js:1
+msgid "Hide Copy Text Button"
+msgstr ""
+
+#: assets/js/unminified/package/business/srfm-custom-app.js:86
+#: dist/package/business/srfmCustomApp.js:1
+msgid "Hide Download All Button"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:79
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Enable Custom Registration Page "
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:83
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Enable this to assign your Custom Registration page and offer a personalized sign-up experience."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:88
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Select Registration Page"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:95
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Enable Custom Login Page "
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:96
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Enable this to assign your Custom Login page and offer a personalized log-in experience."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:101
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Select Login Page"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:135
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Search for a page"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:142
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:608
+#: dist/blocks.js:182
+#: dist/formSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:189
+#: dist/package/pro/nativeIntegrations.js:177
+msgid "Select"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:220
+#: assets/js/unminified/package/business/user-registration/user-registration.js:58
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Login/Registration"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/link/edit.js:53
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Prefix Text"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/link/edit.js:58
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "URL"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/link/edit.js:64
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Suffix Text"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/link/edit.js:69
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Hyperlink Text"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/link/edit.js:97
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Text Alignment"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/link/edit.js:113
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Left"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/link/edit.js:122
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Center"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/link/edit.js:134
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Right"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:50
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Email or Username"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:67
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:119
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Remember Me"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:74
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:128
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Forgot Password"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:83
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Sign In"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:89
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Don't have an account? "
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:90
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:140
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Sign Up"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:149
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Hide form for logged in users"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/login/editor/edit.js:163
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Login Message"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/password/editor/settings.js:44
+#: assets/js/unminified/package/pro/signature/editor/edit.js:70
+#: dist/blocks.js:180
+#: dist/blocks.js:182
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+#: dist/package/pro/signatureAdmin.js:174
+msgid "Required"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/password/editor/settings.js:52
+#: assets/js/unminified/package/pro/signature/editor/edit.js:78
+#: dist/blocks.js:180
+#: dist/blocks.js:182
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+#: dist/package/pro/signatureAdmin.js:174
+msgid "Error Message"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/password/editor/settings.js:67
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Enable Password Strength"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/password/editor/settings.js:79
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Enable Password Confirmation"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/password/editor/settings.js:93
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Enable Password Visibility Toggle"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/password/editor/settings.js:116
+#: dist/blocks.js:180
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Placeholder"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/register/editor/edit.js:54
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:35
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "First Name"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/register/editor/edit.js:62
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:39
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Last Name"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/register/editor/edit.js:70
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:31
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Username"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/register/editor/edit.js:78
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:43
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:350
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Email"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/context.js:36
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:186
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:340
+#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:262
+#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:283
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "User Registration"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-meta-key-value-pair.js:224
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Enter Custom Meta Key"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-meta-key-value-pair.js:244
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-meta-key-value-pair.js:250
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Select Meta Key"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-meta-key-value-pair.js:269
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "User Meta"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-meta-key-value-pair.js:288
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Select a Field or Type Custom Value"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:60
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:223
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Create User"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:61
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:224
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Update User"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:82
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Simple Email"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:84
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Email Notification"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:211
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Enter Feed Name"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:219
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "User Registration Type"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:248
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Registration Field Mapping"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:260
+#: dist/blocks.js:182
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Select Field"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:287
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "User Role"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:293
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Subscriber"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:317
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Additional Options"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:323
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Send Email"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:324
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Automatically sends the new user an email with their account details."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:342
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Email Type"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:371
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Auto Login"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:372
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Allow the user to login automatically after registration."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:89
+#: dist/blocks.js:182
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Type"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:114
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "User Registration Mapping"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:120
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Create User Registration Mapping to on-board users"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:135
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "User Registration disabled successfully."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:140
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "User Registration enabled successfully."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:154
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Update User configurations cannot be duplicated."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:167
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "User Registration duplicated successfully."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:178
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "User Registration deleted successfully."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:345
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Register new users or update existing accounts with form submissions."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:380
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Add a Registration block to your form first to use User Registration Mapping."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:96
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Login block cannot be added when other blocks are present in the form."
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/user-registration.js:13
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Password Strength Weak"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/user-registration.js:17
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Password Strength Moderate"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/user-registration.js:21
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Password Strength Strong"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/user-registration.js:25
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Password Strength Very Strong"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/user-registration.js:29
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Confirmation Password Mismatch"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/user-registration.js:43
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Password Block"
+msgstr ""
+
+#: assets/js/unminified/package/business/user-registration/user-registration.js:61
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Onboard new users or update existing accounts through beautiful looking forms."
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/IntegrationCredentialsContext.js:121
+#: assets/js/unminified/package/pro/native-integrations/components/IntegrationCredentialsContext.js:130
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Connection test failed"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/IntegrationsConditionalLogic.js:18
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Run this workflow only when specific conditions are met based on form submission data."
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/IntegrationsConditionalLogic.js:22
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Trigger workflow when "
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:94
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:934
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1003
+#: dist/package/pro/nativeIntegrations.js:1
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Search for an option"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:103
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:943
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1012
+#: dist/package/pro/nativeIntegrations.js:1
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Select an option"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:171
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Enable this integration to connect with the WordPress plugin."
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:181
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Toggle WordPress plugin integration"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:292
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Testing plugin…"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:306
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Plugin is not installed or not active. Please install and activate the plugin first."
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:332
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "WordPress plugin integration enabled successfully!"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:340
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:460
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Failed to save configuration"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:365
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "WordPress plugin integration disabled successfully!"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:373
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Failed to disable integration"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:384
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Authentication configuration not found"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:396
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Please enter valid credentials"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:405
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Testing connection…"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:424
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Connection test failed. Please check your credentials."
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:452
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Configuration saved successfully!"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/components/NativeIntegrationConfig.js:468
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "An error occurred during save"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:161
+#: dist/package/pro/nativeIntegrations.js:174
+msgid "Failed to load integration configuration"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:270
+#: dist/package/pro/nativeIntegrations.js:177
+msgid "Test completed successfully!"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:275
+#: dist/package/pro/nativeIntegrations.js:177
+msgid "Test failed. Please check your configuration."
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:284
+#: dist/package/pro/nativeIntegrations.js:177
+msgid "Test failed. Please try again."
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:297
+#: dist/package/pro/nativeIntegrations.js:174
+msgid "Workflow name is required"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:303
+#: dist/package/pro/nativeIntegrations.js:174
+msgid "Please select an action"
+msgstr ""
+
+#. Translators: %s is the field label
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:319
+#: dist/package/pro/nativeIntegrations.js:177
+msgid "%s is required"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:538
+#: dist/formSettings.js:189
+#: dist/package/pro/nativeIntegrations.js:177
+msgid "Please fill in all required fields"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:580
+#: dist/package/pro/nativeIntegrations.js:177
+msgid "Please complete all required fields"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:613
+#: dist/formSettings.js:189
+#: dist/package/pro/nativeIntegrations.js:177
+msgid "Configure"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:618
+#: dist/package/pro/nativeIntegrations.js:177
+msgid "Test"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:743
+#: dist/formSettings.js:189
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Workflow Name"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:744
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Enter a name for this workflow"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:769
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Select Action"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:782
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Search for an action"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:789
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Choose an action"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:840
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "No configuration required for this action."
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1185
+#: dist/package/pro/nativeIntegrations.js:171
+msgid "Test Your Action"
+msgstr ""
+
+#. Translators: %1$s is the integration name, %2$s is the action name
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1189
+#: dist/package/pro/nativeIntegrations.js:174
+msgid "We will test your workflow connection for \"%1$s\" during \"%2$s\". This data will be necessary when you are setting up your workflow."
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1208
+#: dist/package/pro/nativeIntegrations.js:174
+msgid "Testing…"
+msgstr ""
+
+#: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:1209
+#: dist/package/pro/nativeIntegrations.js:174
+msgid "Test Workflow"
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/save-resume-frontend.js:1218
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+#: dist/package/pro/saveResumeFrontend.js:1
+msgid "Saving…"
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/save-resume-frontend.js:1837
+#: dist/package/pro/saveResumeFrontend.js:1
+msgid "Failed to send email. Please try again."
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/save-resume-frontend.js:1856
+#: dist/activateLicensePopup.js:1
+#: dist/package/pro/saveResumeFrontend.js:1
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:24
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:166
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:222
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Resume URL"
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:29
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Save Email Input"
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:44
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Allow users to save their progress and continue the form later using a secure link."
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:55
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Enable Save and Progress"
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:59
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Allow form progress to be saved and resumed later."
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:79
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Saved progress is linked with a unique URL. Make sure your site uses HTTPS for better security."
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:94
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Link Label"
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:126
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Confirmation Message"
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:153
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "After Confirmation"
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:173
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:229
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Save Email"
+msgstr ""
+
+#: assets/js/unminified/package/pro/save-resume/SaveResumeSettings.js:197
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Email Body"
+msgstr ""
+
+#: assets/js/unminified/package/pro/signature/editor/edit.js:107
+#: dist/package/pro/signatureAdmin.js:174
+msgid "Pen Color"
+msgstr ""
+
+#: assets/js/unminified/package/pro/signature/editor/edit.js:117
+#: dist/package/pro/signatureAdmin.js:174
+msgid "Upload File Size Limit (MB)"
+msgstr ""
+
+#: assets/js/unminified/package/pro/signature/editor/edit.js:122
+#: dist/blocks.js:180
+#: dist/package/pro/signatureAdmin.js:174
+msgid "Select the maximum file size limit of the file that can be upload"
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-form-admin.js:60
+#: dist/package/pro/srfmConversationalFormAdmin.js:1
+#: dist/package/pro/srfmConversationalForms.js:1
+msgid "Quickly build AI-powered conversational forms, such as mortgage or loan conversational forms, with ease."
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:156
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Conversational Layout"
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:173
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Form Layout"
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:259
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Image on Right"
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:328
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "No Image"
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:413
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Image on Left"
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:460
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Page Background Image"
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:491
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Progress Bar"
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:507
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Label Size"
+msgstr ""
+
+#: assets/js/unminified/package/pro/srfm-conversational-forms.js:513
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Help Text Size"
+msgstr ""
+
+#: assets/js/unminified/package/pro/zapier-integration.js:57
+#: dist/package/pro/zapierIntegration.js:1
+msgid "Failed to load Zapier details."
+msgstr ""
+
+#: assets/js/unminified/package/pro/zapier-integration.js:91
+#: dist/package/pro/zapierIntegration.js:1
+msgid "Website URL"
+msgstr ""
+
+#: assets/js/unminified/package/pro/zapier-integration.js:97
+#: dist/package/pro/zapierIntegration.js:1
+msgid "No Website URL found"
+msgstr ""
+
+#: assets/js/unminified/package/pro/zapier-integration.js:115
+#: dist/package/pro/zapierIntegration.js:1
+msgid "API Key"
+msgstr ""
+
+#: assets/js/unminified/package/pro/zapier-integration.js:121
+#: dist/package/pro/zapierIntegration.js:1
+msgid "No API Key found"
+msgstr ""
+
+#: assets/js/unminified/package/pro/zapier-integration.js:146
+#: assets/js/unminified/package/pro/zapier-integration.js:210
+#: dist/package/pro/zapierIntegration.js:1
+msgid "Zapier"
+msgstr ""
+
+#: assets/js/unminified/package/pro/zapier-integration.js:147
+#: dist/package/pro/zapierIntegration.js:1
+msgid "SureForms and Zapier Integration allows you to connect your WordPress forms with a number of web apps"
+msgstr ""
+
+#: dist/activateLicensePopup.js:1
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "License Key"
+msgstr ""
+
+#: dist/activateLicensePopup.js:1
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Paste your license key here"
+msgstr ""
+
+#: dist/activateLicensePopup.js:1
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Please enter a license key"
+msgstr ""
+
+#: dist/activateLicensePopup.js:1
+msgid "Activated"
+msgstr ""
+
+#: dist/activateLicensePopup.js:1
+msgid "AI Form Generation Limit Reached"
+msgstr ""
+
+#: dist/activateLicensePopup.js:1
+msgid "License Not Activated"
+msgstr ""
+
+#: dist/activateLicensePopup.js:1
+msgid "You have used all the AI form generations available in your current plan."
+msgstr ""
+
+#: dist/activateLicensePopup.js:1
+msgid "It looks like the Premium plugin is already installed, but your license has not been activated yet."
+msgstr ""
+
+#. translators: abbreviation for units
+#: dist/blocks.js:172
+#: dist/blocks.js:182
+msgid "Default Value"
+msgstr ""
+
+#. Translators: 1: index number.
+#: dist/blocks.js:177
+#: dist/blocks.js:180
+msgid "Label %1$s"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Default Rating"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Icon Shape"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Star"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Smiley"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Thumb"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Display Rating Labels"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Maximum File Size (MB)"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "File Types"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Search and select file types. If no types are selected, all types will be allowed."
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Multiple Files"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Maximum Files"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Select the maximum number of files that can be uploaded"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Sunday"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Monday"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Tuesday"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Wednesday"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Thursday"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Friday"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Saturday"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Date Format"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Minimum Date"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Clear minimum date"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Select a date"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Maximum Date"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Clear maximum date"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Please enter a lower Minimum Date!"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Minimum Date should always be less than the Maximum Date"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Restrict to Days"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Select the days to allow. If no days are selected, all days (Monday through Sunday) will be allowed by default."
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Disable Past Dates"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "When enabled, users cannot select dates before today. Today and future dates remain selectable."
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Use 12-Hour Clock"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Increments (In minutes)"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Minimum Time"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Maximum Time"
+msgstr ""
+
+#: dist/blocks.js:180
+msgid "Maximum time should be greater than the Minimum time."
+msgstr ""
+
+#. translators: abbreviation for units
+#: dist/blocks.js:182
+msgid "Start Label"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "End Label"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Tooltip Prefix"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Tooltip Suffix"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Minimum Value"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Maximum Value"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Please check the Minimum and Maximum value"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Step Increment"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Edit Options"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Add New Option"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "ADD"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Number"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Text"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "For the more options please select the Parent Form Block."
+msgstr ""
+
+#: dist/blocks.js:182
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Add Shortcode"
+msgstr ""
+
+#: dist/blocks.js:182
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Add media"
+msgstr ""
+
+#: dist/blocks.js:182
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Visual"
+msgstr ""
+
+#: dist/blocks.js:182
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "HTML"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "HTML Code Block"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Save"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Form tags are not allowed in HTML content. Please remove any <form> tags."
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Add your custom HTML here. It will show in preview and on the published form. The block label is only visible in the editor for your reference and won't appear on the live form."
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Edit HTML Content"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Select…"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Not found"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Value"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Value… (e.g. 10, 20)"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Value…"
+msgstr ""
+
+#: dist/blocks.js:182
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "And"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "OR Group"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Please Set a Rule!"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Set Rules"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Configure Conditional Logic"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Conditional Logic"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Enable Conditional Logic"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Show"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Hide"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "this field if"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Configure Conditions"
+msgstr ""
+
+#: dist/blocks.js:182
+#: dist/entry.js:177
+msgid "OR"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "AND"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "Please Configure the Conditions"
+msgstr ""
+
+#: dist/blocks.js:182
+msgid "There are few unsaved changes. Please save your changes to reflect the updates."
+msgstr ""
+
+#: dist/entry.js:171
+msgid "Open"
+msgstr ""
+
+#: dist/entry.js:171
+msgid "Uploaded image"
+msgstr ""
+
+#: dist/entry.js:171
+msgid "Uploaded Image"
+msgstr ""
+
+#: dist/entry.js:171
+msgid "Uploaded file"
+msgstr ""
+
+#: dist/entry.js:171
+#: dist/entry.js:174
+#: dist/entry.js:180
+msgid "Unknown"
+msgstr ""
+
+#. translators: %d is the repeater index starting from 1.
+#. translators: %d is the repeater row number.
+#: dist/entry.js:174
+#: dist/entry.js:189
+msgid "Repeater %d"
+msgstr ""
+
+#: dist/entry.js:174
+msgid "Notification sent successfully."
+msgstr ""
+
+#: dist/entry.js:174
+msgid "An error occurred while sending the notification. Please try again."
+msgstr ""
+
+#: dist/entry.js:174
+msgid "Log deleted successfully."
+msgstr ""
+
+#: dist/entry.js:174
+msgid "An error occurred while deleting the log. Please try again."
+msgstr ""
+
+#: dist/entry.js:174
+msgid "Delete Entry Log?"
+msgstr ""
+
+#: dist/entry.js:174
+msgid "This action cannot be undone. The log entry will be permanently deleted."
+msgstr ""
+
+#: dist/entry.js:174
+msgid "Delete Log"
+msgstr ""
+
+#: dist/entry.js:174
+msgid "Delete log"
+msgstr ""
+
+#: dist/entry.js:174
+msgid "N/A"
+msgstr ""
+
+#. translators: %1$s is author name, %2$s is date
+#: dist/entry.js:177
+msgid "Submitted by %1$s - %2$s"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Delete note"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Note added successfully."
+msgstr ""
+
+#: dist/entry.js:177
+msgid "An error occurred while adding the note. Please try again."
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Note deleted successfully."
+msgstr ""
+
+#: dist/entry.js:177
+msgid "An error occurred while deleting the note. Please try again."
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Delete Note?"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "This action cannot be undone. The note will be permanently deleted."
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Delete Note"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Notes"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Cancel Note"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Add Note"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Enter your note here…"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Submit Note"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Add an internal note."
+msgstr ""
+
+#: dist/entry.js:177
+#: dist/entry.js:180
+msgid "File downloaded successfully."
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Failed to download file."
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Notification"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Loading…"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Select a notification"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Send To"
+msgstr ""
+
+#: dist/entry.js:177
+#: dist/formSettings.js:194
+msgid "Default"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Other"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Recipient"
+msgstr ""
+
+#: dist/entry.js:177
+#: dist/entry.js:183
+msgid "Enter email address"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Resend Notification"
+msgstr ""
+
+#: dist/entry.js:177
+msgid "Send Details Via Email"
+msgstr ""
+
+#. translators: %s is the star count.
+#: dist/entry.js:180
+msgid "%s Star"
+msgid_plural "%s Stars"
+msgstr[0] ""
+msgstr[1] ""
+
+#: dist/entry.js:180
+msgid "Poor"
+msgstr ""
+
+#: dist/entry.js:180
+msgid "Fair"
+msgstr ""
+
+#: dist/entry.js:180
+msgid "Good"
+msgstr ""
+
+#: dist/entry.js:180
+msgid "Very Good"
+msgstr ""
+
+#: dist/entry.js:180
+msgid "Excellent"
+msgstr ""
+
+#: dist/entry.js:180
+msgid "Download"
+msgstr ""
+
+#: dist/entry.js:183
+msgid "The signature field is not editable."
+msgstr ""
+
+#: dist/entry.js:183
+msgid "No files uploaded"
+msgstr ""
+
+#: dist/entry.js:183
+msgid "Enter phone number"
+msgstr ""
+
+#. translators: %s is the field label.
+#: dist/entry.js:186
+msgid "Enter %s"
+msgstr ""
+
+#: dist/entry.js:189
+msgid "No repeater items"
+msgstr ""
+
+#: dist/entry.js:189
+msgid "An error occurred while updating the entry. Please try again."
+msgstr ""
+
+#: dist/entry.js:189
+msgid "Edit Entry Data"
+msgstr ""
+
+#: dist/entry.js:189
+msgid "Invalid email address"
+msgstr ""
+
+#: dist/entry.js:189
+msgid "Please fix the errors before submitting."
+msgstr ""
+
+#: dist/entry.js:189
+msgid "Failed to update entry."
+msgstr ""
+
+#: dist/entry.js:189
+msgid "Update Entry"
+msgstr ""
+
+#: dist/formSettings.js:1
+#: dist/globalSettings.js:180
+#: dist/package/business/srfmUserRegistration.js:1
+msgid "Signature Block File Size Exceed"
+msgstr ""
+
+#. Translators: %s represents the max file size.
+#: dist/formSettings.js:3
+#: dist/globalSettings.js:182
+#: dist/package/business/srfmUserRegistration.js:3
+msgid "The %s shows the max file size. For example: “File size should not exceed 2 MB.”"
+msgstr ""
+
+#: dist/formSettings.js:3
+#: dist/globalSettings.js:182
+#: dist/package/business/srfmUserRegistration.js:3
+msgid "Signature Block File Type Not Allowed"
+msgstr ""
+
+#: dist/formSettings.js:3
+#: dist/globalSettings.js:182
+#: dist/package/business/srfmUserRegistration.js:3
+msgid "Signature Block Invalid Value"
+msgstr ""
+
+#: dist/formSettings.js:3
+#: dist/globalSettings.js:182
+#: dist/package/business/srfmUserRegistration.js:3
+msgid "Upload Block File Size Exceed"
+msgstr ""
+
+#. Translators: %s represents the max file size.
+#: dist/formSettings.js:5
+#: dist/globalSettings.js:184
+#: dist/package/business/srfmUserRegistration.js:5
+msgid "The %s shows the max file size. For example: “File size should not exceed 5 MB.”"
+msgstr ""
+
+#: dist/formSettings.js:5
+#: dist/globalSettings.js:184
+#: dist/package/business/srfmUserRegistration.js:5
+msgid "Upload Block File Type Not Allowed"
+msgstr ""
+
+#: dist/formSettings.js:5
+#: dist/globalSettings.js:184
+#: dist/package/business/srfmUserRegistration.js:5
+msgid "Upload Block File Upload Limit"
+msgstr ""
+
+#. Translators: %s represents the max files allowed.
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "%s represents the max files allowed. For example: “You can only upload up to 3 files.”"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Rating Block"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Signature Block"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Date Picker Block"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Time Picker Block"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Upload Block"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Slider Block"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Webhooks"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Failed to load webhook settings"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Using default values. Please refresh to try again."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Allow forms to send data to external webhook URLs"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Save failed"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Webhooks enabled successfully!"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Webhooks disabled successfully!"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Failed to save webhook settings"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Please try again."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Toggle webhooks"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "An unexpected error occurred. Please try again."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Network error. Please check your connection and try again."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "There was an issue fetching integrations."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Failed to save integration. Please try again."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Failed to delete integration. Please try again."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Unable to test connection. Please try again."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Unable to load integration credentials. Please configure the integration first."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Connection test failed. Please check your configuration."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Connection testing is not available for this integration type."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Integration Added"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Integration Updated"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Integration Deleted"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Integration has been successfully deleted."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Integration connection is working properly."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Error"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Loading Error"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Save Error"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Delete Error"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Test Failed"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Configuration Error"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Connection Test Failed"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Connection Test Successful"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Connection Test Not Available"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Delete Integration"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Are you sure you want to delete this integration? This action cannot be undone and will stop all data flow to this service."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Native integrations functionality not available"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Connection"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Connection Name"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Created On"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Test Connection"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:10
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:1
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Integrations"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Add Integration"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Unknown Integration"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Connect Your First Integration"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "You haven't set up any integrations yet. Boost productivity by linking SureForms to the tools you already use and love."
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Send form submissions directly to your CRM, email, or marketing platforms"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Keep your data updated and in sync across platforms instantly"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/formSettings.js:189
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Automate tasks and streamline workflows with native apps"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Browse Integrations"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Broadcast your SureForms submission to any web API endpoint with the powerful webhook module"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Please enter your license key below to activate!"
+msgstr ""
+
+#: dist/formSettings.js:7
+#: dist/globalSettings.js:186
+#: dist/package/business/srfmUserRegistration.js:7
+msgid "Great going! Your license is verified. You're all set to enjoy Premium features, updates, support and more."
+msgstr ""
+
+#. translators: %1$s: Plugin name with anchor link, %2$s billing page anchor link.
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Activate %1$s to get professional support and automatic updates from your WordPress dashboard. If you don't have a license, you can %2$s"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "get it here »"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Your license is activated"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Deactivate"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:189
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "License"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "No Date"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Integration ID not found."
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "OAuth API handler not available."
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Failed to get authorization URL."
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "OAuth authentication failed."
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Popup blocked. Please allow popups for this site."
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "OAuth authentication timed out."
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "OAuth authentication was cancelled."
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Search integrations…"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Successfully connected!"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Authentication failed"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Integration configured successfully!"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Integration Details"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Select the integration you want to configure for your form"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "No integrations available"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Integrations have been disabled globally. Enable them in the global settings to connect your forms."
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "No integrations found"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Didn't find what you're looking for? Request your integration and we'll take it from there."
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Request Integration"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Connecting…"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Connect"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Save Changes"
+msgstr ""
+
+#: dist/formSettings.js:10
+#: dist/globalSettings.js:1
+#: dist/package/business/srfmUserRegistration.js:10
+msgid "Continue"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "is"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "is not"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "is greater than"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "is greater than or equal to"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "is less than"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "is less than or equal to"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "starts with"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "ends with"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "contains"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "does not contain"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "regex"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "Select if you want to add conditional logic for trigger"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "Trigger when "
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "Choose Field"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "Select Operator"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "Add Value"
+msgstr ""
+
+#: dist/formSettings.js:189
+#: dist/package/business/srfmCustomPostType.js:180
+#: dist/package/pro/nativeIntegrations.js:171
+#: dist/srfmConditionalEmails.js:171
+msgid "Any"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Select if you want to add conditional logic for trigger."
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Trigger webhook when "
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Webhook Name"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Enter a name for this webhook"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Request URL"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Request Method"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Request Format"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Add Headers"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Select if you want to add headers with the Webhook request"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Custom Headers"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Add Data Filters"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Select if you want to modify the data payload"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Custom Data Filters"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Add Key"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Name is required."
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "URL should use HTTPS"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "URL is missing Top Level Domain (TLD)"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "URL is invalid. The URL should follow https//example.com format."
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "URL is required."
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Please fix validation errors"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Send form data to any web API endpoint with webhooks"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Failed to configure form integration. Please try again."
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Integration status updated successfully!"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Failed to update integration status."
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Integration duplicated successfully!"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Failed to duplicate integration."
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Integration deleted successfully!"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Add Integrations"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Runs"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Create Workflow"
+msgstr ""
+
+#: dist/formSettings.js:189
+msgid "Unnamed Workflow"
+msgstr ""
+
+#. translators: abbreviation for units
+#: dist/formSettings.js:194
+msgid "Style"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Width"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Radius"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Hover Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Border"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Normal"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Hover"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "None"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Solid"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Dotted"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Dashed"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Double"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Groove"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Inset"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Outset"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Ridge"
+msgstr ""
+
+#. translators: abbreviation for units
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Pixel"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "%"
+msgstr ""
+
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "EM"
+msgstr ""
+
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Font Size"
+msgstr ""
+
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Line Height"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Box Shadow"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "SureForms Default"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Custom"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Select Theme"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Changing to Custom styling might slightly change how your design looks, but you'll have full control to adjust it as needed."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Error Message Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Row Gap"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Column Gap"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Transparent"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Gradient"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Button Text Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Background"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Typography"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Padding"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Horizontal"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Vertical"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Blur"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Spread"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Position"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Background Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Label Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Help Text Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Label Gap"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Border Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Border Width"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Border Radius"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Input Shadow"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Focus"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Next Text Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Next Background Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Next Border Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Previous Text Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Previous Background Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Previous Border Color"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Buttons"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Button"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Messages"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Page Break"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Form Theme"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Allow"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Block"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "If matches"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Submission."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Select countries…"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Message"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Enter a custom message to display when this restriction is triggered."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Password Protection"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Protect your form with a password to restrict access."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Set Password"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Please note that this password will become empty if you disable password protection."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Description"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Enter a custom description to display above the password field on the frontend."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Enter a custom message to display when an incorrect password is entered."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "IP Based Restriction"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Limit or allow form submissions based on a user's IP address."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Add IP Addresses"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Enter IP addresses separated by commas (e.g., 192.168.1.1, 10.0.0.1)."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Country Based Restriction"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Control who can submit the form based on their country."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Select Countries"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Keyword Based Restriction"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Block or allow submissions that contain specific keywords in form fields."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Add Keywords"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Enter keywords separated by commas (e.g., spam, test, blocked). Submissions containing these words will be restricted."
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Login Based Restriction"
+msgstr ""
+
+#: dist/formSettings.js:194
+msgid "Require users to be logged in to submit the form."
+msgstr ""
+
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Welcome Screen"
+msgstr ""
+
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Welcome Screen Heading"
+msgstr ""
+
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Welcome Screen Message"
+msgstr ""
+
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Welcome Heading Size"
+msgstr ""
+
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Welcome Message Size"
+msgstr ""
+
+#: dist/formSettings.js:194
+#: dist/package/pro/srfmConversationalForms.js:174
+msgid "Start Button Text"
+msgstr ""
+
+#: dist/package/pro/nativeIntegrations.js:1
+msgid "Copied to clipboard"
+msgstr ""
+
+#: inc/blocks/date-picker/block.json
+msgctxt "block title"
+msgid "Date Picker"
+msgstr ""
+
+#: inc/blocks/date-picker/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Date Field"
+msgstr ""
+
+#: inc/blocks/date-picker/block.json
+msgctxt "block keyword"
+msgid "date"
+msgstr ""
+
+#: inc/blocks/date-picker/block.json
+msgctxt "block keyword"
+msgid "day"
+msgstr ""
+
+#: inc/blocks/date-picker/block.json
+msgctxt "block keyword"
+msgid "date picker"
+msgstr ""
+
+#: inc/blocks/date-picker/block.json
+msgctxt "block keyword"
+msgid "calendar"
+msgstr ""
+
+#: inc/blocks/hidden/block.json
+msgctxt "block title"
+msgid "Hidden"
+msgstr ""
+
+#: inc/blocks/hidden/block.json
+msgctxt "block description"
+msgid "Displays a SureForms hidden Field"
+msgstr ""
+
+#: inc/blocks/hidden/block.json
+msgctxt "block keyword"
+msgid "hidden"
+msgstr ""
+
+#: inc/blocks/html/block.json
+msgctxt "block title"
+msgid "HTML"
+msgstr ""
+
+#: inc/blocks/html/block.json
+msgctxt "block description"
+msgid "Displays a SureForms HTML Content"
+msgstr ""
+
+#: inc/blocks/html/block.json
+msgctxt "block keyword"
+msgid "html"
+msgstr ""
+
+#: inc/blocks/html/block.json
+msgctxt "block keyword"
+msgid "code"
+msgstr ""
+
+#: inc/blocks/page-break/block.json
+msgctxt "block title"
+msgid "Page Break"
+msgstr ""
+
+#: inc/blocks/page-break/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Page break"
+msgstr ""
+
+#: inc/blocks/page-break/block.json
+msgctxt "block keyword"
+msgid "page break"
+msgstr ""
+
+#: inc/blocks/rating/block.json
+msgctxt "block title"
+msgid "Rating"
+msgstr ""
+
+#: inc/blocks/rating/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Rating Field"
+msgstr ""
+
+#: inc/blocks/rating/block.json
+msgctxt "block keyword"
+msgid "rating"
+msgstr ""
+
+#: inc/blocks/rating/block.json
+msgctxt "block keyword"
+msgid "star rating"
+msgstr ""
+
+#: inc/blocks/rating/block.json
+msgctxt "block keyword"
+msgid "review"
+msgstr ""
+
+#: inc/blocks/rating/block.json
+#: inc/blocks/upload/block.json
+#: inc/business/repeater/block.json
+#: inc/pro/signature/block.json
+msgctxt "block keyword"
+msgid "field"
+msgstr ""
+
+#: inc/blocks/slider/block.json
+msgctxt "block title"
+msgid "Slider"
+msgstr ""
+
+#: inc/blocks/slider/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Slider Field"
+msgstr ""
+
+#: inc/blocks/slider/block.json
+msgctxt "block keyword"
+msgid "number slider"
+msgstr ""
+
+#: inc/blocks/slider/block.json
+msgctxt "block keyword"
+msgid "range slider"
+msgstr ""
+
+#: inc/blocks/slider/block.json
+msgctxt "block keyword"
+msgid "range input"
+msgstr ""
+
+#: inc/blocks/slider/block.json
+msgctxt "block keyword"
+msgid "text slider"
+msgstr ""
+
+#: inc/blocks/time-picker/block.json
+msgctxt "block title"
+msgid "Time Picker"
+msgstr ""
+
+#: inc/blocks/time-picker/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Time Field"
+msgstr ""
+
+#: inc/blocks/time-picker/block.json
+msgctxt "block keyword"
+msgid "time"
+msgstr ""
+
+#: inc/blocks/time-picker/block.json
+msgctxt "block keyword"
+msgid "time picker"
+msgstr ""
+
+#: inc/blocks/time-picker/block.json
+msgctxt "block keyword"
+msgid "clock"
+msgstr ""
+
+#: inc/blocks/upload/block.json
+msgctxt "block title"
+msgid "Upload"
+msgstr ""
+
+#: inc/blocks/upload/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Upload Field"
+msgstr ""
+
+#: inc/blocks/upload/block.json
+msgctxt "block keyword"
+msgid "upload"
+msgstr ""
+
+#: inc/business/repeater/block.json
+msgctxt "block title"
+msgid "Repeater"
+msgstr ""
+
+#: inc/business/repeater/block.json
+msgctxt "block description"
+msgid "A field that allows you to repeat a set of fields multiple times."
+msgstr ""
+
+#: inc/business/repeater/block.json
+msgctxt "block keyword"
+msgid "repeater"
+msgstr ""
+
+#: inc/business/repeater/block.json
+msgctxt "block keyword"
+msgid "dynamic"
+msgstr ""
+
+#: inc/business/repeater/block.json
+msgctxt "block keyword"
+msgid "multiple"
+msgstr ""
+
+#: inc/business/user-registration/link/block.json
+msgctxt "block title"
+msgid "Link"
+msgstr ""
+
+#: inc/business/user-registration/link/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Link Field"
+msgstr ""
+
+#: inc/business/user-registration/link/block.json
+msgctxt "block keyword"
+msgid "link"
+msgstr ""
+
+#: inc/business/user-registration/login/block.json
+msgctxt "block title"
+msgid "Login"
+msgstr ""
+
+#: inc/business/user-registration/login/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Login Field"
+msgstr ""
+
+#: inc/business/user-registration/login/block.json
+msgctxt "block keyword"
+msgid "login"
+msgstr ""
+
+#: inc/business/user-registration/password/block.json
+msgctxt "block title"
+msgid "Password"
+msgstr ""
+
+#: inc/business/user-registration/password/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Password Field"
+msgstr ""
+
+#: inc/business/user-registration/password/block.json
+msgctxt "block keyword"
+msgid "password"
+msgstr ""
+
+#: inc/business/user-registration/password/block.json
+msgctxt "block keyword"
+msgid "secure"
+msgstr ""
+
+#: inc/business/user-registration/register/block.json
+msgctxt "block title"
+msgid "Register"
+msgstr ""
+
+#: inc/business/user-registration/register/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Register Field"
+msgstr ""
+
+#: inc/business/user-registration/register/block.json
+msgctxt "block keyword"
+msgid "register"
+msgstr ""
+
+#: inc/pro/signature/block.json
+msgctxt "block title"
+msgid "Signature"
+msgstr ""
+
+#: inc/pro/signature/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Signature Field"
+msgstr ""
+
+#: inc/pro/signature/block.json
+msgctxt "block keyword"
+msgid "signature"
+msgstr ""

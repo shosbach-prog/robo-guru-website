@@ -1,0 +1,28 @@
+.jfDropdown {
+  font-size: 14px !important;
+  line-height: 1 !important;
+  appearance: none;
+  display: flex;
+  width: 100%;
+  height: 40px !important;
+  border-radius: 4px !important;
+  border: 1px solid var(--jfv-navy-100) !important;
+  background: var(--jfv-white);
+  outline: 2px solid transparent !important;
+  outline-offset: 0;
+  transition: all 0.3s;
+  color: var(--jfv-navy-700) !important;
+  padding: 0 12px !important;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%236c73a8' viewBox='0 0 24 24' class='shrink-0 w-5'%3E%3Cpath fill-rule='evenodd' d='M7.293 10.293a1 1 0 0 1 1.414 0L12 13.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E") no-repeat right 4px center !important;
+  background-size: 20px 20px !important;
+  max-width: unset !important;
+  &:hover {
+    border-color: var(--jfv-navy-300) !important;
+  }
+
+  &:focus {
+    border-color: var(--jfv-blue-500) !important;
+    outline-color: var(--jfv-blue-200) !important;
+    box-shadow: none !important;
+  }
+}

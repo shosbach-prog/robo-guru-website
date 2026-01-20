@@ -1,0 +1,53 @@
+.jfMaterialEditor {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  @media screen and (min-width: 1024px) {
+    padding-inline-start: 48px;
+  }
+  &--container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  &--inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: var(--jfv-white);
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid var(--jfv-navy-100);
+  }
+  &--footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &--label-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 18px;
+    h3 {
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+      color: var(--jfv-navy-700);
+    }
+    p {
+      font-size: 12px;
+      line-height: 16px;
+      color: var(--jfv-navy-300);
+    }
+  }
+  &--error-message {
+    background-color: var(--jfv-red-400);
+    color: var(--jfv-white);
+    font-size: 12px;
+    width: max-content;
+    border-radius: 6px;
+    padding: 4px 8px;
+  }
+}

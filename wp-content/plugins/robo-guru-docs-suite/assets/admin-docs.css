@@ -1,0 +1,15 @@
+
+.rg-doc-list{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.rg-doc{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid rgba(0,0,0,.12);border-radius:12px;background:#fff;}
+.rg-doc__drag{cursor:move;font-weight:900;opacity:.6;user-select:none}
+.rg-doc__name{font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rg-doc__meta{font-size:12px;font-weight:800;opacity:.7;padding:4px 8px;border-radius:999px;background:rgba(0,0,0,.05)}
+.rg-docs-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0;}
+
+/* BuddyBoss search results */
+.rg-bb-results{display:flex;flex-direction:column;gap:8px;}
+.rg-bb-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border:1px solid rgba(0,0,0,.10);border-radius:12px;background:rgba(0,0,0,.02);}
+.rg-bb-row__meta{min-width:0;flex:1;}
+.rg-bb-row__title{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rg-bb-row__folder{margin-top:2px;font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rg-bb-empty,.rg-bb-loading{padding:10px;border:1px dashed rgba(0,0,0,.20);border-radius:12px;opacity:.8;}

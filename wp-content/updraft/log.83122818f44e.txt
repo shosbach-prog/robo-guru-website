@@ -1,0 +1,72 @@
+0000.002 () Opened log file at time: Fri, 09 Jan 2026 22:56:48 +0000 on https://robo-guru.de
+0000.002 () UpdraftPlus WordPress backup plugin (https://updraftplus.com): 2.25.9 WP: 6.9 PHP: 8.3.6 (fpm-fcgi, Linux agitated-mclean.217-154-80-227.plesk.page 6.8.0-90-generic #91-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 18 14:14:30 UTC 2025 x86_64) MySQL: 10.11.13-MariaDB-0ubuntu0.24.04.1 (max packet size=16777216) WPLANG: de_DE_formal Server: Apache safe_mode: 0 max_execution_time: 30 memory_limit: 128M (used: 6.7M | 10M) multisite: N openssl: OpenSSL 3.0.13 30 Jan 2024 mcrypt: N LANG:  WP Proxy: disabled ZipArchive::addFile: Y
+0000.002 () Free space on disk containing Updraft's temporary directory: 107184 MB
+0000.004 () Restore setup, now closing connection and starting restore over AJAX.
+0000.001 () Opened log file at time: Fri, 09 Jan 2026 22:56:48 +0000 on https://robo-guru.de
+0000.002 () UpdraftPlus WordPress backup plugin (https://updraftplus.com): 2.25.9 WP: 6.9 PHP: 8.3.6 (fpm-fcgi, Linux agitated-mclean.217-154-80-227.plesk.page 6.8.0-90-generic #91-Ubuntu SMP PREEMPT_DYNAMIC Tue Nov 18 14:14:30 UTC 2025 x86_64) MySQL: 10.11.13-MariaDB-0ubuntu0.24.04.1 (max packet size=16777216) WPLANG: de_DE_formal Server: Apache safe_mode: 0 max_execution_time: 30 memory_limit: 128M (used: 3.8M | 10M) multisite: N openssl: OpenSSL 3.0.13 30 Jan 2024 mcrypt: N LANG:  WP Proxy: disabled ZipArchive::addFile: Y
+0000.002 () Free space on disk containing Updraft's temporary directory: 107184 MB
+0000.002 () Ensuring WP_Filesystem is setup for a restore
+0000.003 () WP_Filesystem is setup and ready for a restore
+0000.004 () Restore job started. Entities to restore: plugins, themes, mu-plugins, others. Restore options: {"include_unspecified_plugins":false,"plugins_to_restore":["Ultimate-Premium-Plugin","buddyboss-platform","buddyboss-platform-pro","buddyboss-sharing","jotform-ai-chatbot","loco-automatic-translate-addon-pro","loco-translate","rg-ffmpeg-video-poster","rg-forum-design-extension","rg-hotfix-pack","rg-robot-admin-tabs","rg-robot-profile2-0-33","rg-roi-calculator","robo-finder-endpoint","robo-finder-pro-plugin","robo-guru-docs-suite","seo-by-rank-math","seo-by-rank-math-pro","smtp2go","sureforms","sureforms-pro","suretriggers","updraftplus"],"plugins_to_skip":[],"include_unspecified_themes":false,"themes_to_restore":["buddyboss-theme","buddyboss-theme-child-1.0.0-1","buddyboss-theme-child-1.0.0-___","twentytwentyfive"],"themes_to_skip":[],"updraft_encryptionphrase":"","updraft_restorer_wpcore_includewpconfig":false,"updraft_incremental_restore_point":-1}
+0000.005 () PHP event: code E_WARNING: mkdir(): File exists (line 558, wp-admin/includes/class-wp-filesystem-direct.php)
+0000.008 () Will not delete any archives after unpacking them, because there was no cloud storage for this backup
+0000.009 () Entity: mu-plugins
+0000.009 () restore_backup(backup_file=backup_2026-01-09-2317_RoboGuru_04ff0aab768f-mu-plugins.zip, type=mu-plugins, info=a:2:{s:4:"path";s:59:"/var/www/vhosts/robo-guru.de/httpdocs/wp-content/mu-plugins";s:11:"description";s:16:"Must-use plugins";}, last_one=)
+0000.009 () Unpacking backup... (backup_2026-01-09-2317_RoboGuru_04ff0aab768f-mu-plugins.zip, 0 MB)
+0000.098 () Unzipping backup_2026-01-09-2317_RoboGuru_04ff0aab768f-mu-plugins.zip to /var/www/vhosts/robo-guru.de/httpdocs/wp-content/upgrade/ce3f1a32/ using UpdraftPlus_ZipArchive, starting index 0
+0000.100 () Unzip progress: 2 out of 2 files (1.3 KB, mu-plugins/buddyboss-performance-api.php)
+0000.100 () Moving old data: filesystem method / updraft_dir is potentially possible
+0000.100 () Moving old data: can potentially use wp_filesystem method / -old
+0000.100 () Moving old data out of the way...
+0000.101 () Moving unpacked backup into place...
+0000.102 () Cleaning up rubbish...
+0000.104 () Entity: plugins
+0000.104 () restore_backup(backup_file=backup_2026-01-09-2317_RoboGuru_04ff0aab768f-plugins.zip, type=plugins, info=a:3:{s:4:"path";s:56:"/var/www/vhosts/robo-guru.de/httpdocs/wp-content/plugins";s:11:"description";s:7:"Plugins";s:20:"singular_description";s:6:"Plugin";}, last_one=)
+0000.104 () Unpacking backup... (backup_2026-01-09-2317_RoboGuru_04ff0aab768f-plugins.zip, 74.1 MB)
+0000.104 () Unzipping backup_2026-01-09-2317_RoboGuru_04ff0aab768f-plugins.zip to /var/www/vhosts/robo-guru.de/httpdocs/wp-content/upgrade/6186a297/ using UpdraftPlus_ZipArchive, starting index 0
+0000.702 () Unzip progress: 2178 out of 14741 files (1.1 KB, plugins/suretriggers/src/Integrations/sureforms/sureforms.php)
+0000.962 () Unzip progress: 3179 out of 14741 files (3.5 MB, plugins/buddyboss-platform-pro/includes/integrations/zoom/assets/images/wizard-scope_users.png)
+0001.266 () Unzip progress: 4180 out of 14741 files (17.9 MB, plugins/Ultimate-Premium-Plugin/images/visit_icons/Visit_us_linkedin/icon_Visit_pt_BR.svg)
+0001.587 () Unzip progress: 5181 out of 14741 files (39 MB, plugins/Ultimate-Premium-Plugin/images/icons_theme/crystal/crystal_weibo.png)
+0001.822 () Unzip progress: 6182 out of 14741 files (43.8 MB, plugins/loco-translate/tpl/admin/file/info-po.php)
+0002.100 () Unzip progress: 7183 out of 14741 files (56.6 MB, plugins/seo-by-rank-math/includes/modules/404-monitor/views/help-tab-actions.php)
+0002.385 () Unzip progress: 8184 out of 14741 files (64.6 MB, plugins/buddyboss-platform/bp-templates/bp-nouveau/includes/profile-header-customizer-controls.php)
+0002.720 () Unzip progress: 9185 out of 14741 files (85.3 MB, plugins/buddyboss-platform/bp-templates/bp-nouveau/readylaunch/assets/fonts/Inter-Italic.ttf)
+0003.082 () Unzip progress: 10186 out of 14741 files (116.4 MB, plugins/buddyboss-platform/bp-core/images/search/membership.svg)
+0003.444 () Unzip progress: 11187 out of 14741 files (152.4 MB, plugins/buddyboss-platform/vendor/php-ffmpeg/php-ffmpeg/src/FFMpeg/FFProbe/OptionsTesterInterface.php)
+0003.741 () Unzip progress: 12188 out of 14741 files (164.5 MB, plugins/seo-by-rank-math-pro/includes/admin/class-bulk-actions.php)
+0004.034 () Unzip progress: 13189 out of 14741 files (175.3 MB, plugins/updraftplus/methods/insufficient.php)
+0004.375 () Unzip progress: 14190 out of 14741 files (202.4 MB, plugins/updraftplus/includes/PEAR/HTTP/Request2/Adapter/Mock.php)
+0004.537 () Unzip progress: 14741 out of 14741 files (206.7 MB, plugins/updraftplus/vendor/yahnis-elsts/plugin-update-checker/Puc/v4/Factory.php)
+0004.542 () Moving old data: filesystem method / updraft_dir is potentially possible
+0004.542 () Moving old data: can potentially use wp_filesystem method / -old
+0004.542 () Moving old data out of the way...
+0006.230 () Top-level entities being moved: Ultimate-Premium-Plugin, buddyboss-platform, buddyboss-platform-pro, buddyboss-sharing, jotform-ai-chatbot, loco-automatic-translate-addon-pro, loco-translate, rg-ffmpeg-video-poster, rg-forum-design-extension, rg-hotfix-pack, rg-robot-admin-tabs, rg-robot-profile2-0-33, rg-roi-calculator, robo-finder-endpoint, robo-finder-pro-plugin, robo-guru-docs-suite, seo-by-rank-math, seo-by-rank-math-pro, smtp2go, sureforms, sureforms-pro, suretriggers, updraftplus
+0006.239 () Moving unpacked backup into place...
+0008.169 () Top-level entities being moved: Ultimate-Premium-Plugin, buddyboss-platform, buddyboss-platform-pro, buddyboss-sharing, jotform-ai-chatbot, loco-automatic-translate-addon-pro, loco-translate, rg-ffmpeg-video-poster, rg-forum-design-extension, rg-hotfix-pack, rg-robot-admin-tabs, rg-robot-profile2-0-33, rg-roi-calculator, robo-finder-endpoint, robo-finder-pro-plugin, robo-guru-docs-suite, seo-by-rank-math, seo-by-rank-math-pro, smtp2go, sureforms, sureforms-pro, suretriggers, updraftplus
+0008.179 () Cleaning up rubbish...
+0008.181 () Entity: themes
+0008.181 () restore_backup(backup_file=backup_2026-01-09-2317_RoboGuru_04ff0aab768f-themes.zip, type=themes, info=a:3:{s:4:"path";s:55:"/var/www/vhosts/robo-guru.de/httpdocs/wp-content/themes";s:11:"description";s:6:"Themes";s:20:"singular_description";s:5:"Theme";}, last_one=)
+0008.181 () Unpacking backup... (backup_2026-01-09-2317_RoboGuru_04ff0aab768f-themes.zip, 21.3 MB)
+0008.182 () Unzipping backup_2026-01-09-2317_RoboGuru_04ff0aab768f-themes.zip to /var/www/vhosts/robo-guru.de/httpdocs/wp-content/upgrade/ac1da130/ using UpdraftPlus_ZipArchive, starting index 0
+0008.513 () Unzip progress: 1002 out of 2574 files (4.4 MB, themes/buddyboss-theme/inc/admin/framework/redux-core/inc/fields/image_select/redux-image-select.js)
+0008.864 () Unzip progress: 2003 out of 2574 files (39.8 MB, themes/buddyboss-theme/inc/plugins/buddyboss-menu-icons/includes/picker.php)
+0009.075 () Unzip progress: 2574 out of 2574 files (52.6 MB, themes/buddyboss-theme/assets/icons/fonts/filled.eot)
+0009.076 () Moving old data: filesystem method / updraft_dir is potentially possible
+0009.076 () Moving old data: can potentially use wp_filesystem method / -old
+0009.076 () Moving old data out of the way...
+0009.440 () Top-level entities being moved: buddyboss-theme, buddyboss-theme-child-1.0.0-1, buddyboss-theme-child-1.0.0-___, twentytwentyfive
+0009.442 () Moving unpacked backup into place...
+0009.805 () Top-level entities being moved: buddyboss-theme, buddyboss-theme-child-1.0.0-1, buddyboss-theme-child-1.0.0-___, twentytwentyfive
+0009.807 () Cleaning up rubbish...
+0009.809 () Entity: others
+0009.809 () restore_backup(backup_file=backup_2026-01-09-2317_RoboGuru_04ff0aab768f-others.zip, type=others, info=a:2:{s:4:"path";s:48:"/var/www/vhosts/robo-guru.de/httpdocs/wp-content";s:11:"description";s:6:"Others";}, last_one=1)
+0009.809 () Unpacking backup... (backup_2026-01-09-2317_RoboGuru_04ff0aab768f-others.zip, 4.4 MB)
+0009.810 () Unzipping backup_2026-01-09-2317_RoboGuru_04ff0aab768f-others.zip to /var/www/vhosts/robo-guru.de/httpdocs/wp-content/upgrade/b456a4d8/ using UpdraftPlus_ZipArchive, starting index 0
+0009.966 () Unzip progress: 341 out of 341 files (14.7 MB, wp-rocket-config/dynamic-lists-incompatible-plugins.json)
+0009.967 () PHP event: code E_WARNING: file_exists(): open_basedir restriction in effect. File(/var/www/vhosts/robo-guru.de/httpdocs/wp-content/upgrade/b456a4d8/advanced-cache.php/advanced-cache.php) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 419, wp-admin/includes/class-wp-filesystem-direct.php)
+0009.968 () PHP event: code E_WARNING: file_exists(): open_basedir restriction in effect. File(/var/www/vhosts/robo-guru.de/httpdocs/wp-content/upgrade/b456a4d8/index.php/index.php) is not within the allowed path(s): (/var/www/vhosts/robo-guru.de/:/tmp/) (line 419, wp-admin/includes/class-wp-filesystem-direct.php)
+0009.968 () Cleaning up rubbish...
+0009.984 () Purging cache directory: /var/www/vhosts/robo-guru.de/httpdocs/wp-content/cache
+0010.203 () Restore successful!
+0010.203 () Restore successful

@@ -1,0 +1,2082 @@
+{
+    "ar-AR": [
+      {
+        "original": "Application",
+        "translation": "Ø§Ù„Ø·Ù„Ø¨"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Ù„ÙˆÙ† Ø§Ù„Ø²Ø±"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Ø¥Ù„ØºØ§Ø¡"
+      },
+      {
+        "original": "Create",
+        "translation": "Ø¥Ø¶Ø§ÙØ©"
+      },
+      {
+        "original": "Default",
+        "translation": "Ø§Ù„ØªÙ„Ù‚Ø§Ø¦ÙŠ"
+      },
+      {
+        "original": "Delete",
+        "translation": "Ø­Ø°Ù"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Ø£Ø¹Ø·Ù†Ø§ Ø±Ø£ÙŠÙƒ"
+      },
+      {
+        "original": "Left",
+        "translation": "Ø§Ù„ÙŠØ³Ø§Ø±"
+      },
+      {
+        "original": "Next",
+        "translation": "Ø§Ù„Ø¥Ø³ØªÙ…Ø±Ø§Ø±"
+      },
+      {
+        "original": "Save",
+        "translation": "Ø­ÙØ¸"
+      }
+    ],
+    "bg-BG": [
+      {
+        "original": "Application",
+        "translation": "ÐŸÑ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ"
+      },
+      {
+        "original": "Appointment",
+        "translation": "Ð£Ð³Ð¾Ð²Ð¾Ñ€ÐµÐ½Ð¸ ÑÑ€ÐµÑ‰Ð¸"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Ð“Ð°Ð»ÐµÑ€Ð¸Ñ Ñ Ð°Ð²Ð°Ñ‚Ð°Ñ€Ð¸"
+      },
+      {
+        "original": "Back",
+        "translation": "ÐÐ°Ð·Ð°Ð´"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Ð¦Ð²ÑÑ‚ Ð½Ð° Ð±ÑƒÑ‚Ð¾Ð½Ð°"
+      },
+      {
+        "original": "Cancel",
+        "translation": "ÐžÑ‚Ð¼ÐµÐ½Ð¸"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Ð¦Ð²ÐµÑ‚Ð¾Ð²Ð° ÑÑ…ÐµÐ¼Ð°"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "ÐšÐ¾Ð¿Ð¸Ñ€Ð°Ð½Ð¾ Ð² ÐšÐ»Ð¸Ð¿Ð±Ð¾Ñ€Ð´Ð°!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "ÐšÐ¾Ð¿Ð¸Ñ€Ð°Ð¹Ñ‚Ðµ ÐºÐ¾Ð´Ð°"
+      },
+      {
+        "original": "Create",
+        "translation": "Ð¡ÑŠÐ·Ð´Ð°Ð¹"
+      },
+      {
+        "original": "Default",
+        "translation": "ÐŸÐ¾ Ð¿Ð¾Ð´Ñ€Ð°Ð·Ð±Ð¸Ñ€Ð°Ð½Ðµ"
+      },
+      {
+        "original": "Delete",
+        "translation": "Ð˜Ð·Ñ‚Ñ€Ð¸Ð¹Ñ‚Ðµ"
+      },
+      {
+        "original": "Edit",
+        "translation": "Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð°Ð½Ðµ"
+      },
+      {
+        "original": "End Color",
+        "translation": "Ð—Ð°Ð²ÑŠÑ€ÑˆÐ²Ð°Ñ‰ Ñ†Ð²ÑÑ‚"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Ð¦Ð²ÑÑ‚ Ð½Ð° ÑˆÑ€Ð¸Ñ„Ñ‚"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Ð¨Ñ€Ð¸Ñ„Ñ‚Ð¾Ð²Ð¾ ÑÐµÐ¼ÐµÐ¹ÑÑ‚Ð²Ð¾"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Ð”Ð°Ð¹Ñ‚Ðµ Ð¾Ñ‚Ð·Ð¸Ð²Ð¸"
+      },
+      {
+        "original": "Left",
+        "translation": "Ð›ÑÐ²Ð¾"
+      },
+      {
+        "original": "Next",
+        "translation": "Ð¡Ð»ÐµÐ´Ð²Ð°Ñ‰"
+      },
+      {
+        "original": "Position",
+        "translation": "ÐŸÐ¾Ð·Ð¸Ñ†Ð¸Ñ"
+      },
+      {
+        "original": "Right",
+        "translation": "Ð”ÑÑÐ½Ð¾"
+      },
+      {
+        "original": "Save",
+        "translation": "Ð—Ð°Ð¿Ð°Ð·Ð¸"
+      },
+      {
+        "original": "Start Color",
+        "translation": "Ð¡Ñ‚Ð°Ñ€Ñ‚Ð¾Ð² Ñ†Ð²ÑÑ‚"
+      },
+      {
+        "original": "Icon Color",
+        "translation": "Ð¦Ð²ÑÑ‚ Ð½Ð° Ð¸ÐºÐ¾Ð½Ð°Ñ‚Ð°"
+      },
+      {
+        "original": "Feedback",
+        "translation": "ÐžÐ±Ñ€Ð°Ñ‚Ð½Ð° Ð’Ñ€ÑŠÐ·ÐºÐ°"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "ÐžÑ‚Ð¸Ð´Ð¸ Ð½Ð° Ñ†ÐµÐ½Ð¸"
+      }
+    ],
+    "es-ES": [
+      {
+        "original": "Application",
+        "translation": "Solicitud"
+      },
+      {
+        "original": "Appointment",
+        "translation": "Agenda"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "GalerÃ­a Avatar"
+      },
+      {
+        "original": "Back",
+        "translation": "AtrÃ¡s"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Color BotÃ³n"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Cancele"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Esquema de colores"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Â¡Copiado al portapapeles!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Copiar CÃ³digo"
+      },
+      {
+        "original": "Create",
+        "translation": "Crear"
+      },
+      {
+        "original": "Default",
+        "translation": "Predeterminado"
+      },
+      {
+        "original": "Delete",
+        "translation": "Borrar"
+      },
+      {
+        "original": "Edit",
+        "translation": "Editar"
+      },
+      {
+        "original": "End Color",
+        "translation": "Color Final"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Color de la fuente"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Fuentes"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Dar OpiniÃ³n"
+      },
+      {
+        "original": "Left",
+        "translation": "Izquierda"
+      },
+      {
+        "original": "Next",
+        "translation": "Seguir"
+      },
+      {
+        "original": "Position",
+        "translation": "PosiciÃ³n"
+      },
+      {
+        "original": "Right",
+        "translation": "Derecha"
+      },
+      {
+        "original": "Save",
+        "translation": "Guardar"
+      },
+      {
+        "original": "Start Color",
+        "translation": "Color Inicio"
+      },
+      {
+        "original": "Icon Color",
+        "translation": "Color de Ã­cono"
+      },
+      {
+        "original": "Feedback",
+        "translation": "OpiniÃ³n"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "Ir a precios"
+      }
+    ],
+    "fi-FI": [
+      {
+        "original": "Application",
+        "translation": "Hakemus"
+      },
+      {
+        "original": "Appointment",
+        "translation": "Ajanvaraus"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Avatar-galleria"
+      },
+      {
+        "original": "Back",
+        "translation": "Takaisin"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Painikkeen vÃ¤ri"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Peruuta"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "VÃ¤rimaailma"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Kopioitu leikepÃ¶ydÃ¤lle!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Kopioi koodi"
+      },
+      {
+        "original": "Create",
+        "translation": "Luo"
+      },
+      {
+        "original": "Default",
+        "translation": "Oletus"
+      },
+      {
+        "original": "Delete",
+        "translation": "Poista"
+      },
+      {
+        "original": "Edit",
+        "translation": "Muokkaa"
+      },
+      {
+        "original": "End Color",
+        "translation": "LoppuvÃ¤ri"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Fontin vÃ¤ri"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Fontti"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Anna palautetta"
+      },
+      {
+        "original": "Left",
+        "translation": "Vasen"
+      },
+      {
+        "original": "Next",
+        "translation": "Seuraava"
+      },
+      {
+        "original": "Position",
+        "translation": "Sijainti"
+      },
+      {
+        "original": "Right",
+        "translation": "Oikea"
+      },
+      {
+        "original": "Save",
+        "translation": "Tallenna"
+      },
+      {
+        "original": "Start Color",
+        "translation": "AlkuvÃ¤ri"
+      },
+      {
+        "original": "Icon Color",
+        "translation": "Kuvakkeen vÃ¤ri"
+      }
+    ],
+    "fr-FR": [
+      {
+        "original": "Application",
+        "translation": "Candidature"
+      },
+      {
+        "original": "Appointment",
+        "translation": "Rendez-vous"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Galerie d&#039;avatars"
+      },
+      {
+        "original": "Back",
+        "translation": "Retour"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Couleur du bouton"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Annuler"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Palette de couleurs"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "CopiÃ© dans le presse-papier!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Copier le code"
+      },
+      {
+        "original": "Create",
+        "translation": "CrÃ©er"
+      },
+      {
+        "original": "Default",
+        "translation": "Par dÃ©faut"
+      },
+      {
+        "original": "Delete",
+        "translation": "Supprimer"
+      },
+      {
+        "original": "Edit",
+        "translation": "Modifier"
+      },
+      {
+        "original": "End Color",
+        "translation": "Couleur de fin"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Couleur de la police"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Police"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "RÃ©diger un avis"
+      },
+      {
+        "original": "Left",
+        "translation": "Ã€ gauche"
+      },
+      {
+        "original": "Next",
+        "translation": "Suivant"
+      },
+      {
+        "original": "Position",
+        "translation": "Position"
+      },
+      {
+        "original": "Right",
+        "translation": "Ã€ droite"
+      },
+      {
+        "original": "Save",
+        "translation": "Enregistrer"
+      },
+      {
+        "original": "Start Color",
+        "translation": "Couleur de dÃ©but"
+      },
+      {
+        "original": "Icon Color",
+        "translation": "Couleur de l&#039;icÃ´ne"
+      },
+      {
+        "original": "Feedback",
+        "translation": "Votre avis"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "Aller Ã  la page de tarification"
+      },
+      {
+        "original": "CHAT STYLE",
+        "translation": "STYLE DE DISCUSSION"
+      },
+      {
+        "original": "Chat Background Color",
+        "translation": "Couleur d&#039;arriÃ¨re-plan du chat"
+      },
+      {
+        "original": "BUTTON STYLE",
+        "translation": "STYLE DE BOUTON"
+      },
+      {
+        "original": "Easily embed your agent anywhere on your site",
+        "translation": "IntÃ©grez facilement votre assistant n&#039;importe oÃ¹ sur votre site"
+      }
+    ],
+    "pt-PT": [
+      {
+        "original": "Application",
+        "translation": "Candidaturas"
+      },
+      {
+        "original": "Appointment",
+        "translation": "Agendamento"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Galeria de Avatares"
+      },
+      {
+        "original": "Back",
+        "translation": "Voltar"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Cor do BotÃ£o"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Cancelar"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Esquema de Cores"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Copiado para a Ã¡rea de transferÃªncia!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Copiar CÃ³digo"
+      },
+      {
+        "original": "Create",
+        "translation": "Criar"
+      },
+      {
+        "original": "Default",
+        "translation": "PadrÃ£o"
+      },
+      {
+        "original": "Delete",
+        "translation": "Excluir"
+      },
+      {
+        "original": "Edit",
+        "translation": "Editar"
+      },
+      {
+        "original": "End Color",
+        "translation": "Cor Final"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Cor da Fonte"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Tipos de Fontes"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "DÃª sua opiniÃ£o"
+      },
+      {
+        "original": "Left",
+        "translation": "Esquerda"
+      },
+      {
+        "original": "Next",
+        "translation": "PrÃ³ximo"
+      },
+      {
+        "original": "Position",
+        "translation": "PosiÃ§Ã£o"
+      },
+      {
+        "original": "Right",
+        "translation": "Direita"
+      },
+      {
+        "original": "Save",
+        "translation": "Salvar"
+      },
+      {
+        "original": "Start Color",
+        "translation": "Cor Inicial"
+      },
+      {
+        "original": "Icon Color",
+        "translation": "Cor do Ãcone"
+      },
+      {
+        "original": "Feedback",
+        "translation": "Feedback"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "Voltar para PreÃ§os"
+      },
+      {
+        "original": "Chat Background Color",
+        "translation": "Cor de Fundo do Chat"
+      },
+      {
+        "original": "BUTTON STYLE",
+        "translation": "ESTILO DO BOTÃƒO"
+      },
+      {
+        "original": "Easily embed your agent anywhere on your site",
+        "translation": "Incorpore seu agente facilmente em qualquer lugar do seu site"
+      }
+    ],
+    "sr-BA": [
+      {
+        "original": "Application",
+        "translation": "ÐÐ¿Ð»Ð¸ÐºÐ°Ñ†Ð¸Ñ˜Ð°"
+      },
+      {
+        "original": "Appointment",
+        "translation": "Ð¢ÐµÑ€Ð¼Ð¸Ð½"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Ð“Ð°Ð»ÐµÑ€Ð¸Ñ˜Ð° Ð°Ð²Ð°Ñ‚Ð°Ñ€Ð°"
+      },
+      {
+        "original": "Back",
+        "translation": "ÐÐ°Ð·Ð°Ð´"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Ð‘Ð¾Ñ˜Ð° Ð´ÑƒÐ³Ð¼ÐµÑ‚Ð°"
+      },
+      {
+        "original": "Cancel",
+        "translation": "ÐžÑ‚ÐºÐ°Ð¶Ð¸"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Ð¨ÐµÐ¼Ðµ Ð±Ð¾Ñ˜Ð°"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "ÐšÐ¾Ð¿Ð¸Ñ€Ð°Ð½Ð¾ Ñƒ Ð¾ÑÑ‚Ð°Ð²Ñƒ"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "ÐšÐ¾Ð¿Ð¸Ñ€Ð°Ñ˜ ÐºÐ¾Ð´"
+      },
+      {
+        "original": "Create",
+        "translation": "ÐšÑ€ÐµÐ¸Ñ€Ð°Ñ˜"
+      },
+      {
+        "original": "Default",
+        "translation": "ÐŸÐ¾Ð´Ñ€Ð°Ð·ÑƒÐ¼ÐµÐ²Ð°Ð½Ð¾"
+      },
+      {
+        "original": "Delete",
+        "translation": "Ð˜Ð·Ð±Ñ€Ð¸ÑˆÐ¸"
+      },
+      {
+        "original": "Edit",
+        "translation": "Ð˜Ð·Ð¼ÐµÐ½Ð¸"
+      },
+      {
+        "original": "End Color",
+        "translation": "Ð‘Ð¾Ñ˜Ð° ÐºÑ€Ð°Ñ˜Ð°"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Ð‘Ð¾Ñ˜Ð° Ñ„Ð¾Ð½Ñ‚Ð°"
+      },
+      {
+        "original": "Font Family",
+        "translation": "ÐŸÐ¾Ñ€Ð¾Ð´Ð¸Ñ†Ð° ÑÑ‚Ð¸Ð»Ð° Ñ‚ÐµÐºÑÑ‚Ð°"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "ÐŸÐ¾Ð²Ñ€Ð°Ñ‚Ð½Ð° Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ˜Ð°"
+      },
+      {
+        "original": "Left",
+        "translation": "Ð›ÐµÐ²Ð¾"
+      },
+      {
+        "original": "Next",
+        "translation": "Ð”Ð°Ñ™Ðµ"
+      },
+      {
+        "original": "Position",
+        "translation": "ÐŸÐ¾Ð·Ð¸Ñ†Ð¸Ñ˜Ð°"
+      },
+      {
+        "original": "Right",
+        "translation": "Ð”ÐµÑÐ½Ð¾"
+      },
+      {
+        "original": "Save",
+        "translation": "Ð¡Ð°Ñ‡ÑƒÐ²Ð°Ñ˜"
+      },
+      {
+        "original": "Start Color",
+        "translation": "ÐŸÐ¾Ñ‡ÐµÑ‚Ð½Ð° Ð±Ð¾Ñ˜Ð°"
+      },
+      {
+        "original": "Icon Color",
+        "translation": "Ð‘Ð¾Ñ˜Ð° Ð¸ÐºÐ¾Ð½Ð¸Ñ†Ðµ"
+      },
+      {
+        "original": "Feedback",
+        "translation": "ÐŸÐ¾Ð²Ñ€Ð°Ñ‚Ð½Ðµ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ˜Ðµ"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "Ð˜Ð´Ð¸ Ð½Ð° Ñ†ÐµÐ½Ðµ"
+      }
+    ],
+    "sv-SE": [
+      {
+        "original": "Application",
+        "translation": "AnsÃ¶kan"
+      },
+      {
+        "original": "Appointment",
+        "translation": "Tidsbokning"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Avatar Galleri"
+      },
+      {
+        "original": "Back",
+        "translation": "Tillbaka"
+      },
+      {
+        "original": "Button Color",
+        "translation": "FÃ¤rg pÃ¥ knapp"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Avbryt"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "FÃ¤rgtema"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Kopierat till Urklipp!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Kopiera Kod"
+      },
+      {
+        "original": "Create",
+        "translation": "Create"
+      },
+      {
+        "original": "Default",
+        "translation": "Standard"
+      },
+      {
+        "original": "Delete",
+        "translation": "Ta bort"
+      },
+      {
+        "original": "Edit",
+        "translation": "Redigera"
+      },
+      {
+        "original": "End Color",
+        "translation": "SlutfÃ¤rg"
+      },
+      {
+        "original": "Font Color",
+        "translation": "TeckenfÃ¤rg"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Typsnitt"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Ge Feedback"
+      },
+      {
+        "original": "Left",
+        "translation": "VÃ¤nster"
+      },
+      {
+        "original": "Next",
+        "translation": "NÃ¤sta"
+      },
+      {
+        "original": "Position",
+        "translation": "Position"
+      },
+      {
+        "original": "Right",
+        "translation": "HÃ¶ger"
+      },
+      {
+        "original": "Save",
+        "translation": "Spara"
+      },
+      {
+        "original": "Start Color",
+        "translation": "StartfÃ¤rg"
+      },
+      {
+        "original": "Icon Color",
+        "translation": "Ikon-fÃ¤rg"
+      },
+      {
+        "original": "Feedback",
+        "translation": "Feedback"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "GÃ¥ till Priserna"
+      },
+      {
+        "original": "CHAT STYLE",
+        "translation": "CHATSTIL"
+      },
+      {
+        "original": "Chat Background Color",
+        "translation": "ChattbakgrundsfÃ¤rg"
+      },
+      {
+        "original": "BUTTON STYLE",
+        "translation": "KNAPPSTIL"
+      },
+      {
+        "original": "Easily embed your agent anywhere on your site",
+        "translation": "BÃ¤dda enkelt in din agent var som helst pÃ¥ din webbplats"
+      }
+    ],
+    "tr-TR": [
+      {
+        "original": "Application",
+        "translation": "BaÅŸvuru"
+      },
+      {
+        "original": "Appointment",
+        "translation": "Randevu"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Avatar Galerisi"
+      },
+      {
+        "original": "Back",
+        "translation": "Geri"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Buton Rengi"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Ä°ptal"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Renk TemalarÄ±"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Panoya kopyalandÄ±!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Kodu kopyala"
+      },
+      {
+        "original": "Create",
+        "translation": "OluÅŸtur"
+      },
+      {
+        "original": "Default",
+        "translation": "VarsayÄ±lan"
+      },
+      {
+        "original": "Delete",
+        "translation": "Sil"
+      },
+      {
+        "original": "Edit",
+        "translation": "DÃ¼zenle"
+      },
+      {
+        "original": "End Color",
+        "translation": "BitiÅŸ Rengi"
+      },
+      {
+        "original": "Font Color",
+        "translation": "YazÄ± Rengi"
+      },
+      {
+        "original": "Font Family",
+        "translation": "YazÄ± Tipi Ailesi"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Geri Bildirim GÃ¶nder"
+      },
+      {
+        "original": "Left",
+        "translation": "Sol"
+      },
+      {
+        "original": "Next",
+        "translation": "Ä°leri"
+      },
+      {
+        "original": "Position",
+        "translation": "Konum"
+      },
+      {
+        "original": "Right",
+        "translation": "SaÄŸ"
+      },
+      {
+        "original": "Save",
+        "translation": "Kaydet"
+      },
+      {
+        "original": "Start Color",
+        "translation": "BaÅŸlangÄ±Ã§ Rengi"
+      },
+      {
+        "original": "Icon Color",
+        "translation": "Simge Rengi"
+      },
+      {
+        "original": "Feedback",
+        "translation": "Geri Bildirim"
+      },
+      {
+        "original": "CHAT STYLE",
+        "translation": "SOHBET STÄ°LÄ°"
+      },
+      {
+        "original": "Chat Background Color",
+        "translation": "Sohbet Arka Plan Rengi"
+      },
+      {
+        "original": "BUTTON STYLE",
+        "translation": "BUTON STÄ°LÄ°"
+      },
+      {
+        "original": "Easily embed your agent anywhere on your site",
+        "translation": "AsistanÄ±nÄ±zÄ± sitenizin herhangi bir yerine kolayca yerleÅŸtirin"
+      }
+    ],
+    "zb-ZB": [
+      {
+        "original": "Application",
+        "translation": 1
+      },
+      {
+        "original": "Appointment",
+        "translation": 1
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": 1
+      },
+      {
+        "original": "Back",
+        "translation": 1
+      },
+      {
+        "original": "Button Color",
+        "translation": 1
+      },
+      {
+        "original": "Cancel",
+        "translation": 1
+      },
+      {
+        "original": "Color Scheme",
+        "translation": 1
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": 1
+      },
+      {
+        "original": "Copy Code",
+        "translation": 1
+      },
+      {
+        "original": "Create",
+        "translation": 1
+      },
+      {
+        "original": "Default",
+        "translation": 1
+      },
+      {
+        "original": "Delete",
+        "translation": 1
+      },
+      {
+        "original": "Edit",
+        "translation": 1
+      },
+      {
+        "original": "End Color",
+        "translation": 1
+      },
+      {
+        "original": "Font Color",
+        "translation": 1
+      },
+      {
+        "original": "Font Family",
+        "translation": 1
+      },
+      {
+        "original": "Give Feedback",
+        "translation": 1
+      },
+      {
+        "original": "Left",
+        "translation": 1
+      },
+      {
+        "original": "Next",
+        "translation": 1
+      },
+      {
+        "original": "Position",
+        "translation": 1
+      },
+      {
+        "original": "Right",
+        "translation": 1
+      },
+      {
+        "original": "Save",
+        "translation": 1
+      },
+      {
+        "original": "Start Color",
+        "translation": 1
+      }
+    ],
+    "af-ZA": [
+      {
+        "original": "Appointment",
+        "translation": "Afspraak"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Avatar Galery"
+      },
+      {
+        "original": "Back",
+        "translation": "Terug"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Knoppie Kleur"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Kanselleer"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Kleurskema"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Gekopieer na Knipbord!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Kopieer Kode"
+      },
+      {
+        "original": "Create",
+        "translation": "Skep"
+      },
+      {
+        "original": "Default",
+        "translation": "Verstek"
+      },
+      {
+        "original": "Delete",
+        "translation": "Skraap"
+      },
+      {
+        "original": "Edit",
+        "translation": "Wysig"
+      },
+      {
+        "original": "End Color",
+        "translation": "Eindkleur"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Lettertipe Kleur"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Gee Terugvoering"
+      },
+      {
+        "original": "Left",
+        "translation": "Links"
+      },
+      {
+        "original": "Next",
+        "translation": "Volgende"
+      },
+      {
+        "original": "Right",
+        "translation": "Reg"
+      },
+      {
+        "original": "Save",
+        "translation": "Stoor"
+      },
+      {
+        "original": "Start Color",
+        "translation": "Begin Kleur"
+      },
+      {
+        "original": "Icon Color",
+        "translation": "Ikoon Kleur"
+      },
+      {
+        "original": "Feedback",
+        "translation": "Terugvoer"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "Gaan na Pryse"
+      },
+      {
+        "original": "CHAT STYLE",
+        "translation": "KLETS STYL"
+      },
+      {
+        "original": "Chat Background Color",
+        "translation": "Klets Agtergrond Kleur"
+      },
+      {
+        "original": "BUTTON STYLE",
+        "translation": "KNOPPIE STYL"
+      }
+    ],
+    "de-DE": [
+      {
+        "original": "Appointment",
+        "translation": "Termin"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Avatar Gallerie"
+      },
+      {
+        "original": "Back",
+        "translation": "ZurÃ¼ck"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Button Farbe"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Abbrechen"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Farbschema"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "In die Zwischenablage kopiert!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Code kopieren"
+      },
+      {
+        "original": "Create",
+        "translation": "Erstellen"
+      },
+      {
+        "original": "Default",
+        "translation": "Standard"
+      },
+      {
+        "original": "Delete",
+        "translation": "LÃ¶schen"
+      },
+      {
+        "original": "Edit",
+        "translation": "Ã„ndern"
+      },
+      {
+        "original": "End Color",
+        "translation": "Ende Farbe"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Schriftfarbe"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Schriftart"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Feedback geben"
+      },
+      {
+        "original": "Left",
+        "translation": "Links"
+      },
+      {
+        "original": "Next",
+        "translation": "Weiter"
+      },
+      {
+        "original": "Position",
+        "translation": "Position"
+      },
+      {
+        "original": "Right",
+        "translation": "Rechts"
+      },
+      {
+        "original": "Save",
+        "translation": "Speichern"
+      },
+      {
+        "original": "Start Color",
+        "translation": "Beginn Farbe"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "Zu den Preisen"
+      },
+      {
+        "original": "CHAT STYLE",
+        "translation": "CHAT STIL"
+      },
+      {
+        "original": "Chat Background Color",
+        "translation": "Chat Hintergrundfarbe"
+      },
+      {
+        "original": "BUTTON STYLE",
+        "translation": "BUTTON STIL"
+      },
+      {
+        "original": "Easily embed your agent anywhere on your site",
+        "translation": "Betten Sie Ihren Assistenten an beliebiger Stelle auf Ihrer Website ein"
+      }
+    ],
+    "hu-HU": [
+      {
+        "original": "Appointment",
+        "translation": "IdÅ‘pont"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "ProfilkÃ©p galÃ©ria"
+      },
+      {
+        "original": "Back",
+        "translation": "Vissza"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Gomb szÃ­ne"
+      },
+      {
+        "original": "Cancel",
+        "translation": "MÃ©gsem"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "SzÃ­nÃ¶sszeÃ¡llÃ­tÃ¡s"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "VÃ¡gÃ³lapra mÃ¡solva!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "copy Code"
+      },
+      {
+        "original": "Create",
+        "translation": "Create"
+      },
+      {
+        "original": "Default",
+        "translation": "Hiba"
+      },
+      {
+        "original": "Delete",
+        "translation": "TÃ¶rÃ¶l"
+      },
+      {
+        "original": "Edit",
+        "translation": "SzerkesztÃ©s"
+      },
+      {
+        "original": "End Color",
+        "translation": "BefejezÃ©si SzÃ­n"
+      },
+      {
+        "original": "Font Color",
+        "translation": "BetÅ±szÃ­n"
+      },
+      {
+        "original": "Font Family",
+        "translation": "BetÅ±tÃ­pus"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Adj visszajelzÃ©st"
+      },
+      {
+        "original": "Left",
+        "translation": "Balra"
+      },
+      {
+        "original": "Next",
+        "translation": "KÃ¶vetkezÅ‘"
+      },
+      {
+        "original": "Position",
+        "translation": "PozÃ­ciÃ³"
+      },
+      {
+        "original": "Right",
+        "translation": "Jobb"
+      },
+      {
+        "original": "Save",
+        "translation": "Ment"
+      },
+      {
+        "original": "Start Color",
+        "translation": "KezdÃ©si SzÃ­n"
+      }
+    ],
+    "it-IT": [
+      {
+        "original": "Appointment",
+        "translation": "Appuntamento"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Galleria Avatar"
+      },
+      {
+        "original": "Back",
+        "translation": "Indietro"
+      },
+      {
+        "original": "Button Color",
+        "translation": "Colore Pulsante"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Annulla"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Combinazione di Colori"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Copiato negli Appunti!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Copia il Codice"
+      },
+      {
+        "original": "Create",
+        "translation": "Crea"
+      },
+      {
+        "original": "Default",
+        "translation": "Default"
+      },
+      {
+        "original": "Delete",
+        "translation": "Elimina"
+      },
+      {
+        "original": "Edit",
+        "translation": "Modifica"
+      },
+      {
+        "original": "End Color",
+        "translation": "Colore Finale"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Colore Carattere"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Tipo di Carattere"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Lascia un Feedback"
+      },
+      {
+        "original": "Left",
+        "translation": "Sinistra"
+      },
+      {
+        "original": "Next",
+        "translation": "Avanti"
+      },
+      {
+        "original": "Position",
+        "translation": "Posizione"
+      },
+      {
+        "original": "Right",
+        "translation": "Destra"
+      },
+      {
+        "original": "Save",
+        "translation": "Salva"
+      },
+      {
+        "original": "Start Color",
+        "translation": "Colore Inizio"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "Torna ai Piani"
+      },
+      {
+        "original": "CHAT STYLE",
+        "translation": "STILE CHAT"
+      },
+      {
+        "original": "Chat Background Color",
+        "translation": "Colore di sfondo della chat"
+      },
+      {
+        "original": "BUTTON STYLE",
+        "translation": "STILE PULSANTE"
+      }
+    ],
+    "ka-GE": [
+      {
+        "original": "Appointment",
+        "translation": "áƒ¨áƒ”áƒ®áƒ•áƒ”áƒ“áƒ áƒ"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "áƒáƒ•áƒáƒ¢áƒáƒ áƒ”áƒ‘áƒ˜áƒ¡ áƒ’áƒáƒšáƒ”áƒ áƒ”áƒ"
+      },
+      {
+        "original": "Back",
+        "translation": "áƒ£áƒ™áƒáƒœ"
+      },
+      {
+        "original": "Button Color",
+        "translation": "áƒ¦áƒ˜áƒšáƒáƒ™áƒ˜áƒ¡ áƒ¤áƒ”áƒ áƒ˜"
+      },
+      {
+        "original": "Cancel",
+        "translation": "áƒ’áƒáƒ£áƒ¥áƒ›áƒ”áƒ‘áƒ"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "áƒ¤áƒ”áƒ áƒ”áƒ‘áƒ˜áƒ¡ áƒ¡áƒ¥áƒ”áƒ›áƒ"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "áƒ“áƒáƒ™áƒáƒžáƒ˜áƒ áƒ“áƒ áƒ¬áƒáƒ›áƒáƒ¢áƒ”áƒ‘áƒ˜áƒ—!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "áƒ™áƒáƒ“áƒ˜áƒ¡ áƒ™áƒáƒžáƒ˜áƒ áƒ”áƒ‘áƒ"
+      },
+      {
+        "original": "Create",
+        "translation": "áƒ¨áƒ”áƒ¥áƒ›áƒœáƒ"
+      },
+      {
+        "original": "Default",
+        "translation": "áƒ¡áƒáƒ¬áƒ§áƒ˜áƒ¡áƒ˜"
+      },
+      {
+        "original": "Delete",
+        "translation": "áƒ¬áƒáƒ¨áƒšáƒ"
+      },
+      {
+        "original": "Edit",
+        "translation": "áƒ áƒ”áƒ“áƒáƒ¥áƒ¢áƒ˜áƒ áƒ”áƒ‘áƒ"
+      },
+      {
+        "original": "End Color",
+        "translation": "áƒ“áƒáƒ¡áƒ áƒ£áƒšáƒ”áƒ‘áƒ˜áƒ¡ áƒ¤áƒ”áƒ áƒ˜"
+      },
+      {
+        "original": "Font Color",
+        "translation": "áƒ¤áƒáƒœáƒ¢áƒ˜áƒ¡ áƒ¤áƒ”áƒ áƒ˜"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "áƒ£áƒ™áƒ£áƒ™áƒáƒ•áƒ¨áƒ˜áƒ áƒ˜áƒ¡ áƒ’áƒáƒ’áƒ–áƒáƒ•áƒœáƒ"
+      },
+      {
+        "original": "Left",
+        "translation": "áƒ›áƒáƒ áƒªáƒ®áƒœáƒ˜áƒ•"
+      },
+      {
+        "original": "Next",
+        "translation": "áƒ¨áƒ”áƒ›áƒ“áƒ”áƒ’áƒ˜"
+      },
+      {
+        "original": "Right",
+        "translation": "áƒ›áƒáƒ áƒ¯áƒ•áƒœáƒ˜áƒ•"
+      },
+      {
+        "original": "Save",
+        "translation": "áƒ¨áƒ”áƒœáƒáƒ®áƒ•áƒ"
+      },
+      {
+        "original": "Start Color",
+        "translation": "áƒ“áƒáƒ¬áƒ§áƒ”áƒ‘áƒ˜áƒ¡ áƒ¤áƒ”áƒ áƒ˜"
+      },
+      {
+        "original": "Feedback",
+        "translation": "áƒ£áƒ™áƒ£áƒ™áƒáƒ•áƒ¨áƒ˜áƒ áƒ˜"
+      }
+    ],
+    "ko-KR": [
+      {
+        "original": "Appointment",
+        "translation": "ëŒ€ë©´ ì˜ˆì•½"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "ìƒ‰ êµ¬ì„±"
+      },
+      {
+        "original": "Font Color",
+        "translation": "ê¸€ê¼´ ìƒ‰ìƒ"
+      },
+      {
+        "original": "Save",
+        "translation": "ì €ìž¥í•˜ê¸°"
+      },
+      {
+        "original": "CHAT STYLE",
+        "translation": "ì±„íŒ… ìŠ¤íƒ€ì¼"
+      },
+      {
+        "original": "Chat Background Color",
+        "translation": "ì±„íŒ… ë°°ê²½ìƒ‰"
+      },
+      {
+        "original": "BUTTON STYLE",
+        "translation": "ë²„íŠ¼ ìŠ¤íƒ€ì¼"
+      },
+      {
+        "original": "Easily embed your agent anywhere on your site",
+        "translation": "ì‚¬ì´íŠ¸ ì–´ëŠ ê³³ì—ë‚˜ ì—ì´ì „íŠ¸ë¥¼ ì‰½ê²Œ ì‚½ìž…í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤"
+      }
+    ],
+    "nl-NL": [
+      {
+        "original": "Appointment",
+        "translation": "Afspraak"
+      },
+      {
+        "original": "Back",
+        "translation": "Vorige"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Annuleren"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Kleurenschema"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Gekopieerd naar het klembord!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Kopieer Code"
+      },
+      {
+        "original": "Create",
+        "translation": "Aanmaken"
+      },
+      {
+        "original": "Default",
+        "translation": "Standaard"
+      },
+      {
+        "original": "Delete",
+        "translation": "Verwijderen"
+      },
+      {
+        "original": "Edit",
+        "translation": "Wijzig"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Kleur Lettertype"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Soort Lettertype"
+      },
+      {
+        "original": "Left",
+        "translation": "Links"
+      },
+      {
+        "original": "Next",
+        "translation": "Volgende"
+      },
+      {
+        "original": "Right",
+        "translation": "Rechts"
+      },
+      {
+        "original": "Save",
+        "translation": "Opslaan"
+      }
+    ],
+    "ru-RU": [
+      {
+        "original": "Appointment",
+        "translation": "ÐŸÑ€ÐµÐ´Ð²Ð°Ñ€Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð°Ñ Ð—Ð°Ð¿Ð¸ÑÑŒ"
+      },
+      {
+        "original": "Back",
+        "translation": "ÐÐ°Ð·Ð°Ð´"
+      },
+      {
+        "original": "Cancel",
+        "translation": "ÐžÑ‚Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "Ð¦Ð²ÐµÑ‚Ð¾Ð²Ð°Ñ ÑÑ…ÐµÐ¼Ð°"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Ð¡ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¾ Ð² Ð‘ÑƒÑ„ÐµÑ€ ÐžÐ±Ð¼ÐµÐ½Ð°!"
+      },
+      {
+        "original": "Copy Code",
+        "translation": "Ð¡ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ ÐšÐ¾Ð´"
+      },
+      {
+        "original": "Create",
+        "translation": "Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ"
+      },
+      {
+        "original": "Default",
+        "translation": "ÐŸÐ¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ"
+      },
+      {
+        "original": "Delete",
+        "translation": "Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ"
+      },
+      {
+        "original": "Edit",
+        "translation": "Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Ð¦Ð²ÐµÑ‚ Ð¨Ñ€Ð¸Ñ„Ñ‚Ð°"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Ð¡ÐµÐ¼ÐµÐ¹ÑÑ‚Ð²Ð¾ ÑˆÑ€Ð¸Ñ„Ñ‚Ð¾Ð²"
+      },
+      {
+        "original": "Left",
+        "translation": "Ð¡Ð»ÐµÐ²Ð°"
+      },
+      {
+        "original": "Next",
+        "translation": "Ð’Ð¿ÐµÑ€Ñ‘Ð´"
+      },
+      {
+        "original": "Right",
+        "translation": "Ð¡Ð¿Ñ€Ð°Ð²Ð°"
+      },
+      {
+        "original": "Save",
+        "translation": "Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ"
+      }
+    ],
+    "uk-UA": [
+      {
+        "original": "Appointment",
+        "translation": "ÐŸÐ¾Ð¿ÐµÑ€ÐµÐ´Ð½Ñ–Ð¹ Ð—Ð°Ð¿Ð¸Ñ"
+      },
+      {
+        "original": "Avatar Gallery",
+        "translation": "Ð“Ð°Ð»ÐµÑ€ÐµÑ ÐÐ²Ð°Ñ‚Ð°Ñ€Ñ–Ð²"
+      },
+      {
+        "original": "Back",
+        "translation": "ÐÐ°Ð·Ð°Ð´"
+      },
+      {
+        "original": "Button Color",
+        "translation": "ÐšÐ¾Ð»Ñ–Ñ€ ÐšÐ½Ð¾Ð¿ÐºÐ¸"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Ð¡ÐºÐ°ÑÑƒÐ²Ð°Ñ‚Ð¸"
+      },
+      {
+        "original": "Create",
+        "translation": "Ð¡Ñ‚Ð²Ð¾Ñ€Ð¸Ñ‚Ð¸"
+      },
+      {
+        "original": "Default",
+        "translation": "Ð—Ð° Ð—Ð°Ð¼Ð¾Ð²Ñ‡ÑƒÐ²Ð°Ð½Ð½ÑÐ¼"
+      },
+      {
+        "original": "Delete",
+        "translation": "Ð’Ð¸Ð´Ð°Ð»Ð¸Ñ‚Ð¸"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "Ð—Ð°Ð»Ð¸ÑˆÑ‚Ðµ Ð’Ñ–Ð´Ð³ÑƒÐº"
+      },
+      {
+        "original": "Left",
+        "translation": "Ð—Ð»Ñ–Ð²Ð°"
+      },
+      {
+        "original": "Next",
+        "translation": "Ð”Ð°Ð»Ñ–"
+      },
+      {
+        "original": "Right",
+        "translation": "Ð¡Ð¿Ñ€Ð°Ð²Ð°"
+      }
+    ],
+    "ja-JP": [
+      {
+        "original": "Avatar Gallery",
+        "translation": "ã‚¢ãƒã‚¿ãƒ¼ã‚®ãƒ£ãƒ©ãƒªãƒ¼"
+      },
+      {
+        "original": "Cancel",
+        "translation": "ã‚­ãƒ£ãƒ³ã‚»ãƒ«"
+      },
+      {
+        "original": "Create",
+        "translation": "ä½œæˆã™ã‚‹"
+      },
+      {
+        "original": "Delete",
+        "translation": "å‰Šé™¤"
+      },
+      {
+        "original": "Font Family",
+        "translation": "ãƒ•ã‚©ãƒ³ãƒˆãƒ•ã‚¡ãƒŸãƒªãƒ¼"
+      },
+      {
+        "original": "Save",
+        "translation": "ä¿å­˜"
+      },
+      {
+        "original": "CHAT STYLE",
+        "translation": "ãƒãƒ£ãƒƒãƒˆã‚¹ã‚¿ã‚¤ãƒ«"
+      },
+      {
+        "original": "Chat Background Color",
+        "translation": "ãƒãƒ£ãƒƒãƒˆã®èƒŒæ™¯è‰²"
+      },
+      {
+        "original": "BUTTON STYLE",
+        "translation": "ãƒœã‚¿ãƒ³ã®ã‚¹ã‚¿ã‚¤ãƒ«"
+      }
+    ],
+    "pl-PL": [
+      {
+        "original": "Avatar Gallery",
+        "translation": "Galeria avatarÃ³w"
+      },
+      {
+        "original": "Back",
+        "translation": "Wstecz"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Anuluj"
+      },
+      {
+        "original": "Copied to Clipboard!",
+        "translation": "Skopiowano do schowka!"
+      },
+      {
+        "original": "Create",
+        "translation": "UtwÃ³rz"
+      },
+      {
+        "original": "Default",
+        "translation": "DomyÅ›lny"
+      },
+      {
+        "original": "Delete",
+        "translation": "UsuÅ„"
+      },
+      {
+        "original": "End Color",
+        "translation": "Kolor koÅ„cowy"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Kolor czcionki"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Czcionka"
+      },
+      {
+        "original": "Give Feedback",
+        "translation": "PrzekaÅ¼ opiniÄ™"
+      },
+      {
+        "original": "Left",
+        "translation": "Do lewej"
+      },
+      {
+        "original": "Next",
+        "translation": "Dalej"
+      },
+      {
+        "original": "Right",
+        "translation": "Do prawej"
+      },
+      {
+        "original": "Save",
+        "translation": "Zapisz"
+      },
+      {
+        "original": "Start Color",
+        "translation": "Kolor startowy"
+      }
+    ],
+    "ca-ES": [
+      {
+        "original": "Back",
+        "translation": "Enrere"
+      },
+      {
+        "original": "Cancel",
+        "translation": "CancelÂ·la"
+      },
+      {
+        "original": "Default",
+        "translation": "Defecte"
+      },
+      {
+        "original": "Delete",
+        "translation": "Esborra"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Color de la lletra"
+      },
+      {
+        "original": "Font Family",
+        "translation": "FamÃ­lia tipogrÃ fica"
+      },
+      {
+        "original": "Left",
+        "translation": "Esquerra"
+      },
+      {
+        "original": "Next",
+        "translation": "SegÃ¼ent"
+      },
+      {
+        "original": "Right",
+        "translation": "Dreta"
+      },
+      {
+        "original": "Save",
+        "translation": "Desa"
+      }
+    ],
+    "da-DA": [
+      {
+        "original": "Back",
+        "translation": "Tilbage"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Annuller"
+      },
+      {
+        "original": "Create",
+        "translation": "Lav"
+      },
+      {
+        "original": "Default",
+        "translation": "Standardindstilling"
+      },
+      {
+        "original": "Delete",
+        "translation": "Slet"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Skrift farve"
+      },
+      {
+        "original": "Font Family",
+        "translation": "SKrifttype"
+      },
+      {
+        "original": "Left",
+        "translation": "Venstre"
+      },
+      {
+        "original": "Next",
+        "translation": "NÃ¦ste"
+      },
+      {
+        "original": "Right",
+        "translation": "HÃ¸jre"
+      },
+      {
+        "original": "Save",
+        "translation": "Gem"
+      }
+    ],
+    "no-NO": [
+      {
+        "original": "Back",
+        "translation": "Tilbake"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Avbryt"
+      },
+      {
+        "original": "Default",
+        "translation": "Standard"
+      },
+      {
+        "original": "Delete",
+        "translation": "Slett"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Font farge"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Font Type"
+      },
+      {
+        "original": "Left",
+        "translation": "Venstre"
+      },
+      {
+        "original": "Next",
+        "translation": "Neste"
+      },
+      {
+        "original": "Right",
+        "translation": "HÃ¸yre"
+      },
+      {
+        "original": "Save",
+        "translation": "Lagre"
+      },
+      {
+        "original": "Feedback",
+        "translation": "Tilbakemelding"
+      },
+      {
+        "original": "Go to Pricing",
+        "translation": "GÃ¥ til priser"
+      }
+    ],
+    "ro-RO": [
+      {
+        "original": "Back",
+        "translation": "ÃŽnapoi"
+      },
+      {
+        "original": "Cancel",
+        "translation": "Anulat"
+      },
+      {
+        "original": "Create",
+        "translation": "Create"
+      },
+      {
+        "original": "Default",
+        "translation": "Implicit"
+      },
+      {
+        "original": "Delete",
+        "translation": "Åžterge"
+      },
+      {
+        "original": "Font Color",
+        "translation": "Culoare font"
+      },
+      {
+        "original": "Font Family",
+        "translation": "Tip font"
+      },
+      {
+        "original": "Left",
+        "translation": "StÃ¢nga"
+      },
+      {
+        "original": "Next",
+        "translation": "UrmÄƒtorul"
+      },
+      {
+        "original": "Right",
+        "translation": "Dreapta"
+      },
+      {
+        "original": "Save",
+        "translation": "Salvare"
+      }
+    ],
+    "zh-CN": [
+      {
+        "original": "Back",
+        "translation": "è¿”å›ž"
+      },
+      {
+        "original": "Cancel",
+        "translation": "å–æ¶ˆ"
+      },
+      {
+        "original": "Color Scheme",
+        "translation": "é…è‰²æ–¹æ¡ˆ"
+      },
+      {
+        "original": "Delete",
+        "translation": "åˆªé™¤"
+      },
+      {
+        "original": "Next",
+        "translation": "ä¸‹ä¸€éƒ¨"
+      },
+      {
+        "original": "Save",
+        "translation": "å„²å­˜"
+      }
+    ],
+    "id-ID": [
+      {
+        "original": "Font Family",
+        "translation": "Gaya Font"
+      },
+      {
+        "original": "Save",
+        "translation": "Simpan"
+      },
+      {
+        "original": "Feedback",
+        "translation": "Umpan Balik"
+      }
+    ],
+    "zh-HK": [
+      {
+        "original": "Feedback",
+        "translation": "åé¥‹"
+      }
+    ]
+  }

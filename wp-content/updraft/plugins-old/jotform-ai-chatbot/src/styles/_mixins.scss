@@ -1,0 +1,11 @@
+@mixin only-safari {
+  @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
+    @content;
+  }
+}
+
+@mixin only-firefox {
+  @-moz-document url-prefix("") {
+    @content;
+  }
+}

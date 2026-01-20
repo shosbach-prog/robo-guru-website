@@ -1,0 +1,81 @@
+{
+	"name": "srfm/time-picker",
+	"title": "Time Picker",
+	"description": "Displays a SureForms Time Field",
+	"category": "sureforms-pro",
+	"keywords": ["time", "time picker", "clock"],
+	"textdomain": "sureforms-pro",
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"example": {
+		"attributes": {
+			"preview": true
+		}
+	},
+	"attributes": {
+		"preview": {
+			"type": "boolean",
+			"default": false
+		},
+		"block_id": {
+			"type": "string"
+		},
+		"fieldType": {
+			"type": "string",
+			"default": "time"
+		},
+		"min": {
+			"type": "string",
+			"default": ""
+		},
+		"max": {
+			"type": "string",
+			"default": ""
+		},
+		"increment": {
+			"type": "number",
+			"default": 30
+		},
+		"showTwelveHourFormat": {
+			"type": "boolean",
+			"default": true
+		},
+		"required": {
+			"type": "boolean"
+		},
+		"fieldWidth": {
+			"type": "number",
+			"default": 100
+		},
+		"label": {
+			"type": "string",
+			"default": "Time"
+		},
+		"help": {
+			"type": "string",
+			"default": ""
+		},
+		"errorMsg": {
+			"type": "string",
+			"default": ""
+		},
+		"formId": {
+			"type": "number",
+			"default": ""
+		},
+		"placeholder": {
+			"type": "string",
+			"default": ""
+		},
+		"isConditionalLogic":{
+			"type":"boolean",
+			"default":false
+		},
+		"slug": {
+			"type": "string",
+			"default": ""
+		}
+	}
+}

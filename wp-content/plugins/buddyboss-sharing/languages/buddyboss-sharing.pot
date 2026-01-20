@@ -1,0 +1,1062 @@
+# Copyright (C) 2025 BuddyBoss
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: BuddyBoss Sharing 1.1.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/buddyboss-sharing\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-12-15T08:20:14+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: buddyboss-sharing\n"
+
+#. Plugin Name of the plugin
+#: buddyboss-sharing.php
+msgid "BuddyBoss Sharing"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: buddyboss-sharing.php
+msgid "https://buddyboss.com"
+msgstr ""
+
+#. Description of the plugin
+#: buddyboss-sharing.php
+msgid "Adds share buttons across your site to let members easily share content to social media platforms."
+msgstr ""
+
+#. Author of the plugin
+#: buddyboss-sharing.php
+msgid "BuddyBoss"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:78
+msgid "Activity Sharing"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:86
+msgid "Enable sharing"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:99
+msgid "Custom message"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:113
+msgid "Share to groups"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:128
+#: templates/activity-sharing/share-modal-content.php:88
+msgid "Share to friend's profile"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:143
+msgid "Share to message"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:157
+msgid "Share as a link"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:170
+msgid "Select where to share as a link"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:189
+msgid "Configure activity sharing options for your members."
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:203
+#: includes/Admin/Admin.php:313
+msgid "View Tutorial"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:221
+msgid "Allow members to share the activity posts"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:238
+msgid "Allow members to add a custom message while sharing"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:255
+msgid "Allow members to share public posts in their groups"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:272
+msgid "Allow members to share public posts to their friend's profiles"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:289
+msgid "Allow members to send via direct message"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:306
+msgid "Allow member to share public post as a link"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:318
+#: includes/Modules/Activity_Sharing.php:233
+#: templates/activity-sharing/share-modal-content.php:178
+#: templates/activity-sharing/share-modal.php:111
+msgid "Messenger"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:319
+msgid "Whatsapp"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:320
+#: includes/Modules/Activity_Sharing.php:241
+#: templates/activity-sharing/share-modal-content.php:180
+#: templates/activity-sharing/share-modal.php:113
+msgid "Facebook"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:321
+#: includes/Modules/Activity_Sharing.php:245
+#: templates/activity-sharing/share-modal-content.php:181
+#: templates/activity-sharing/share-modal.php:114
+msgid "X"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:322
+#: includes/Modules/Activity_Sharing.php:249
+#: templates/activity-sharing/share-modal-content.php:182
+#: templates/activity-sharing/share-modal.php:115
+msgid "LinkedIn"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:386
+msgid "Features locked."
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:388
+msgid "Check license activation"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:394
+msgid "Upgrade"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:395
+msgid "Pro"
+msgstr ""
+
+#: includes/Admin/Activity_Settings.php:396
+msgid "to unlock"
+msgstr ""
+
+#: includes/Admin/Admin.php:78
+msgid "Site SEO"
+msgstr ""
+
+#: includes/Admin/Admin.php:86
+msgid "Search Result Preview"
+msgstr ""
+
+#: includes/Admin/Admin.php:96
+msgid "SEO Title"
+msgstr ""
+
+#: includes/Admin/Admin.php:106
+msgid "SEO Description"
+msgstr ""
+
+#: includes/Admin/Admin.php:116
+#: includes/Admin/Admin.php:404
+msgid "Social"
+msgstr ""
+
+#: includes/Admin/Admin.php:146
+msgid "Open Graph Title"
+msgstr ""
+
+#: includes/Admin/Admin.php:166
+msgid "Open Graph Description"
+msgstr ""
+
+#: includes/Admin/Admin.php:186
+msgid "Open Graph Image"
+msgstr ""
+
+#: includes/Admin/Admin.php:196
+#: includes/Admin/Admin.php:669
+msgid "Activity Open Graph (Public Networks)"
+msgstr ""
+
+#: includes/Admin/Admin.php:206
+msgid "Activity Title Template"
+msgstr ""
+
+#: includes/Admin/Admin.php:216
+msgid "Activity Description Template"
+msgstr ""
+
+#: includes/Admin/Admin.php:226
+#: includes/Admin/Admin.php:752
+msgid "Group Open Graph (Public Networks)"
+msgstr ""
+
+#: includes/Admin/Admin.php:236
+msgid "Group Title Template"
+msgstr ""
+
+#: includes/Admin/Admin.php:246
+msgid "Group Description Template"
+msgstr ""
+
+#: includes/Admin/Admin.php:256
+#: includes/Admin/Admin.php:823
+msgid "Member Open Graph (Public Networks)"
+msgstr ""
+
+#: includes/Admin/Admin.php:266
+msgid "Member Title Template"
+msgstr ""
+
+#: includes/Admin/Admin.php:276
+msgid "Member Description Template"
+msgstr ""
+
+#: includes/Admin/Admin.php:286
+#: includes/Admin/Admin.php:625
+msgid "Indexing"
+msgstr ""
+
+#: includes/Admin/Admin.php:375
+msgid "Define the main title of your website that Google will index. Optimal title length is approximately 55 characters."
+msgstr ""
+
+#: includes/Admin/Admin.php:392
+msgid "Set the default description that will accompany your SEO title in search engine results. Optimal description length is 155 to 300 characters."
+msgstr ""
+
+#: includes/Admin/Admin.php:418
+msgid "Enable Open Graph"
+msgstr ""
+
+#: includes/Admin/Admin.php:421
+msgid "Open Graph support improves how your content looks when shared on social media like Facebook, ensuring a more engaging and visually appealing experience."
+msgstr ""
+
+#: includes/Admin/Admin.php:534
+msgid "Use same as SEO title"
+msgstr ""
+
+#: includes/Admin/Admin.php:583
+msgid "Use same as SEO description"
+msgstr ""
+
+#: includes/Admin/Admin.php:606
+msgid "Upload"
+msgstr ""
+
+#: includes/Admin/Admin.php:608
+#: includes/Admin/Admin.php:928
+msgid "Remove"
+msgstr ""
+
+#: includes/Admin/Admin.php:612
+msgid "Use an image that's at least 1200px by 630px minimum (1.91:1 ratio). Maximum file size: 8 MB. Recommended: 1-2 MB for optimal performance."
+msgstr ""
+
+#: includes/Admin/Admin.php:627
+msgid "Choose if you want search engines to index this page."
+msgstr ""
+
+#: includes/Admin/Admin.php:645
+msgid "Posts"
+msgstr ""
+
+#: includes/Admin/Admin.php:649
+msgid "Profiles"
+msgstr ""
+
+#: includes/Admin/Admin.php:653
+msgid "Groups"
+msgstr ""
+
+#: includes/Admin/Admin.php:656
+msgid "Disabling indexing will hide this content from search engines."
+msgstr ""
+
+#: includes/Admin/Admin.php:671
+msgid "Customize how single activity posts appear when shared on social media. These settings only apply when your network is public."
+msgstr ""
+
+#: includes/Admin/Admin.php:674
+msgid "Note:"
+msgstr ""
+
+#: includes/Admin/Admin.php:678
+#, php-format
+msgid "For private networks, the general Open Graph settings above will be used. You can configure your network privacy in %s."
+msgstr ""
+
+#: includes/Admin/Admin.php:679
+msgid "BuddyBoss &gt; Settings"
+msgstr ""
+
+#: includes/Admin/Admin.php:698
+msgid "Template for activity Open Graph titles. Use the tags below to dynamically insert activity data."
+msgstr ""
+
+#: includes/Admin/Admin.php:701
+#: includes/Admin/Admin.php:731
+#: includes/Admin/Admin.php:774
+#: includes/Admin/Admin.php:803
+#: includes/Admin/Admin.php:845
+#: includes/Admin/Admin.php:873
+msgid "Available Tags:"
+msgstr ""
+
+#: includes/Admin/Admin.php:703
+#: includes/Admin/Admin.php:733
+msgid "Activity post title (falls back to activity_action if empty)"
+msgstr ""
+
+#: includes/Admin/Admin.php:704
+#: includes/Admin/Admin.php:734
+msgid "Activity action text (e.g., \"John posted an update\")"
+msgstr ""
+
+#: includes/Admin/Admin.php:705
+msgid "Activity content (limited to 60 characters)"
+msgstr ""
+
+#: includes/Admin/Admin.php:706
+#: includes/Admin/Admin.php:736
+msgid "Activity author display name"
+msgstr ""
+
+#: includes/Admin/Admin.php:707
+#: includes/Admin/Admin.php:737
+msgid "Activity author first name"
+msgstr ""
+
+#: includes/Admin/Admin.php:708
+#: includes/Admin/Admin.php:738
+msgid "Activity author last name"
+msgstr ""
+
+#: includes/Admin/Admin.php:709
+#: includes/Admin/Admin.php:739
+#: includes/Admin/Admin.php:781
+#: includes/Admin/Admin.php:810
+#: includes/Admin/Admin.php:851
+#: includes/Admin/Admin.php:879
+msgid "Your site name"
+msgstr ""
+
+#: includes/Admin/Admin.php:710
+#: includes/Admin/Admin.php:782
+#: includes/Admin/Admin.php:852
+msgid "Separator (displays as |)"
+msgstr ""
+
+#: includes/Admin/Admin.php:728
+msgid "Template for activity Open Graph descriptions. Use the tags below to dynamically insert activity data. Optimal length is 155-300 characters."
+msgstr ""
+
+#: includes/Admin/Admin.php:735
+msgid "Activity content (limited to 300 characters)"
+msgstr ""
+
+#: includes/Admin/Admin.php:754
+msgid "Customize how group pages appear when shared on social media. These settings only apply when your network is public."
+msgstr ""
+
+#: includes/Admin/Admin.php:771
+msgid "Template for group Open Graph titles. Use the tags below to dynamically insert group data."
+msgstr ""
+
+#: includes/Admin/Admin.php:776
+#: includes/Admin/Admin.php:805
+msgid "Group name"
+msgstr ""
+
+#: includes/Admin/Admin.php:777
+msgid "Group description (limited to 60 characters)"
+msgstr ""
+
+#: includes/Admin/Admin.php:778
+#: includes/Admin/Admin.php:807
+msgid "Group creator display name"
+msgstr ""
+
+#: includes/Admin/Admin.php:779
+#: includes/Admin/Admin.php:808
+msgid "Group creator first name"
+msgstr ""
+
+#: includes/Admin/Admin.php:780
+#: includes/Admin/Admin.php:809
+msgid "Group creator last name"
+msgstr ""
+
+#: includes/Admin/Admin.php:800
+msgid "Template for group Open Graph descriptions. Use the tags below to dynamically insert group data. Optimal length is 155-300 characters."
+msgstr ""
+
+#: includes/Admin/Admin.php:806
+msgid "Group description (limited to 300 characters)"
+msgstr ""
+
+#: includes/Admin/Admin.php:825
+msgid "Customize how member profile pages appear when shared on social media. These settings only apply when your network is public."
+msgstr ""
+
+#: includes/Admin/Admin.php:842
+msgid "Template for member profile Open Graph titles. Use the tags below to dynamically insert member data."
+msgstr ""
+
+#: includes/Admin/Admin.php:847
+#: includes/Admin/Admin.php:875
+msgid "Member display name"
+msgstr ""
+
+#: includes/Admin/Admin.php:848
+#: includes/Admin/Admin.php:876
+msgid "Member first name"
+msgstr ""
+
+#: includes/Admin/Admin.php:849
+#: includes/Admin/Admin.php:877
+msgid "Member last name"
+msgstr ""
+
+#: includes/Admin/Admin.php:850
+msgid "Member biography (limited to 60 characters)"
+msgstr ""
+
+#: includes/Admin/Admin.php:870
+msgid "Template for member profile Open Graph descriptions. Use the tags below to dynamically insert member data. Optimal length is 155-300 characters."
+msgstr ""
+
+#: includes/Admin/Admin.php:878
+msgid "Member biography (limited to 300 characters)"
+msgstr ""
+
+#: includes/Admin/Admin.php:926
+msgid "Upload Image"
+msgstr ""
+
+#: includes/Admin/Admin.php:927
+msgid "Select Image"
+msgstr ""
+
+#: includes/Admin/Admin.php:929
+msgid "Settings saved successfully!"
+msgstr ""
+
+#: includes/Admin/Admin.php:930
+#: includes/Frontend/Frontend.php:166
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: includes/Admin/Admin.php:963
+#: includes/Core/Dependency_Checker.php:148
+msgid "BuddyBoss Sharing:"
+msgstr ""
+
+#: includes/Admin/Admin.php:968
+msgid "Get BuddyBoss Pro"
+msgstr ""
+
+#: includes/Admin/Admin.php:971
+msgid "Activate License"
+msgstr ""
+
+#: includes/API/Link_Preview.php:246
+#: includes/Modules/Activity_Sharing_Enhanced.php:2427
+msgid "You do not have permission to view this activity."
+msgstr ""
+
+#. translators: %s: group name
+#: includes/API/Link_Preview.php:292
+#, php-format
+msgid "in %s"
+msgstr ""
+
+#. translators: %s: time ago
+#: includes/API/Link_Preview.php:304
+#, php-format
+msgid "%s ago"
+msgstr ""
+
+#: includes/API/Link_Preview.php:413
+msgid "Unable to generate preview."
+msgstr ""
+
+#. translators: %s: plugin name
+#. translators: %s: dependency name
+#: includes/Core/Dependency_Checker.php:155
+#: includes/Core/Dependency_Checker.php:210
+#, php-format
+msgid "Get %s"
+msgstr ""
+
+#: includes/Core/Dependency_Checker.php:184
+msgid "BuddyBoss Sharing could not be activated."
+msgstr ""
+
+#. translators: %s: URL to update platform
+#: includes/Core/Dependency_Checker.php:196
+#, php-format
+msgid "Please update BuddyBoss Platform to version %s or higher."
+msgstr ""
+
+#: includes/Core/Dependency_Checker.php:206
+msgid "Learn More About BuddyBoss Platform"
+msgstr ""
+
+#: includes/Core/Dependency_Checker.php:220
+msgid "BuddyBoss Platform must be installed and activated before you can use BuddyBoss Sharing."
+msgstr ""
+
+#: includes/Core/Dependency_Checker.php:224
+msgid "Get BuddyBoss Platform"
+msgstr ""
+
+#: includes/Core/License_Manager.php:485
+msgid "Running on staging/development server - License check bypassed."
+msgstr ""
+
+#: includes/Core/License_Manager.php:489
+msgid "Invalid or expired license. Please activate a valid BuddyBoss Pro license."
+msgstr ""
+
+#: includes/Core/License_Manager.php:492
+msgid "License is valid and active."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:163
+#: includes/Modules/Activity_Sharing.php:89
+#: includes/Modules/Activity_Sharing.php:91
+#: includes/Modules/Activity_Sharing.php:93
+#: includes/Modules/Activity_Sharing_Enhanced.php:455
+#: includes/Modules/Activity_Sharing_Enhanced.php:456
+msgid "Share"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:164
+msgid "Share Activity"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:165
+#: includes/Modules/Activity_Sharing.php:128
+#: includes/Modules/Activity_Sharing_Enhanced.php:512
+#: includes/Modules/Activity_Sharing_Enhanced.php:895
+msgid "Activity shared successfully!"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:167
+#: templates/activity-sharing/activity-modal.php:30
+#: templates/activity-sharing/share-group-modal.php:46
+#: templates/activity-sharing/share-message-modal.php:51
+msgid "Loading..."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:168
+msgid "Failed to load message modal."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:169
+msgid "Failed to load activity content."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:170
+msgid "Please select a target."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:171
+msgid "Please select at least one recipient."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:172
+msgid "Failed to send message."
+msgstr ""
+
+#. translators: %s: user's display name
+#: includes/Modules/Activity_OpenGraph.php:381
+#: includes/Modules/Activity_OpenGraph.php:876
+#: includes/Modules/BB_OpenGraph.php:185
+#, php-format
+msgid "Activity by %s"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing.php:107
+#: includes/Modules/Activity_Sharing_Enhanced.php:487
+#: includes/Modules/Activity_Sharing_Enhanced.php:660
+#: includes/Modules/Activity_Sharing_Enhanced.php:716
+#: includes/Modules/Activity_Sharing_Enhanced.php:785
+#: includes/Modules/Activity_Sharing_Enhanced.php:1458
+#: includes/Modules/Activity_Sharing_Enhanced.php:1608
+#: includes/Modules/Activity_Sharing_Enhanced.php:1708
+#: includes/Modules/Activity_Sharing_Enhanced.php:1892
+#: includes/Modules/Activity_Sharing_Enhanced.php:2009
+#: includes/Modules/Activity_Sharing_Enhanced.php:2143
+#: includes/Modules/Activity_Sharing_Enhanced.php:2226
+#: includes/Modules/Activity_Sharing_Enhanced.php:2345
+#: includes/Modules/Activity_Sharing_Enhanced.php:2479
+msgid "You must be logged in."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing.php:116
+#: includes/Modules/Activity_Sharing_Enhanced.php:496
+#: includes/Modules/Activity_Sharing_Enhanced.php:667
+#: includes/Modules/Activity_Sharing_Enhanced.php:727
+#: includes/Modules/Activity_Sharing_Enhanced.php:800
+#: includes/Modules/Activity_Sharing_Enhanced.php:1467
+#: includes/Modules/Activity_Sharing_Enhanced.php:2021
+msgid "Invalid activity."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing.php:132
+#: includes/Modules/Activity_Sharing_Enhanced.php:517
+#: includes/Modules/Activity_Sharing_Enhanced.php:903
+#: includes/Modules/Activity_Sharing_Enhanced.php:2297
+msgid "Failed to share activity."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing.php:214
+#: includes/Modules/Activity_Sharing_Enhanced.php:606
+#: includes/Modules/Activity_Sharing_Enhanced.php:1532
+#: includes/Modules/Activity_Sharing_Enhanced.php:1554
+msgid "Shared Activity"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing.php:237
+#: templates/activity-sharing/share-modal-content.php:179
+#: templates/activity-sharing/share-modal.php:112
+msgid "WhatsApp"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:219
+msgid "Shared a post"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:221
+msgid "Shares"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:230
+msgid "Shared a post in a group"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:232
+msgid "Group Shares"
+msgstr ""
+
+#. translators: %1$s: user link, %2$s: friend link
+#: includes/Modules/Activity_Sharing_Enhanced.php:261
+#: includes/Modules/Activity_Sharing_Enhanced.php:2285
+#, php-format
+msgid "%1$s shared a post with %2$s"
+msgstr ""
+
+#. translators: %s: user link
+#: includes/Modules/Activity_Sharing_Enhanced.php:269
+#: includes/Modules/Activity_Sharing_Enhanced.php:292
+#: includes/Modules/Activity_Sharing_Enhanced.php:302
+#, php-format
+msgid "%s shared a post"
+msgstr ""
+
+#. translators: %1$s: user link, %2$s: group link
+#: includes/Modules/Activity_Sharing_Enhanced.php:311
+#, php-format
+msgid "%1$s shared a post in the group %2$s"
+msgstr ""
+
+#. translators: %d: number of new shares
+#: includes/Modules/Activity_Sharing_Enhanced.php:341
+#, php-format
+msgid "You have %d new shares"
+msgstr ""
+
+#. translators: %s: user's display name
+#: includes/Modules/Activity_Sharing_Enhanced.php:348
+#, php-format
+msgid "%s shared a post with you"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:721
+#: includes/Modules/Activity_Sharing_Enhanced.php:790
+msgid "Activity component is not available."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:736
+#: includes/Modules/Activity_Sharing_Enhanced.php:824
+#: includes/Modules/Activity_Sharing_Enhanced.php:1486
+#: includes/Modules/Activity_Sharing_Enhanced.php:2039
+#: includes/Modules/Activity_Sharing_Enhanced.php:2363
+#: includes/Modules/Activity_Sharing_Enhanced.php:2419
+msgid "Activity not found."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:815
+msgid "Sharing activities cannot include media uploads, polls, or scheduled posts."
+msgstr ""
+
+#. translators: %1$s: number wrapped in span, %2$s: Share label
+#: includes/Modules/Activity_Sharing_Enhanced.php:1035
+#, php-format
+msgctxt "placeholder: activity share count"
+msgid "%1$s %2$s"
+msgstr ""
+
+#. translators: %1$s: number wrapped in span, %2$s: Share label
+#: includes/Modules/Activity_Sharing_Enhanced.php:1035
+msgctxt "singular share label"
+msgid "Share"
+msgstr ""
+
+#. translators: %1$s: number wrapped in span, %2$s: Shares label
+#: includes/Modules/Activity_Sharing_Enhanced.php:1038
+#, php-format
+msgctxt "placeholder: activity shares count"
+msgid "%1$s %2$s"
+msgstr ""
+
+#. translators: %1$s: number wrapped in span, %2$s: Shares label
+#: includes/Modules/Activity_Sharing_Enhanced.php:1038
+msgctxt "plural shares label"
+msgid "Shares"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1083
+msgid "Shared a Post: "
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1161
+#: includes/Modules/Activity_Sharing_Enhanced.php:1283
+#: templates/activity-sharing/no-access.php:27
+msgid "This content isn't available right now"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1162
+#: includes/Modules/Activity_Sharing_Enhanced.php:1284
+#: templates/activity-sharing/no-access.php:30
+msgid "When this happens, it's usually because the owner changed who can see it or it's been deleted."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1190
+#: includes/Modules/Activity_Sharing_Enhanced.php:1266
+#: includes/Modules/Activity_Sharing_Enhanced.php:1330
+#: includes/Modules/Activity_Sharing_Enhanced.php:2815
+msgid "Shared a Post"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1190
+msgid "[Activity not accessible]"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1266
+msgid "[Activity unavailable]"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1471
+msgid "Please select at least one recipient or thread."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1476
+msgid "Messaging is not available."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1515
+msgid "You do not have permission to share this activity."
+msgstr ""
+
+#. translators: %d: number of conversations
+#: includes/Modules/Activity_Sharing_Enhanced.php:1578
+#, php-format
+msgid "Message sent to %d conversation successfully!"
+msgid_plural "Messages sent to %d conversations successfully!"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1594
+msgid "Failed to send messages."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1712
+msgid "Messages component is not active."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1801
+msgid "Deleted Group"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1896
+#: includes/Modules/Activity_Sharing_Enhanced.php:2013
+msgid "Groups component is not active."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1947
+#: templates/activity-sharing/share-activity-modal.php:40
+#: templates/activity-sharing/share-modal-content.php:35
+msgid "Public"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1950
+msgid "Private"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:1953
+msgid "Hidden"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2025
+msgid "Invalid group."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2030
+msgid "You are not a member of this group."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2071
+msgid "Shared to group successfully!"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2076
+msgid "Failed to share to group."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2147
+msgid "Friends component is not active."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2236
+#: includes/Modules/Activity_Sharing_Enhanced.php:2352
+#: includes/Modules/Activity_Sharing_Enhanced.php:2412
+msgid "Invalid activity ID."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2240
+msgid "Invalid friend ID."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2246
+msgid "You can only share to friends."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2257
+msgid "Original activity not found."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2263
+msgid "Friend user not found."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2324
+msgid "Activity shared successfully on your friend's profile!"
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2340
+#: includes/Modules/Activity_Sharing_Enhanced.php:2405
+msgid "Security check failed."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2387
+msgid "Could not generate activity permalink."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:2484
+msgid "You do not have permission to create activities."
+msgstr ""
+
+#. translators: %s: user's display name
+#: includes/Modules/BB_OpenGraph.php:279
+#, php-format
+msgid "%s's Profile"
+msgstr ""
+
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:468
+msgid "Your browser does not support the video tag."
+msgstr ""
+
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:510
+msgid "More Video"
+msgstr ""
+
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:512
+msgid "More Videos"
+msgstr ""
+
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:660
+msgid "More Photos"
+msgstr ""
+
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:793
+msgid "Your browser does not support the audio element."
+msgstr ""
+
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:868
+msgid "Click to"
+msgstr ""
+
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:936
+msgid "Read more"
+msgstr ""
+
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:1003
+msgid "ago"
+msgstr ""
+
+#. translators: %s: member display name
+#: includes/Modules/Member_OpenGraph.php:290
+#, php-format
+msgid "View %s's profile"
+msgstr ""
+
+#: templates/activity-sharing/activity-modal.php:19
+#: templates/activity-sharing/share-activity-modal.php:73
+#: templates/activity-sharing/share-modal-content.php:290
+msgid "Post"
+msgstr ""
+
+#: templates/activity-sharing/activity-modal.php:20
+msgid "Close"
+msgstr ""
+
+#: templates/activity-sharing/share-activity-modal.php:21
+#: templates/activity-sharing/share-modal.php:66
+msgid "Create a post"
+msgstr ""
+
+#: templates/activity-sharing/share-activity-modal.php:41
+msgid "All Members"
+msgstr ""
+
+#: templates/activity-sharing/share-activity-modal.php:42
+msgid "My Connections"
+msgstr ""
+
+#: templates/activity-sharing/share-activity-modal.php:43
+msgid "Only Me"
+msgstr ""
+
+#: templates/activity-sharing/share-activity-modal.php:55
+msgid "Write something about this..."
+msgstr ""
+
+#: templates/activity-sharing/share-activity-modal.php:70
+msgid "Cancel"
+msgstr ""
+
+#: templates/activity-sharing/share-group-modal.php:22
+#: templates/activity-sharing/share-modal-content.php:52
+msgid "Share to a group"
+msgstr ""
+
+#: templates/activity-sharing/share-group-modal.php:33
+msgid "Search for groups"
+msgstr ""
+
+#: templates/activity-sharing/share-group-modal.php:40
+msgid "All Groups"
+msgstr ""
+
+#: templates/activity-sharing/share-message-modal.php:22
+msgid "Send to"
+msgstr ""
+
+#: templates/activity-sharing/share-message-modal.php:33
+msgid "Search for members"
+msgstr ""
+
+#: templates/activity-sharing/share-message-modal.php:45
+msgid "Recent"
+msgstr ""
+
+#: templates/activity-sharing/share-message-modal.php:62
+msgid "Add additional message..."
+msgstr ""
+
+#: templates/activity-sharing/share-message-modal.php:72
+msgid "Send"
+msgstr ""
+
+#. Translators: %s is the user's display name.
+#: templates/activity-sharing/share-modal-content.php:45
+#, php-format
+msgid "Share what's on your mind, %s..."
+msgstr ""
+
+#: templates/activity-sharing/share-modal-content.php:53
+msgid "Search groups..."
+msgstr ""
+
+#: templates/activity-sharing/share-modal-content.php:80
+msgid "No groups found."
+msgstr ""
+
+#: templates/activity-sharing/share-modal-content.php:89
+msgid "Search friends..."
+msgstr ""
+
+#: templates/activity-sharing/share-modal-content.php:114
+msgid "No friends found."
+msgstr ""
+
+#: templates/activity-sharing/share-modal-content.php:122
+msgid "Select recipients"
+msgstr ""
+
+#: templates/activity-sharing/share-modal-content.php:123
+msgid "Search members..."
+msgstr ""
+
+#: templates/activity-sharing/share-modal-content.php:147
+msgid "No members found."
+msgstr ""
+
+#: templates/activity-sharing/share-modal-content.php:155
+msgid "Add a message (optional)"
+msgstr ""
+
+#: templates/activity-sharing/share-modal-content.php:159
+msgid "Write your message here..."
+msgstr ""
+
+#. Translators: %s is time ago.
+#: templates/activity-sharing/share-modal-content.php:210
+#, php-format
+msgid "posted an update · %s"
+msgstr ""
+
+#: templates/activity-sharing/share-modal.php:28
+msgid "Share to Activity Feed"
+msgstr ""
+
+#: templates/activity-sharing/share-modal.php:34
+msgid "Share to Group"
+msgstr ""
+
+#: templates/activity-sharing/share-modal.php:41
+msgid "Share to Friend's Profile"
+msgstr ""
+
+#: templates/activity-sharing/share-modal.php:48
+msgid "Share to Message"
+msgstr ""
+
+#: templates/activity-sharing/share-modal.php:55
+msgid "Share as Link"
+msgstr ""
+
+#: templates/activity-sharing/share-modal.php:85
+msgid "Share link"
+msgstr ""
+
+#: templates/activity-sharing/share-modal.php:96
+msgid "Copy"
+msgstr ""

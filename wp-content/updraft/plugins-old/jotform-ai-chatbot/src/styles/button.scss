@@ -1,0 +1,441 @@
+.jfButton {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  outline: 2px solid transparent;
+  outline-offset: 0;
+  transition: all 0.3s;
+  color: var(--jfv-white);
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  &:hover,
+  &:focus {
+    color: var(--jfv-white);
+  }
+  &:not(.jfButton--rounded) {
+    border-radius: 4px;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  &--full-width {
+    width: 100%;
+  }
+  &--rounded {
+    border-radius: 9998px;
+  }
+  &--icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &--loading {
+    pointer-events: none;
+    cursor: default;
+    position: relative;
+    .jfButton--text {
+      opacity: 0;
+    }
+    .jfButton--icon {
+      opacity: 0;
+    }
+    .jfButton--spin {
+      opacity: 1;
+    }
+  }
+  &--spin {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    &:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 50%;
+      border: 2px solid;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      border-right-color: currentColor;
+      animation: spin-loader 0.7s linear infinite;
+    }
+  }
+  // Sizes
+  &--small {
+    height: 32px;
+    padding: 0 12px;
+    .jfButton--text {
+      font-size: 14px;
+      line-height: 18px;
+      padding: 0 4px;
+    }
+    .jfButton--icon {
+      width: 16px;
+      height: 16px;
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+    .jfButton--spin {
+      width: 16px;
+      height: 16px;
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+  &--medium {
+    height: 40px;
+    padding: 0 10px;
+    .jfButton--text {
+      font-size: 14px;
+      line-height: 18px;
+      padding: 0 8px;
+    }
+    .jfButton--icon {
+      width: 20px;
+      height: 20px;
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .jfButton--spin {
+      width: 20px;
+      height: 20px;
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  &--large {
+    height: 48px;
+    padding: 0 12px;
+    .jfButton--text {
+      font-size: 18px;
+      line-height: 22px;
+      padding: 0 12px;
+    }
+    .jfButton--icon {
+      width: 24px;
+      height: 24px;
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+    .jfButton--spin {
+      width: 24px;
+      height: 24px;
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  // Colors
+  &--error {
+    background: var(--jfv-red-400);
+    &:focus {
+      outline-color: var(--jfv-red-500);
+    }
+    &:hover {
+      background: var(--jfv-red-600);
+    }
+    &.jfButton--ghost {
+      border: 0;
+      background: transparent;
+      color: var(--jfv-red-400);
+      &:focus {
+        outline-color: var(--jfv-red-300);
+      }
+      &:hover {
+        background: var(--jfv-red-100);
+      }
+    }
+    &.jfButton--outline {
+      background: transparent;
+      color: var(--jfv-red-400);
+      border: 1px solid var(--jfv-red-400);
+      &:focus {
+        outline-color: var(--jfv-red-300);
+      }
+      &:hover {
+        background: var(--jfv-red-100);
+      }
+    }
+  }
+  &--primary {
+    background: var(--jfv-blue-500);
+    &:focus {
+      outline-color: var(--jfv-blue-200);
+    }
+    &:hover {
+      background: var(--jfv-blue-600);
+    }
+    &.jfButton--ghost {
+      border: 0;
+      background: transparent;
+      color: var(--jfv-blue-500);
+      &:focus {
+        outline-color: var(--jfv-blue-200);
+      }
+      &:hover {
+        background: var(--jfv-blue-100);
+      }
+    }
+    &.jfButton--outline {
+      background: transparent;
+      color: var(--jfv-blue-500);
+      border: 1px solid var(--jfv-blue-500);
+      &:focus {
+        outline-color: var(--jfv-blue-200);
+      }
+      &:hover {
+        background: var(--jfv-blue-100);
+      }
+    }
+  }
+  &--success {
+    background: var(--jfv-green-500);
+    &:focus {
+      outline-color: var(--jfv-green-300);
+    }
+    &:hover {
+      background: var(--jfv-green-600);
+    }
+    &.jfButton--ghost {
+      border: 0;
+      background: transparent;
+      color: var(--jfv-green-600);
+      &:focus {
+        outline-color: var(--jfv-green-300);
+      }
+      &:hover {
+        background: var(--jfv-green-100);
+      }
+    }
+    &.jfButton--outline {
+      background: transparent;
+      color: var(--jfv-green-600);
+      border: 1px solid var(--jfv-green-500);
+      &:focus {
+        outline-color: var(--jfv-green-300);
+      }
+      &:hover {
+        background: var(--jfv-green-100);
+      }
+    }
+  }
+  &--teams {
+    background: var(--jfv-teams-default);
+    &:focus {
+      outline-color: var(--jfv-teams-dark);
+    }
+    &:hover {
+      background: var(--jfv-teams-light);
+    }
+  }
+  &--pdf {
+    background: var(--jfv-pdf-default);
+    &:focus {
+      outline-color: var(--jfv-pdf-dark);
+    }
+    &:hover {
+      background: var(--jfv-pdf-light);
+    }
+  }
+  &--apps {
+    background: var(--jfv-apps-default);
+    &:focus {
+      outline-color: var(--jfv-apps-dark);
+    }
+    &:hover {
+      background: var(--jfv-apps-light);
+    }
+  }
+  &--reports {
+    background: var(--jfv-reports-default);
+    &:focus {
+      outline-color: var(--jfv-reports-dark);
+    }
+    &:hover {
+      background: var(--jfv-reports-light);
+    }
+  }
+  &--forms {
+    background: var(--jfv-forms-default);
+    &:focus {
+      outline-color: var(--jfv-forms-dark);
+    }
+    &:hover {
+      background: var(--jfv-forms-light);
+    }
+  }
+  &--sign {
+    background: var(--jfv-sign-default);
+    &:focus {
+      outline-color: var(--jfv-sign-dark);
+    }
+    &:hover {
+      background: var(--jfv-sign-light);
+    }
+  }
+  &--tables {
+    background: var(--jfv-tables-default);
+    &:focus {
+      outline-color: var(--jfv-tables-dark);
+    }
+    &:hover {
+      background: var(--jfv-tables-light);
+    }
+  }
+  &--inbox {
+    background: var(--jfv-inbox-default);
+    &:focus {
+      outline-color: var(--jfv-inbox-dark);
+    }
+    &:hover {
+      background: var(--jfv-inbox-light);
+    }
+  }
+  &--approvals {
+    background: var(--jfv-approvals-default);
+    &:focus {
+      outline-color: var(--jfv-approvals-dark);
+    }
+    &:hover {
+      background: var(--jfv-approvals-light);
+    }
+  }
+  &--analytics {
+    background: var(--jfv-analytics-default);
+    &:focus {
+      outline-color: var(--jfv-analytics-dark);
+    }
+    &:hover {
+      background: var(--jfv-analytics-light);
+    }
+  }
+  &--pages {
+    background: var(--jfv-pages-default);
+    &:focus {
+      outline-color: var(--jfv-pages-dark);
+    }
+    &:hover {
+      background: var(--jfv-pages-light);
+    }
+  }
+  &--secondary {
+    background: var(--jfv-navy-75);
+    color: var(--jfv-navy-500);
+    &:focus {
+      outline-color: var(--jfv-navy-50);
+    }
+    &:hover {
+      background: var(--jfv-navy-100);
+    }
+    &.jfButton--ghost {
+      border: 0;
+      background: transparent;
+      color: var(--jfv-navy-500);
+      &:focus {
+        outline-color: var(--jfv-navy-50);
+      }
+      &:hover {
+        background: var(--jfv-navy-25);
+      }
+    }
+    &.jfButton--outline {
+      background: transparent;
+      color: var(--jfv-navy-500);
+      border: 1px solid var(--jfv-navy-100);
+      &:focus {
+        outline-color: var(--jfv-navy-50);
+      }
+      &:hover {
+        background: #e8e8f2;
+      }
+    }
+  }
+  &--neutral {
+    background: var(--jfv-gray-500);
+    &:focus {
+      outline-color: var(--jfv-gray-300);
+    }
+    &:hover {
+      background: var(--jfv-gray-700);
+    }
+    &.jfButton--ghost {
+      border: 0;
+      background: transparent;
+      color: var(--jfv-navy-500);
+      &:focus {
+        outline-color: var(--jfv-gray-300);
+      }
+      &:hover {
+        background: var(--jfv-navy-25);
+      }
+    }
+    &.jfButton--outline {
+      background: transparent;
+      color: var(--jfv-navy-500);
+      border: 1px solid var(--jfv-gray-600);
+      &:focus {
+        outline-color: var(--jfv-gray-300);
+      }
+      &:hover {
+        background: var(--jfv-navy-25);
+      }
+    }
+  }
+  &.isPulseAnimation {
+    &:after,
+    &:before {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      animation: animPulse 2s infinite;
+      pointer-events: none;
+      border-radius: inherit;
+      opacity: 0;
+      outline: 0 solid #0075e3;
+    }
+    &:after {
+      animation-delay: 0.54s;
+    }
+  }
+}
+
+@keyframes spin-loader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animPulse {
+  25% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+    outline-width: 10px;
+  }
+}

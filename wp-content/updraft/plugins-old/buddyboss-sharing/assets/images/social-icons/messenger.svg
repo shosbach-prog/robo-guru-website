@@ -1,0 +1,11 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="28" cy="28" r="28" fill="url(#messenger_gradient)"/>
+  <path d="M28 12C19.163 12 12 18.597 12 26.8C12 30.92 13.813 34.613 16.75 37.213V44L23.125 40.75C24.938 41.35 26.913 41.7 29 41.7C37.837 41.7 45 35.103 45 26.9C45 18.697 37.837 12 28 12ZM29.5 31.5L24.25 25.75L14 31.5L25.25 19.5L30.75 25.25L41 19.5L29.5 31.5Z" fill="white"/>
+  <defs>
+    <linearGradient id="messenger_gradient" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF00FF"/>
+      <stop offset="0.5" stop-color="#A033FF"/>
+      <stop offset="1" stop-color="#0099FF"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,0 +1,38 @@
+/* Robo-Guru Hotfix Pack
+ * Keep embeds visible & responsive on mobile.
+ */
+
+@media (max-width: 782px){
+  .wp-block-embed,
+  .wp-block-embed__wrapper,
+  .wp-block-video,
+  .rg-video,
+  .rg-videos,
+  iframe,
+  video{
+    display:block !important;
+    visibility:visible !important;
+    height:auto !important;
+    max-height:none !important;
+    opacity:1 !important;
+  }
+
+  .wp-block-embed__wrapper{
+    width:100% !important;
+    aspect-ratio:16 / 9;
+  }
+
+  .wp-block-embed__wrapper iframe{
+    width:100% !important;
+    height:100% !important;
+    display:block !important;
+  }
+
+  /* Consent overlays must be clickable */
+  .consent-overlay,
+  .video-consent,
+  .rg-video-consent{
+    pointer-events:auto !important;
+    z-index:50 !important;
+  }
+}

@@ -1,0 +1,81 @@
+{
+	"name": "srfm/date-picker",
+	"title": "Date Picker",
+	"description": "Displays a SureForms Date Field",
+	"category": "sureforms-pro",
+	"keywords": ["date", "day", "date picker", "calendar"],
+	"textdomain": "sureforms-pro",
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"example": {
+		"attributes": {
+			"preview": true
+		}
+	},
+	"attributes": {
+		"preview": {
+			"type": "boolean",
+			"default": false
+		},
+		"block_id": {
+			"type": "string"
+		},
+		"min": {
+			"type": "string",
+			"default": ""
+		},
+		"max": {
+			"type": "string",
+			"default": ""
+		},
+		"dateFormat": {
+			"type": "string",
+			"default": "mm/dd/yyyy"
+		},
+		"required": {
+			"type": "boolean"
+		},
+		"fieldWidth": {
+			"type": "number",
+			"default": 100
+		},
+		"label": {
+			"type": "string",
+			"default": "Date"
+		},
+		"help": {
+			"type": "string",
+			"default": ""
+		},
+		"errorMsg": {
+			"type": "string",
+			"default": ""
+		},
+		"formId": {
+			"type": "number",
+			"default": ""
+		},
+		"placeholder": {
+			"type": "string",
+			"default": ""
+		},
+		"isConditionalLogic":{
+			"type":"boolean",
+			"default":false
+		},
+		"slug": {
+			"type": "string",
+			"default": ""
+		},
+		"daysOfWeekEnabled": {
+			"type": "array",
+			"default": []
+		},
+		"disablePastDates": {
+			"type": "boolean",
+			"default": false
+		}
+	}
+}

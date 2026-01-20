@@ -1,0 +1,868 @@
+/* Robo Finder Pro — Design System (boxed + consistent)
+   Scoped to .rf-wrap so theme styles don't break the UI.
+*/
+
+.rf-wrap{
+  /* Tokens */
+  --rf-primary: #1ECAD3;
+  --rf-primary-2: #128CA3;
+  --rf-accent: #FF8A00;
+  --rf-ink: #0E2A32;
+  --rf-text: rgba(14,42,50,.88);
+  --rf-muted: rgba(14,42,50,.62);
+  --rf-border: rgba(14,42,50,.12);
+  --rf-border-strong: rgba(30,202,211,.35);
+  --rf-soft: rgba(30,202,211,.10);
+  --rf-bg: #F7FBFC;
+  --rf-card: #FFFFFF;
+  --rf-shadow: 0 18px 48px rgba(0,0,0,.10);
+  --rf-radius: 24px;
+  --rf-radius-sm: 18px;
+  --rf-font: inherit;
+
+  box-sizing: border-box;
+  width: 100%;
+  margin: 24px 0;
+  position: relative;
+  z-index: 50; /* stay above odd theme layers */
+  font-family: var(--rf-font);
+  color: var(--rf-text);
+}
+.rf-wrap *{ box-sizing: border-box; }
+
+/* Boxed container (consistent width on all steps) */
+.rf-container{
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+@media (min-width: 1024px){
+  .rf-container{ padding: 0 24px; }
+}
+
+/* Main card */
+.rf-card{
+  background: var(--rf-card);
+  border: 1px solid var(--rf-border);
+  border-radius: var(--rf-radius);
+  box-shadow: var(--rf-shadow);
+  padding: 26px;
+  overflow: hidden;
+}
+
+/* Head */
+.rf-title{
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 950;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  color: var(--rf-ink);
+}
+.rf-sub{
+  margin: 0 0 18px;
+  color: var(--rf-muted);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* Progress */
+.rf-progress{
+  height: 8px;
+  background: rgba(30,202,211,.10);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 12px 0 18px;
+}
+.rf-progress-bar{
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--rf-primary), var(--rf-primary-2));
+}
+
+/* Layout */
+.rf-layout{
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(320px,380px);
+  gap: 22px;
+  align-items: start;
+}
+.rf-layout--single{ grid-template-columns: 1fr; }
+@media (max-width: 1024px){
+  .rf-layout{ grid-template-columns: 1fr; }
+}
+
+/* Steps */
+.rf-step{ display: none; }
+.rf-step.is-active{ display: block; }
+
+.rf-label{
+  display: block;
+  margin: 2px 0 10px;
+  font-weight: 950;
+  font-size: 13px;
+  color: var(--rf-muted);
+  text-transform: uppercase;
+  letter-spacing: .10em;
+}
+.rf-help{
+  margin: 0 0 14px;
+  color: var(--rf-muted);
+  font-weight: 650;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Tiles (radio/checkbox) */
+.rf-tiles{
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 14px;
+}
+@media (max-width: 900px){ .rf-tiles{ grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 520px){ .rf-tiles{ grid-template-columns: 1fr; } }
+
+.rf-tile{
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 18px;
+  min-height: 92px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid var(--rf-border);
+  box-shadow: 0 10px 26px rgba(0,0,0,.06);
+  cursor: pointer;
+  user-select: none;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
+  overflow: hidden;
+}
+.rf-tile:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(0,0,0,.10);
+}
+.rf-tile.is-on, .rf-tile.is-active{
+  border-color: var(--rf-border-strong);
+  background: var(--rf-soft);
+  box-shadow: 0 16px 34px rgba(30,202,211,.16);
+}
+.rf-tile.is-on::after{
+  content: "✓";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 950;
+  font-size: 13px;
+  background: linear-gradient(135deg, var(--rf-primary), var(--rf-primary-2));
+}
+.rf-tile input{ position: absolute; opacity: 0; pointer-events: none; }
+.rf-ico{
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: var(--rf-soft);
+  border: 1px solid rgba(30,202,211,.22);
+}
+.rf-ico:empty{ display: none; }
+.rf-txt{ min-width: 0; display: flex; flex-direction: column; }
+.rf-name{ font-weight: 950; font-size: 16px; line-height: 1.2; color: var(--rf-ink); }
+.rf-desc{ margin-top: 4px; font-size: 13px; font-weight: 650; color: var(--rf-muted); }
+
+/* Navigation buttons (consistent on all steps) */
+.rf-nav{
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.rf-wrap .button,
+.rf-wrap button.button,
+.rf-wrap .rf-btn{
+  appearance: none;
+  border: 0;
+  border-radius: 16px;
+  padding: 12px 16px;
+  font-weight: 950;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  text-decoration: none;
+}
+.rf-wrap .rf-next,
+.rf-wrap .rf-submit,
+.rf-wrap .rf-cta,
+.rf-wrap .button.rf-next{
+  background: linear-gradient(90deg, var(--rf-primary), var(--rf-primary-2));
+  color: #fff;
+}
+.rf-wrap .rf-prev,
+.rf-wrap .button.rf-prev{
+  background: transparent;
+  border: 2px solid rgba(30,202,211,.45);
+  color: var(--rf-primary-2);
+}
+.rf-wrap .button:focus{ outline: 3px solid rgba(30,202,211,.25); outline-offset: 2px; }
+.rf-wrap .is-disabled{ opacity: .55; pointer-events: none; }
+
+/* Sidebar (consistent) */
+.rf-side{
+  position: sticky;
+  top: 110px;
+  align-self: start;
+}
+@media (max-width: 1024px){
+  .rf-side{ position: static; top: auto; }
+}
+.rf-side-inner{
+  background: linear-gradient(180deg, rgba(30,202,211,.10), rgba(255,255,255,0));
+  border: 1px solid rgba(30,202,211,.22);
+  border-radius: var(--rf-radius);
+  padding: 16px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.06);
+}
+.rf-side-head{
+  padding: 8px 8px 12px;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  margin-bottom: 10px;
+}
+.rf-side-title{ margin: 0; font-weight: 950; font-size: 18px; color: var(--rf-ink); }
+.rf-side-sub{ margin: 4px 0 0; font-weight: 650; font-size: 13px; color: var(--rf-muted); }
+
+/* Summary / results cards */
+.rf-results{ display: grid; gap: 10px; padding: 6px; }
+.rf-result-card{
+  background: #fff;
+  border: 1px solid var(--rf-border);
+  border-radius: var(--rf-radius-sm);
+  padding: 12px;
+  box-shadow: 0 10px 22px rgba(0,0,0,.06);
+}
+.rf-result-title{ margin: 0 0 6px; font-weight: 950; color: var(--rf-ink); }
+.rf-result-meta{ margin: 0; font-size: 13px; font-weight: 650; color: var(--rf-muted); }
+
+/* Terra-like section (barriers + area buckets) */
+.rf-terra-box{
+  border: 1px solid rgba(30,202,211,.22);
+  background: rgba(30,202,211,.06);
+  border-radius: var(--rf-radius);
+  padding: 16px;
+}
+.rf-terra-inline-top{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.rf-terra-pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(30,202,211,.24);
+  background: #fff;
+  font-weight: 950;
+  color: var(--rf-primary-2);
+}
+.rf-terra-inline-hint{ margin-top: 10px; font-size: 13px; font-weight: 650; color: var(--rf-muted); }
+
+.rf-terra-cards{
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 12px;
+}
+@media (max-width: 900px){ .rf-terra-cards{ grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 520px){ .rf-terra-cards{ grid-template-columns: 1fr; } }
+
+.rf-terra-card{
+  border: 1px solid var(--rf-border);
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  box-shadow: 0 10px 22px rgba(0,0,0,.06);
+}
+.rf-terra-card:hover{ transform: translateY(-1px); box-shadow: 0 14px 28px rgba(0,0,0,.10); }
+.rf-terra-card.is-on{ border-color: var(--rf-border-strong); background: var(--rf-soft); box-shadow: 0 16px 34px rgba(30,202,211,.16); }
+.rf-terra-card-title{ margin: 0; font-weight: 950; color: var(--rf-ink); }
+.rf-terra-card-sub{ margin: 4px 0 0; font-weight: 650; font-size: 13px; color: var(--rf-muted); }
+
+/* Area buckets (radio list) */
+.rf-area-steps{ display: grid; gap: 10px; }
+.rf-area-step{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--rf-border);
+  border-radius: 18px;
+  background: #fff;
+  cursor: pointer;
+}
+.rf-area-step input{ accent-color: var(--rf-primary); }
+
+/* Inputs in lead/form area */
+.rf-wrap input[type="text"],
+.rf-wrap input[type="email"],
+.rf-wrap input[type="tel"],
+.rf-wrap select,
+.rf-wrap textarea{
+  width: 100%;
+  border: 1px solid rgba(14,42,50,.16);
+  border-radius: 16px;
+  padding: 12px 12px;
+  background: #fff;
+  font-weight: 650;
+}
+
+/* SureForms (best-effort styling without hard coupling) */
+.rf-wrap .sureforms-form,
+.rf-wrap form.sureforms-form{
+  margin-top: 10px;
+}
+.rf-wrap .sureforms-form button[type="submit"],
+.rf-wrap .sureforms-form input[type="submit"],
+.rf-wrap form.sureforms-form button[type="submit"],
+.rf-wrap form.sureforms-form input[type="submit"]{
+  background: linear-gradient(90deg, var(--rf-primary), var(--rf-primary-2));
+  color: #fff;
+  border: 0;
+  border-radius: 18px;
+  padding: 12px 16px;
+  font-weight: 950;
+  width: 100%;
+}
+
+/* Hide lead form on step 1; show once we have summary/results */
+.rf-lead{ display: none; }
+.rf-wrap.has-results .rf-lead{ display: block; }
+
+/* Safety: keep Finder clickable even if theme injects overlay layers */
+.rf-card, .rf-card *{ pointer-events: auto; }
+.rf-layout, .rf-steps, .rf-step, .rf-tiles, .rf-nav{ position: relative; z-index: 10; }
+
+/* =========================================================
+   CONSISTENCY & UX UPGRADES (v4.8.8)
+   - clear active state on Step 3 (barrier cards)
+   - disabled "Weiter" actually looks/behaves disabled
+   - sticky nav on mobile
+   - summary edit button styling
+   - topbar (step indicator)
+========================================================= */
+
+/* Topbar: step indicator + microcopy */
+.rf-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:14px 0 6px;
+  padding:10px 12px;
+  border:1px solid rgba(14,42,50,.12);
+  border-radius:16px;
+  background: rgba(247,251,252,.9);
+}
+.rf-step-ind{
+  font-weight: 900;
+  color: var(--rf-dark);
+}
+.rf-topbar-right{
+  color: rgba(14,42,50,.75);
+  font-weight: 700;
+  font-size: 14px;
+  text-align:right;
+}
+
+/* Disabled Next */
+.rf-wrap .rf-next.is-disabled,
+.rf-wrap .rf-next[disabled]{
+  opacity: .45;
+  filter: grayscale(20%);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Step 3: Barrier cards – very clear active */
+.rf-step[data-step="3"] .rf-terra-card{
+  position: relative;
+  border: 2px solid rgba(14,42,50,.14);
+  background:#fff;
+  transition: all .15s ease;
+}
+.rf-step[data-step="3"] .rf-terra-card:hover{
+  border-color: var(--rf-primary);
+  box-shadow: 0 12px 26px rgba(0,0,0,.07);
+  transform: translateY(-1px);
+}
+.rf-step[data-step="3"] .rf-terra-card.is-active,
+.rf-step[data-step="3"] .rf-terra-card[aria-pressed="true"]{
+  border-color: var(--rf-primary) !important;
+  background: rgba(30,202,211,.12) !important;
+}
+.rf-step[data-step="3"] .rf-terra-card.is-active::after,
+.rf-step[data-step="3"] .rf-terra-card[aria-pressed="true"]::after{
+  content:"✓";
+  position:absolute;
+  top: 10px;
+  right: 12px;
+  width:28px;
+  height:28px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  color:#fff;
+  background: var(--rf-primary);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12);
+}
+
+/* Summary edit button */
+.rf-sum-edit{
+  margin-left: 10px;
+  border: 1px solid rgba(30,202,211,.35) !important;
+  background: var(--rf-primary, #1ECAD3) !important;
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-weight: 900;
+  font-size: 13px;
+  cursor: pointer;
+  color: #fff !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+}
+.rf-sum-edit:hover{
+  border-color: rgba(14,42,50,.15);
+  background: var(--rf-ink);
+}
+
+/* no icons */
+.rf-sum-edit::before{ content: none; }
+
+/* Summary card styling (Step 5 + 6) */
+.rf-summary{ margin-top: 6px; }
+.rf-sum-card{
+  background: linear-gradient(180deg, rgba(30,202,211,.08), rgba(247,251,252,.92));
+  border: 1px solid rgba(30,202,211,.22);
+  border-radius: var(--rf-radius);
+  padding: 16px;
+  box-shadow: 0 16px 36px rgba(0,0,0,.08);
+}
+.rf-sum-title{
+  margin: 0 0 12px;
+  font-weight: 950;
+  font-size: 16px;
+  color: var(--rf-ink);
+}
+.rf-sum-row{
+  display: grid;
+  grid-template-columns: 28px 160px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 10px 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(14,42,50,.08);
+  background: rgba(255,255,255,.92);
+  margin-bottom: 10px;
+}
+.rf-sum-row:last-child{ margin-bottom: 0; }
+.rf-sum-row::before{
+  content: "✓";
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 950;
+  background: linear-gradient(135deg, var(--rf-primary), var(--rf-primary-2));
+  box-shadow: 0 10px 20px rgba(0,0,0,.12);
+  margin-top: 2px;
+}
+.rf-sum-k{
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: rgba(14,42,50,.62);
+  padding-top: 4px;
+}
+.rf-sum-v{
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--rf-ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 680px){
+  .rf-sum-row{ grid-template-columns: 26px 1fr; }
+  .rf-sum-k{ grid-column: 2; }
+  .rf-sum-v{ grid-column: 2; justify-content: flex-start; }
+}
+
+/* Mini summary edit button in sidebar */
+.rf-mini-edit{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid rgba(30,202,211,.45);
+  background: rgba(30,202,211,.10);
+  color: var(--rf-primary, #1ECAD3) !important;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-weight: 900;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+.rf-mini-edit:hover{ border-color: var(--rf-primary); background: rgba(30,202,211,.16); }
+
+/* Final step (6/6) – clean layout:
+   - No duplicate "Deine Angaben" card inside the content area
+   - Sidebar already shows the mini-summary
+   - Content focuses on Kontakt & Angebot (form) */
+.rf-step[data-step="6"] .rf-terra-final-form > .rf-summary{ display: none !important; }
+
+.rf-terra-final-form{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+@media (min-width: 900px){
+  .rf-terra-final-title{ margin-top: 6px; }
+  .rf-terra-final-form :is(.sureforms-form, form.sureforms-form, .srfm-form){ width: 100% !important; }
+}
+
+.rf-terra-final-title{
+  margin: 0;
+  font-weight: 950;
+  color: var(--rf-ink);
+}
+
+/* Wrap SureForms area as a card-like panel (best-effort) */
+.rf-terra-final-form > .rf-summary{ margin: 0; }
+.rf-terra-final-form > .rf-summary .rf-sum-card{ height: 100%; }
+
+.rf-terra-final-form .sureforms-form,
+.rf-terra-final-form form.sureforms-form,
+.rf-terra-final-form .srfm-form{
+  background: #fff;
+  border: 1px solid rgba(14,42,50,.12);
+  border-radius: var(--rf-radius);
+  padding: 16px;
+  box-shadow: 0 16px 36px rgba(0,0,0,.08);
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Inputs spacing + labels */
+.rf-terra-final-form .sureforms-field,
+.rf-terra-final-form .srfm-field{
+  margin-bottom: 14px;
+}
+
+/* Make sure submit button doesn't look detached */
+.rf-terra-final-form .sureforms-form button[type="submit"],
+.rf-terra-final-form .sureforms-form input[type="submit"],
+.rf-terra-final-form .srfm-form button[type="submit"],
+.rf-terra-final-form .srfm-form input[type="submit"]{
+  margin-top: 8px;
+  border-radius: 18px !important;
+}
+
+/* Mobile sticky nav (keeps CTA visible) */
+@media (max-width: 860px){
+  .rf-nav{
+    position: sticky;
+    bottom: 10px;
+    z-index: 50;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(14,42,50,.10);
+    border-radius: 18px;
+    padding: 10px;
+    box-shadow: 0 18px 36px rgba(0,0,0,.08);
+  }
+  .rf-nav .button{ flex: 1; }
+}
+
+/* SureForms inputs inside RF final step (broader selectors) */
+.rf-wrap .srfm-form input[type="text"],
+.rf-wrap .srfm-form input[type="email"],
+.rf-wrap .srfm-form input[type="tel"],
+.rf-wrap .srfm-form textarea,
+.rf-wrap .srfm-form select{
+  border-radius: 16px !important;
+}
+
+
+
+/* Sidebar (ab Step 2) */
+.rf-sidebar{
+  position: sticky;
+  top: 16px;
+  align-self: start;
+}
+.rf-sidebar.is-hidden{ display:none; }
+
+.rf-sidecard{
+  border: 1px solid var(--rf-border);
+  border-radius: var(--rf-radius);
+  background: #fff;
+  padding: 16px 16px;
+  box-shadow: var(--rf-shadow);
+  margin-bottom: 14px;
+}
+.rf-sidehead{
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 10px;
+  letter-spacing: .2px;
+  color: var(--rf-dark);
+}
+.rf-sideprogress{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.rf-sidecopy{
+  font-size: 13px;
+  color: rgba(14,42,50,.78);
+  line-height: 1.35;
+}
+
+.rf-minisummary{ display:flex; flex-direction:column; gap:10px; }
+.rf-mini-row{
+  border: 1px solid var(--rf-border);
+  border-radius: 12px;
+  padding: 10px 10px;
+  background: var(--rf-bg);
+  position: relative;
+}
+.rf-mini-k{ font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: rgba(14,42,50,.65); margin-bottom: 4px; }
+.rf-mini-v{ font-size: 13px; font-weight: 700; color: var(--rf-dark); padding-right: 74px; }
+.rf-mini-edit{
+  position:absolute;
+  top: 10px;
+  right: 10px;
+  border: 1px solid var(--rf-border);
+  background:#fff;
+  color: var(--rf-dark);
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 6px 10px;
+  cursor:pointer;
+}
+.rf-mini-edit:hover{
+  border-color: var(--rf-primary);
+  box-shadow: 0 10px 24px rgba(0,0,0,.06);
+}
+
+.rf-mini-empty{
+  font-size: 13px;
+  color: rgba(14,42,50,.72);
+}
+
+.rf-trustlist{
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(14,42,50,.82);
+  font-size: 13px;
+}
+
+
+
+/* === Step 5: Notes + Critical Notes (before Kurz-Check) === */
+.rf-notes{
+  border: 1px solid var(--rf-border, #E6EEF0);
+  border-radius: 18px;
+  padding: 16px;
+  background: #fff;
+  margin: 10px 0 18px;
+}
+.rf-notes-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 10px;
+}
+.rf-tags{ display:flex; flex-wrap:wrap; gap:10px; margin: 12px 0 14px; }
+.rf-tag{
+  border: 1px solid rgba(30,202,211,.35);
+  background: rgba(30,202,211,.10);
+  color: var(--rf-dark, #0E2A32);
+  border-radius: 999px;
+  padding: 10px 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.rf-tag:hover{
+  border-color: var(--rf-primary,#1ECAD3);
+  background: rgba(30,202,211,.16);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.06);
+}
+.rf-tag.is-on,
+.rf-tag.is-active{
+  border-color: var(--rf-primary,#1ECAD3);
+  background: var(--rf-primary,#1ECAD3);
+  color: #fff;
+}
+
+.rf-textarea{
+  width: 100%;
+  border: 2px solid var(--rf-border,#E6EEF0);
+  border-radius: 14px;
+  padding: 14px 14px;
+  font-size: 16px;
+  line-height: 1.4;
+  outline: none;
+}
+.rf-textarea:focus{
+  border-color: var(--rf-primary,#1ECAD3);
+  box-shadow: 0 0 0 4px rgba(30,202,211,.12);
+}
+.rf-help--small{ font-size: 14px; opacity: .78; margin-top: 8px; }
+
+.rf-counter{
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  opacity: .65;
+  text-align: right;
+}
+
+.rf-divider{ border:0; border-top:1px solid var(--rf-border,#E6EEF0); margin: 18px 0; }
+
+.rf-critical{
+  margin-top: 14px;
+  border: 1px solid rgba(245, 158, 11, .28);
+  background: rgba(245, 158, 11, .05);
+  border-radius: 18px;
+  padding: 14px;
+}
+.rf-critical-head{ font-weight: 900; margin-bottom: 6px; }
+.rf-critical-sub{ opacity: .85; margin-bottom: 10px; }
+.rf-textarea--critical{ border-color: rgba(245, 158, 11, .45); }
+.rf-textarea--critical:focus{
+  border-color: rgba(245, 158, 11, .75);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, .15);
+}
+.rf-validation{
+  margin-top: 8px;
+  font-weight: 700;
+  color: #b45309;
+}
+
+/* === Step 6: Form layout (avoid centered/narrow forms) === */
+.rf-step[data-step="6"] .rf-terra-final-form{
+  max-width: none;
+}
+.rf-step[data-step="6"] .rf-terra-final-form form,
+.rf-step[data-step="6"] .rf-terra-final-form .sureforms-form{
+  max-width: none !important;
+  width: 100% !important;
+}
+
+
+
+/* === 4.8.18.2 UX polish: checkmark before text, mobile buttons, centered selects, teaser === */
+
+/* Remove top-right checkmark and place it before the option text */
+.rf-tile.is-on::after,
+.rf-tile.is-active::after{
+  content: none !important;
+  display: none !important;
+}
+.rf-tile.is-on .rf-name::before,
+.rf-tile.is-active .rf-name::before{
+  content: "✓";
+  display: inline-block;
+  margin-right: 10px;
+  font-weight: 950;
+}
+
+/* Flatter buttons on mobile for better fit */
+@media (max-width: 520px){
+  .rf-wrap .button,
+  .rf-wrap button.button,
+  .rf-wrap .rf-btn{
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+  .rf-nav{ gap: 10px; }
+}
+
+/* Center text in select boxes (SureForms + Finder) */
+.rf-wrap select,
+.rf-wrap .srfm-form select{
+  text-align: center !important;
+  text-align-last: center !important;
+  height: 48px !important;
+  line-height: 48px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Step 6 teaser card */
+.rf-result-teaser{ margin: 14px 0 18px; }
+.rf-teaser-card{
+  border: 1px solid var(--rf-border);
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px 14px;
+  box-shadow: 0 10px 26px rgba(0,0,0,.06);
+}
+.rf-teaser-title{
+  font-weight: 950;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.rf-teaser-text{ margin: 0 0 6px; }
+.rf-teaser-sub{ opacity: .8; font-size: 14px; }
+
+
+/* UX polish: differentiate hover vs active (active stays stable) */
+.rf-tile.is-on:hover,
+.rf-tile.is-active:hover{ transform: none; }
+
+/* UX polish: centered tile text + readable line length */
+.rf-tile{ display:flex; align-items:center; justify-content:center; text-align:center; }
+.rf-tile .rf-txt{ display:flex; align-items:center; justify-content:center; gap:10px; }
+.rf-tile .rf-name{ max-width: 24ch; display:inline-block; margin:0 auto; line-height:1.25; }
+
+/* UX polish: CTA zone separation */
+.rf-nav{ padding-top: 12px; border-top: 1px solid var(--rf-border); }
+
+/* UX polish: remove icon containers everywhere */
+.rf-ico{ display:none !important; }
+
+@media (max-width:520px){
+  .rf-wrap .rf-btn, .rf-wrap .button, .rf-wrap button.button{ padding: 10px 12px; border-radius: 14px; }
+}
