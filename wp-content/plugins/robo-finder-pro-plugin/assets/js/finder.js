@@ -345,6 +345,33 @@ function syncHiddenFields($wrap){
   }
 
   // =====================
+  // Step 5 special-case UI
+  // =====================
+  // If selected barriers require a manual feasibility check, Step 5 asks for a
+  // short mandatory hint. The template contains this field but keeps it hidden
+  // by default (data-rf-critical-wrap). If we don't unhide it, users can end up
+  // with a disabled CTA and no visible way to satisfy the requirement.
+  function updateStep5SpecialUI($wrap){
+    try{
+      $wrap = getWrap($wrap);
+      var step = parseInt($wrap.data('rf-step') || 1, 10);
+      if(step !== 5) return;
+
+      var st = computeState($wrap);
+      var $critWrap = $wrap.find('[data-rf-critical-wrap]').first();
+      if(!$critWrap.length) return;
+
+      // Show/hide the mandatory field based on current selection.
+      $critWrap.prop('hidden', !st.manual_check_required);
+
+      // Toggle validation hint + CTA state
+      var ok5 = isStepValid($wrap, 5);
+      $wrap.find('[data-rf-critical-hint]').prop('hidden', ok5);
+      updateNextButtonState($wrap, 5);
+    }catch(e){}
+  }
+
+  // =====================
   // Step switching
   // =====================
   // Several flows call `showStep(...)` (restore, next/back, direct step nav).
@@ -371,6 +398,8 @@ function syncHiddenFields($wrap){
     updateCtaCopy($wrap);
     syncHiddenFields($wrap);
     updateNextButtonState($wrap, step);
+    // Ensure Step 5 mandatory hint field becomes visible when required
+    updateStep5SpecialUI($wrap);
 
     // Render summary when user reaches the recap/final steps
     if(step === 5 || step === 6){
