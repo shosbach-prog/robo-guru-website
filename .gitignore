@@ -31,3 +31,10 @@ error_log
 .DS_Store
 .idea/
 .vscode/
+
+# Licenses / secrets
+wp-content/plugins/seo-by-rank-math-pro/licence-data.php
+
+# Uploads (local-only)
+wp-content/uploads/
+wp-content/uploads__local_backup/
