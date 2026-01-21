@@ -1,14 +1,14 @@
-# <!=Copyright (C) 2025
+# <!=Copyright (C) 2026
 # This file is distributed under the same license as the  package.=!>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 12:46:23+00:00\n"
+"POT-Creation-Date: 2026-01-01 13:06:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-MO-DA HO:MI+ZONE\n"
 "Last-Translator: BuddyBoss\n"
 "Language-Team: BuddyBoss\n"
 "Language: en\n"
@@ -244,8 +244,8 @@ msgstr ""
 #: inc/plugins/buddyboss-menu-icons/vendor/kucrut/icon-picker/includes/types/fa.php:2594
 #: inc/plugins/buddyboss-menu-icons/vendor/kucrut/icon-picker/includes/types/genericon.php:623
 #: inc/plugins/learndash-compat.php:63 inc/theme/template-functions.php:905
-#: inc/theme/template-functions.php:1920 inc/theme/template-functions.php:1933
-#: inc/theme/template-functions.php:2042 inc/theme/template-functions.php:2057
+#: inc/theme/template-functions.php:1921 inc/theme/template-functions.php:1934
+#: inc/theme/template-functions.php:2043 inc/theme/template-functions.php:2058
 #: learndash/ld30/focus/comments_list.php:120
 #: tutor/dashboard/question-answer/answers.php:107
 #: tutor/single/lesson/comments-loop.php:37
@@ -275,7 +275,7 @@ msgstr ""
 msgid "Start of Discussion"
 msgstr ""
 
-#: bbpress/content-single-topic.php:149 learndash/ld30/lesson.php:216
+#: bbpress/content-single-topic.php:149 learndash/ld30/lesson.php:222
 #: learndash/ld30/quiz.php:100
 #: lifterlms/assignment/template-single-assignment-content.php:61
 #: lifterlms/lesson/template-single-lesson-content.php:63
@@ -13033,7 +13033,7 @@ msgstr ""
 msgid "All certificates"
 msgstr ""
 
-#: inc/plugins/related-posts-helper.php:204
+#: inc/plugins/related-posts-helper.php:233
 msgid "There is no excerpt because this is a protected post."
 msgstr ""
 
@@ -13467,7 +13467,7 @@ msgstr ""
 msgid "Load More"
 msgstr ""
 
-#: inc/theme/template-functions.php:2243
+#: inc/theme/template-functions.php:2244
 msgid "Edit Post Privacy"
 msgstr ""
 
@@ -13957,13 +13957,13 @@ msgstr ""
 msgid "Please login to view sample content"
 msgstr ""
 
-#: learndash/ld30/lesson.php:232 learndash/ld30/quiz.php:111
-#: learndash/ld30/topic.php:246
+#: learndash/ld30/lesson.php:238 learndash/ld30/quiz.php:111
+#: learndash/ld30/topic.php:253
 msgid "Expires at"
 msgstr ""
 
-#: learndash/ld30/lesson.php:232 learndash/ld30/quiz.php:111
-#: learndash/ld30/topic.php:246
+#: learndash/ld30/lesson.php:238 learndash/ld30/quiz.php:111
+#: learndash/ld30/topic.php:253
 msgid "Expired at"
 msgstr ""
 
