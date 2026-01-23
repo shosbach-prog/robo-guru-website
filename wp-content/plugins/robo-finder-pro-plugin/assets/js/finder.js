@@ -49,6 +49,44 @@
     return (isFinite(n) && n >= 1) ? n : 6;
   }
 
+  // Determine whether the current selection requires a manual feasibility check.
+  // Lightweight (no computeState dependency), so it can be used early in showStep().
+  function manualRequiredNow($wrap){
+    try{
+      $wrap = getWrap($wrap);
+      var rawB = ($wrap.find('input[name="rf_barrierefreiheit"]').val() || '').trim();
+      if(!rawB) return false;
+      var b = rawB.split(',').map(function(s){return (s||'').trim();}).filter(Boolean);
+
+      var hasStairs = b.indexOf('stufen_treppen') !== -1;
+      var hasLift   = (b.indexOf('aufzug') !== -1) || (b.indexOf('fahrstuhl') !== -1);
+      var hasTight  = b.indexOf('enge_tueren') !== -1;
+      var hasRamps  = b.indexOf('rampen_schwellen') !== -1;
+      var hasGate   = (b.indexOf('tore') !== -1) || (b.indexOf('rolltor') !== -1) || (b.indexOf('tor') !== -1);
+
+      return (hasStairs && !hasLift) || hasTight || hasRamps || (hasGate && hasLift);
+    }catch(e){
+      return false;
+    }
+  }
+
+  // Display meta for progress/step indicator.
+  // IMPORTANT: Step 6 in Robo Finder is the SureForms form (not a thank-you page),
+  // therefore we must keep showing 6/6 and allow navigation to step 6 even when
+  // a manual feasibility check is required.
+  function getDisplayStepMeta($wrap, step){
+    $wrap = getWrap($wrap);
+    var total = getTotalSteps($wrap);
+    return { step: step, total: total, isManual: manualRequiredNow($wrap) };
+  }
+
+  // Backwards-compat: older builds called this from showStep().
+  // We no longer change the internal total step count (to avoid breaking the
+  // post-submit confirmation step), so this is intentionally a no-op.
+  function applyEffectiveTotalSteps($wrap){
+    return;
+  }
+
   function clampStep($wrap, step){
     var total = getTotalSteps($wrap);
     step = parseInt(step || 1, 10);
@@ -59,7 +97,9 @@
   }
 
   function setProgress($wrap, step){
-    var total = getTotalSteps($wrap);
+    var meta = getDisplayStepMeta($wrap, step);
+    var total = meta.total;
+    step = meta.step;
     var pct = (total <= 1) ? 100 : ((step-1) / (total-1)) * 100;
     pct = Math.max(0, Math.min(100, pct));
     // Support multiple possible classnames (theme/plugin variations)
@@ -88,9 +128,9 @@
 
   function updateTopbar($wrap, step){
     ensureTopbar($wrap);
-    var total = getTotalSteps($wrap);
-    $wrap.find('[data-rf-step-n]').text(String(step));
-    $wrap.find('[data-rf-step-total]').text(String(total));
+    var meta = getDisplayStepMeta($wrap, step);
+    $wrap.find('[data-rf-step-n]').text(String(meta.step));
+    $wrap.find('[data-rf-step-total]').text(String(meta.total));
 
     var copyMap = {
       1: 'Wähle den Robotertyp – damit wir direkt richtig filtern.',
@@ -100,7 +140,13 @@
       5: 'Fast geschafft – optional noch Hinweise, dann Kurz-Check.',
       6: 'Kontaktdaten – wir melden uns mit einer passenden Empfehlung.'
     };
-    $wrap.find('[data-rf-step-copy]').text(copyMap[step] || '');
+    // If we're on the post-submit confirmation page but in manual-check mode,
+    // show a short confirmation copy.
+    if(meta.isManual && step >= 6){
+      $wrap.find('[data-rf-step-copy]').text('Danke! Wir prüfen die Machbarkeit und melden uns zeitnah.');
+    } else {
+      $wrap.find('[data-rf-step-copy]').text(copyMap[step] || '');
+    }
   }
 
   function syncTileVisual($tile){
@@ -269,25 +315,90 @@ function syncToSureForms($wrap, st){
     // SureForms renders its own <form> inside step 6 container
     var form = $wrap.find('.rf-terra-final-form form').first();
     if(!form.length) return;
-    // Ensure required hidden fields exist inside SureForms form
-    function ensure(name, val){
+
+    // Set any field inside SureForms (hidden or visible) without overwriting user input
+    function setField(name, val){
+      if(val === undefined || val === null) val = '';
+      val = String(val);
+      var $els = form.find('[name="'+name+'"]');
+      if(!$els.length) return;
+      $els.each(function(){
+        var $el = $(this);
+        // don't overwrite if user already typed something
+        if(($el.val() || '').toString().trim().length) return;
+        $el.val(val);
+        try{ $el.trigger('input'); $el.trigger('change'); }catch(e){}
+      });
+    }
+
+    // Ensure required hidden fields exist (for setups that only read hidden inputs)
+    function ensureHidden(name, val){
+      if(val === undefined || val === null) val = '';
+      val = String(val);
       var $h = form.find('input[type="hidden"][name="'+name+'"]');
       if(!$h.length){
         $h = $('<input type="hidden" />').attr('name', name).appendTo(form);
       }
       $h.val(val);
     }
-    ensure('rf_notes', st.notes || '');
-    ensure('rf_manual_check_required', st.manual_check_required ? '1' : '0');
-    ensure('rf_task', st.aufgabe || '');
-    ensure('rf_environment', (st.einsatzgebiet || []).join(','));
-    ensure('rf_environments', (st.einsatzgebiet || []).join(','));
-    // NEW: also push barriers into SureForms, otherwise it stays value="" and Step-3 info is lost
-    ensure('rf_barrierefreiheit', (st.barrierefreiheit || []).join(','));
-    // keep backward compatible keys too
-    ensure('rf_aufgabe', st.aufgabe || '');
-    ensure('rf_einsatzgebiet', (st.einsatzgebiet || []).join(','));
-    ensure('rf_critical_notes', st.critical_notes || '');
+
+    var env = (st.einsatzgebiet || []).join(', ');
+    var barr = (st.barrierefreiheit || []).join(', ');
+
+    // Main mapping (matches your SureForms field keys)
+    setField('rf_aufgabe', st.aufgabe || '');
+    setField('rf_task', st.aufgabe || '');
+
+    setField('rf_einsatzgebiet', env);
+    setField('rf_environment', env);
+    setField('rf_environments', env);
+
+    setField('rf_barrierefreiheit', barr);
+    setField('rf_flaeche_qm', st.flaeche_qm || '');
+
+    // Notes fields
+    setField('rf_notes', st.notes || '');
+    setField('rf_critical_notes', st.critical_notes || '');
+
+    // Special: some SureForms builds label the critical field as
+    // "Wichtiger Hinweis zu deinem Objekt" without a stable name.
+    // Try to locate the textarea by label text and fill it with critical_notes.
+    try{
+      if(st.critical_notes){
+        var $labels = form.find('label');
+        $labels.each(function(){
+          var txt = ($(this).text() || '').replace(/\s+/g,' ').trim();
+          if(!txt) return;
+          if(txt.indexOf('Wichtiger Hinweis') !== -1 || txt.indexOf('besondere Anforderungen') !== -1){
+            var fid = $(this).attr('for');
+            if(fid){
+              var $t = form.find('#'+fid);
+              if($t.length && !String($t.val()||'').trim().length){
+                $t.val(String(st.critical_notes));
+                try{ $t.trigger('input'); $t.trigger('change'); }catch(e){}
+              }
+            }
+          }
+        });
+      }
+    }catch(e){}
+
+    // Meta
+    setField('rf_manual_check_required', st.manual_check_required ? '1' : '0');
+    setField('rf_page_url', window.location.href);
+    setField('rf_session_id', st.session_id || '');
+    setField('rf_timestamp', (new Date()).toISOString());
+
+    // Hidden mirrors for maximum compatibility
+    ensureHidden('rf_notes', st.notes || '');
+    ensureHidden('rf_critical_notes', st.critical_notes || '');
+    ensureHidden('rf_manual_check_required', st.manual_check_required ? '1' : '0');
+    ensureHidden('rf_task', st.aufgabe || '');
+    ensureHidden('rf_environment', env);
+    ensureHidden('rf_environments', env);
+    ensureHidden('rf_barrierefreiheit', barr);
+    ensureHidden('rf_aufgabe', st.aufgabe || '');
+    ensureHidden('rf_einsatzgebiet', env);
   }catch(e){}
 }
 
@@ -379,6 +490,9 @@ function syncHiddenFields($wrap){
   // a hard runtime error and made the UI non-interactive.
   function showStep($wrap, step){
     $wrap = getWrap($wrap);
+    // If the current selection triggers a manual feasibility check, Step 5 becomes
+    // the final step. Adjust the total step count BEFORE clamping.
+    applyEffectiveTotalSteps($wrap);
     step = clampStep($wrap, step);
 
     // Switch visible step
@@ -404,6 +518,39 @@ function syncHiddenFields($wrap){
     // Render summary when user reaches the recap/final steps
     if(step === 5 || step === 6){
       renderMiniSummary($wrap);
+    }
+
+    if(step === 6){
+      // Prefill/append hidden fields to SureForms as early as possible (not only on submit)
+      try{
+        var $sf = $wrap.find('.rf-step[data-step="6"] form').first();
+        if($sf.length){
+          syncSureFormsBeforeSubmit($wrap, $sf.get(0));
+          // Ensure raw hidden fields exist (for setups without SureForms hidden mapping)
+          var st = computeState($wrap);
+          var payload = {
+            rf_aufgabe: st.aufgabe || '',
+            rf_task: st.aufgabe || '',
+            rf_einsatzgebiet: (st.einsatzgebiet||[]).join(','),
+            rf_environment: (st.einsatzgebiet||[]).join(','),
+            rf_barrierefreiheit: ($wrap.find('input[name="rf_barrierefreiheit"]').val() || ''),
+            rf_flaeche_qm: st.flaeche_qm || '',
+            rf_notes: st.notes || '',
+            rf_critical_notes: st.critical_notes || '',
+            rf_manual_check_required: st.manual_check_required ? '1' : '0',
+            rf_page_url: window.location.href,
+            rf_session_id: (sessionStorage.getItem('rf_session_id') || ''),
+            rf_timestamp: (new Date()).toISOString()
+          };
+          // Prefill visible/hidden SureForms fields using robust mapping
+          rfFillSureFormsMapped($sf, payload);
+
+          Object.keys(payload).forEach(function(k){
+            if($sf.find('[name="'+k+'"]').length) return;
+            $sf.append('<input type="hidden" name="'+k+'" value="'+esc(String(payload[k]||''))+'">');
+          });
+        }
+      }catch(e){}
     }
 
     // Persist so refresh keeps the state (unless cleared on entry page)
@@ -500,9 +647,48 @@ function syncHiddenFields($wrap){
     }
   }
 
-  // Adjust CTA copy depending on selected task (Reinigung vs Service/Lieferung)
+  
+  function barrierLabels(keys){
+    var map = {
+      stufen_treppen:'Stufen / Treppen',
+      aufzug:'Fahrstuhl / Aufzug',
+      rampen_schwellen:'Rampen / Schwellen',
+      enge_tueren:'Enge Türen',
+      tore:'Tore / Rolltore',
+      alles_ebenerdig:'Alles ebenerdig'
+    };
+    return (keys||[]).map(function(k){ return map[k] || k; });
+  }
+
+  function updateSpecialHint($wrap){
+    var st = computeState($wrap);
+    var $hint = $wrap.find('[data-rf-special-hint]').first();
+    if(!$hint.length) return;
+
+    if(!st.manual_check_required){
+      $hint.prop('hidden', true).empty();
+      return;
+    }
+
+    var labels = barrierLabels(st.barrierefreiheit || []);
+    var why = labels.length ? ('Aufgrund von <strong>' + esc(labels.join(', ')) + '</strong> prüfen wir die Machbarkeit individuell.') : 'Wir prüfen die Machbarkeit individuell.';
+    var html =
+      '<div class="rf-special-hint__card">' +
+        '<div class="rf-special-hint__icon">🔍</div>' +
+        '<div class="rf-special-hint__body">' +
+          '<div class="rf-special-hint__title">Machbarkeit statt Fehlkauf</div>' +
+          '<div class="rf-special-hint__text">' + why + ' <span>Im nächsten Schritt öffnet sich das Formular zur Machbarkeitsprüfung.</span></div>' +
+          '<div class="rf-special-hint__sub"><strong>Warum wir prüfen:</strong> Bei Stufen, Toren oder Rampen unterscheiden sich Roboter stark – eine kurze Prüfung verhindert teure Fehlkäufe.</div>' +
+        '</div>' +
+      '</div>';
+
+    $hint.html(html).prop('hidden', false);
+  }
+
+// Adjust CTA copy depending on selected task (Reinigung vs Service/Lieferung)
   function updateCtaCopy($wrap){
     var st = computeState($wrap);
+    updateSpecialHint($wrap);
     var t = (st.aufgabe || '').toLowerCase();
     var isServiceOrDelivery = /transport|liefer|service|abräum|servicerobot/.test(t);
     var isSpecial = !!st.manual_check_required;
@@ -514,14 +700,26 @@ function syncHiddenFields($wrap){
     // Step 6 headline/subline + teaser
     var $s6 = $wrap.find('.rf-step[data-step="6"]');
     if($s6.length){
-      $s6.find('.rf-label').first().text(cta);
+      ($s6.find('[data-rf-s6-label]').first().length ? $s6.find('[data-rf-s6-label]').first() : $s6.find('.rf-label').first()).text(cta);
 
       var sub = isSpecial
         ? 'Trag deine Kontaktdaten ein – wir prüfen die Machbarkeit und melden uns mit einer passenden Empfehlung.'
         : (isServiceOrDelivery
             ? 'Trag deine Kontaktdaten ein – wir melden uns mit einer passenden Lösung.'
             : 'Trag deine Kontaktdaten ein – wir melden uns mit einer passenden Empfehlung.');
-      $s6.find('.rf-sub').first().text(sub);
+      ($s6.find('[data-rf-s6-sub]').first().length ? $s6.find('[data-rf-s6-sub]').first() : $s6.find('.rf-sub').first()).text(sub);
+
+      // Final form title (inside the form box)
+      var $ft = $s6.find('[data-rf-final-title]').first();
+      if($ft.length){
+        $ft.text(isSpecial ? 'Machbarkeitsprüfung anfordern' : 'Kontakt & Angebot');
+      }
+
+      // Next steps box – show extra note only for special cases
+      var $fehl = $s6.find('[data-rf-fehlkauf]').first();
+      if($fehl.length){
+        $fehl.prop('hidden', !isSpecial);
+      }
 
       // Result teaser (conversion booster) – no specific model names
       var $teaser = $s6.find('[data-rf-teaser]').first();
@@ -595,7 +793,9 @@ function syncHiddenFields($wrap){
     var st = computeState($wrap);
     var payload = {
       rf_aufgabe: st.aufgabe || '',
+      rf_task: st.aufgabe || '',
       rf_einsatzgebiet: (st.einsatzgebiet||[]).join(','),
+            rf_environment: (st.einsatzgebiet||[]).join(','),
       rf_environment: (st.einsatzgebiet||[]).join(','),
       rf_environments: (st.einsatzgebiet||[]).join(','),
       rf_barrierefreiheit: ($wrap.find('input[name="rf_barrierefreiheit"]').val() || ''),
@@ -605,7 +805,7 @@ function syncHiddenFields($wrap){
       rf_manual_check_required: st.manual_check_required ? '1' : '0',
       rf_page_url: window.location.href,
       rf_session_id: (sessionStorage.getItem('rf_session_id') || ''),
-      rf_timestamp: String(Date.now())
+      rf_timestamp: (new Date()).toISOString()
     };
     syncSureFormsHidden($sf, payload);
 
@@ -621,7 +821,67 @@ function syncHiddenFields($wrap){
     }catch(e){}
   }
 
-  // =====================
+  
+
+// Robust prefill for SureForms fields by exact name, partial match, or label text.
+function rfFillSureFormsMapped($sf, payload){
+  try{
+    var setIfEmpty = function($el, val){
+      if(!$el || !$el.length) return;
+      $el.each(function(){
+        var el = this;
+        // don't override user input
+        if(typeof el.value !== 'undefined' && String(el.value||'').trim() === ''){
+          el.value = val;
+          // trigger change for any listeners
+          try{ $(el).trigger('input').trigger('change'); }catch(e){}
+        }
+      });
+    };
+
+    var findByLabelText = function(key){
+      // Try: <label>rf_aufgabe</label> then nearest input/textarea
+      var $labels = $sf.find('label').filter(function(){
+        return String($(this).text()||'').trim() === key;
+      });
+      if(!$labels.length){
+        // also allow partial match
+        $labels = $sf.find('label').filter(function(){
+          return String($(this).text()||'').indexOf(key) !== -1;
+        });
+      }
+      if(!$labels.length) return $();
+      var $l = $labels.first();
+      var forId = $l.attr('for');
+      if(forId){
+        var safeId = String(forId).replace(/([ #;?%&,.+*~\':"!^$\[\]()=>|\/])/g,'\\$1');
+        var $t = $sf.find('#'+safeId);
+        if($t.length) return $t;
+      }
+      // common SureForms structure: label + input in same wrapper
+      var $wrap = $l.closest('.sureforms-field, .sf-field, .srf-field, .form-field, .field, .sf-field-wrap');
+      if($wrap.length){
+        var $in = $wrap.find('input, textarea, select').not('[type="hidden"]').first();
+        if($in.length) return $in;
+      }
+      // fallback: next input/textarea in DOM
+      var $next = $l.nextAll('input, textarea, select').first();
+      return $next;
+    };
+
+    Object.keys(payload||{}).forEach(function(key){
+      var val = payload[key];
+      if(val == null) val = '';
+      // 1) exact name/id
+      setIfEmpty($sf.find('[name="'+key+'"], #'+key), val);
+      // 2) partial name/id (for field arrays or prefixed names)
+      setIfEmpty($sf.find('input[name*="'+key+'"], textarea[name*="'+key+'"], select[name*="'+key+'"], input[id*="'+key+'"], textarea[id*="'+key+'"], select[id*="'+key+'"]'), val);
+      // 3) label text match
+      setIfEmpty(findByLabelText(key), val);
+    });
+  }catch(e){}
+}
+// =====================
   // Init
   // =====================
   function initOne($wrap){
@@ -751,6 +1011,30 @@ $(document).on('click', '.rf-wrap[data-rf="finder"] .rf-tile', function(e){
       return;
     }
     showStep($wrap, step + 1);
+  });
+
+  // Step 5 CTA ("Empfehlung erhalten" / "Machbarkeit prüfen lassen")
+  // In this Robo Finder, Step 6 contains the embedded SureForms form.
+  // The CTA on Step 5 must therefore navigate to Step 6 (instead of being a dead end).
+  $(document).on('click', '.rf-wrap[data-rf="finder"] .rf-to-form', function(e){
+    var $wrap = getWrap($(this));
+    var step = clampStep($wrap, $wrap.data('rf-step') || 1);
+    // Only meaningful on step 5
+    if(step !== 5){
+      // fall back to next behaviour
+      showStep($wrap, step + 1);
+      return;
+    }
+    if(!isStepValid($wrap, 5)){
+      e.preventDefault();
+      e.stopPropagation();
+      updateNextButtonState($wrap, 5);
+      updateStep5SpecialUI($wrap);
+      return;
+    }
+    // Ensure hidden fields are synced before showing the form.
+    syncHiddenFields($wrap);
+    showStep($wrap, 6);
   });
 
   // Summary: jump back to a specific step

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Robo Finder Pro
  * Description: Robo-Finder für Reinigungs- und Serviceroboter mit Roboter-Datenbank, Matching-Engine, Lead-Datenbank, Scraper, Dashboard-Analytics und Frontend-Grid/Compare. Shortcodes: [robo_finder], [robo_robot_grid], [robo_robot_compare ids="1,2,3"].
- * Version: 4.8.18.10
+* Version: 4.8.18.16
  * Author: Robo-Guru / Sebastian
  * Text Domain: robo-finder-pro
  */
@@ -11,7 +11,7 @@
 
 
 
-if (!defined('RF_PRO_VER')) { define('RF_PRO_VER','4.8.18.10'); }
+if (!defined('RF_PRO_VER')) { define('RF_PRO_VER','4.8.18.16'); }
 
 
 /**
@@ -1941,6 +1941,18 @@ public function render_rg_forum_mount() {
         <div class="rf-terra-inline-hint"><?php esc_html_e( 'Mehrfachauswahl möglich (außer „Alles ebenerdig“).', 'robo-finder-pro' ); ?></div>
     </div>
 
+    <div class="rf-nextsteps" data-rf-nextsteps>
+      <div class="rf-nextsteps__head">So geht’s weiter</div>
+      <ul class="rf-nextsteps__list">
+        <li>Wir prüfen deine Angaben (inkl. Barrieren & Wegeführung)</li>
+        <li>Du bekommst eine klare Empfehlung – ohne Spam</li>
+        <li>Optional: Demo & ROI-Check</li>
+      </ul>
+      <div class="rf-nextsteps__note" data-rf-fehlkauf hidden>
+        <strong>Warum wir prüfen:</strong> Bei Stufen, Toren oder Rampen unterscheiden sich Roboter stark – eine kurze Prüfung verhindert teure Fehlkäufe.
+      </div>
+    </div>
+
     <div class="rf-nav">
         <button type="button" class="button rf-prev" data-rf-prev><?php esc_html_e( 'Zurück', 'robo-finder-pro' ); ?></button>
         <button type="button" class="button rf-next" data-rf-next><?php esc_html_e( 'Weiter', 'robo-finder-pro' ); ?></button>
@@ -2003,6 +2015,8 @@ public function render_rg_forum_mount() {
   <label class="rf-label">Fast geschafft (noch ca. 30 Sekunden)</label>
   <p class="rf-help">Gibt es Besonderheiten oder Wünsche? Optional – je genauer, desto passender wird unsere Empfehlung.</p>
 
+  <div class="rf-special-hint" data-rf-special-hint hidden></div>
+
   <div class="rf-notes">
     <div class="rf-notes-top">
       <strong>Was ist dir besonders wichtig?</strong>
@@ -2046,14 +2060,14 @@ public function render_rg_forum_mount() {
 
 <!-- STEP 6: Formular -->
 <div class="rf-step" data-step="6">
-    <label class="rf-label"><?php esc_html_e( 'Angebot anfordern', 'robo-finder-pro' ); ?></label>
-    <p class="rf-sub"><?php esc_html_e( 'Trag deine Kontaktdaten ein – wir melden uns mit einer passenden Empfehlung.', 'robo-finder-pro' ); ?></p>
+    <label class="rf-label" data-rf-s6-label><?php esc_html_e( 'Angebot anfordern', 'robo-finder-pro' ); ?></label>
+    <p class="rf-sub" data-rf-s6-sub><?php esc_html_e( 'Trag deine Kontaktdaten ein – wir melden uns mit einer passenden Empfehlung.', 'robo-finder-pro' ); ?></p>
 
     <div class="rf-result-teaser" data-rf-teaser hidden></div>
 
 
     <div class="rf-terra-final-form">
-        <p class="rf-terra-final-title"><?php esc_html_e( 'Kontakt & Angebot', 'robo-finder-pro' ); ?></p>
+        <p class="rf-terra-final-title" data-rf-final-title><?php esc_html_e( 'Kontakt & Angebot', 'robo-finder-pro' ); ?></p>
         <?php
         if ( function_exists( 'do_shortcode' ) && shortcode_exists( 'sureforms' ) ) {
             echo do_shortcode( "[sureforms id='{$sureforms_id}']" );
