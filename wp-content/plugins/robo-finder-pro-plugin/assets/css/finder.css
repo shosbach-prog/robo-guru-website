@@ -3,16 +3,16 @@
 */
 
 .rf-wrap{
-  /* Tokens */
-  --rf-primary: #385DFF;
-  --rf-primary-2: #1E42DD;
+  /* Tokens - Robo Guru Logo Colors */
+  --rf-primary: #00BCD4;
+  --rf-primary-2: #0097A7;
   --rf-accent: #ED9615;
-  --rf-ink: #1E2132;
-  --rf-text: rgba(30,33,50,.88);
-  --rf-muted: rgba(30,33,50,.62);
-  --rf-border: rgba(30,33,50,.12);
-  --rf-border-strong: rgba(56,93,255,.35);
-  --rf-soft: rgba(56,93,255,.10);
+  --rf-ink: #0A1F44;
+  --rf-text: rgba(10,31,68,.88);
+  --rf-muted: rgba(10,31,68,.62);
+  --rf-border: rgba(10,31,68,.12);
+  --rf-border-strong: rgba(0,188,212,.35);
+  --rf-soft: rgba(0,188,212,.10);
   --rf-bg: #FAFBFD;
   --rf-card: #FFFFFF;
   --rf-shadow: 0 18px 48px rgba(0,0,0,.10);
