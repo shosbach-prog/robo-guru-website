@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Robo Finder Pro
  * Description: Robo-Finder für Reinigungs- und Serviceroboter mit Roboter-Datenbank, Matching-Engine, Lead-Datenbank, Scraper, Dashboard-Analytics und Frontend-Grid/Compare. Shortcodes: [robo_finder], [robo_robot_grid], [robo_robot_compare ids="1,2,3"].
-* Version: 4.8.18.16
+* Version: 4.8.18.17
  * Author: Robo-Guru / Sebastian
  * Text Domain: robo-finder-pro
  */
@@ -11,7 +11,7 @@
 
 
 
-if (!defined('RF_PRO_VER')) { define('RF_PRO_VER','4.8.18.16'); }
+if (!defined('RF_PRO_VER')) { define('RF_PRO_VER','4.8.18.17'); }
 
 
 /**
@@ -1415,14 +1415,14 @@ public function maybe_use_robot_templates($template){
 /* === Modal / Lightbox (Robo-Guru Look) === */
 .rf-modal-overlay{position:fixed;inset:0;background:rgba(7,18,35,.62);backdrop-filter:saturate(120%) blur(3px);z-index:99990}
 .rf-modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,calc(100vw - 32px));max-height:calc(100vh - 96px);background:#fff;border-radius:16px;box-shadow:0 20px 70px rgba(0,0,0,.35);z-index:99999;overflow:hidden}
-.rf-modal-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 14px 14px 16px;background:linear-gradient(90deg,#17c3c0 0%,#ff8a00 100%);color:#fff}
+.rf-modal-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 14px 14px 16px;background:linear-gradient(90deg,#00BCD4 0%,#ff8a00 100%);color:#fff}
 .rf-modal-title{margin:0;font-size:18px;line-height:1.2;font-weight:800;letter-spacing:.2px}
 .rf-modal-close{appearance:none;border:1px solid rgba(15,23,42,.10);background:rgba(255,255,255,.92);color:#0b1320;width:38px;height:38px;border-radius:12px;cursor:pointer;display:grid;place-items:center;font-size:20px;line-height:1;transition:transform .12s ease, background .12s ease}
 .rf-modal-close:hover{transform:scale(1.03);background:#fff}
 .rf-modal-close:active{transform:scale(.98)}
 .rf-modal-body{padding:16px;overflow:auto;max-height:calc(100vh - 160px)}
-.rf-modal-note{margin:0 0 10px 0;padding:10px 12px;border-radius:10px;background:#f3f7ff;border:1px solid rgba(23,195,192,.25);font-size:13px;line-height:1.35;color:#0b1320}
-.rf-modal-note.is-success{background:#ecfff9;border-color:rgba(23,195,192,.45)}
+.rf-modal-note{margin:0 0 10px 0;padding:10px 12px;border-radius:10px;background:#f3f7ff;border:1px solid rgba(0,188,212,.25);font-size:13px;line-height:1.35;color:#0b1320}
+.rf-modal-note.is-success{background:#ecfff9;border-color:rgba(0,188,212,.45)}
 .rf-modal-note.is-error{background:#fff3f3;border-color:rgba(255,138,0,.45)}
 
 /* SureForms inside modal: tighten typography + make fields full width */
@@ -1436,7 +1436,7 @@ public function maybe_use_robot_templates($template){
 .rf-modal textarea,
 .rf-modal select{width:100%!important;max-width:100%!important;box-sizing:border-box;border-radius:10px;border:1px solid rgba(15,23,42,.18);padding:10px 12px;font-size:14px;line-height:1.3;outline:none}
 .rf-modal textarea{min-height:110px;resize:vertical}
-.rf-modal input:focus, .rf-modal textarea:focus, .rf-modal select:focus{border-color:rgba(23,195,192,.75);box-shadow:0 0 0 3px rgba(23,195,192,.16)}
+.rf-modal input:focus, .rf-modal textarea:focus, .rf-modal select:focus{border-color:rgba(0,188,212,.75);box-shadow:0 0 0 3px rgba(0,188,212,.16)}
 .rf-modal .srfm-help, .rf-modal .srfm-desc, .rf-modal .srfm-field-description{font-size:12px;line-height:1.35;color:rgba(15,23,42,.72)}
 .rf-modal button[type="submit"], .rf-modal input[type="submit"]{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:pointer;width:100%;max-width:100%}
 
@@ -1477,9 +1477,9 @@ public function maybe_use_robot_templates($template){
 
 /* === RankMath FAQ Styling (Robo-Guru cards + checkmark) === */
 .rank-math-list-item{position:relative;border:1px solid rgba(15,23,42,.10);border-radius:10px;padding:14px 14px 12px 14px;margin:12px 0;background:#fff;box-shadow:0 10px 26px rgba(0,0,0,.05);overflow:hidden}
-.rank-math-list-item:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,#17c3c0 0%,#ff8a00 100%)}
+.rank-math-list-item:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,#00BCD4 0%,#ff8a00 100%)}
 .rank-math-list-item .rank-math-question{display:flex;align-items:flex-start;gap:10px;font-weight:900;margin:0 0 8px 0;font-size:15px;line-height:1.3}
-.rank-math-list-item .rank-math-question:before{content:"✓";display:inline-grid;place-items:center;flex:0 0 auto;width:22px;height:22px;border-radius:7px;background:rgba(23,195,192,.14);border:1px solid rgba(23,195,192,.28);color:#0b1320;font-size:14px;line-height:1;margin-top:1px}
+.rank-math-list-item .rank-math-question:before{content:"✓";display:inline-grid;place-items:center;flex:0 0 auto;width:22px;height:22px;border-radius:7px;background:rgba(0,188,212,.14);border:1px solid rgba(0,188,212,.28);color:#0b1320;font-size:14px;line-height:1;margin-top:1px}
 .rank-math-list-item .rank-math-answer{margin:0;color:rgba(15,23,42,.85);font-size:14px;line-height:1.6}
 CSS;
             wp_add_inline_style( 'robo-finder-pro-css', $inline_css );
