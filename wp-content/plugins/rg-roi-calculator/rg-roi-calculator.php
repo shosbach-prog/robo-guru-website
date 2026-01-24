@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.1.0';
+    const VERSION = '1.2.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -203,13 +203,7 @@ final class RG_ROI_Calculator {
 
                     <div class="rg-actions">
                         <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">📄</span><span>PDF herunterladen</span></button>
-
-                        <div class="rg-emailrow">
-                            <input class="rg-mail__input" type="email" data-rg="email" placeholder="E-Mail für den Bericht">
-                        </div>
-
                         <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">🖨</span><span>Drucken</span></button>
-                        <button class="rg-btn" data-rg-btn="mail" disabled><span class="rg-ico">📧</span><span>Per E-Mail senden</span></button>
 
                         <div class="rg-hint" data-rg-out="hint">
                             Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
@@ -227,16 +221,6 @@ final class RG_ROI_Calculator {
                             <div class="rg-kpi"><div class="rg-k">Fläche (m²/Tag)</div><div class="rg-v" data-rg-out="area">–</div></div>
                             <div class="rg-kpi"><div class="rg-k">abgeleitet (m²/h)</div><div class="rg-v" data-rg-out="sqmPerHour">–</div></div>
                         
-                        </div>
-
-                        <div class="rg-assumptions">
-                            <div class="rg-assumptions__title">Annahmen der Berechnung</div>
-                            <ul class="rg-assumptions__list">
-                                <li>Konstanter Betrieb über das Jahr (Arbeitstage laut Eingabe).</li>
-                                <li>Personalkosten basieren auf dem eingegebenen Stundensatz.</li>
-                                <li>Service- und Stromkosten basieren auf Ihren Angaben.</li>
-                                <li>Keine Förderungen, Steuern oder Restwerte berücksichtigt.</li>
-                            </ul>
                         </div>
 
                         <div class="rg-assumptions">

@@ -440,11 +440,9 @@ out('invest').textContent = fmtEUR(calc.invest);
 
     const pdfBtn = q('[data-rg-btn="pdf"]', root);
     const printBtn = q('[data-rg-btn="print"]', root);
-    const mailBtn = q('[data-rg-btn="mail"]', root);
 
     pdfBtn.disabled = !canExport;
     printBtn.disabled = !canExport;
-    mailBtn.disabled = !canExport;
 
     if (!canExport){
       out('roi').textContent = '–';
@@ -530,55 +528,6 @@ out('invest').textContent = fmtEUR(calc.invest);
       if (!lastCalc.canExport) return;
       const doc = generatePdf(lastCalc);
       doc.save(`ROI-Berechnung-Robo-Guru-${new Date().toISOString().slice(0,10)}.pdf`);
-    });
-
-    q('[data-rg-btn="mail"]', root).addEventListener('click', async () => {
-      lastCalc = toCalc(root);
-      if (!lastCalc.canExport) return;
-
-      const email = (q('[data-rg="email"]', root).value || '').trim();
-      if (!email || !email.includes('@')) {
-        alert('Bitte eine gültige E-Mail-Adresse eingeben.');
-        return;
-      }
-
-      const doc = generatePdf(lastCalc);
-      const pdfBase64 = doc.output('datauristring'); // data:application/pdf;base64,...
-
-      const ajaxUrl = (window.rgRoi && window.rgRoi.ajaxUrl) ? window.rgRoi.ajaxUrl : '/wp-admin/admin-ajax.php';
-      const nonce = (window.rgRoi && window.rgRoi.nonce) ? window.rgRoi.nonce : '';
-
-      const btn = q('[data-rg-btn="mail"]', root);
-      const oldText = btn.textContent;
-      btn.textContent = 'Sende...';
-      btn.disabled = true;
-
-      try {
-        // WordPress AJAX requires action as URL parameter when sending JSON body
-        const url = new URL(ajaxUrl, window.location.origin);
-        url.searchParams.set('action', 'rg_send_roi_report');
-
-        const res = await fetch(url.toString(), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            nonce,
-            email,
-            calc: lastCalc,
-            pdfBase64
-          })
-        });
-        const json = await res.json();
-        const msg = (json && json.data && json.data.message) ? json.data.message :
-                    (json && json.message) ? json.message :
-                    'Fertig.';
-        alert(msg);
-      } catch (e) {
-        alert('Fehler beim Versand. Bitte später erneut versuchen.');
-      } finally {
-        btn.textContent = oldText;
-        btn.disabled = false;
-      }
     });
   }
 
