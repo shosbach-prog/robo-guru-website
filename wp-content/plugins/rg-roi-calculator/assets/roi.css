@@ -25,7 +25,12 @@
 .rg-roi__head p{margin:0;font-size:15px;color:#64748b;max-width:65ch}
 
 /* Grid Layout */
-.rg-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;align-items:start}
+.rg-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr minmax(280px,1.2fr);
+  gap:20px;
+  align-items:start;
+}
 
 /* Cards */
 .rg-roi .rg-card{
@@ -91,7 +96,6 @@
   background:linear-gradient(135deg,#f0fdff 0%,#f8fafc 100%);
   border:2px solid rgba(22,198,229,.3);
   box-shadow:0 8px 40px rgba(22,198,229,.15);
-  overflow:hidden;
 }
 .rg-roi .rg-result:hover{box-shadow:0 12px 48px rgba(22,198,229,.2)}
 
@@ -291,10 +295,10 @@
 .rg-optional{font-size:11px;color:#94a3b8;font-weight:600}
 
 /* Responsive */
-@media (max-width: 1100px){
-  .rg-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width: 1200px){
+  .rg-grid{grid-template-columns:1fr 1fr;gap:16px}
 }
-@media (max-width: 680px){
+@media (max-width: 768px){
   .rg-grid{grid-template-columns:1fr;gap:16px}
   .rg-roi__head h3{font-size:22px}
   .rg-metrics{grid-template-columns:1fr 1fr}
