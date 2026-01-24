@@ -91,6 +91,7 @@
   background:linear-gradient(135deg,#f0fdff 0%,#f8fafc 100%);
   border:2px solid rgba(22,198,229,.3);
   box-shadow:0 8px 40px rgba(22,198,229,.15);
+  overflow:hidden;
 }
 .rg-roi .rg-result:hover{box-shadow:0 12px 48px rgba(22,198,229,.2)}
 
@@ -201,13 +202,11 @@
 /* Buttons */
 .rg-actions{
   margin-top:16px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  align-items:stretch;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  overflow:hidden;
 }
-.rg-actions [data-rg-btn="pdf"]{grid-column:1}
-.rg-actions [data-rg-btn="print"]{grid-column:2}
 
 .rg-roi .rg-btn{
   display:flex !important;
@@ -216,7 +215,7 @@
   gap:8px !important;
   width:100% !important;
   min-height:48px !important;
-  padding:12px 16px !important;
+  padding:12px 14px !important;
   border-radius:var(--rg-radius-sm) !important;
   border:none !important;
   background:var(--rg-card-bg) !important;
@@ -225,6 +224,8 @@
   font-weight:700 !important;
   line-height:1.2 !important;
   cursor:pointer !important;
+  box-sizing:border-box !important;
+  max-width:100% !important;
   box-shadow:0 2px 8px rgba(15,37,55,.08),inset 0 0 0 1.5px #e2e8f0 !important;
   transition:all .15s ease !important;
 }
@@ -297,13 +298,7 @@
   .rg-grid{grid-template-columns:1fr;gap:16px}
   .rg-roi__head h3{font-size:22px}
   .rg-metrics{grid-template-columns:1fr 1fr}
-  .rg-actions{grid-template-columns:1fr 1fr}
   .rg-hero__value{font-size:28px}
-}
-@media (max-width: 400px){
-  .rg-actions{grid-template-columns:1fr}
-  .rg-actions [data-rg-btn="pdf"],
-  .rg-actions [data-rg-btn="print"]{grid-column:1}
 }
 
 /* Print styles */
