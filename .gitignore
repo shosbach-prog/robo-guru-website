@@ -44,3 +44,6 @@ wp-content/uploads__local_backup/
 * 2.js
 * 2.txt
 wp-content/uploads*/
+
+# Local WP Rocket config
+wp-content/wp-rocket-config/*.php
