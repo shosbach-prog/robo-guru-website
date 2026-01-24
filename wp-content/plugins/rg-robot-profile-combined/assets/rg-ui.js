@@ -67,55 +67,6 @@
     forum.classList.add('rg-forum-actions');
   })();
 
-  // Enhance forum actions with meta (thread count / last activity) if possible
-  (function(){
-    const blocks = qsa('.rf-forum-actions, .rg-forum-actions');
-    if(!blocks.length) return;
-    blocks.forEach(b=>{
-      const a = qs('a', b);
-      if(!a) return;
-      // Create meta container
-      let meta = qs('.rg-forum-meta', b);
-      if(!meta){
-        meta = document.createElement('div');
-        meta.className = 'rg-forum-meta';
-        b.appendChild(meta);
-      }
-      // Show placeholder pills
-      meta.innerHTML = '<span class="rg-forum-pill">💬 <strong>Diskussion läuft</strong></span>';
-      // Fetch meta
-      const form = new FormData();
-      form.append('action','rg_forum_meta');
-      form.append('url', a.href);
-      fetch((window.rgAjax && window.rgAjax.ajaxurl) ? window.rgAjax.ajaxurl : '/wp-admin/admin-ajax.php', {method:'POST', credentials:'same-origin', body: form})
-        .then(r=>r.json()).then(res=>{
-          if(!res || !res.success || !res.data || !res.data.found) return;
-          const d = res.data;
-          const replies = (typeof d.replies==='number') ? d.replies : null;
-          const last = d.last_time ? d.last_time : '';
-          const lastTitle = d.last_title ? d.last_title : '';
-          meta.innerHTML = '';
-          if(replies !== null){
-            const p = document.createElement('span');
-            p.className='rg-forum-pill';
-            p.innerHTML = '🧵 <strong>'+replies+'</strong> Antworten';
-            meta.appendChild(p);
-          }
-          if(last){
-            const p2 = document.createElement('span');
-            p2.className='rg-forum-pill';
-            p2.innerHTML = '🕒 Letzter Beitrag: <strong>'+last+'</strong>';
-            meta.appendChild(p2);
-          }
-          if(lastTitle){
-            const p3 = document.createElement('span');
-            p3.className='rg-forum-pill';
-            p3.textContent = '↪ ' + lastTitle;
-            meta.appendChild(p3);
-          }
-        }).catch(()=>{});
-    });
-  })();
 
   // Gallery (single)
   const gal = qs('[data-rg-gallery]');
