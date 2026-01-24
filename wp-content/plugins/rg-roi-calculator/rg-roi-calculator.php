@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Robo-Guru ROI Kalkulator
  * Description: Einfacher ROI-Kalkulator für Reinigungsrobotik inkl. PDF-Download, Druckansicht und Versand per E-Mail (PDF-Anhang). Shortcode: [rg_roi_calculator]
- * Version: 1.0.0
+ * Version: 1.0.9
  * Author: Robo-Guru
  * Text Domain: rg-roi
  */
@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.0.0';
+    const VERSION = '1.0.9';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -76,20 +76,48 @@ final class RG_ROI_Calculator {
                 <p><?php echo esc_html($atts['subtitle']); ?></p>
             </div>
 
+            
             <div class="rg-grid">
                 <div class="rg-card">
-                    <h4>Investition</h4>
-                    <label>Kaufpreis pro Roboter (€)
-                        <input type="number" class="rg-in" data-rg="price" value="25000" min="0" step="100">
+                    <h4>Finanzierung</h4>
+
+                    <label>Modell
+                        <select class="rg-in rg-select" data-rg="mode">
+                            <option value="purchase" selected>Kauf</option>
+                            <option value="lease">Leasing</option>
+                        </select>
                     </label>
+
+                    <div class="rg-mode rg-mode--purchase" data-rg-mode="purchase">
+                        <label>Kaufpreis pro Roboter (€)
+                            <input type="number" class="rg-in" data-rg="price" value="25000" min="0" step="100">
+                        </label>
+                    </div>
+
+                    <div class="rg-mode rg-mode--lease rg-hide" data-rg-mode="lease">
+                        <label>Leasingrate pro Roboter / Monat (€)
+                            <input type="number" class="rg-in" data-rg="leaseRateMonthly" value="950" min="0" step="10">
+                        </label>
+                        <label>Laufzeit (Monate)
+                            <select class="rg-in rg-select" data-rg="leaseTermMonths">
+                                <option value="24">24</option>
+                                <option value="36" selected>36</option>
+                                <option value="48">48</option>
+                                <option value="60">60</option>
+                            </select>
+                        </label>
+                        <div class="rg-note">Hinweis: Leasing wird als monatliche Rate × Laufzeit gerechnet (überschlägig).</div>
+                    </div>
+
                     <label>Anzahl Roboter
                         <input type="number" class="rg-in" data-rg="qty" value="1" min="1" step="1">
                     </label>
-                    <div class="rg-note">Investition gesamt = Kaufpreis × Anzahl</div>
+
+                    <div class="rg-note" data-rg-out="investHint">–</div>
                 </div>
 
                 <div class="rg-card">
-                    <h4>Einsparung (manuelle Arbeit)</h4>
+                    <h4>Nutzung & Einsparung</h4>
                     <label>Eingesparte Stunden pro Tag (pro Roboter)
                         <input type="number" class="rg-in" data-rg="hoursPerDay" value="2.5" min="0" step="0.1">
                     </label>
@@ -99,57 +127,136 @@ final class RG_ROI_Calculator {
                     <label>Arbeitstage pro Jahr
                         <input type="number" class="rg-in" data-rg="daysPerYear" value="260" min="0" step="1">
                     </label>
-                    <div class="rg-note">Tipp: 220–260 Tage (Mo–Fr) oder 300–365 (7-Tage-Betrieb)</div>
+
+                    <label>Zu reinigende Fläche pro Tag (m²) <span class="rg-optional">(optional)</span>
+                        <input type="number" class="rg-in" data-rg="areaSqmPerDay" value="0" min="0" step="50">
+                    </label>
+                    <div class="rg-note" data-rg-out="sqmHint">Tipp: Wird zur Einordnung genutzt (keine harte Rechenbasis).</div>
                 </div>
 
                 <div class="rg-card">
-                    <h4>Betriebskosten</h4>
-                    <label>Wartung/Service pro Roboter pro Jahr (€)
-                        <input type="number" class="rg-in" data-rg="maintPerYear" value="1500" min="0" step="50">
+                    <h4>Service & Betriebskosten</h4>
+
+                    <label>Servicepaket
+                        <select class="rg-in rg-select" data-rg="servicePreset">
+                            <option value="0">Kein Paket / bereits enthalten</option>
+                            <option value="99">Basic (ab 99 €/Monat)</option>
+                            <option value="179" selected>Standard (ab 179 €/Monat)</option>
+                            <option value="255">Premium (ab 255 €/Monat)</option>
+                            <option value="-1">Eigener Wert</option>
+                        </select>
                     </label>
-                    <label>Stromkosten pro Roboter pro Jahr (€)
+
+                    <label>Servicekosten pro Roboter / Monat (€)
+                        <input type="number" class="rg-in" data-rg="serviceMonthly" value="149" min="0" step="5">
+                    </label>
+
+                    <label>Stromkosten pro Roboter / Jahr (€)
                         <input type="number" class="rg-in" data-rg="powerPerYear" value="350" min="0" step="10">
                     </label>
-                    <div class="rg-note">Strom ist meist klein – Wartung & Personal sind die großen Hebel.</div>
+
+                    <div class="rg-note">Hinweis: Servicepaket kann je nach Anbieter/Modell variieren. Strom ist meist ein kleiner Hebel.</div>
                 </div>
 
                 <div class="rg-card rg-result">
-                    <h4>Ergebnis</h4>
+                    <div class="rg-result__head">
+                        <h4>Ergebnis</h4>
+                        <div class="rg-result__tag">Unabhängige Beispielrechnung</div>
+                    </div>
 
-                    <div class="rg-kpi"><div class="rg-k">Investition gesamt</div><div class="rg-v" data-rg-out="invest">–</div></div>
-                    <div class="rg-kpi"><div class="rg-k">Ersparnis/Jahr (brutto)</div><div class="rg-v" data-rg-out="gross">–</div></div>
-                    <div class="rg-kpi"><div class="rg-k">Betriebskosten/Jahr</div><div class="rg-v" data-rg-out="ops">–</div></div>
+                    <div class="rg-hero">
+                        <div class="rg-hero__label">Geschätzte Netto-Ersparnis / Jahr</div>
+                        <div class="rg-hero__value" data-rg-out="net">–</div>
+                        <div class="rg-hero__sub">entspricht ca. <span data-rg-out="monthly">–</span> pro Monat</div>
+                    </div>
 
-                    <hr class="rg-hr">
+                    <div class="rg-metrics">
+                        <div class="rg-metric">
+                            <div class="rg-metric__k">Amortisationszeit</div>
+                            <div class="rg-metric__v" data-rg-out="payback">–</div>
+                            <div class="rg-metric__s">Monate</div>
+                        </div>
+                        <div class="rg-metric">
+                            <div class="rg-metric__k">ROI</div>
+                            <div class="rg-metric__v" data-rg-out="roi">–</div>
+                            <div class="rg-metric__s">vereinfachte Jahresbetrachtung</div>
+                        </div>
+                    </div>
 
-                    <div class="rg-kpi"><div class="rg-k"><strong>Geschätzte Netto-Ersparnis pro Jahr</strong></div><div class="rg-v" data-rg-out="net"><strong>–</strong></div></div>
-                    <div class="rg-kpi"><div class="rg-k">ROI (vereinfachte Jahresbetrachtung)</div><div class="rg-v" data-rg-out="roi">–</div></div>
-                    <div class="rg-kpi"><div class="rg-k">Amortisationszeit (Monate)</div><div class="rg-v" data-rg-out="payback">–</div></div>
-                    <div class="rg-kpi"><div class="rg-k">Break-even</div><div class="rg-v" data-rg-out="beText">–</div></div>
+
+                    <div class="rg-rating" data-rg-out="ratingWrap" data-level="ok">
+                        <div class="rg-rating__dot" aria-hidden="true"></div>
+                        <div class="rg-rating__content">
+                            <div class="rg-rating__label" data-rg-out="ratingLabel">–</div>
+                            <div class="rg-rating__text" data-rg-out="ratingText">–</div>
+                        </div>
+                    </div>
+
+                    <div class="rg-be" aria-live="polite">
+                        <div class="rg-be__badge">Break-even</div>
+                        <div class="rg-be__text" data-rg-out="beText">–</div>
+                    </div>
 
                     <div class="rg-warn" data-rg-out="warn" style="display:none;">
                         Hinweis: Mit den aktuellen Angaben entsteht keine positive Netto-Ersparnis.
                     </div>
 
                     <div class="rg-actions">
-                        <button class="rg-btn" data-rg-btn="pdf" disabled>📄 PDF herunterladen</button>
-                        <button class="rg-btn" data-rg-btn="print" disabled>🖨 Drucken</button>
+                        <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">📄</span><span>PDF herunterladen</span></button>
 
-                        <div class="rg-mail">
+                        <div class="rg-emailrow">
                             <input class="rg-mail__input" type="email" data-rg="email" placeholder="E-Mail für den Bericht">
-                            <button class="rg-btn" data-rg-btn="mail" disabled>📧 Per E-Mail senden</button>
                         </div>
+
+                        <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">🖨</span><span>Drucken</span></button>
+                        <button class="rg-btn" data-rg-btn="mail" disabled><span class="rg-ico">📧</span><span>Per E-Mail senden</span></button>
 
                         <div class="rg-hint" data-rg-out="hint">
                             Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
                         </div>
                     </div>
 
+                    <details class="rg-details">
+                        <summary>Details der Berechnung</summary>
+                        <div class="rg-details__grid">
+                            <div class="rg-kpi"><div class="rg-k">Finanzierung</div><div class="rg-v" data-rg-out="finModel">–</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Investition / Vertragsvolumen</div><div class="rg-v" data-rg-out="invest">–</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Ersparnis/Jahr (brutto)</div><div class="rg-v" data-rg-out="gross">–</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Service+Strom/Jahr</div><div class="rg-v" data-rg-out="ops">–</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Leasingkosten/Jahr</div><div class="rg-v" data-rg-out="leaseYear">–</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Fläche (m²/Tag)</div><div class="rg-v" data-rg-out="area">–</div></div>
+                            <div class="rg-kpi"><div class="rg-k">abgeleitet (m²/h)</div><div class="rg-v" data-rg-out="sqmPerHour">–</div></div>
+                        
+                        </div>
+
+                        <div class="rg-assumptions">
+                            <div class="rg-assumptions__title">Annahmen der Berechnung</div>
+                            <ul class="rg-assumptions__list">
+                                <li>Konstanter Betrieb über das Jahr (Arbeitstage laut Eingabe).</li>
+                                <li>Personalkosten basieren auf dem eingegebenen Stundensatz.</li>
+                                <li>Service- und Stromkosten basieren auf Ihren Angaben.</li>
+                                <li>Keine Förderungen, Steuern oder Restwerte berücksichtigt.</li>
+                            </ul>
+                        </div>
+
+                        <div class="rg-assumptions">
+                            <div class="rg-assumptions__title">Annahmen der Berechnung</div>
+                            <ul class="rg-assumptions__list">
+                                <li>Konstanter Betrieb über das Jahr (Arbeitstage laut Eingabe).</li>
+                                <li>Personalkosten basieren auf dem eingegebenen Stundensatz.</li>
+                                <li>Service- und Stromkosten basieren auf Ihren Angaben.</li>
+                                <li>Keine Förderungen, Steuern oder Restwerte berücksichtigt.</li>
+                            </ul>
+                        </div>
+                    </details>
+
+
                     <div class="rg-disclaimer">
                         Dieser Kalkulator dient zur überschlägigen Bewertung und ersetzt keine individuelle Projektprüfung.
                     </div>
                 </div>
             </div>
+</div>
         </div>
         <?php
         return (string)ob_get_clean();
@@ -210,10 +317,20 @@ final class RG_ROI_Calculator {
             wp_send_json_error(['message' => 'Bitte eine gültige E-Mail-Adresse eingeben.'], 400);
         }
 
-        $invest = floatval($calc['invest'] ?? 0);
+        $mode = isset($calc['mode']) ? sanitize_text_field($calc['mode']) : 'purchase';
+        $invest = floatval($calc['invest'] ?? 0); // Kauf: Investition gesamt, Leasing: Vertragsvolumen (überschlägig)
         $net = floatval($calc['net'] ?? 0);
-        if ($invest <= 0 || $net <= 0) {
+        $lease_rate = floatval($calc['leaseRateMonthly'] ?? 0);
+        $lease_term = intval($calc['leaseTermMonths'] ?? 0);
+
+        if ($net <= 0) {
             wp_send_json_error(['message' => 'Versand nur bei positiver Netto-Ersparnis möglich.'], 400);
+        }
+        if ($mode === 'purchase' && $invest <= 0) {
+            wp_send_json_error(['message' => 'Bitte einen Kaufpreis eingeben.'], 400);
+        }
+        if ($mode === 'lease' && ($lease_rate <= 0 || $lease_term <= 0)) {
+            wp_send_json_error(['message' => 'Bitte Leasingrate und Laufzeit eingeben.'], 400);
         }
 
         if (strpos($pdf_base64, 'data:application/pdf;base64,') === 0) {
