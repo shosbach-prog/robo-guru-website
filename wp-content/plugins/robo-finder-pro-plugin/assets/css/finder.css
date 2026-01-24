@@ -213,7 +213,7 @@
   border: 2px solid var(--rf-border-strong);
   color: var(--rf-primary-2);
 }
-.rf-wrap .button:focus{ outline: 3px solid rgba(56,93,255,.25); outline-offset: 2px; }
+.rf-wrap .button:focus{ outline: 3px solid rgba(0,188,212,.25); outline-offset: 2px; }
 .rf-wrap .is-disabled{ opacity: .55; pointer-events: none; }
 
 /* Sidebar (consistent) */
@@ -535,7 +535,7 @@
   line-height: 1;
   cursor: pointer;
 }
-.rf-mini-edit:hover{ border-color: var(--rf-primary); background: rgba(56,93,255,.16); }
+.rf-mini-edit:hover{ border-color: var(--rf-primary); background: rgba(0,188,212,.16); }
 
 /* Final step (6/6) – clean layout:
    - No duplicate "Deine Angaben" card inside the content area
@@ -724,7 +724,7 @@
 }
 .rf-tag:hover{
   border-color: var(--rf-primary);
-  background: rgba(56,93,255,.16);
+  background: rgba(0,188,212,.16);
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(0,0,0,.06);
 }
@@ -746,7 +746,7 @@
 }
 .rf-textarea:focus{
   border-color: var(--rf-primary);
-  box-shadow: 0 0 0 4px rgba(56,93,255,.12);
+  box-shadow: 0 0 0 4px rgba(0,188,212,.12);
 }
 .rf-help--small{ font-size: 14px; opacity: .78; margin-top: 8px; }
 

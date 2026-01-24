@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Robo Finder Pro
  * Description: Robo-Finder für Reinigungs- und Serviceroboter mit Roboter-Datenbank, Matching-Engine, Lead-Datenbank, Scraper, Dashboard-Analytics und Frontend-Grid/Compare. Shortcodes: [robo_finder], [robo_robot_grid], [robo_robot_compare ids="1,2,3"].
-* Version: 4.8.18.17
+* Version: 4.8.18.18
  * Author: Robo-Guru / Sebastian
  * Text Domain: robo-finder-pro
  */
@@ -11,7 +11,7 @@
 
 
 
-if (!defined('RF_PRO_VER')) { define('RF_PRO_VER','4.8.18.17'); }
+if (!defined('RF_PRO_VER')) { define('RF_PRO_VER','4.8.18.18'); }
 
 
 /**
