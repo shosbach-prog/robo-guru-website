@@ -394,25 +394,40 @@
 .rf-forum-actions,
 .rg-forum-actions{
   margin-top: 14px;
-  padding: 16px 18px;
-  border-radius: 16px;
-  background: rgba(0, 198, 215, 0.08);
-  border: 1px solid rgba(0, 198, 215, 0.35);
+  padding: 20px 22px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(0, 198, 215, 0.12) 0%, rgba(0, 180, 200, 0.18) 100%);
+  border: 2px solid rgba(0, 198, 215, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 198, 215, 0.15);
 }
-.rf-forum-actions a,
-.rg-forum-actions a{
+.rf-forum-actions a.rf-forum-btn,
+.rg-forum-actions a.rf-forum-btn{
   display:inline-flex;
   align-items:center;
   gap:10px;
-  padding: 12px 14px;
+  padding: 14px 22px;
   border-radius: 14px;
-  background: var(--rg-accent);
+  background: linear-gradient(135deg, #00c6d7 0%, #00a8b8 100%);
   color:#fff !important;
   text-decoration:none !important;
   font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0, 198, 215, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.rf-forum-actions a:hover,
-.rg-forum-actions a:hover{ filter: brightness(0.95); }
+.rf-forum-actions a.rf-forum-btn:hover,
+.rg-forum-actions a.rf-forum-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 198, 215, 0.45);
+}
+
+.rf-forum-topmeta,
+.rg-forum-topmeta{
+  margin-top: 14px;
+  font-size: 15px;
+  color: #1a5a60;
+  font-weight: 500;
+}
 
 .rf-forum-actions .rg-forum-meta,
 .rg-forum-actions .rg-forum-meta{
