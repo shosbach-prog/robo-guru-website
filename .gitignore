@@ -38,3 +38,9 @@ wp-content/plugins/seo-by-rank-math-pro/licence-data.php
 # Uploads (local-only)
 wp-content/uploads/
 wp-content/uploads__local_backup/
+
+# Local duplicates / backups
+* 2.css
+* 2.js
+* 2.txt
+wp-content/uploads*/
