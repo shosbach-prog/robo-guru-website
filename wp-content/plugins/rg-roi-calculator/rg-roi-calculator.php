@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Robo-Guru ROI Kalkulator
  * Description: Einfacher ROI-Kalkulator für Reinigungsrobotik inkl. PDF-Download, Druckansicht und Versand per E-Mail (PDF-Anhang). Shortcode: [rg_roi_calculator]
- * Version: 1.0.9
+ * Version: 1.1.0
  * Author: Robo-Guru
  * Text Domain: rg-roi
  */
@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.0.9';
+    const VERSION = '1.1.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';

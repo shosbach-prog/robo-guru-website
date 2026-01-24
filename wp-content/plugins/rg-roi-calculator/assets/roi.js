@@ -509,7 +509,20 @@ out('invest').textContent = fmtEUR(calc.invest);
     q('[data-rg-btn="print"]', root).addEventListener('click', () => {
       lastCalc = toCalc(root);
       if (!lastCalc.canExport) return;
-      window.print();
+      const doc = generatePdf(lastCalc);
+      const blob = doc.output('blob');
+      const blobUrl = URL.createObjectURL(blob);
+      const printWindow = window.open(blobUrl, '_blank');
+      if (printWindow) {
+        printWindow.addEventListener('load', () => {
+          printWindow.focus();
+          printWindow.print();
+        });
+      } else {
+        // Fallback: Download if popup blocked
+        doc.save(`ROI-Berechnung-Robo-Guru-${new Date().toISOString().slice(0,10)}.pdf`);
+        alert('Popup blockiert. PDF wurde heruntergeladen - bitte manuell drucken.');
+      }
     });
 
     q('[data-rg-btn="pdf"]', root).addEventListener('click', () => {
@@ -541,11 +554,14 @@ out('invest').textContent = fmtEUR(calc.invest);
       btn.disabled = true;
 
       try {
-        const res = await fetch(ajaxUrl, {
+        // WordPress AJAX requires action as URL parameter when sending JSON body
+        const url = new URL(ajaxUrl, window.location.origin);
+        url.searchParams.set('action', 'rg_send_roi_report');
+
+        const res = await fetch(url.toString(), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            action: 'rg_send_roi_report',
             nonce,
             email,
             calc: lastCalc,
