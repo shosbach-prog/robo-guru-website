@@ -3,16 +3,16 @@
 */
 
 .rf-wrap{
-  /* Tokens */
-  --rf-primary: #385DFF;
-  --rf-primary-2: #1E42DD;
+  /* Tokens - Robo Guru Logo Colors */
+  --rf-primary: #00BCD4;
+  --rf-primary-2: #0097A7;
   --rf-accent: #ED9615;
-  --rf-ink: #1E2132;
-  --rf-text: rgba(30,33,50,.88);
-  --rf-muted: rgba(30,33,50,.62);
-  --rf-border: rgba(30,33,50,.12);
-  --rf-border-strong: rgba(56,93,255,.35);
-  --rf-soft: rgba(56,93,255,.10);
+  --rf-ink: #0A1F44;
+  --rf-text: rgba(10,31,68,.88);
+  --rf-muted: rgba(10,31,68,.62);
+  --rf-border: rgba(10,31,68,.12);
+  --rf-border-strong: rgba(0,188,212,.35);
+  --rf-soft: rgba(0,188,212,.10);
   --rf-bg: #FAFBFD;
   --rf-card: #FFFFFF;
   --rf-shadow: 0 18px 48px rgba(0,0,0,.10);
@@ -213,7 +213,7 @@
   border: 2px solid var(--rf-border-strong);
   color: var(--rf-primary-2);
 }
-.rf-wrap .button:focus{ outline: 3px solid rgba(56,93,255,.25); outline-offset: 2px; }
+.rf-wrap .button:focus{ outline: 3px solid rgba(0,188,212,.25); outline-offset: 2px; }
 .rf-wrap .is-disabled{ opacity: .55; pointer-events: none; }
 
 /* Sidebar (consistent) */
@@ -535,7 +535,7 @@
   line-height: 1;
   cursor: pointer;
 }
-.rf-mini-edit:hover{ border-color: var(--rf-primary); background: rgba(56,93,255,.16); }
+.rf-mini-edit:hover{ border-color: var(--rf-primary); background: rgba(0,188,212,.16); }
 
 /* Final step (6/6) – clean layout:
    - No duplicate "Deine Angaben" card inside the content area
@@ -724,7 +724,7 @@
 }
 .rf-tag:hover{
   border-color: var(--rf-primary);
-  background: rgba(56,93,255,.16);
+  background: rgba(0,188,212,.16);
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(0,0,0,.06);
 }
@@ -746,7 +746,7 @@
 }
 .rf-textarea:focus{
   border-color: var(--rf-primary);
-  box-shadow: 0 0 0 4px rgba(56,93,255,.12);
+  box-shadow: 0 0 0 4px rgba(0,188,212,.12);
 }
 .rf-help--small{ font-size: 14px; opacity: .78; margin-top: 8px; }
 
