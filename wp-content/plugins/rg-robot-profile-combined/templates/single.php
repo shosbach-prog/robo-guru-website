@@ -123,8 +123,19 @@ if ( ! function_exists( 'rg_rp_render_forum_box' ) ) {
     $last_date  = $last_ts ? wp_date( get_option( 'date_format' ), $last_ts ) : '';
 
     $top_bits = array();
+    $disc_and_answers = '';
     if ( $discussions !== null ) {
-      $top_bits[] = (int) $discussions . ' Diskussion' . ( (int) $discussions === 1 ? '' : 'en' );
+      $disc_and_answers = (int) $discussions . ' Diskussion' . ( (int) $discussions === 1 ? '' : 'en' );
+    }
+    if ( $answers !== null ) {
+      if ( $disc_and_answers ) {
+        $disc_and_answers .= ' und ' . (int) $answers . ' Antwort' . ( (int) $answers === 1 ? '' : 'en' );
+      } else {
+        $disc_and_answers = (int) $answers . ' Antwort' . ( (int) $answers === 1 ? '' : 'en' );
+      }
+    }
+    if ( $disc_and_answers ) {
+      $top_bits[] = $disc_and_answers;
     }
     if ( ! empty( $last_human ) ) {
       $top_bits[] = 'Letzter Beitrag vor ' . esc_html( $last_human );
