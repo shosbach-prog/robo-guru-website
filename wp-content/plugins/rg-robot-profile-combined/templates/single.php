@@ -172,7 +172,6 @@ if ( ! function_exists( 'rg_rp_render_forum_box' ) ) {
 return '<div class="rf-forum-actions">'
          .   '<a class="rf-forum-btn" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">Diskussion im Forum öffnen</a>'
          .   $top_meta
-         .   $pills
          . '</div>';
   }
 }
