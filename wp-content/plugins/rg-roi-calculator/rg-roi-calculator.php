@@ -23,6 +23,8 @@ final class RG_ROI_Calculator {
         add_action('wp_ajax_rg_send_roi_report', [__CLASS__, 'ajax_send_report']);
         add_action('wp_ajax_nopriv_rg_send_roi_report', [__CLASS__, 'ajax_send_report']);
 
+        add_action('wp_ajax_rg_save_to_profile', [__CLASS__, 'ajax_save_to_profile']);
+
         add_action('admin_menu', [__CLASS__, 'admin_menu']);
         add_action('admin_init', [__CLASS__, 'register_settings']);
     }
@@ -204,10 +206,14 @@ final class RG_ROI_Calculator {
                     <div class="rg-actions">
                         <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">📄</span><span>PDF herunterladen</span></button>
                         <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">🖨</span><span>Drucken</span></button>
+                        <?php if (is_user_logged_in() && function_exists('bp_is_active') && bp_is_active('document')) : ?>
+                        <button class="rg-btn rg-btn--save" data-rg-btn="save" disabled><span class="rg-ico">💾</span><span>In Profil speichern</span></button>
+                        <?php endif; ?>
 
                         <div class="rg-hint" data-rg-out="hint">
                             Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
                         </div>
+                        <div class="rg-save-status" data-rg-out="saveStatus" style="display:none;"></div>
                     </div>
 
                     <details class="rg-details">
@@ -401,6 +407,130 @@ final class RG_ROI_Calculator {
 
         // Use real newlines (no escaping outside a PHP string)
         return implode("\n", $lines);
+    }
+
+    public static function ajax_save_to_profile() {
+        // Check if user is logged in
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Bitte melden Sie sich an, um Dokumente zu speichern.'], 401);
+        }
+
+        // Check if BuddyBoss document component is active
+        if (!function_exists('bp_is_active') || !bp_is_active('document')) {
+            wp_send_json_error(['message' => 'Dokumentenfunktion ist nicht verfügbar.'], 400);
+        }
+
+        $payload = json_decode(file_get_contents('php://input'), true);
+        $nonce = isset($payload['nonce']) ? sanitize_text_field($payload['nonce']) : '';
+
+        if (!$nonce || !wp_verify_nonce($nonce, self::NONCE_ACTION)) {
+            wp_send_json_error(['message' => 'Sicherheitsprüfung fehlgeschlagen.'], 403);
+        }
+
+        $pdf_base64 = isset($payload['pdfBase64']) ? (string)$payload['pdfBase64'] : '';
+
+        if (strpos($pdf_base64, 'data:application/pdf;base64,') === 0) {
+            $pdf_base64 = substr($pdf_base64, strlen('data:application/pdf;base64,'));
+        }
+
+        if (!$pdf_base64) {
+            wp_send_json_error(['message' => 'PDF-Daten fehlen.'], 400);
+        }
+
+        $bytes = base64_decode($pdf_base64, true);
+        if (!$bytes) {
+            wp_send_json_error(['message' => 'PDF konnte nicht dekodiert werden.'], 400);
+        }
+
+        $user_id = get_current_user_id();
+        $folder_name = 'ROI Berechnung';
+
+        // Find or create the folder
+        $folder_id = self::get_or_create_folder($user_id, $folder_name);
+        if (!$folder_id) {
+            wp_send_json_error(['message' => 'Ordner konnte nicht erstellt werden.'], 500);
+        }
+
+        // Save the PDF file
+        $upload_dir = wp_upload_dir();
+        $filename = 'ROI-Berechnung-' . date('Y-m-d-His') . '.pdf';
+        $file_path = trailingslashit($upload_dir['path']) . $filename;
+
+        if (!file_put_contents($file_path, $bytes)) {
+            wp_send_json_error(['message' => 'Datei konnte nicht gespeichert werden.'], 500);
+        }
+
+        // Create WordPress attachment
+        $file_type = wp_check_filetype($filename, null);
+        $attachment = array(
+            'post_mime_type' => $file_type['type'],
+            'post_title'     => sanitize_file_name($filename),
+            'post_content'   => '',
+            'post_status'    => 'inherit'
+        );
+
+        $attachment_id = wp_insert_attachment($attachment, $file_path);
+        if (is_wp_error($attachment_id)) {
+            @unlink($file_path);
+            wp_send_json_error(['message' => 'Anhang konnte nicht erstellt werden.'], 500);
+        }
+
+        // Generate attachment metadata
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+        $attach_data = wp_generate_attachment_metadata($attachment_id, $file_path);
+        wp_update_attachment_metadata($attachment_id, $attach_data);
+
+        // Add to BuddyBoss documents
+        $document_id = bp_document_add(array(
+            'attachment_id' => $attachment_id,
+            'user_id'       => $user_id,
+            'title'         => 'ROI-Berechnung ' . date('d.m.Y H:i'),
+            'folder_id'     => $folder_id,
+            'privacy'       => 'onlyme',
+            'error_type'    => 'wp_error',
+        ));
+
+        if (is_wp_error($document_id) || !$document_id) {
+            wp_delete_attachment($attachment_id, true);
+            wp_send_json_error(['message' => 'Dokument konnte nicht in BuddyBoss gespeichert werden.'], 500);
+        }
+
+        // Get user profile documents URL
+        $profile_url = bp_core_get_user_domain($user_id) . 'documents/';
+
+        wp_send_json_success([
+            'message' => 'Dokument wurde in Ihrem Profil gespeichert.',
+            'document_id' => $document_id,
+            'folder_id' => $folder_id,
+            'profile_url' => $profile_url,
+        ]);
+    }
+
+    private static function get_or_create_folder($user_id, $folder_name) {
+        global $wpdb;
+        $bp = buddypress();
+
+        // Check if folder already exists
+        $table = $bp->document->table_name_folder;
+        $existing = $wpdb->get_var($wpdb->prepare(
+            "SELECT id FROM {$table} WHERE user_id = %d AND title = %s AND group_id = 0",
+            $user_id,
+            $folder_name
+        ));
+
+        if ($existing) {
+            return (int) $existing;
+        }
+
+        // Create new folder
+        $folder_id = bp_folder_add(array(
+            'user_id'  => $user_id,
+            'title'    => $folder_name,
+            'privacy'  => 'onlyme',
+            'group_id' => 0,
+        ));
+
+        return $folder_id ? (int) $folder_id : false;
     }
 }
 

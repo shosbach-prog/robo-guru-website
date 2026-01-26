@@ -600,9 +600,11 @@ out('invest').textContent = fmtEUR(calc.invest);
 
     const pdfBtn = q('[data-rg-btn="pdf"]', root);
     const printBtn = q('[data-rg-btn="print"]', root);
+    const saveBtn = q('[data-rg-btn="save"]', root);
 
     pdfBtn.disabled = !canExport;
     printBtn.disabled = !canExport;
+    if (saveBtn) saveBtn.disabled = !canExport;
 
     if (!canExport){
       out('roi').textContent = '–';
@@ -689,6 +691,60 @@ out('invest').textContent = fmtEUR(calc.invest);
       const doc = generatePdf(lastCalc);
       doc.save(`ROI-Berechnung-Robo-Guru-${new Date().toISOString().slice(0,10)}.pdf`);
     });
+
+    // Save to BuddyBoss profile
+    const saveBtn = q('[data-rg-btn="save"]', root);
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async () => {
+        lastCalc = toCalc(root);
+        if (!lastCalc.canExport) return;
+
+        const statusEl = q('[data-rg-out="saveStatus"]', root);
+        const showStatus = (msg, isError) => {
+          if (statusEl) {
+            statusEl.textContent = msg;
+            statusEl.style.display = 'block';
+            statusEl.style.color = isError ? '#ef4444' : '#2FBF71';
+          }
+        };
+
+        saveBtn.disabled = true;
+        saveBtn.querySelector('span:last-child').textContent = 'Speichern...';
+        showStatus('', false);
+
+        try {
+          const doc = generatePdf(lastCalc);
+          const pdfBase64 = doc.output('datauristring');
+
+          const response = await fetch(rgRoi.ajaxUrl + '?action=rg_save_to_profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              nonce: rgRoi.nonce,
+              pdfBase64: pdfBase64,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            showStatus('Gespeichert! ', false);
+            const link = document.createElement('a');
+            link.href = result.data.profile_url;
+            link.textContent = 'Zum Ordner';
+            link.target = '_blank';
+            if (statusEl) statusEl.appendChild(link);
+          } else {
+            showStatus(result.data?.message || 'Fehler beim Speichern.', true);
+          }
+        } catch (err) {
+          showStatus('Netzwerkfehler: ' + err.message, true);
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.querySelector('span:last-child').textContent = 'In Profil speichern';
+        }
+      });
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
