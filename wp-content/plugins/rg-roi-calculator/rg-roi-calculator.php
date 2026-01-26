@@ -429,8 +429,9 @@ final class RG_ROI_Calculator {
 
         $pdf_base64 = isset($payload['pdfBase64']) ? (string)$payload['pdfBase64'] : '';
 
-        if (strpos($pdf_base64, 'data:application/pdf;base64,') === 0) {
-            $pdf_base64 = substr($pdf_base64, strlen('data:application/pdf;base64,'));
+        // Strip data URI prefix (handles various formats like data:application/pdf;base64, or data:application/pdf;filename=xxx;base64,)
+        if (preg_match('/^data:application\/pdf[^,]*,/', $pdf_base64, $matches)) {
+            $pdf_base64 = substr($pdf_base64, strlen($matches[0]));
         }
 
         if (!$pdf_base64) {
