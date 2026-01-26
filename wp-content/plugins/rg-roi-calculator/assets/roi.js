@@ -41,18 +41,24 @@
   }
 
 
-  function drawRoiChart(doc, x, y, w, h, monthlyNet, invest, monthsToShow) {
-    doc.setLineWidth(0.2);
-    doc.rect(x, y, w, h);
+function drawRoiChart(doc, x, y, w, h, monthlyNet, invest, monthsToShow) {
+    // Background with subtle styling
+    doc.setFillColor(250, 252, 254);
+    doc.roundedRect(x, y, w, h, 2, 2, 'F');
+    doc.setDrawColor(220, 228, 232);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(x, y, w, h, 2, 2, 'S');
 
-    const pad = 7;
+    const pad = 10;
     const cx = x + pad;
     const cw = w - pad * 2;
-    const ch = h - pad * 2;
+    const ch = h - pad * 2 - 6;
+    const chartTop = y + pad + 6;
 
     if (!monthlyNet || monthlyNet <= 0 || invest < 0) {
       doc.setFontSize(10);
-      doc.text('Keine positive Netto-Ersparnis – Break-even nicht erreichbar.', cx, y + h/2);
+      doc.setTextColor(...RG_BRAND.grey);
+      doc.text('Keine positive Netto-Ersparnis - Break-even nicht erreichbar.', x + w/2, y + h/2, { align: 'center' });
       return { breakEvenMonth: null, monthsShown: monthsToShow || 36 };
     }
 
@@ -62,212 +68,363 @@
     const maxCum = monthlyNet * mShow;
     const maxYVal = Math.max(maxCum, invest * 1.2);
 
-    const yFor = (val) => (y + h - pad) - (ch * (val / maxYVal));
+    const yFor = (val) => (chartTop + ch) - (ch * (val / maxYVal));
     const xForM = (m) => cx + (cw * (m - 1)) / (mShow - 1);
 
+    // Grid lines (subtle)
+    doc.setDrawColor(240, 243, 247);
+    doc.setLineWidth(0.15);
+    for (let i = 1; i < 4; i++) {
+      const gridY = chartTop + (ch * i / 4);
+      doc.line(cx, gridY, cx + cw, gridY);
+    }
+
     // x-axis
-    doc.setLineWidth(0.2);
-    doc.line(cx, y + h - pad, x + w - pad, y + h - pad);
+    doc.setDrawColor(200, 210, 220);
+    doc.setLineWidth(0.3);
+    doc.line(cx, chartTop + ch, cx + cw, chartTop + ch);
 
-    // Investitionslinie (gestrichelt)
+    // Investitionslinie (gestrichelt, rot-ton)
     const yInvest = yFor(invest);
-    doc.setLineWidth(0.4);
-    doc.setLineDashPattern([2, 2], 0);
-    doc.line(cx, yInvest, x + w - pad, yInvest);
+    doc.setDrawColor(200, 90, 90);
+    doc.setLineWidth(0.5);
+    doc.setLineDashPattern([3, 2], 0);
+    doc.line(cx, yInvest, cx + cw, yInvest);
     doc.setLineDashPattern([], 0);
-    doc.setFontSize(9);
-    doc.text('Investition', x + w - pad - 22, yInvest - 2);
 
-    // Kumulierte Ersparnis (Linie)
+    // Investment label
+    doc.setFontSize(7);
+    doc.setTextColor(180, 70, 70);
+    doc.text('Investition', cx + cw - 2, yInvest - 2, { align: 'right' });
+
+    // Collect points
     const points = [];
     for (let m = 1; m <= mShow; m++) {
       const cum = monthlyNet * m;
       points.push([xForM(m), yFor(cum), cum]);
     }
 
-    doc.setLineWidth(0.7);
+    // Main line (brand color)
+    doc.setDrawColor(...RG_BRAND.primary);
+    doc.setLineWidth(1.0);
     for (let i = 1; i < points.length; i++) {
       doc.line(points[i-1][0], points[i-1][1], points[i][0], points[i][1]);
     }
 
-    // Break-even Markierung (grün)
+    // Break-even marker
     const be = Math.min(breakEvenMonth, mShow);
     const beX = xForM(be);
     const beY = yFor(monthlyNet * be);
 
-    doc.setDrawColor(0, 140, 0);
+    // Break-even vertical line
+    doc.setDrawColor(...RG_BRAND.success);
     doc.setLineWidth(0.6);
-    doc.line(beX, y + pad, beX, y + h - pad);
+    doc.setLineDashPattern([2, 1], 0);
+    doc.line(beX, chartTop, beX, chartTop + ch);
+    doc.setLineDashPattern([], 0);
 
-    doc.setFillColor(0, 140, 0);
-    doc.circle(beX, beY, 1.5, 'F');
+    // Break-even point circle
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(...RG_BRAND.success);
+    doc.setLineWidth(0.8);
+    doc.circle(beX, beY, 2, 'FD');
+    doc.setFillColor(...RG_BRAND.success);
+    doc.circle(beX, beY, 1, 'F');
 
-    doc.setTextColor(0, 120, 0);
-    doc.setFontSize(10);
-    doc.text(`Break-even ab Monat ${breakEvenMonth}`, Math.min(beX + 2, x + w - pad - 55), y + pad + 10);
+    // Break-even label
+    const beLabelX = Math.min(beX + 3, cx + cw - 45);
+    doc.setFillColor(235, 250, 242);
+    doc.setDrawColor(...RG_BRAND.success);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(beLabelX - 1, chartTop + 1, 42, 6, 1, 1, 'FD');
+    doc.setTextColor(...RG_BRAND.success);
+    doc.setFontSize(7);
+    doc.text('Break-even: Monat ' + breakEvenMonth, beLabelX, chartTop + 5);
 
-    // Reset
-    doc.setDrawColor(0,0,0);
-    doc.setTextColor(0,0,0);
+    // Reset colors
+    doc.setDrawColor(0, 0, 0);
+    doc.setTextColor(...RG_BRAND.dark);
 
-    // Labels
-    doc.setFontSize(9);
-    doc.text('Kumulierte Netto-Ersparnis (Beispielrechnung)', cx, y + pad - 1);
-    doc.text(`Monat 1`, cx, y + h - 2);
-    doc.text(`Monat ${mShow}`, x + w - pad - 22, y + h - 2);
+    // Chart title
+    doc.setFontSize(8);
+    doc.setTextColor(...RG_BRAND.dark);
+    doc.text('Kumulierte Netto-Ersparnis', cx, y + pad + 1);
+
+    // X-axis labels
+    doc.setFontSize(7);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('Monat 1', cx, chartTop + ch + 4);
+    doc.text('Monat ' + mShow, cx + cw, chartTop + ch + 4, { align: 'right' });
 
     return { breakEvenMonth, monthsShown: mShow };
   }
 
-  function addHeaderFooter(doc){
+function addHeaderFooter(doc){
     const pageCount = doc.getNumberOfPages();
     const dateStr = new Date().toLocaleDateString('de-DE');
 
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
 
-      // Header
-      // Small logo in top-right corner (print friendly)
-      try { doc.addImage(RG_LOGO_DATA, 'PNG', 182, 5, 14, 14); } catch(e) {}
-      doc.setFontSize(10);
-      doc.setTextColor(...RG_BRAND.dark);
-      doc.text('Robo-Guru | ROI-Berechnung Reinigungsrobotik', 14, 10);
+      // Header bar background
+      doc.setFillColor(15, 37, 55);
+      doc.rect(0, 0, 210, 16, 'F');
+
+      // Logo in header
+      try { doc.addImage(RG_LOGO_DATA, 'PNG', 8, 2, 12, 12); } catch(e) {}
+      
+      // Header text
+      doc.setFontSize(11);
+      doc.setTextColor(255, 255, 255);
+      doc.text('Robo-Guru', 22, 9);
       doc.setFontSize(9);
+      doc.setTextColor(200, 210, 220);
+      doc.text('ROI-Berechnung Reinigungsrobotik', 22, 13);
+
+      // Date on right
+      doc.setFontSize(8);
+      doc.setTextColor(180, 190, 200);
+      doc.text(dateStr, 196, 10, { align: 'right' });
+
+      // Footer line
+      doc.setDrawColor(220, 228, 232);
+      doc.setLineWidth(0.3);
+      doc.line(14, 282, 196, 282);
+
+      // Footer disclaimer
+      doc.setFontSize(7);
       doc.setTextColor(...RG_BRAND.grey);
-      doc.text(`Datum: ${dateStr}`, 145, 10);
-      doc.setTextColor(...RG_BRAND.dark);
-// Footer
+      const disclaimer = 'Hinweis: Vereinfachte Modellrechnung auf Basis Ihrer Angaben. Abweichungen durch Einsatzzeiten, Lohnkosten, Wartung, Energiepreise oder Foerderungen moeglich.';
+      doc.text(disclaimer, 14, 286, { maxWidth: 155 });
+
+      // Page number
       doc.setFontSize(8);
       doc.setTextColor(...RG_BRAND.grey);
-      const disclaimer =
-        'Hinweis: Vereinfachte Modellrechnung auf Basis Ihrer Angaben. Abweichungen durch Einsatzzeiten, Lohnkosten, Wartung, Energiepreise oder Förderungen möglich.';
-      doc.text(disclaimer, 14, 287, { maxWidth: 160 });
+      doc.text('Seite ' + i + ' / ' + pageCount, 196, 286, { align: 'right' });
 
-      doc.setFontSize(9);
-      doc.setTextColor(...RG_BRAND.grey);
-      doc.text(`Seite ${i} / ${pageCount}`, 185, 292);
+      // Website
+      doc.setTextColor(...RG_BRAND.primary);
+      doc.text('robo-guru.de', 14, 292);
     }
   }
 
-  function generatePdf(calc){
+function generatePdf(calc){
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
     const monthlyNet = calc.net / 12;
     const beMonth = Math.max(1, Math.ceil(calc.invest / monthlyNet));
-    const beText = `ab Monat ${beMonth} ist die Investition rechnerisch wieder drin.`;
-    // Report header (page 1)
-    // (Small logo is already placed in the page header via addHeaderFooter)
+    const beText = 'ab Monat ' + beMonth + ' ist die Investition rechnerisch wieder drin.';
+
+    // Page 1 - Results
+    // Title section (starts after header bar)
     doc.setTextColor(...RG_BRAND.dark);
-    doc.setFontSize(18);
-    doc.text('ROI-Berechnung Reinigungsrobotik', 14, 26);
+    doc.setFontSize(20);
+    doc.text('ROI-Berechnung', 14, 28);
+    doc.setFontSize(12);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', 14, 35);
+
+    // Hero section - Main result
+    doc.setFillColor(240, 253, 255);
+    doc.setDrawColor(22, 198, 229);
+    doc.setLineWidth(0.5);
+    doc.roundedRect(14, 42, 182, 32, 3, 3, 'FD');
 
     doc.setFontSize(10);
     doc.setTextColor(...RG_BRAND.grey);
-    doc.text('Unabhängige Beispielrechnung zur Wirtschaftlichkeit', 14, 32);
+    doc.text('Geschaetzte Netto-Ersparnis pro Jahr', 105, 50, { align: 'center' });
 
-    // subtle divider
-    doc.setDrawColor(220, 228, 232);
-    doc.setLineWidth(0.3);
-    doc.line(14, 38, 196, 38);
-    doc.setDrawColor(0,0,0);
-
+    doc.setFontSize(28);
     doc.setTextColor(...RG_BRAND.dark);
-doc.setFontSize(12);
-    doc.text('Zusammenfassung', 14, 46);
+    doc.text(fmtEUR(calc.net), 105, 64, { align: 'center' });
+
+    doc.setFontSize(9);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('entspricht ca. ' + fmtEUR(monthlyNet) + ' pro Monat', 105, 71, { align: 'center' });
+
+    // Key metrics in boxes
+    const metricsY = 80;
+    const metricW = 58;
+    const metricH = 22;
+    const metricGap = 4;
+
+    // Metric 1 - ROI
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(230, 235, 240);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(14, metricsY, metricW, metricH, 2, 2, 'FD');
+    doc.setFontSize(8);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('ROI', 14 + metricW/2, metricsY + 6, { align: 'center' });
+    doc.setFontSize(16);
+    doc.setTextColor(...RG_BRAND.dark);
+    doc.text(fmtNum(calc.roi) + ' %', 14 + metricW/2, metricsY + 16, { align: 'center' });
+
+    // Metric 2 - Amortisation
+    doc.roundedRect(14 + metricW + metricGap, metricsY, metricW, metricH, 2, 2, 'FD');
+    doc.setFontSize(8);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('Amortisation', 14 + metricW + metricGap + metricW/2, metricsY + 6, { align: 'center' });
+    doc.setFontSize(16);
+    doc.setTextColor(...RG_BRAND.dark);
+    doc.text(fmtNum(calc.paybackMonths) + ' Mon.', 14 + metricW + metricGap + metricW/2, metricsY + 16, { align: 'center' });
+
+    // Metric 3 - Einordnung
+    const ratingColor = calc.rating && calc.rating.level === 'good' ? RG_BRAND.success :
+                        calc.rating && calc.rating.level === 'ok' ? [245, 158, 11] : [239, 68, 68];
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(...ratingColor);
+    doc.setLineWidth(0.5);
+    doc.roundedRect(14 + 2*(metricW + metricGap), metricsY, metricW, metricH, 2, 2, 'FD');
+    doc.setFontSize(8);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('Einordnung', 14 + 2*(metricW + metricGap) + metricW/2, metricsY + 6, { align: 'center' });
+    doc.setFontSize(11);
+    doc.setTextColor(...ratingColor);
+    doc.text(calc.rating ? calc.rating.label : '-', 14 + 2*(metricW + metricGap) + metricW/2, metricsY + 16, { align: 'center' });
+
+    // Summary table
+    const tableY = metricsY + metricH + 10;
+    doc.setTextColor(...RG_BRAND.dark);
+    doc.setFontSize(11);
+    doc.text('Detaillierte Zusammenfassung', 14, tableY);
 
     doc.autoTable({
-      startY: 50,
-      theme: 'grid',
+      startY: tableY + 4,
+      theme: 'striped',
       head: [['Kennzahl', 'Wert']],
       body: [
         ['Investition gesamt', fmtEUR(calc.invest)],
-        ['Geschätzte Netto-Ersparnis/Jahr', fmtEUR(calc.net)],
-        ['Geschätzte Netto-Ersparnis/Monat', fmtEUR(monthlyNet)],
-        ['ROI (vereinfachte Jahresbetrachtung)', `${fmtNum(calc.roi)} %`],
-        ['Amortisation (Monate)', `${fmtNum(calc.paybackMonths)} Monate`],
+        ['Geschaetzte Netto-Ersparnis/Jahr', fmtEUR(calc.net)],
+        ['Geschaetzte Netto-Ersparnis/Monat', fmtEUR(monthlyNet)],
+        ['ROI (vereinfachte Jahresbetrachtung)', fmtNum(calc.roi) + ' %'],
+        ['Amortisation (Monate)', fmtNum(calc.paybackMonths) + ' Monate'],
         ['Break-even', beText],
-        ['Einordnung', (calc.rating ? (calc.rating.label + ' – ' + calc.rating.text) : '–')],
       ],
-      styles: { fontSize: 10 },
-      headStyles: { fillColor: RG_BRAND.dark },
+      styles: { 
+        fontSize: 9,
+        cellPadding: 4,
+      },
+      headStyles: { 
+        fillColor: RG_BRAND.dark,
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [248, 250, 252],
+      },
+      columnStyles: {
+        0: { cellWidth: 80 },
+        1: { cellWidth: 'auto', halign: 'right', fontStyle: 'bold' },
+      },
     });
 
-    const chartY = doc.lastAutoTable.finalY + 10;
-    doc.setFontSize(12);
-    doc.text('Diagramm', 14, chartY);
-    doc.setFontSize(10);
-    doc.text('Entwicklung der kumulierten Netto-Ersparnis (Beispielrechnung)', 14, chartY + 6);
+    // Chart section
+    const chartY = doc.lastAutoTable.finalY + 8;
+    doc.setFontSize(11);
+    doc.setTextColor(...RG_BRAND.dark);
+    doc.text('Break-even Analyse', 14, chartY);
+    doc.setFontSize(8);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('Entwicklung der kumulierten Netto-Ersparnis', 14, chartY + 5);
 
-    drawRoiChart(doc, 14, chartY + 10, 182, 60, monthlyNet, calc.invest, 36);
+    drawRoiChart(doc, 14, chartY + 8, 182, 55, monthlyNet, calc.invest, 36);
 
+    // Page 2 - Parameters
     doc.addPage();
 
-    const inputsY = 24;
-    doc.setFontSize(12);
-    doc.text('Berechnungsgrundlage', 14, inputsY);
+    doc.setTextColor(...RG_BRAND.dark);
+    doc.setFontSize(14);
+    doc.text('Berechnungsgrundlage', 14, 26);
+    doc.setFontSize(9);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('Ihre eingegebenen Parameter', 14, 32);
 
     doc.autoTable({
-      startY: inputsY + 4,
-      theme: 'grid',
+      startY: 38,
+      theme: 'striped',
       head: [['Parameter', 'Wert']],
       body: [
-        ['Modell', (calc.mode==='lease' ? 'Leasing' : 'Kauf')],
+        ['Finanzierungsmodell', (calc.mode==='lease' ? 'Leasing' : 'Kauf')],
         ['Anzahl Roboter', String(calc.qty)],
         ...(calc.mode==='purchase'
           ? [['Kaufpreis pro Roboter', fmtEUR(calc.price)]]
           : [
               ['Leasingrate pro Roboter/Monat', fmtEUR(calc.leaseRateMonthly)],
-              ['Laufzeit (Monate)', String(calc.leaseTermMonths)],
+              ['Laufzeit', String(calc.leaseTermMonths) + ' Monate'],
             ]),
-        ['Eingesparte Stunden/Tag (pro Roboter)', String(calc.hoursPerDay)],
+        ['Eingesparte Stunden/Tag (pro Roboter)', String(calc.hoursPerDay) + ' Std.'],
         ['Lohnkosten pro Stunde', fmtEUR(calc.hourlyRate)],
-        ['Arbeitstage pro Jahr', String(calc.daysPerYear)],
+        ['Arbeitstage pro Jahr', String(calc.daysPerYear) + ' Tage'],
         ['Servicekosten pro Roboter/Monat', fmtEUR(calc.serviceMonthly)],
         ['Stromkosten pro Roboter/Jahr', fmtEUR(calc.powerPerYear)],
-        ['Fläche pro Tag (optional)', (calc.areaSqmPerDay > 0 ? (new Intl.NumberFormat('de-DE').format(calc.areaSqmPerDay) + ' m²') : '–')],
+        ['Flaeche pro Tag', (calc.areaSqmPerDay > 0 ? (new Intl.NumberFormat('de-DE').format(calc.areaSqmPerDay) + ' m2') : 'nicht angegeben')],
       ],
-      styles: { fontSize: 10 },
-      headStyles: { fillColor: RG_BRAND.dark },
+      styles: { 
+        fontSize: 9,
+        cellPadding: 4,
+      },
+      headStyles: { 
+        fillColor: RG_BRAND.dark,
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [248, 250, 252],
+      },
+      columnStyles: {
+        0: { cellWidth: 80 },
+        1: { cellWidth: 'auto', halign: 'right' },
+      },
     });
 
-// Annahmen
-    const afterY = doc.lastAutoTable.finalY + 10;
-    doc.setFontSize(12);
-    doc.text('Annahmen der Berechnung', 14, afterY);
-    doc.setFontSize(9);
+    // Assumptions section
+    const afterY = doc.lastAutoTable.finalY + 12;
+    doc.setFillColor(248, 250, 252);
+    doc.setDrawColor(230, 235, 240);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(14, afterY, 182, 38, 2, 2, 'FD');
+
+    doc.setFontSize(10);
+    doc.setTextColor(...RG_BRAND.dark);
+    doc.text('Annahmen der Berechnung', 18, afterY + 7);
+
+    doc.setFontSize(8);
     doc.setTextColor(...RG_BRAND.grey);
     const assumptions = [
-      'Konstanter Betrieb über das Jahr (Arbeitstage laut Eingabe).',
-      'Personalkosten basieren auf dem eingegebenen Stundensatz.',
-      'Service- und Stromkosten basieren auf Ihren Angaben.',
-      'Keine Förderungen, Steuern oder Restwerte berücksichtigt.',
+      'Konstanter Betrieb ueber das Jahr (Arbeitstage laut Eingabe)',
+      'Personalkosten basieren auf dem eingegebenen Stundensatz',
+      'Service- und Stromkosten basieren auf Ihren Angaben',
+      'Keine Foerderungen, Steuern oder Restwerte beruecksichtigt',
     ];
-    let yy = afterY + 6;
-    assumptions.forEach(a => { doc.text('• ' + a, 14, yy, { maxWidth: 182 }); yy += 5; });
-    doc.setTextColor(...RG_BRAND.dark);
-    // QR-Code (Seite 2) – für Ausdruck & erneute Prüfung
-    // Place near bottom-right; keep page 1 clean.
+    let yy = afterY + 14;
+    assumptions.forEach(function(a) { 
+      doc.text('  •  ' + a, 18, yy); 
+      yy += 5.5; 
+    });
+
+    // QR-Code section
     try {
-      const qrSize = 28;
-      const qrX = 196 - qrSize; // right margin align
-      const qrY = 250;
-      doc.setDrawColor(220, 228, 232);
-      doc.setLineWidth(0.3);
-      doc.line(14, 244, 196, 244);
-      doc.setDrawColor(0,0,0);
+      const qrSize = 25;
+      const qrX = 196 - qrSize;
+      const qrY = afterY + 50;
+
+      doc.setFillColor(248, 250, 252);
+      doc.setDrawColor(230, 235, 240);
+      doc.roundedRect(14, qrY - 4, 182, 36, 2, 2, 'FD');
 
       doc.setFontSize(10);
       doc.setTextColor(...RG_BRAND.dark);
-      doc.text('Berechnung online erneut durchführen', 14, 256);
-      doc.setFontSize(9);
+      doc.text('Online neu berechnen', 18, qrY + 5);
+      doc.setFontSize(8);
       doc.setTextColor(...RG_BRAND.grey);
-      doc.text('robo-guru.de/roi-rechner', 14, 261);
+      doc.text('Scannen Sie den QR-Code oder besuchen Sie:', 18, qrY + 12);
+      doc.setTextColor(...RG_BRAND.primary);
+      doc.text('robo-guru.de/roi-rechner', 18, qrY + 18);
 
-      doc.addImage(RG_QR_DATA, 'PNG', qrX, qrY, qrSize, qrSize);
-      doc.setTextColor(...RG_BRAND.dark);
+      doc.addImage(RG_QR_DATA, 'PNG', qrX - 4, qrY - 1, qrSize, qrSize);
     } catch(e) {}
-
 
     addHeaderFooter(doc);
     return doc;
