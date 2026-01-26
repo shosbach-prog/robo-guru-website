@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.2.0';
+    const VERSION = '1.3.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -148,7 +148,7 @@ final class RG_ROI_Calculator {
                     </label>
 
                     <label>Servicekosten pro Roboter / Monat (€)
-                        <input type="number" class="rg-in" data-rg="serviceMonthly" value="149" min="0" step="5">
+                        <input type="number" class="rg-in" data-rg="serviceMonthly" value="179" min="0" step="5">
                     </label>
 
                     <label>Stromkosten pro Roboter / Jahr (€)
