@@ -262,6 +262,9 @@ function generatePdf(calc){
     doc.text(fmtNum(calc.roi) + ' %', 14 + metricW/2, metricsY + 16, { align: 'center' });
 
     // Metric 2 - Amortisation
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(230, 235, 240);
+    doc.setLineWidth(0.3);
     doc.roundedRect(14 + metricW + metricGap, metricsY, metricW, metricH, 2, 2, 'FD');
     doc.setFontSize(8);
     doc.setTextColor(...RG_BRAND.grey);
