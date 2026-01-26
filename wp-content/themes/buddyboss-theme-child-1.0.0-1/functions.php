@@ -26,11 +26,17 @@ function buddyboss_theme_child_languages()
  */
 function buddyboss_theme_child_scripts_styles()
 {
+  // Cache-busting version based on file modification time
+  $css_file = get_stylesheet_directory() . '/assets/css/custom.css';
+  $js_file  = get_stylesheet_directory() . '/assets/js/custom.js';
+  $css_ver  = file_exists($css_file) ? filemtime($css_file) : '1.0.0';
+  $js_ver   = file_exists($js_file)  ? filemtime($js_file)  : '1.0.0';
+
   // Styles
-  wp_enqueue_style( 'buddyboss-child-css', get_stylesheet_directory_uri().'/assets/css/custom.css' );
+  wp_enqueue_style( 'buddyboss-child-css', get_stylesheet_directory_uri().'/assets/css/custom.css', array(), $css_ver );
 
   // Javascript
-  wp_enqueue_script( 'buddyboss-child-js', get_stylesheet_directory_uri().'/assets/js/custom.js' );
+  wp_enqueue_script( 'buddyboss-child-js', get_stylesheet_directory_uri().'/assets/js/custom.js', array(), $js_ver, true );
 }
 add_action( 'wp_enqueue_scripts', 'buddyboss_theme_child_scripts_styles', 9999 );
 
