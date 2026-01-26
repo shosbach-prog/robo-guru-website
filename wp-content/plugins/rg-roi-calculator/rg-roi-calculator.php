@@ -240,7 +240,6 @@ final class RG_ROI_Calculator {
                     </div>
                 </div>
             </div>
-</div>
         </div>
         <?php
         return (string)ob_get_clean();
