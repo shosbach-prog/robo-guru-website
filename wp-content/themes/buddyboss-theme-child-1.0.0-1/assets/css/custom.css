@@ -268,3 +268,66 @@ body.page .rg-wrap{
 /* Make WP default content nicer inside rg-card */
 .rg-content :where(p,ul,ol){ color: var(--rg-muted); }
 .rg-content h3{ margin-top: 16px; }
+
+/* FAQ (Plugin: rg-robot-profile) */
+.rg-faq-section .rg-h2{ margin-bottom: 16px; }
+.rg-faq-wrap{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+@media (max-width: 768px){
+  .rg-faq-wrap{ grid-template-columns: 1fr; }
+}
+.rg-faq-item{
+  border: 1px solid rgba(0, 180, 170, .25);
+  border-radius: 14px;
+  padding: 0;
+  background: linear-gradient(135deg, rgba(0, 180, 170, .06) 0%, rgba(255,255,255,1) 100%);
+  transition: border-color .2s ease, box-shadow .2s ease;
+  scroll-margin-top: 100px;
+  overflow: hidden;
+}
+.rg-faq-item:hover{
+  border-color: rgba(0, 180, 170, .45);
+  box-shadow: 0 4px 16px rgba(0, 180, 170, .12);
+}
+.rg-faq-item.open{
+  border-color: rgba(0, 180, 170, .5);
+  background: linear-gradient(135deg, rgba(0, 180, 170, .10) 0%, rgba(255,255,255,1) 60%);
+  box-shadow: 0 6px 20px rgba(0, 180, 170, .15);
+}
+.rg-faq-q{
+  cursor: pointer;
+  font-weight: 700;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #111;
+  transition: background .15s ease;
+}
+.rg-faq-q:hover{
+  background: rgba(0, 180, 170, .05);
+}
+.rg-faq-q .icon{
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(0, 180, 170, .8);
+  transition: transform .2s ease;
+  flex-shrink: 0;
+}
+.rg-faq-item.open .rg-faq-q .icon{
+  transform: rotate(45deg);
+}
+.rg-faq-a{
+  color: var(--rg-muted);
+  padding: 0 16px 14px;
+  display: none;
+  animation: faqFadeIn .25s ease;
+}
+.rg-faq-item.open .rg-faq-a{
+  display: block;
+}
