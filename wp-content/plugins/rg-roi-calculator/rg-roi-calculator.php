@@ -496,6 +496,17 @@ final class RG_ROI_Calculator {
             wp_send_json_error(['message' => 'Dokument konnte nicht in BuddyBoss gespeichert werden.'], 500);
         }
 
+        // Add required BuddyBoss document metadata
+        if (function_exists('bp_document_update_meta')) {
+            bp_document_update_meta($document_id, 'file_name', $filename);
+            bp_document_update_meta($document_id, 'extension', '.pdf');
+        }
+
+        // Generate document previews if available
+        if (function_exists('bp_document_generate_document_previews')) {
+            bp_document_generate_document_previews($document_id);
+        }
+
         // Get user profile documents URL
         $profile_url = bp_core_get_user_domain($user_id) . 'documents/';
 
