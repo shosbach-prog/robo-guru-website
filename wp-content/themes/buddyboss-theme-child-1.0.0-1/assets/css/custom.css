@@ -187,21 +187,71 @@ body.page .rg-wrap{
 .rg-ctaCard__txt p{ margin: 0 0 12px; color: var(--rg-muted); }
 
 /* FAQ */
-.rg-faq h2{ margin-top: 0; }
-.rg-faq__item{
-  border: 1px solid rgba(17,17,17,.10);
-  border-radius: 14px;
-  padding: 8px 12px;
-  background: #fff;
+.rg-faq h2{ margin-top: 0; margin-bottom: 16px; }
+.rg-faq__list{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
 }
-.rg-faq__item + .rg-faq__item{ margin-top: 10px; }
+@media (max-width: 768px){
+  .rg-faq__list{ grid-template-columns: 1fr; }
+}
+.rg-faq__item{
+  border: 1px solid rgba(0, 180, 170, .25);
+  border-radius: 14px;
+  padding: 0;
+  background: linear-gradient(135deg, rgba(0, 180, 170, .06) 0%, rgba(255,255,255,1) 100%);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease;
+  scroll-margin-top: 100px;
+}
+.rg-faq__item:hover{
+  border-color: rgba(0, 180, 170, .45);
+  box-shadow: 0 4px 16px rgba(0, 180, 170, .12);
+}
+.rg-faq__item[open]{
+  border-color: rgba(0, 180, 170, .5);
+  background: linear-gradient(135deg, rgba(0, 180, 170, .10) 0%, rgba(255,255,255,1) 60%);
+  box-shadow: 0 6px 20px rgba(0, 180, 170, .15);
+}
 .rg-faq__item summary{
-  cursor:pointer;
+  cursor: pointer;
   font-weight: 700;
   list-style: none;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #111;
+  border-radius: 14px;
+  transition: background .15s ease;
 }
-.rg-faq__item summary::-webkit-details-marker{ display:none; }
-.rg-faq__answer{ color: var(--rg-muted); padding: 10px 2px 4px; }
+.rg-faq__item summary::after{
+  content: '+';
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(0, 180, 170, .8);
+  transition: transform .2s ease;
+  flex-shrink: 0;
+}
+.rg-faq__item[open] summary::after{
+  content: '−';
+  transform: rotate(180deg);
+}
+.rg-faq__item summary:hover{
+  background: rgba(0, 180, 170, .05);
+}
+.rg-faq__item summary::-webkit-details-marker{ display: none; }
+.rg-faq__answer{
+  color: var(--rg-muted);
+  padding: 0 16px 14px;
+  animation: faqFadeIn .25s ease;
+}
+@keyframes faqFadeIn{
+  from{ opacity: 0; transform: translateY(-6px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
 
 /* Archive helpers (works with our archive template classes) */
 .rg-filters input,
