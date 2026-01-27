@@ -260,10 +260,51 @@ body.page .rg-wrap{
   border: 1px solid rgba(17,17,17,.12) !important;
   background:#fff !important;
 }
+.rg-filter{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rg-filter__label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rg-muted);
+}
 .rg-grid .rg-card{ box-shadow: var(--rg-shadow); }
 
 /* Compare bar (if present) */
 #rg-compare-link{ font-weight: 700; }
+.rg-compare-bar{
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: rgba(255,255,255,.96);
+  border-top: 1px solid rgba(17,17,17,.1);
+  box-shadow: 0 -6px 20px rgba(0,0,0,.08);
+  padding: 10px var(--rg-gutter);
+  transform: translateY(110%);
+  transition: transform .2s ease;
+}
+.rg-compare-bar.is-active{
+  transform: translateY(0);
+}
+.rg-compare-bar__inner{
+  max-width: var(--rg-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rg-compare-bar__text{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rg-compare-bar__count{
+  font-size: 13px;
+  color: var(--rg-muted);
+}
 
 /* Make WP default content nicer inside rg-card */
 .rg-content :where(p,ul,ol){ color: var(--rg-muted); }
