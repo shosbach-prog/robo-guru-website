@@ -941,15 +941,6 @@
   display: grid;
   gap: 10px;
 }
-.rf-relevance-card{
-  display: flex;
-  gap: 12px;
-  padding: 10px;
-  background: var(--rf-bg);
-  border: 1px solid var(--rf-border);
-  border-radius: 8px;
-  transition: border-color .15s, box-shadow .15s;
-}
 .rf-relevance-card:hover{
   border-color: var(--rf-accent);
   box-shadow: 0 4px 12px rgba(0,0,0,.08);
@@ -977,14 +968,7 @@
   gap: 8px;
   margin-bottom: 2px;
 }
-.rf-rel-title{
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--rf-ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* rf-rel-title styles moved to a.rf-rel-title below */
 .rf-rel-badge{
   flex-shrink: 0;
   padding: 2px 6px;
@@ -1025,10 +1009,154 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+/* Hidden cards (expand/collapse) */
+.rf-relevance-card--hidden{
+  display: none !important;
+}
 .rf-relevance-more{
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--rf-primary-2);
+  background: var(--rf-soft);
+  border: 1px solid var(--rf-border-strong);
+  border-radius: var(--rf-radius-sm);
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background .15s, color .15s;
+}
+.rf-relevance-more:hover{
+  background: var(--rf-primary);
+  color: #fff;
+}
+/* Clickable title link */
+a.rf-rel-title{
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--rf-ink);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+a.rf-rel-title:hover{
+  color: var(--rf-primary);
+  text-decoration: underline;
+}
+/* Compare checkbox on cards */
+.rf-compare-check{
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rf-compare-cb{
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.rf-compare-icon{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--rf-border);
+  border-radius: 4px;
+  background: #fff;
+  transition: background .15s, border-color .15s;
+}
+.rf-compare-icon::after{
+  content: '';
+  display: none;
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin: 1px 0 0 5px;
+}
+.rf-compare-cb:checked + .rf-compare-icon{
+  background: var(--rf-primary);
+  border-color: var(--rf-primary);
+}
+.rf-compare-cb:checked + .rf-compare-icon::after{
+  display: block;
+}
+.rf-relevance-card{
+  position: relative; /* for checkbox positioning */
+  display: flex;
+  gap: 12px;
+  padding: 10px;
+  padding-right: 32px; /* space for checkbox */
+  background: var(--rf-bg);
+  border: 1px solid var(--rf-border);
+  border-radius: 8px;
+  transition: border-color .15s, box-shadow .15s;
+}
+/* Compare bar */
+.rf-compare-bar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: var(--rf-soft);
+  border: 1px solid var(--rf-border-strong);
+  border-radius: var(--rf-radius-sm);
+  margin-bottom: 8px;
+}
+.rf-compare-bar-text{
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rf-ink);
+}
+.rf-compare-btn{
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--rf-primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.rf-compare-btn:hover{
+  background: var(--rf-primary-2);
+}
+/* Compare table (inline) */
+.rf-compare-result{
+  margin-top: 12px;
+}
+.rf-compare-thumb{
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto 6px;
+}
+.rf-compare-close{
+  display: block;
+  width: 100%;
   text-align: center;
   padding: 8px;
   font-size: 13px;
+  font-weight: 600;
   color: var(--rf-muted);
-  margin-top: 6px;
+  background: transparent;
+  border: 1px solid var(--rf-border);
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: color .15s;
+}
+.rf-compare-close:hover{
+  color: var(--rf-ink);
 }
