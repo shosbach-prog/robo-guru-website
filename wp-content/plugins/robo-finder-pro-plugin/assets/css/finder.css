@@ -914,3 +914,121 @@
   line-height:1.35;
   opacity:.95;
 }
+
+/* =========================
+   Relevance Results (Step 6 Teaser)
+   ========================= */
+.rf-relevance-results{ margin-top: 12px; }
+.rf-relevance-loading{
+  text-align: center;
+  padding: 20px;
+  color: var(--rf-muted);
+  font-size: 14px;
+}
+.rf-relevance-empty{
+  text-align: center;
+  padding: 16px;
+  color: var(--rf-muted);
+  font-size: 14px;
+}
+.rf-relevance-fallback-note{
+  font-size: 13px;
+  color: var(--rf-muted);
+  margin-bottom: 10px;
+  font-style: italic;
+}
+.rf-relevance-grid{
+  display: grid;
+  gap: 10px;
+}
+.rf-relevance-card{
+  display: flex;
+  gap: 12px;
+  padding: 10px;
+  background: var(--rf-bg);
+  border: 1px solid var(--rf-border);
+  border-radius: 8px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.rf-relevance-card:hover{
+  border-color: var(--rf-accent);
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+.rf-rel-thumb{
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+.rf-rel-thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rf-rel-content{
+  flex: 1;
+  min-width: 0;
+}
+.rf-rel-header{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.rf-rel-title{
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--rf-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rf-rel-badge{
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+.rf-rel-badge.rf-rel-high{ background: #22c55e; }
+.rf-rel-badge.rf-rel-medium{ background: #f59e0b; }
+.rf-rel-badge.rf-rel-low{ background: #94a3b8; }
+.rf-rel-manufacturer{
+  font-size: 12px;
+  color: var(--rf-muted);
+  margin-bottom: 4px;
+}
+.rf-rel-matches{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.rf-match-tag{
+  display: inline-block;
+  padding: 2px 6px;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.rf-rel-highlight{
+  font-size: 12px;
+  color: var(--rf-muted);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rf-relevance-more{
+  text-align: center;
+  padding: 8px;
+  font-size: 13px;
+  color: var(--rf-muted);
+  margin-top: 6px;
+}
