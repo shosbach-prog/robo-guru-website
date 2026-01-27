@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Robo Finder Pro
  * Description: Robo-Finder für Reinigungs- und Serviceroboter mit Roboter-Datenbank, Matching-Engine, Lead-Datenbank, Scraper, Dashboard-Analytics und Frontend-Grid/Compare. Shortcodes: [robo_finder], [robo_robot_grid], [robo_robot_compare ids="1,2,3"].
-* Version: 4.8.18.18
+* Version: 4.8.19.0
  * Author: Robo-Guru / Sebastian
  * Text Domain: robo-finder-pro
  */
@@ -11,7 +11,7 @@
 
 
 
-if (!defined('RF_PRO_VER')) { define('RF_PRO_VER','4.8.18.18'); }
+if (!defined('RF_PRO_VER')) { define('RF_PRO_VER','4.8.19.0'); }
 
 
 /**
@@ -120,6 +120,7 @@ class Robo_Finder_Pro_Plugin {
 
         add_action( 'add_meta_boxes', array( $this, 'register_robot_metabox' ) );
         add_action( 'save_post_robo_robot', array( $this, 'save_robot_contact_shortcode_meta' ), 10, 2 );
+        add_action( 'save_post_robo_robot', array( $this, 'invalidate_robot_cache' ), 20 );
 
         add_filter( 'manage_edit-robo_robot_columns', array( $this, 'add_robot_columns' ) );
         add_action( 'manage_robo_robot_posts_custom_column', array( $this, 'render_robot_columns' ), 10, 2 );
@@ -148,6 +149,8 @@ class Robo_Finder_Pro_Plugin {
         add_action( 'wp_ajax_nopriv_robo_finder_recommend', array( $this, 'handle_recommendation' ) );
         add_action( 'wp_ajax_robo_finder_lead', array( $this, 'handle_lead' ) );
         add_action( 'wp_ajax_nopriv_robo_finder_lead', array( $this, 'handle_lead' ) );
+        add_action( 'wp_ajax_robo_finder_compare', array( $this, 'handle_compare' ) );
+        add_action( 'wp_ajax_nopriv_robo_finder_compare', array( $this, 'handle_compare' ) );
 
         add_action( 'wp_dashboard_setup', array( $this, 'register_dashboard_widget' ) );
     }
@@ -2166,10 +2169,55 @@ public function render_rg_forum_mount() {
         return $out;
     }
 
+    /**
+     * Invalidate the pre-built robot data cache whenever a robot is saved/updated.
+     */
+    public function invalidate_robot_cache() {
+        delete_transient( 'rf_robot_data_cache' );
+    }
+
+    /**
+     * Build or retrieve the full robot data cache (all published robots with terms + meta).
+     * Cached as a transient for 12 hours; invalidated on save_post_robo_robot.
+     */
+    private function get_robot_data_cache() {
+        $cached = get_transient( 'rf_robot_data_cache' );
+        if ( $cached !== false ) {
+            return $cached;
+        }
+
+        $q = new WP_Query(
+            array(
+                'post_type'      => 'robo_robot',
+                'post_status'    => 'publish',
+                'posts_per_page' => 100,
+                'fields'         => 'ids',
+                'no_found_rows'  => true,
+            )
+        );
+
+        $robots = array();
+        foreach ( (array) $q->posts as $pid ) {
+            $robots[ $pid ] = array(
+                'id'          => $pid,
+                'envs'        => (array) wp_get_post_terms( $pid, 'robo_env', array( 'fields' => 'slugs' ) ),
+                'tasks'       => (array) wp_get_post_terms( $pid, 'robo_task', array( 'fields' => 'slugs' ) ),
+                'floors'      => (array) wp_get_post_terms( $pid, 'robo_floor', array( 'fields' => 'slugs' ) ),
+                'budgets'     => (array) wp_get_post_terms( $pid, 'robo_budget', array( 'fields' => 'slugs' ) ),
+                'm2h'         => floatval( get_post_meta( $pid, '_rf_m2h', true ) ),
+                'has_docking' => (string) get_post_meta( $pid, '_rf_has_docking', true ) === '1',
+                'serialized'  => $this->serialize_robot( $pid ),
+            );
+        }
+
+        set_transient( 'rf_robot_data_cache', $robots, 12 * HOUR_IN_SECONDS );
+        return $robots;
+    }
+
     public function handle_recommendation() {
         check_ajax_referer( 'robo_finder_nonce', 'nonce' );
 
-                // Multi-Select Inputs (arrays) + optionale Filter
+        // Multi-Select Inputs (arrays) + optionale Filter
         $envs    = isset( $_POST['env'] ) ? (array) wp_unslash( $_POST['env'] ) : array();
         $tasks   = isset( $_POST['task'] ) ? (array) wp_unslash( $_POST['task'] ) : array();
         $floors  = isset( $_POST['floor'] ) ? (array) wp_unslash( $_POST['floor'] ) : array();
@@ -2182,106 +2230,112 @@ public function render_rg_forum_mount() {
         $tasks  = array_values( array_filter( array_map( 'sanitize_key', $tasks ) ) );
         $floors = array_values( array_filter( array_map( 'sanitize_key', $floors ) ) );
 
-        // Erst breite Auswahl holen (damit es nicht zu streng ist)
-        $q = new WP_Query(
-            array(
-                'post_type'      => 'robo_robot',
-                'post_status'    => 'publish',
-                'posts_per_page' => 80,
-                'fields'         => 'ids',
-                'no_found_rows'  => true,
-            )
-        );
+        // Use cached robot data instead of live DB queries
+        $all_robots = $this->get_robot_data_cache();
 
         $scored = array();
 
-        // Max possible score for relevance calculation
+        // Improved scoring: weighted per match + partial multi-match bonus
         $max_score = 0;
-        if ( $envs )   $max_score += 3;
-        if ( $tasks )  $max_score += 3;
-        if ( $floors ) $max_score += 2;
-        if ( $budget ) $max_score += 1;
-        if ( $min_m2h > 0 ) $max_score += 1;
-        if ( $need_docking ) $max_score += 1;
+        if ( $envs )          $max_score += 3;
+        if ( $tasks )         $max_score += 3;
+        if ( $floors )        $max_score += 2;
+        if ( $budget )        $max_score += 1;
+        if ( $min_m2h > 0 )   $max_score += 1;
+        if ( $need_docking )  $max_score += 1;
         if ( $max_score < 1 ) $max_score = 1;
 
-        foreach ( (array) $q->posts as $pid ) {
-            $score = 0;
+        foreach ( $all_robots as $pid => $rdata ) {
+            $score   = 0;
             $matches = array();
 
-            // Tax Matches (OR innerhalb, aber Kategorie zählt)
+            // Environment match – partial scoring: bonus for matching multiple envs
             if ( $envs ) {
-                $terms = wp_get_post_terms( $pid, 'robo_env', array( 'fields' => 'slugs' ) );
-                $matched_envs = array_intersect( (array) $terms, $envs );
+                $matched_envs = array_intersect( $rdata['envs'], $envs );
                 if ( $matched_envs ) {
-                    $score += 3;
+                    // Base 2 points + up to 1 bonus for matching multiple
+                    $ratio = count( $matched_envs ) / count( $envs );
+                    $score += 2 + round( $ratio, 2 );
                     $matches['env'] = array_values( $matched_envs );
                 }
             }
+
+            // Task match – partial scoring for multi-task overlap
             if ( $tasks ) {
-                $terms = wp_get_post_terms( $pid, 'robo_task', array( 'fields' => 'slugs' ) );
-                $matched_tasks = array_intersect( (array) $terms, $tasks );
+                $matched_tasks = array_intersect( $rdata['tasks'], $tasks );
                 if ( $matched_tasks ) {
-                    $score += 3;
+                    $ratio = count( $matched_tasks ) / count( $tasks );
+                    $score += 2 + round( $ratio, 2 );
                     $matches['task'] = array_values( $matched_tasks );
                 }
             }
+
+            // Floor match – partial scoring
             if ( $floors ) {
-                $terms = wp_get_post_terms( $pid, 'robo_floor', array( 'fields' => 'slugs' ) );
-                $matched_floors = array_intersect( (array) $terms, $floors );
+                $matched_floors = array_intersect( $rdata['floors'], $floors );
                 if ( $matched_floors ) {
-                    $score += 2;
+                    $ratio = count( $matched_floors ) / count( $floors );
+                    $score += 1 + round( $ratio, 2 );
                     $matches['floor'] = array_values( $matched_floors );
                 }
             }
+
+            // Budget match
             if ( $budget ) {
-                $terms = wp_get_post_terms( $pid, 'robo_budget', array( 'fields' => 'slugs' ) );
-                if ( in_array( $budget, (array) $terms, true ) ) {
+                if ( in_array( $budget, $rdata['budgets'], true ) ) {
                     $score += 1;
                     $matches['budget'] = $budget;
                 }
             }
 
-            // Meta Filters
+            // Meta Filters (hard filters – exclude if not met)
             if ( $min_m2h > 0 ) {
-                $m2h = floatval( get_post_meta( $pid, '_rf_m2h', true ) );
-                if ( $m2h <= 0 || $m2h < $min_m2h ) {
+                if ( $rdata['m2h'] <= 0 || $rdata['m2h'] < $min_m2h ) {
                     continue;
                 }
-                $score += 1;
+                // Bonus proportional to how much coverage exceeds requirement (capped at +1)
+                $coverage_bonus = min( 1.0, ( $rdata['m2h'] / $min_m2h ) - 1 );
+                $score += 0.5 + round( $coverage_bonus * 0.5, 2 );
                 $matches['m2h'] = true;
             }
 
             if ( $need_docking ) {
-                $has = (string) get_post_meta( $pid, '_rf_has_docking', true );
-                if ( $has !== '1' ) {
+                if ( ! $rdata['has_docking'] ) {
                     continue;
                 }
                 $score += 1;
                 $matches['docking'] = true;
             }
 
-            // Mindestens irgendwas matchen, sonst später Fallback
+            // Include robots with any match
             if ( $score > 0 ) {
                 $relevance = round( ( $score / $max_score ) * 100 );
+                $relevance = min( 100, $relevance ); // cap at 100
                 $scored[] = array(
                     'id'        => $pid,
                     'score'     => $score,
                     'relevance' => $relevance,
                     'matches'   => $matches,
+                    'match_cnt' => count( $matches ),
                 );
             }
         }
 
+        // Sort by score DESC, then by number of matched categories DESC (tiebreaker)
         usort( $scored, function( $a, $b ) {
-            if ( $a['score'] === $b['score'] ) return 0;
-            return ( $a['score'] > $b['score'] ) ? -1 : 1;
+            if ( $a['score'] !== $b['score'] ) {
+                return ( $a['score'] > $b['score'] ) ? -1 : 1;
+            }
+            if ( $a['match_cnt'] !== $b['match_cnt'] ) {
+                return ( $a['match_cnt'] > $b['match_cnt'] ) ? -1 : 1;
+            }
+            return 0;
         } );
 
         $items = array();
         $top = array_slice( $scored, 0, 12 );
         foreach ( $top as $row ) {
-            $robot = $this->serialize_robot( $row['id'] );
+            $robot = $all_robots[ $row['id'] ]['serialized'];
             $robot['relevance'] = $row['relevance'];
             $robot['matches']   = $row['matches'];
             $items[] = $robot;
@@ -2303,7 +2357,11 @@ public function render_rg_forum_mount() {
                 )
             );
             foreach ( (array) $fallback->posts as $pid ) {
-                $robot = $this->serialize_robot( $pid );
+                if ( isset( $all_robots[ $pid ] ) ) {
+                    $robot = $all_robots[ $pid ]['serialized'];
+                } else {
+                    $robot = $this->serialize_robot( $pid );
+                }
                 $robot['relevance'] = 0;
                 $robot['matches']   = array();
                 $items[] = $robot;
@@ -2315,6 +2373,37 @@ public function render_rg_forum_mount() {
                 'is_fallback' => $is_fallback,
             )
         );
+    }
+
+    /**
+     * AJAX handler: compare selected robots (returns serialized data for frontend table).
+     */
+    public function handle_compare() {
+        check_ajax_referer( 'robo_finder_nonce', 'nonce' );
+
+        $ids = isset( $_POST['ids'] ) ? (array) wp_unslash( $_POST['ids'] ) : array();
+        $ids = array_filter( array_map( 'intval', $ids ) );
+        $ids = array_slice( $ids, 0, 5 ); // max 5 robots to compare
+
+        if ( empty( $ids ) ) {
+            wp_send_json_error( array( 'message' => 'Keine Roboter-IDs angegeben.' ) );
+        }
+
+        $all_robots = $this->get_robot_data_cache();
+        $robots = array();
+        foreach ( $ids as $id ) {
+            if ( isset( $all_robots[ $id ] ) ) {
+                $robots[] = $all_robots[ $id ]['serialized'];
+            } elseif ( get_post_type( $id ) === 'robo_robot' ) {
+                $robots[] = $this->serialize_robot( $id );
+            }
+        }
+
+        if ( empty( $robots ) ) {
+            wp_send_json_error( array( 'message' => 'Keine passenden Roboter gefunden.' ) );
+        }
+
+        wp_send_json_success( array( 'robots' => $robots ) );
     }
 
     private function serialize_robot( $post_id ) {
