@@ -98,36 +98,51 @@ function rg_opt($key, $label, $selected) {
     </div>
 
     <form method="get" class="rg-filters">
-      <input type="text" name="q" placeholder="Suche (z. B. CC1, Nexaro, Phantas …)" value="<?php echo esc_attr($search); ?>">
-      <select name="brand">
+      <label class="rg-filter">
+        <span class="rg-filter__label">Suche</span>
+        <input type="text" name="q" placeholder="z. B. CC1, Nexaro, Phantas …" value="<?php echo esc_attr($search); ?>" aria-label="Roboter suchen">
+      </label>
+      <label class="rg-filter">
+        <span class="rg-filter__label">Hersteller</span>
+        <select name="brand" aria-label="Hersteller filtern">
         <option value="">Hersteller</option>
         <?php
         $brands = ['Pudu'=>'Pudu','Gausium'=>'Gausium','Nexaro'=>'Nexaro','Kärcher'=>'Kärcher','Sonstiges'=>'Sonstiges'];
         foreach ($brands as $k=>$v) echo rg_opt($k, $v, $brand);
         ?>
-      </select>
-      <select name="usecase">
+        </select>
+      </label>
+      <label class="rg-filter">
+        <span class="rg-filter__label">Einsatz</span>
+        <select name="usecase" aria-label="Einsatz filtern">
         <option value="">Einsatz</option>
         <?php
         $usecases = ['Halle'=>'Hallen/Industrie','Retail'=>'Retail/Supermarkt','Hotel'=>'Hotel','Klinik'=>'Klinik','Logistik'=>'Logistik'];
         foreach ($usecases as $k=>$v) echo rg_opt($k, $v, $usecase);
         ?>
-      </select>
-      <select name="budget">
+        </select>
+      </label>
+      <label class="rg-filter">
+        <span class="rg-filter__label">Budget</span>
+        <select name="budget" aria-label="Budget filtern">
         <option value="">Budget</option>
         <?php
         $budgets = ['S'=>'S (Budget)','M'=>'M (Standard)','L'=>'L (Premium)'];
         foreach ($budgets as $k=>$v) echo rg_opt($k, $v, $budget);
         ?>
-      </select>
-      <select name="sort">
+        </select>
+      </label>
+      <label class="rg-filter">
+        <span class="rg-filter__label">Sortierung</span>
+        <select name="sort" aria-label="Sortierung wählen">
         <?php
         echo rg_opt('new','Sort: Neueste',$sort);
         echo rg_opt('name','Sort: Name A-Z',$sort);
         echo rg_opt('roi','Sort: ROI-Score',$sort);
         echo rg_opt('area','Sort: Flächenleistung',$sort);
         ?>
-      </select>
+        </select>
+      </label>
     </form>
   </div>
 
@@ -188,11 +203,26 @@ function rg_opt($key, $label, $selected) {
   <?php endif; ?>
 </div>
 
+<div class="rg-compare-bar" id="rg-compare-bar" aria-live="polite">
+  <div class="rg-compare-bar__inner">
+    <div class="rg-compare-bar__text">
+      <strong>Vergleich</strong>
+      <span class="rg-compare-bar__count" id="rg-compare-count">0 ausgewählt</span>
+    </div>
+    <a href="/roboter-vergleich/" class="rg-btn rg-btn--primary" id="rg-compare-bar-link" style="opacity:.6;pointer-events:none;">
+      Vergleich öffnen
+    </a>
+  </div>
+</div>
+
 <script>
 (function(){
   const key = 'rg_compare_ids';
   const cbs = document.querySelectorAll('.rg-compare-cb');
   const link = document.getElementById('rg-compare-link');
+  const bar = document.getElementById('rg-compare-bar');
+  const barLink = document.getElementById('rg-compare-bar-link');
+  const barCount = document.getElementById('rg-compare-count');
 
   function load(){
     try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e){ return []; }
@@ -208,6 +238,13 @@ function rg_opt($key, $label, $selected) {
       link.style.opacity = ids.length ? '1' : '.6';
       link.style.pointerEvents = ids.length ? 'auto' : 'none';
       link.href = '/roboter-vergleich/?ids=' + encodeURIComponent(ids.join(','));
+    }
+    if(bar && barLink && barCount){
+      barCount.textContent = `${ids.length} ausgewählt`;
+      barLink.style.opacity = ids.length ? '1' : '.6';
+      barLink.style.pointerEvents = ids.length ? 'auto' : 'none';
+      barLink.href = '/roboter-vergleich/?ids=' + encodeURIComponent(ids.join(','));
+      bar.classList.toggle('is-active', ids.length > 0);
     }
   }
   cbs.forEach(cb => cb.addEventListener('change', () => {
