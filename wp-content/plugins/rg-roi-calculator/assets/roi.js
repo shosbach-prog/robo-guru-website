@@ -600,9 +600,11 @@ out('invest').textContent = fmtEUR(calc.invest);
 
     const pdfBtn = q('[data-rg-btn="pdf"]', root);
     const printBtn = q('[data-rg-btn="print"]', root);
+    const saveBtn = q('[data-rg-btn="save"]', root);
 
     pdfBtn.disabled = !canExport;
     printBtn.disabled = !canExport;
+    if (saveBtn) saveBtn.disabled = !canExport;
 
     if (!canExport){
       out('roi').textContent = '–';
@@ -689,6 +691,49 @@ out('invest').textContent = fmtEUR(calc.invest);
       const doc = generatePdf(lastCalc);
       doc.save(`ROI-Berechnung-Robo-Guru-${new Date().toISOString().slice(0,10)}.pdf`);
     });
+
+    const saveBtn = q('[data-rg-btn="save"]', root);
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        lastCalc = toCalc(root);
+        if (!lastCalc.canExport) return;
+        if (saveBtn.disabled) return;
+
+        const doc = generatePdf(lastCalc);
+        const pdfBase64 = doc.output('datauristring');
+
+        saveBtn.disabled = true;
+        const origText = saveBtn.querySelector('span:last-child');
+        const prevLabel = origText.textContent;
+        origText.textContent = 'Wird gespeichert\u2026';
+
+        fetch(rgRoi.ajaxUrl + '?action=rg_save_roi_to_profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nonce: rgRoi.nonce,
+            pdfBase64: pdfBase64,
+          }),
+        })
+        .then(r => r.json())
+        .then(res => {
+          if (res.success) {
+            origText.textContent = 'Gespeichert!';
+            setTimeout(() => { origText.textContent = prevLabel; saveBtn.disabled = false; }, 3000);
+          } else {
+            const msg = (res.data && res.data.message) ? res.data.message : 'Speichern fehlgeschlagen.';
+            origText.textContent = prevLabel;
+            saveBtn.disabled = false;
+            alert(msg);
+          }
+        })
+        .catch(() => {
+          origText.textContent = prevLabel;
+          saveBtn.disabled = false;
+          alert('Netzwerkfehler – bitte erneut versuchen.');
+        });
+      });
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
