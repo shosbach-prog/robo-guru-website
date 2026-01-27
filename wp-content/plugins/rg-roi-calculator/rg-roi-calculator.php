@@ -23,6 +23,8 @@ final class RG_ROI_Calculator {
         add_action('wp_ajax_rg_send_roi_report', [__CLASS__, 'ajax_send_report']);
         add_action('wp_ajax_nopriv_rg_send_roi_report', [__CLASS__, 'ajax_send_report']);
 
+        add_action('wp_ajax_rg_save_roi_to_profile', [__CLASS__, 'ajax_save_to_profile']);
+
         add_action('admin_menu', [__CLASS__, 'admin_menu']);
         add_action('admin_init', [__CLASS__, 'register_settings']);
     }
@@ -55,10 +57,12 @@ final class RG_ROI_Calculator {
         );
 
         wp_localize_script('rg-roi', 'rgRoi', [
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce'   => wp_create_nonce(self::NONCE_ACTION),
-            'ccEmail' => get_option(self::OPTION_CC_EMAIL, ''),
-            'siteName'=> get_bloginfo('name'),
+            'ajaxUrl'    => admin_url('admin-ajax.php'),
+            'nonce'      => wp_create_nonce(self::NONCE_ACTION),
+            'ccEmail'    => get_option(self::OPTION_CC_EMAIL, ''),
+            'siteName'   => get_bloginfo('name'),
+            'isLoggedIn' => is_user_logged_in() ? '1' : '0',
+            'hasBbDocs'  => function_exists('bp_document_add') ? '1' : '0',
         ]);
     }
 
@@ -204,6 +208,9 @@ final class RG_ROI_Calculator {
                     <div class="rg-actions">
                         <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">📄</span><span>PDF herunterladen</span></button>
                         <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">🖨</span><span>Drucken</span></button>
+                        <?php if (is_user_logged_in() && function_exists('bp_document_add')) : ?>
+                        <button class="rg-btn rg-btn--save" data-rg-btn="save" disabled><span class="rg-ico">💾</span><span>Im Profil speichern</span></button>
+                        <?php endif; ?>
 
                         <div class="rg-hint" data-rg-out="hint">
                             Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
@@ -368,6 +375,113 @@ final class RG_ROI_Calculator {
         } else {
             wp_send_json_error(['message' => 'E-Mail konnte nicht versendet werden.'], 500);
         }
+    }
+
+    public static function ajax_save_to_profile() {
+        // Only logged-in users (no nopriv hook registered)
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Bitte zuerst einloggen.'], 401);
+        }
+
+        if (!function_exists('bp_document_add')) {
+            wp_send_json_error(['message' => 'Dokument-Funktion ist nicht verfügbar.'], 501);
+        }
+
+        $payload = json_decode(file_get_contents('php://input'), true);
+        $nonce = isset($payload['nonce']) ? sanitize_text_field($payload['nonce']) : '';
+        if (!$nonce || !wp_verify_nonce($nonce, self::NONCE_ACTION)) {
+            wp_send_json_error(['message' => 'Sicherheitsprüfung fehlgeschlagen.'], 403);
+        }
+
+        $pdf_base64 = isset($payload['pdfBase64']) ? (string)$payload['pdfBase64'] : '';
+        if (strpos($pdf_base64, 'data:application/pdf;base64,') === 0) {
+            $pdf_base64 = substr($pdf_base64, strlen('data:application/pdf;base64,'));
+        }
+        if (!$pdf_base64) {
+            wp_send_json_error(['message' => 'PDF-Daten fehlen.'], 400);
+        }
+
+        // Rate limit: 1 save per 60 seconds per user
+        $user_id = get_current_user_id();
+        $rate_key = 'rg_roi_save_' . $user_id;
+        if (get_transient($rate_key)) {
+            wp_send_json_error(['message' => 'Bitte kurz warten bevor du erneut speicherst.'], 429);
+        }
+        set_transient($rate_key, 1, 60);
+
+        $bytes = base64_decode($pdf_base64, true);
+        if (!$bytes) {
+            wp_send_json_error(['message' => 'PDF konnte nicht gelesen werden.'], 400);
+        }
+
+        // Write temporary file for sideload
+        $upload_dir = wp_upload_dir();
+        $tmp_dir = trailingslashit($upload_dir['basedir']) . 'rg-roi';
+        if (!wp_mkdir_p($tmp_dir)) {
+            wp_send_json_error(['message' => 'Temporären Ordner konnte nicht erstellt werden.'], 500);
+        }
+
+        $filename = 'ROI-Berechnung-Robo-Guru-' . date('Y-m-d') . '.pdf';
+        $tmp_path = trailingslashit($tmp_dir) . wp_generate_password(12, false, false) . '.pdf';
+        $written = file_put_contents($tmp_path, $bytes);
+
+        if (!$written || !file_exists($tmp_path)) {
+            wp_send_json_error(['message' => 'PDF konnte nicht gespeichert werden.'], 500);
+        }
+
+        // Create WordPress attachment
+        $filetype = wp_check_filetype($filename, null);
+        $attachment_data = [
+            'post_mime_type' => $filetype['type'] ? $filetype['type'] : 'application/pdf',
+            'post_title'     => sanitize_file_name($filename),
+            'post_content'   => '',
+            'post_status'    => 'inherit',
+        ];
+
+        // Move file to uploads
+        $dest_path = trailingslashit($upload_dir['path']) . $filename;
+        // Avoid overwriting existing files
+        $dest_path = wp_unique_filename($upload_dir['path'], $filename);
+        $dest_path = trailingslashit($upload_dir['path']) . $dest_path;
+
+        if (!@rename($tmp_path, $dest_path)) {
+            @copy($tmp_path, $dest_path);
+            @unlink($tmp_path);
+        }
+
+        if (!file_exists($dest_path)) {
+            wp_send_json_error(['message' => 'Datei konnte nicht verschoben werden.'], 500);
+        }
+
+        $attachment_id = wp_insert_attachment($attachment_data, $dest_path);
+        if (is_wp_error($attachment_id)) {
+            @unlink($dest_path);
+            wp_send_json_error(['message' => 'Attachment konnte nicht erstellt werden.'], 500);
+        }
+
+        // Generate attachment metadata
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+        $attach_data = wp_generate_attachment_metadata($attachment_id, $dest_path);
+        wp_update_attachment_metadata($attachment_id, $attach_data);
+
+        // Mark as BuddyBoss document upload
+        update_post_meta($attachment_id, 'bp_document_upload', 1);
+        update_post_meta($attachment_id, 'bp_document_saved', 1);
+
+        // Create BuddyBoss document entry
+        $doc_id = bp_document_add([
+            'attachment_id' => $attachment_id,
+            'user_id'       => $user_id,
+            'title'         => $filename,
+            'privacy'       => 'onlyme',
+            'error_type'    => 'wp_error',
+        ]);
+
+        if (is_wp_error($doc_id)) {
+            wp_send_json_error(['message' => 'Dokument konnte nicht im Profil gespeichert werden: ' . $doc_id->get_error_message()], 500);
+        }
+
+        wp_send_json_success(['message' => 'ROI-Berechnung wurde in deinem Profil gespeichert.', 'doc_id' => $doc_id]);
     }
 
     private static function mail_text(array $calc) {
