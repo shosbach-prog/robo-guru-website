@@ -599,6 +599,16 @@ function syncHiddenFields($wrap){
   }
 
   
+  // Debounce helper for live preview updates
+  var livePreviewTimer = null;
+  function debouncedLivePreview($wrap){
+    if(livePreviewTimer) clearTimeout(livePreviewTimer);
+    livePreviewTimer = setTimeout(function(){
+      var st = computeState($wrap);
+      updateLiveRelevancePreview($wrap, st);
+    }, 300);
+  }
+
   function renderMiniSummary($wrap){
     var st = computeState($wrap);
     var bMap = {
@@ -631,6 +641,86 @@ function syncHiddenFields($wrap){
       html = '<div class="rf-mini-empty">Noch keine Angaben.</div>';
     }
     $wrap.find('[data-rf-mini-summary]').html(html);
+
+    // Trigger live preview update
+    debouncedLivePreview($wrap);
+  }
+
+  // Update live relevance preview in sidebar
+  function updateLiveRelevancePreview($wrap, st){
+    var currentStep = parseInt($wrap.data('rf-step') || 1, 10);
+    // Only show preview from step 2 onwards when we have some selection
+    if(currentStep < 2 || (!st.aufgabe && (!st.einsatzgebiet || !st.einsatzgebiet.length))) return;
+
+    var $sidebar = $wrap.find('[data-rf-sidebar]').first();
+    if(!$sidebar.length) return;
+
+    // Create preview container if not exists
+    var $preview = $sidebar.find('[data-rf-live-preview]');
+    if(!$preview.length){
+      $sidebar.append('<div class="rf-live-preview" data-rf-live-preview><div class="rf-live-preview-title">Top-Empfehlungen</div><div class="rf-live-preview-list" data-rf-preview-list></div></div>');
+      $preview = $sidebar.find('[data-rf-live-preview]');
+    }
+
+    var $list = $preview.find('[data-rf-preview-list]');
+    $list.html('<div class="rf-preview-loading">Suche...</div>');
+    $preview.show();
+
+    // Load results
+    if(typeof RoboFinderPro === 'undefined') return;
+
+    $.ajax({
+      url: RoboFinderPro.ajax_url,
+      type: 'POST',
+      data: {
+        action: 'robo_finder_recommend',
+        nonce: RoboFinderPro.nonce,
+        env: st.einsatzgebiet || [],
+        task: st.aufgabe ? [st.aufgabe] : []
+      },
+      success: function(res){
+        if(res && res.success && res.data && res.data.items && res.data.items.length){
+          renderLivePreviewList($list, res.data.items);
+        } else {
+          $list.html('<div class="rf-preview-empty">Keine Treffer</div>');
+        }
+      },
+      error: function(){
+        $list.html('');
+      }
+    });
+  }
+
+  // Render compact preview list in sidebar
+  function renderLivePreviewList($list, items){
+    var html = '';
+    var topItems = items.slice(0, 3);
+    for(var i = 0; i < topItems.length; i++){
+      var item = topItems[i];
+      var rel = item.relevance || 0;
+      var relClass = rel >= 80 ? 'rf-rel-high' : (rel >= 50 ? 'rf-rel-medium' : 'rf-rel-low');
+      var position = i + 1;
+
+      html += '<div class="rf-preview-item" data-robot-id="' + item.id + '" style="--item-index:' + i + '">';
+      html += '<span class="rf-preview-rank">#' + position + '</span>';
+      if(item.thumb){
+        html += '<img class="rf-preview-thumb" src="' + esc(item.thumb) + '" alt="">';
+      }
+      html += '<span class="rf-preview-name">' + esc(item.title) + '</span>';
+      if(rel > 0){
+        html += '<span class="rf-preview-badge ' + relClass + '">' + rel + '%</span>';
+      }
+      html += '</div>';
+    }
+    if(items.length > 3){
+      html += '<div class="rf-preview-more">+' + (items.length - 3) + ' weitere</div>';
+    }
+    $list.html(html);
+
+    // Animate items in
+    setTimeout(function(){
+      $list.find('.rf-preview-item').addClass('rf-preview-visible');
+    }, 50);
   }
 
   function updateLayoutForStep($wrap, step){
@@ -749,11 +839,19 @@ function syncHiddenFields($wrap){
     docking: 'Ladestation'
   };
 
+  // Cache for current results to enable smooth transitions
+  var currentResultsCache = {};
+
   // Load relevance-ranked robots via AJAX
   function loadRelevanceResults($wrap, st){
     if(typeof RoboFinderPro === 'undefined') return;
     var $container = $wrap.find('[data-rf-relevance-container]').first();
     if(!$container.length) return;
+
+    // Show loading state only if empty
+    if(!$container.find('.rf-relevance-grid').length){
+      $container.html('<div class="rf-relevance-loading">Lade passende Roboter...</div>');
+    }
 
     $.ajax({
       url: RoboFinderPro.ajax_url,
@@ -777,58 +875,161 @@ function syncHiddenFields($wrap){
     });
   }
 
-  // Render relevance-ranked robot cards
+  // Render relevance-ranked robot cards with smooth reordering
   function renderRelevanceResults($container, items, isFallback){
-    var html = '';
-    if(isFallback){
-      html += '<div class="rf-relevance-fallback-note">Allgemeine Empfehlungen (kein exakter Match):</div>';
-    }
-    html += '<div class="rf-relevance-grid">';
-    // Show top 3 results
+    var $grid = $container.find('.rf-relevance-grid');
     var topItems = items.slice(0, 3);
-    for(var i = 0; i < topItems.length; i++){
-      var item = topItems[i];
-      var rel = item.relevance || 0;
-      var relClass = rel >= 80 ? 'rf-rel-high' : (rel >= 50 ? 'rf-rel-medium' : 'rf-rel-low');
 
-      // Build match tags
-      var matchTags = '';
-      if(item.matches){
-        var matchKeys = Object.keys(item.matches);
-        for(var j = 0; j < matchKeys.length && j < 3; j++){
-          var key = matchKeys[j];
-          var label = matchLabels[key] || key;
-          matchTags += '<span class="rf-match-tag">' + esc(label) + '</span>';
-        }
+    // First render or fallback note changed - full rebuild
+    if(!$grid.length || $container.find('.rf-relevance-fallback-note').length !== (isFallback ? 1 : 0)){
+      var html = '';
+      if(isFallback){
+        html += '<div class="rf-relevance-fallback-note">Allgemeine Empfehlungen (kein exakter Match):</div>';
       }
-
-      html += '<div class="rf-relevance-card">';
-      if(item.thumb){
-        html += '<div class="rf-rel-thumb"><img src="' + esc(item.thumb) + '" alt="' + esc(item.title) + '"></div>';
-      }
-      html += '<div class="rf-rel-content">';
-      html += '<div class="rf-rel-header">';
-      html += '<span class="rf-rel-title">' + esc(item.title) + '</span>';
-      if(rel > 0){
-        html += '<span class="rf-rel-badge ' + relClass + '">' + rel + '%</span>';
+      html += '<div class="rf-relevance-grid">';
+      for(var i = 0; i < topItems.length; i++){
+        html += buildRobotCard(topItems[i], i);
       }
       html += '</div>';
-      if(item.manufacturer){
-        html += '<div class="rf-rel-manufacturer">' + esc(item.manufacturer) + '</div>';
+      if(items.length > 3){
+        html += '<div class="rf-relevance-more">+' + (items.length - 3) + ' weitere passende Modelle</div>';
       }
-      if(matchTags){
-        html += '<div class="rf-rel-matches">' + matchTags + '</div>';
+      $container.html(html);
+      // Trigger entrance animation
+      setTimeout(function(){
+        $container.find('.rf-relevance-card').addClass('rf-card-visible');
+      }, 50);
+      return;
+    }
+
+    // Smart update: reorder existing cards with animation
+    var $existingCards = $grid.find('.rf-relevance-card');
+    var existingIds = [];
+    $existingCards.each(function(){
+      existingIds.push($(this).data('robot-id'));
+    });
+
+    var newIds = topItems.map(function(item){ return item.id; });
+
+    // Check if order changed or items changed
+    var orderChanged = false;
+    for(var k = 0; k < Math.max(existingIds.length, newIds.length); k++){
+      if(existingIds[k] !== newIds[k]){
+        orderChanged = true;
+        break;
       }
-      if(item.highlight_1){
-        html += '<div class="rf-rel-highlight">' + esc(item.highlight_1) + '</div>';
+    }
+
+    if(orderChanged){
+      // Animate out old cards
+      $existingCards.removeClass('rf-card-visible').addClass('rf-card-reordering');
+
+      setTimeout(function(){
+        var html = '';
+        for(var i = 0; i < topItems.length; i++){
+          html += buildRobotCard(topItems[i], i);
+        }
+        $grid.html(html);
+
+        // Update "more" count
+        var $more = $container.find('.rf-relevance-more');
+        if(items.length > 3){
+          if($more.length){
+            $more.text('+' + (items.length - 3) + ' weitere passende Modelle');
+          } else {
+            $grid.after('<div class="rf-relevance-more">+' + (items.length - 3) + ' weitere passende Modelle</div>');
+          }
+        } else {
+          $more.remove();
+        }
+
+        // Animate in new cards with stagger
+        $grid.find('.rf-relevance-card').each(function(idx){
+          var $card = $(this);
+          setTimeout(function(){
+            $card.addClass('rf-card-visible');
+          }, idx * 100);
+        });
+      }, 200);
+    } else {
+      // Just update relevance badges and match tags (no reorder needed)
+      for(var m = 0; m < topItems.length; m++){
+        var item = topItems[m];
+        var $card = $grid.find('.rf-relevance-card[data-robot-id="' + item.id + '"]');
+        if($card.length){
+          updateCardRelevance($card, item);
+        }
       }
-      html += '</div></div>';
+    }
+  }
+
+  // Build a single robot card HTML
+  function buildRobotCard(item, index){
+    var rel = item.relevance || 0;
+    var relClass = rel >= 80 ? 'rf-rel-high' : (rel >= 50 ? 'rf-rel-medium' : 'rf-rel-low');
+
+    // Build match tags
+    var matchTags = '';
+    if(item.matches){
+      var matchKeys = Object.keys(item.matches);
+      for(var j = 0; j < matchKeys.length && j < 3; j++){
+        var key = matchKeys[j];
+        var label = matchLabels[key] || key;
+        matchTags += '<span class="rf-match-tag">' + esc(label) + '</span>';
+      }
+    }
+
+    var html = '<div class="rf-relevance-card" data-robot-id="' + item.id + '" data-relevance="' + rel + '" style="--card-index:' + index + '">';
+    if(item.thumb){
+      html += '<div class="rf-rel-thumb"><img src="' + esc(item.thumb) + '" alt="' + esc(item.title) + '"></div>';
+    }
+    html += '<div class="rf-rel-content">';
+    html += '<div class="rf-rel-header">';
+    html += '<span class="rf-rel-title">' + esc(item.title) + '</span>';
+    if(rel > 0){
+      html += '<span class="rf-rel-badge ' + relClass + '" data-rel="' + rel + '">' + rel + '%</span>';
     }
     html += '</div>';
-    if(items.length > 3){
-      html += '<div class="rf-relevance-more">+' + (items.length - 3) + ' weitere passende Modelle</div>';
+    if(item.manufacturer){
+      html += '<div class="rf-rel-manufacturer">' + esc(item.manufacturer) + '</div>';
     }
-    $container.html(html);
+    if(matchTags){
+      html += '<div class="rf-rel-matches">' + matchTags + '</div>';
+    }
+    if(item.highlight_1){
+      html += '<div class="rf-rel-highlight">' + esc(item.highlight_1) + '</div>';
+    }
+    html += '</div></div>';
+    return html;
+  }
+
+  // Update relevance display on existing card
+  function updateCardRelevance($card, item){
+    var rel = item.relevance || 0;
+    var relClass = rel >= 80 ? 'rf-rel-high' : (rel >= 50 ? 'rf-rel-medium' : 'rf-rel-low');
+    var $badge = $card.find('.rf-rel-badge');
+
+    if($badge.length && $badge.data('rel') !== rel){
+      $badge.removeClass('rf-rel-high rf-rel-medium rf-rel-low')
+            .addClass(relClass)
+            .data('rel', rel)
+            .text(rel + '%')
+            .addClass('rf-badge-pulse');
+      setTimeout(function(){ $badge.removeClass('rf-badge-pulse'); }, 300);
+    }
+
+    // Update match tags
+    var matchTags = '';
+    if(item.matches){
+      var matchKeys = Object.keys(item.matches);
+      for(var j = 0; j < matchKeys.length && j < 3; j++){
+        var key = matchKeys[j];
+        var label = matchLabels[key] || key;
+        matchTags += '<span class="rf-match-tag">' + esc(label) + '</span>';
+      }
+    }
+    $card.find('.rf-rel-matches').html(matchTags);
+    $card.attr('data-relevance', rel);
   }
 
   // Barrier cards selection
