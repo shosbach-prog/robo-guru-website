@@ -2195,25 +2195,51 @@ public function render_rg_forum_mount() {
 
         $scored = array();
 
+        // Max possible score for relevance calculation
+        $max_score = 0;
+        if ( $envs )   $max_score += 3;
+        if ( $tasks )  $max_score += 3;
+        if ( $floors ) $max_score += 2;
+        if ( $budget ) $max_score += 1;
+        if ( $min_m2h > 0 ) $max_score += 1;
+        if ( $need_docking ) $max_score += 1;
+        if ( $max_score < 1 ) $max_score = 1;
+
         foreach ( (array) $q->posts as $pid ) {
             $score = 0;
+            $matches = array();
 
             // Tax Matches (OR innerhalb, aber Kategorie zählt)
             if ( $envs ) {
                 $terms = wp_get_post_terms( $pid, 'robo_env', array( 'fields' => 'slugs' ) );
-                $score += array_intersect( (array) $terms, $envs ) ? 3 : 0;
+                $matched_envs = array_intersect( (array) $terms, $envs );
+                if ( $matched_envs ) {
+                    $score += 3;
+                    $matches['env'] = array_values( $matched_envs );
+                }
             }
             if ( $tasks ) {
                 $terms = wp_get_post_terms( $pid, 'robo_task', array( 'fields' => 'slugs' ) );
-                $score += array_intersect( (array) $terms, $tasks ) ? 3 : 0;
+                $matched_tasks = array_intersect( (array) $terms, $tasks );
+                if ( $matched_tasks ) {
+                    $score += 3;
+                    $matches['task'] = array_values( $matched_tasks );
+                }
             }
             if ( $floors ) {
                 $terms = wp_get_post_terms( $pid, 'robo_floor', array( 'fields' => 'slugs' ) );
-                $score += array_intersect( (array) $terms, $floors ) ? 2 : 0;
+                $matched_floors = array_intersect( (array) $terms, $floors );
+                if ( $matched_floors ) {
+                    $score += 2;
+                    $matches['floor'] = array_values( $matched_floors );
+                }
             }
             if ( $budget ) {
                 $terms = wp_get_post_terms( $pid, 'robo_budget', array( 'fields' => 'slugs' ) );
-                $score += in_array( $budget, (array) $terms, true ) ? 1 : 0;
+                if ( in_array( $budget, (array) $terms, true ) ) {
+                    $score += 1;
+                    $matches['budget'] = $budget;
+                }
             }
 
             // Meta Filters
@@ -2223,6 +2249,7 @@ public function render_rg_forum_mount() {
                     continue;
                 }
                 $score += 1;
+                $matches['m2h'] = true;
             }
 
             if ( $need_docking ) {
@@ -2231,11 +2258,18 @@ public function render_rg_forum_mount() {
                     continue;
                 }
                 $score += 1;
+                $matches['docking'] = true;
             }
 
             // Mindestens irgendwas matchen, sonst später Fallback
             if ( $score > 0 ) {
-                $scored[] = array( 'id' => $pid, 'score' => $score );
+                $relevance = round( ( $score / $max_score ) * 100 );
+                $scored[] = array(
+                    'id'        => $pid,
+                    'score'     => $score,
+                    'relevance' => $relevance,
+                    'matches'   => $matches,
+                );
             }
         }
 
@@ -2247,11 +2281,16 @@ public function render_rg_forum_mount() {
         $items = array();
         $top = array_slice( $scored, 0, 12 );
         foreach ( $top as $row ) {
-            $items[] = $this->serialize_robot( $row['id'] );
+            $robot = $this->serialize_robot( $row['id'] );
+            $robot['relevance'] = $row['relevance'];
+            $robot['matches']   = $row['matches'];
+            $items[] = $robot;
         }
 
         // Fallback: wenn nichts passt, zeig die neuesten Modelle
+        $is_fallback = false;
         if ( empty( $items ) ) {
+            $is_fallback = true;
             $fallback = new WP_Query(
                 array(
                     'post_type'      => 'robo_robot',
@@ -2264,12 +2303,16 @@ public function render_rg_forum_mount() {
                 )
             );
             foreach ( (array) $fallback->posts as $pid ) {
-                $items[] = $this->serialize_robot( $pid );
+                $robot = $this->serialize_robot( $pid );
+                $robot['relevance'] = 0;
+                $robot['matches']   = array();
+                $items[] = $robot;
             }
         }
-wp_send_json_success(
+        wp_send_json_success(
             array(
-                'items' => $items,
+                'items'       => $items,
+                'is_fallback' => $is_fallback,
             )
         );
     }

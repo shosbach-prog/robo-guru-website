@@ -721,20 +721,114 @@ function syncHiddenFields($wrap){
         $fehl.prop('hidden', !isSpecial);
       }
 
-      // Result teaser (conversion booster) – no specific model names
+      // Result teaser with relevance-ranked robots
       var $teaser = $s6.find('[data-rf-teaser]').first();
       if($teaser.length){
         var envTxt = st.einsatzgebiet && st.einsatzgebiet.length ? st.einsatzgebiet.join(', ') : 'deinem Umfeld';
         var specialPart = isSpecial ? ' (Sonderfall – wir prüfen Übergänge & Navigation)' : '';
         var teaserHtml =
           '<div class="rf-teaser-card">' +
-            '<div class="rf-teaser-title">Zwischenergebnis</div>' +
-            '<div class="rf-teaser-text">Basierend auf deinen Angaben prüfen wir Lösungen für <strong>' + esc(envTxt) + '</strong>' + specialPart + '.</div>' +
-            '<div class="rf-teaser-sub">Im nächsten Schritt erhältst du eine konkrete Empfehlung – keine Werbung.</div>' +
+            '<div class="rf-teaser-title">Passende Roboter für dich</div>' +
+            '<div class="rf-teaser-text">Basierend auf deinen Angaben für <strong>' + esc(envTxt) + '</strong>' + specialPart + '</div>' +
+            '<div class="rf-relevance-results" data-rf-relevance-container><div class="rf-relevance-loading">Lade passende Roboter...</div></div>' +
           '</div>';
         $teaser.html(teaserHtml).prop('hidden', false);
+        // Load relevance-ranked results
+        loadRelevanceResults($wrap, st);
       }
     }
+  }
+
+  // Match labels (German translations)
+  var matchLabels = {
+    env: 'Einsatzgebiet',
+    task: 'Aufgabe',
+    floor: 'Bodenart',
+    budget: 'Budget',
+    m2h: 'Flächenleistung',
+    docking: 'Ladestation'
+  };
+
+  // Load relevance-ranked robots via AJAX
+  function loadRelevanceResults($wrap, st){
+    if(typeof RoboFinderPro === 'undefined') return;
+    var $container = $wrap.find('[data-rf-relevance-container]').first();
+    if(!$container.length) return;
+
+    $.ajax({
+      url: RoboFinderPro.ajax_url,
+      type: 'POST',
+      data: {
+        action: 'robo_finder_recommend',
+        nonce: RoboFinderPro.nonce,
+        env: st.einsatzgebiet || [],
+        task: st.aufgabe ? [st.aufgabe] : []
+      },
+      success: function(res){
+        if(res && res.success && res.data && res.data.items && res.data.items.length){
+          renderRelevanceResults($container, res.data.items, res.data.is_fallback);
+        } else {
+          $container.html('<div class="rf-relevance-empty">Keine passenden Roboter gefunden.</div>');
+        }
+      },
+      error: function(){
+        $container.html('<div class="rf-relevance-empty">Fehler beim Laden.</div>');
+      }
+    });
+  }
+
+  // Render relevance-ranked robot cards
+  function renderRelevanceResults($container, items, isFallback){
+    var html = '';
+    if(isFallback){
+      html += '<div class="rf-relevance-fallback-note">Allgemeine Empfehlungen (kein exakter Match):</div>';
+    }
+    html += '<div class="rf-relevance-grid">';
+    // Show top 3 results
+    var topItems = items.slice(0, 3);
+    for(var i = 0; i < topItems.length; i++){
+      var item = topItems[i];
+      var rel = item.relevance || 0;
+      var relClass = rel >= 80 ? 'rf-rel-high' : (rel >= 50 ? 'rf-rel-medium' : 'rf-rel-low');
+
+      // Build match tags
+      var matchTags = '';
+      if(item.matches){
+        var matchKeys = Object.keys(item.matches);
+        for(var j = 0; j < matchKeys.length && j < 3; j++){
+          var key = matchKeys[j];
+          var label = matchLabels[key] || key;
+          matchTags += '<span class="rf-match-tag">' + esc(label) + '</span>';
+        }
+      }
+
+      html += '<div class="rf-relevance-card">';
+      if(item.thumb){
+        html += '<div class="rf-rel-thumb"><img src="' + esc(item.thumb) + '" alt="' + esc(item.title) + '"></div>';
+      }
+      html += '<div class="rf-rel-content">';
+      html += '<div class="rf-rel-header">';
+      html += '<span class="rf-rel-title">' + esc(item.title) + '</span>';
+      if(rel > 0){
+        html += '<span class="rf-rel-badge ' + relClass + '">' + rel + '%</span>';
+      }
+      html += '</div>';
+      if(item.manufacturer){
+        html += '<div class="rf-rel-manufacturer">' + esc(item.manufacturer) + '</div>';
+      }
+      if(matchTags){
+        html += '<div class="rf-rel-matches">' + matchTags + '</div>';
+      }
+      if(item.highlight_1){
+        html += '<div class="rf-rel-highlight">' + esc(item.highlight_1) + '</div>';
+      }
+      html += '</div></div>';
+    }
+    html += '</div>';
+    if(items.length > 3){
+      html += '<div class="rf-relevance-more">+' + (items.length - 3) + ' weitere passende Modelle</div>';
+    }
+    $container.html(html);
   }
 
   // Barrier cards selection
