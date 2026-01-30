@@ -562,16 +562,17 @@ final class RG_ROI_Calculator {
         }
 
         // Build documents URL for the user (link to ROI Berechnung folder if exists)
+        // BuddyBoss URL structure: /mitglieder/{username}/document/folders/{folder_id}/
         $docs_url = '';
         if (function_exists('bp_core_get_user_domain')) {
-            $base_url = bp_core_get_user_domain($user_id) . 'documents/';
+            $base_url = bp_core_get_user_domain($user_id);
             if ($folder_id > 0) {
-                $docs_url = $base_url . $folder_id . '/';
+                $docs_url = $base_url . 'document/folders/' . $folder_id . '/';
             } else {
-                $docs_url = $base_url;
+                $docs_url = $base_url . 'document/';
             }
         } else {
-            $docs_url = home_url('/members/' . wp_get_current_user()->user_nicename . '/documents/');
+            $docs_url = home_url('/mitglieder/' . wp_get_current_user()->user_nicename . '/document/');
         }
 
         wp_send_json_success([
