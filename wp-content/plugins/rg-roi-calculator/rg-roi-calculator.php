@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.3.0';
+    const VERSION = '1.3.1';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -441,17 +441,23 @@ final class RG_ROI_Calculator {
         }
         set_transient($rate_key, 1, 60);
 
-        // Clean base64 string: remove whitespace, fix padding
+        // Clean base64 string: remove whitespace
         $pdf_base64 = preg_replace('/\s+/', '', $pdf_base64);
-        $pdf_base64 = str_replace(['-', '_'], ['+', '/'], $pdf_base64); // URL-safe to standard
-        $padding = strlen($pdf_base64) % 4;
-        if ($padding > 0) {
-            $pdf_base64 .= str_repeat('=', 4 - $padding);
+
+        // Try decoding (non-strict mode for better compatibility)
+        $bytes = base64_decode($pdf_base64, false);
+        if (!$bytes || strlen($bytes) < 100) {
+            // Fallback: try with URL-safe characters replaced
+            $pdf_base64_clean = str_replace(['-', '_'], ['+', '/'], $pdf_base64);
+            $bytes = base64_decode($pdf_base64_clean, false);
+        }
+        if (!$bytes || strlen($bytes) < 100) {
+            wp_send_json_error(['message' => 'PDF konnte nicht dekodiert werden. Bitte erneut versuchen.'], 400);
         }
 
-        $bytes = base64_decode($pdf_base64, true);
-        if (!$bytes || strlen($bytes) < 100) {
-            wp_send_json_error(['message' => 'PDF konnte nicht gelesen werden.'], 400);
+        // Verify PDF magic bytes
+        if (substr($bytes, 0, 4) !== '%PDF') {
+            wp_send_json_error(['message' => 'Ungültiges PDF-Format.'], 400);
         }
 
         // Write temporary file for sideload
