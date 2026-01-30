@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.4.0';
+    const VERSION = '1.4.1';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -514,23 +514,62 @@ final class RG_ROI_Calculator {
         update_post_meta($attachment_id, 'bp_document_upload', 1);
         update_post_meta($attachment_id, 'bp_document_saved', 1);
 
-        // Create BuddyBoss document entry
-        $doc_id = bp_document_add([
+        // Get or create "ROI Berechnung" folder for this user
+        $folder_id = 0;
+        $folder_name = 'ROI Berechnung';
+
+        if (function_exists('bp_document_folder_add')) {
+            // Check if folder already exists
+            global $wpdb;
+            $bp_prefix = bp_core_get_table_prefix();
+            $existing_folder = $wpdb->get_var($wpdb->prepare(
+                "SELECT id FROM {$bp_prefix}bp_document_folder WHERE user_id = %d AND title = %s LIMIT 1",
+                $user_id,
+                $folder_name
+            ));
+
+            if ($existing_folder) {
+                $folder_id = (int) $existing_folder;
+            } else {
+                // Create the folder
+                $new_folder_id = bp_document_folder_add([
+                    'user_id'  => $user_id,
+                    'title'    => $folder_name,
+                    'privacy'  => 'onlyme',
+                ]);
+                if ($new_folder_id && !is_wp_error($new_folder_id)) {
+                    $folder_id = $new_folder_id;
+                }
+            }
+        }
+
+        // Create BuddyBoss document entry (with folder if available)
+        $doc_args = [
             'attachment_id' => $attachment_id,
             'user_id'       => $user_id,
             'title'         => $filename,
             'privacy'       => 'onlyme',
             'error_type'    => 'wp_error',
-        ]);
+        ];
+        if ($folder_id > 0) {
+            $doc_args['folder_id'] = $folder_id;
+        }
+
+        $doc_id = bp_document_add($doc_args);
 
         if (is_wp_error($doc_id)) {
             wp_send_json_error(['message' => 'Dokument konnte nicht im Profil gespeichert werden: ' . $doc_id->get_error_message()], 500);
         }
 
-        // Build documents URL for the user
+        // Build documents URL for the user (link to ROI Berechnung folder if exists)
         $docs_url = '';
         if (function_exists('bp_core_get_user_domain')) {
-            $docs_url = bp_core_get_user_domain($user_id) . 'documents/';
+            $base_url = bp_core_get_user_domain($user_id) . 'documents/';
+            if ($folder_id > 0) {
+                $docs_url = $base_url . $folder_id . '/';
+            } else {
+                $docs_url = $base_url;
+            }
         } else {
             $docs_url = home_url('/members/' . wp_get_current_user()->user_nicename . '/documents/');
         }
@@ -538,6 +577,7 @@ final class RG_ROI_Calculator {
         wp_send_json_success([
             'message' => 'ROI-Berechnung wurde in deinem Profil gespeichert.',
             'doc_id' => $doc_id,
+            'folder_id' => $folder_id,
             'docs_url' => $docs_url,
             'filename' => $filename,
         ]);
