@@ -7,7 +7,8 @@
 
     // Wait for PDF.js to load
     if (typeof pdfjsLib === 'undefined') {
-        console.warn('PDF.js not loaded');
+        console.warn('PDF.js not loaded, retrying...');
+        setTimeout(arguments.callee, 500);
         return;
     }
 
@@ -20,62 +21,132 @@
     let totalPages = 1;
     let currentScale = 1.0;
     let currentUrl = '';
+    const processedItems = new Set();
 
-    // DOM Elements
-    const lightbox = document.getElementById('rg-pdf-lightbox');
-    const canvas = document.getElementById('rg-pdf-canvas');
-    const ctx = canvas ? canvas.getContext('2d') : null;
+    // DOM Elements (initialized later)
+    let lightbox, canvas, ctx;
+
+    /**
+     * Find PDF URL from various sources
+     */
+    function findPdfUrl(item, link) {
+        // Try multiple sources for the PDF URL
+        const sources = [
+            link.getAttribute('data-preview'),
+            link.getAttribute('data-full-preview'),
+            link.getAttribute('data-text-preview'),
+            link.getAttribute('href'),
+            item.querySelector('.download_file a')?.href
+        ];
+
+        for (const url of sources) {
+            if (url && (url.includes('.pdf') || url.includes('download') || url.includes('document'))) {
+                return url;
+            }
+        }
+        return null;
+    }
 
     /**
      * Initialize PDF thumbnails for document list
      */
     function initThumbnails() {
-        const pdfItems = document.querySelectorAll('.media-folder_items.ac-document-list');
+        // Find all document items - try multiple selectors
+        const selectors = [
+            '.media-folder_items.ac-document-list',
+            '.document-data-table .media-folder_items',
+            '[data-id].media-folder_items'
+        ];
+
+        let pdfItems = [];
+        for (const sel of selectors) {
+            pdfItems = document.querySelectorAll(sel);
+            if (pdfItems.length > 0) break;
+        }
+
+        console.log('RG Doc Preview: Found', pdfItems.length, 'document items');
 
         pdfItems.forEach(item => {
-            const link = item.querySelector('.media-folder_name');
+            // Skip if already processed
+            const itemId = item.getAttribute('data-id');
+            if (itemId && processedItems.has(itemId)) return;
+
+            const link = item.querySelector('.media-folder_name, a[data-extension]');
             if (!link) return;
 
+            // Check extension
             const extension = link.getAttribute('data-extension');
-            if (extension !== 'pdf') return;
+            const title = link.getAttribute('data-document-title') || link.textContent?.trim() || '';
+            const isPdf = extension === 'pdf' || title.toLowerCase().endsWith('.pdf');
+
+            if (!isPdf) return;
 
             // Get PDF URL
-            const pdfUrl = link.getAttribute('data-preview') || link.getAttribute('href');
-            if (!pdfUrl || !pdfUrl.includes('.pdf')) return;
+            const pdfUrl = findPdfUrl(item, link);
+            if (!pdfUrl) {
+                console.log('RG Doc Preview: No PDF URL found for', title);
+                return;
+            }
+
+            console.log('RG Doc Preview: Processing PDF', title, pdfUrl);
+
+            // Mark as processed
+            if (itemId) processedItems.add(itemId);
 
             // Mark as PDF item
             item.setAttribute('data-extension', 'pdf');
+            item.classList.add('rg-pdf-item');
+
+            // Check if thumbnail already exists
+            if (item.querySelector('.rg-pdf-thumb')) return;
 
             // Create thumbnail container
             const thumbWrap = document.createElement('div');
             thumbWrap.className = 'rg-pdf-thumb';
             thumbWrap.innerHTML = '<div class="rg-thumb-loading"></div>';
-            item.insertBefore(thumbWrap, item.firstChild);
+
+            // Insert at the beginning
+            const iconEl = item.querySelector('.media-folder_icon');
+            if (iconEl) {
+                iconEl.parentNode.insertBefore(thumbWrap, iconEl);
+            } else {
+                item.insertBefore(thumbWrap, item.firstChild);
+            }
             item.classList.add('has-pdf-thumb');
 
             // Load thumbnail
-            loadPdfThumbnail(pdfUrl, thumbWrap);
+            loadPdfThumbnail(pdfUrl, thumbWrap, title);
 
-            // Add click handler for lightbox
+            // Add click handler for lightbox (prevent default theatre)
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                const title = link.getAttribute('data-document-title') || 'PDF Dokument';
                 const downloadUrl = item.querySelector('.download_file a')?.href || pdfUrl;
-                openLightbox(pdfUrl, title, downloadUrl);
-            });
+                openLightbox(pdfUrl, title || 'PDF Dokument', downloadUrl);
+            }, true);
         });
     }
 
     /**
      * Load PDF thumbnail into element
      */
-    async function loadPdfThumbnail(url, container) {
+    async function loadPdfThumbnail(url, container, title) {
         try {
-            const pdf = await pdfjsLib.getDocument(url).promise;
+            console.log('RG Doc Preview: Loading thumbnail for', title);
+
+            // Configure PDF.js loading task
+            const loadingTask = pdfjsLib.getDocument({
+                url: url,
+                withCredentials: true // For authenticated documents
+            });
+
+            const pdf = await loadingTask.promise;
             const page = await pdf.getPage(1);
 
-            const scale = 0.3;
+            // Calculate scale to fit in thumbnail (max 100px width)
+            const desiredWidth = 100;
+            const originalViewport = page.getViewport({ scale: 1 });
+            const scale = desiredWidth / originalViewport.width;
             const viewport = page.getViewport({ scale });
 
             const thumbCanvas = document.createElement('canvas');
@@ -90,9 +161,18 @@
 
             container.innerHTML = '';
             container.appendChild(thumbCanvas);
+            console.log('RG Doc Preview: Thumbnail loaded for', title);
         } catch (err) {
-            console.warn('Failed to load PDF thumbnail:', err);
-            container.innerHTML = '<i class="bb-icon-l bb-icon-file-pdf" style="font-size:24px;color:#ef4444;"></i>';
+            console.warn('RG Doc Preview: Failed to load thumbnail for', title, err.message);
+            // Show PDF icon as fallback
+            container.innerHTML = `
+                <div class="rg-pdf-icon">
+                    <svg width="32" height="40" viewBox="0 0 32 40" fill="none">
+                        <rect x="1" y="1" width="30" height="38" rx="2" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+                        <text x="16" y="24" text-anchor="middle" fill="#EF4444" font-size="10" font-weight="bold">PDF</text>
+                    </svg>
+                </div>
+            `;
         }
     }
 
@@ -293,18 +373,33 @@
      * Initialize on DOM ready
      */
     function init() {
+        console.log('RG Doc Preview: Initializing...');
+
+        // Initialize lightbox elements
+        lightbox = document.getElementById('rg-pdf-lightbox');
+        canvas = document.getElementById('rg-pdf-canvas');
+        ctx = canvas ? canvas.getContext('2d') : null;
+
         initThumbnails();
         initEvents();
         initMutationObserver();
+
+        console.log('RG Doc Preview: Initialized');
     }
 
     // Run when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
-        init();
+        // Small delay to ensure all elements are rendered
+        setTimeout(init, 100);
     }
 
-    // Also run after a delay to catch AJAX content
+    // Also run after delays to catch AJAX content
     setTimeout(init, 1000);
+    setTimeout(init, 3000);
+
+    // Listen for BuddyBoss AJAX events
+    document.addEventListener('bp_document_page_updated', init);
+    jQuery && jQuery(document).on('bp_ajax_request_completed', init);
 })();
