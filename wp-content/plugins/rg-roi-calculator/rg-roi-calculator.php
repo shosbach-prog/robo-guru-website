@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.4.1';
+    const VERSION = '1.4.2';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -460,45 +460,39 @@ final class RG_ROI_Calculator {
             wp_send_json_error(['message' => 'Ungültiges PDF-Format.'], 400);
         }
 
-        // Write temporary file for sideload
+        // Get upload directory - use BuddyBoss bb_documents folder for proper integration
         $upload_dir = wp_upload_dir();
-        $tmp_dir = trailingslashit($upload_dir['basedir']) . 'rg-roi';
-        if (!wp_mkdir_p($tmp_dir)) {
-            wp_send_json_error(['message' => 'Temporären Ordner konnte nicht erstellt werden.'], 500);
+        $bb_docs_dir = trailingslashit($upload_dir['basedir']) . 'bb_documents';
+        $bb_docs_url = trailingslashit($upload_dir['baseurl']) . 'bb_documents';
+
+        // Create bb_documents directory if it doesn't exist
+        if (!wp_mkdir_p($bb_docs_dir)) {
+            wp_send_json_error(['message' => 'Dokumenten-Ordner konnte nicht erstellt werden.'], 500);
         }
 
         $filename = 'ROI-Berechnung-Robo-Guru-' . date('Y-m-d') . '.pdf';
-        $tmp_path = trailingslashit($tmp_dir) . wp_generate_password(12, false, false) . '.pdf';
-        $written = file_put_contents($tmp_path, $bytes);
+        // Use unique filename to avoid overwriting
+        $unique_filename = wp_unique_filename($bb_docs_dir, $filename);
+        $dest_path = trailingslashit($bb_docs_dir) . $unique_filename;
 
-        if (!$written || !file_exists($tmp_path)) {
+        // Write PDF directly to destination
+        $written = file_put_contents($dest_path, $bytes);
+
+        if (!$written || !file_exists($dest_path)) {
             wp_send_json_error(['message' => 'PDF konnte nicht gespeichert werden.'], 500);
         }
 
-        // Create WordPress attachment
-        $filetype = wp_check_filetype($filename, null);
+        // Create WordPress attachment with correct path in bb_documents
+        $filetype = wp_check_filetype($unique_filename, null);
         $attachment_data = [
             'post_mime_type' => $filetype['type'] ? $filetype['type'] : 'application/pdf',
             'post_title'     => sanitize_file_name($filename),
             'post_content'   => '',
             'post_status'    => 'inherit',
+            'guid'           => trailingslashit($bb_docs_url) . $unique_filename,
         ];
 
-        // Move file to uploads
-        $dest_path = trailingslashit($upload_dir['path']) . $filename;
-        // Avoid overwriting existing files
-        $dest_path = wp_unique_filename($upload_dir['path'], $filename);
-        $dest_path = trailingslashit($upload_dir['path']) . $dest_path;
-
-        if (!@rename($tmp_path, $dest_path)) {
-            @copy($tmp_path, $dest_path);
-            @unlink($tmp_path);
-        }
-
-        if (!file_exists($dest_path)) {
-            wp_send_json_error(['message' => 'Datei konnte nicht verschoben werden.'], 500);
-        }
-
+        // Insert attachment with relative path for BuddyBoss compatibility
         $attachment_id = wp_insert_attachment($attachment_data, $dest_path);
         if (is_wp_error($attachment_id)) {
             @unlink($dest_path);
@@ -509,6 +503,9 @@ final class RG_ROI_Calculator {
         require_once ABSPATH . 'wp-admin/includes/image.php';
         $attach_data = wp_generate_attachment_metadata($attachment_id, $dest_path);
         wp_update_attachment_metadata($attachment_id, $attach_data);
+
+        // Set the correct relative path for BuddyBoss (bb_documents/filename.pdf)
+        update_post_meta($attachment_id, '_wp_attached_file', 'bb_documents/' . $unique_filename);
 
         // Mark as BuddyBoss document upload
         update_post_meta($attachment_id, 'bp_document_upload', 1);
