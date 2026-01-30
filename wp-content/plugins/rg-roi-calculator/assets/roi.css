@@ -24,6 +24,56 @@
 .rg-roi__head h3{margin:0 0 8px 0;font-size:28px;font-weight:800;letter-spacing:-0.5px;color:var(--rg-dark)}
 .rg-roi__head p{margin:0;font-size:15px;color:#64748b;max-width:65ch}
 
+/* Meta Row - Company & Creator fields */
+.rg-meta-row{
+  margin-bottom:20px;
+}
+.rg-meta-card{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  padding:16px 20px;
+  background:var(--rg-card-bg);
+  border:1px solid var(--rg-border);
+  border-radius:var(--rg-radius);
+  box-shadow:var(--rg-shadow);
+}
+.rg-meta-field{
+  flex:1 1 280px;
+  min-width:200px;
+}
+.rg-meta-field label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:13px;
+  font-weight:500;
+  color:#475569;
+  margin:0;
+}
+.rg-meta-field input{
+  width:100%;
+  padding:10px 14px;
+  border-radius:var(--rg-radius-sm);
+  border:1.5px solid #e2e8f0;
+  font-size:14px;
+  font-weight:500;
+  background:var(--rg-card-bg);
+  color:var(--rg-dark);
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.rg-meta-field input:hover{border-color:#cbd5e1}
+.rg-meta-field input:focus{
+  outline:none;
+  border-color:var(--rg-primary);
+  box-shadow:0 0 0 4px rgba(22,198,229,.15);
+}
+.rg-meta-field input::placeholder{color:#94a3b8;font-weight:400}
+
+@media (max-width: 768px){
+  .rg-meta-field{flex:1 1 100%}
+}
+
 /* Grid Layout - 3 input cards + 1 wider result card */
 .rg-grid{
   display:grid;
