@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.4.2';
+    const VERSION = '1.4.3';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -515,21 +515,33 @@ final class RG_ROI_Calculator {
         $folder_id = 0;
         $folder_name = 'ROI Berechnung';
 
+        // Debug logging
+        $debug_log = [];
+        $debug_log[] = 'User ID: ' . $user_id;
+        $debug_log[] = 'Attachment ID: ' . $attachment_id;
+        $debug_log[] = 'File saved to: ' . $dest_path;
+
         // Use bp_folder_add (the correct BuddyBoss function)
         if (function_exists('bp_folder_add') && function_exists('buddypress')) {
+            $debug_log[] = 'bp_folder_add exists: YES';
+
             // Check if folder already exists using BuddyBoss table
             global $wpdb;
             $bp = buddypress();
             if (isset($bp->document->table_name_folder)) {
                 $folder_table = $bp->document->table_name_folder;
+                $debug_log[] = 'Folder table: ' . $folder_table;
+
                 $existing_folder = $wpdb->get_var($wpdb->prepare(
                     "SELECT id FROM {$folder_table} WHERE user_id = %d AND title = %s LIMIT 1",
                     $user_id,
                     $folder_name
                 ));
+                $debug_log[] = 'Existing folder query result: ' . ($existing_folder ?: 'NULL');
 
                 if ($existing_folder) {
                     $folder_id = (int) $existing_folder;
+                    $debug_log[] = 'Using existing folder: ' . $folder_id;
                 } else {
                     // Create the folder using bp_folder_add
                     $new_folder_id = bp_folder_add([
@@ -537,12 +549,21 @@ final class RG_ROI_Calculator {
                         'title'    => $folder_name,
                         'privacy'  => 'onlyme',
                     ]);
+                    $debug_log[] = 'bp_folder_add result: ' . (is_wp_error($new_folder_id) ? 'ERROR: ' . $new_folder_id->get_error_message() : $new_folder_id);
+
                     if ($new_folder_id && !is_wp_error($new_folder_id)) {
                         $folder_id = $new_folder_id;
                     }
                 }
+            } else {
+                $debug_log[] = 'Folder table NOT set in buddypress()->document';
             }
+        } else {
+            $debug_log[] = 'bp_folder_add exists: NO';
+            $debug_log[] = 'buddypress exists: ' . (function_exists('buddypress') ? 'YES' : 'NO');
         }
+
+        $debug_log[] = 'Final folder_id: ' . $folder_id;
 
         // Create BuddyBoss document entry (with folder if available)
         $doc_args = [
@@ -555,11 +576,24 @@ final class RG_ROI_Calculator {
         if ($folder_id > 0) {
             $doc_args['folder_id'] = $folder_id;
         }
+        $debug_log[] = 'bp_document_add args: ' . json_encode($doc_args);
 
-        $doc_id = bp_document_add($doc_args);
+        if (function_exists('bp_document_add')) {
+            $doc_id = bp_document_add($doc_args);
+            $debug_log[] = 'bp_document_add result: ' . (is_wp_error($doc_id) ? 'ERROR: ' . $doc_id->get_error_message() : $doc_id);
+        } else {
+            $debug_log[] = 'bp_document_add does NOT exist';
+            $doc_id = new WP_Error('no_function', 'bp_document_add function not available');
+        }
+
+        // Log to error log for debugging
+        error_log('RG ROI Calculator - Document Save Debug: ' . implode(' | ', $debug_log));
 
         if (is_wp_error($doc_id)) {
-            wp_send_json_error(['message' => 'Dokument konnte nicht im Profil gespeichert werden: ' . $doc_id->get_error_message()], 500);
+            wp_send_json_error([
+                'message' => 'Dokument konnte nicht im Profil gespeichert werden: ' . $doc_id->get_error_message(),
+                'debug' => $debug_log
+            ], 500);
         }
 
         // Build documents URL for the user (link to ROI Berechnung folder if exists)
@@ -582,6 +616,7 @@ final class RG_ROI_Calculator {
             'folder_id' => $folder_id,
             'docs_url' => $docs_url,
             'filename' => $filename,
+            'debug' => $debug_log, // Temporary for debugging
         ]);
     }
 
