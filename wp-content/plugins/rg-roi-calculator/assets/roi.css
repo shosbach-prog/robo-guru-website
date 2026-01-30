@@ -39,8 +39,9 @@
   box-shadow:var(--rg-shadow);
 }
 .rg-meta-field{
-  flex:1 1 280px;
+  flex:0 1 320px;
   min-width:200px;
+  max-width:400px;
 }
 .rg-meta-field label{
   display:flex;

@@ -441,8 +441,16 @@ final class RG_ROI_Calculator {
         }
         set_transient($rate_key, 1, 60);
 
+        // Clean base64 string: remove whitespace, fix padding
+        $pdf_base64 = preg_replace('/\s+/', '', $pdf_base64);
+        $pdf_base64 = str_replace(['-', '_'], ['+', '/'], $pdf_base64); // URL-safe to standard
+        $padding = strlen($pdf_base64) % 4;
+        if ($padding > 0) {
+            $pdf_base64 .= str_repeat('=', 4 - $padding);
+        }
+
         $bytes = base64_decode($pdf_base64, true);
-        if (!$bytes) {
+        if (!$bytes || strlen($bytes) < 100) {
             wp_send_json_error(['message' => 'PDF konnte nicht gelesen werden.'], 400);
         }
 
