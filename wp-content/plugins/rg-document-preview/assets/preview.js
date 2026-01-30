@@ -51,20 +51,68 @@
      * Initialize PDF thumbnails for document list
      */
     function initThumbnails() {
-        // Find all document items - try multiple selectors
+        // Find all document items - try multiple selectors for different BuddyBoss versions
         const selectors = [
             '.media-folder_items.ac-document-list',
+            '.media-folder_items[data-id]',
             '.document-data-table .media-folder_items',
-            '[data-id].media-folder_items'
+            '.bp-document-listing .media-folder_items',
+            '#bp-media-document-container .media-folder_items',
+            '.bb-document-folder .media-folder_items',
+            '.document-data-table-head ~ div .media-folder_items',
+            // ReadyLaunch grid items
+            '.lg-grid-1-5.media-folder_items',
+            '.bb-documents-list .media-folder_items',
+            // Generic fallback
+            'div[data-id][class*="media-folder"]',
+            'div[class*="media-folder_items"]'
         ];
 
         let pdfItems = [];
         for (const sel of selectors) {
-            pdfItems = document.querySelectorAll(sel);
-            if (pdfItems.length > 0) break;
+            try {
+                const found = document.querySelectorAll(sel);
+                if (found.length > 0) {
+                    pdfItems = found;
+                    console.log('RG Doc Preview: Found', found.length, 'items with selector:', sel);
+                    break;
+                }
+            } catch(e) {
+                // Invalid selector, skip
+            }
         }
 
-        console.log('RG Doc Preview: Found', pdfItems.length, 'document items');
+        // Also try to find by data-extension attribute
+        if (pdfItems.length === 0) {
+            const extLinks = document.querySelectorAll('a[data-extension="pdf"]');
+            if (extLinks.length > 0) {
+                console.log('RG Doc Preview: Found', extLinks.length, 'PDF extension links');
+                const items = [];
+                extLinks.forEach(link => {
+                    const parent = link.closest('.media-folder_items') || link.closest('[data-id]') || link.parentElement?.parentElement;
+                    if (parent && !items.includes(parent)) {
+                        items.push(parent);
+                    }
+                });
+                pdfItems = items;
+            }
+        }
+
+        // Debug: log all classes on the page that contain 'document' or 'folder'
+        if (pdfItems.length === 0) {
+            const allElements = document.querySelectorAll('[class*="document"], [class*="folder"], [class*="media"]');
+            const classes = new Set();
+            allElements.forEach(el => {
+                el.className.split(' ').forEach(c => {
+                    if (c.includes('document') || c.includes('folder') || c.includes('media')) {
+                        classes.add(c);
+                    }
+                });
+            });
+            console.log('RG Doc Preview: Available classes on page:', Array.from(classes).join(', '));
+        }
+
+        console.log('RG Doc Preview: Total document items found:', pdfItems.length);
 
         pdfItems.forEach(item => {
             // Skip if already processed
