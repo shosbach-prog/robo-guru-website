@@ -518,27 +518,31 @@ final class RG_ROI_Calculator {
         $folder_id = 0;
         $folder_name = 'ROI Berechnung';
 
-        if (function_exists('bp_document_folder_add')) {
-            // Check if folder already exists
+        // Use bp_folder_add (the correct BuddyBoss function)
+        if (function_exists('bp_folder_add') && function_exists('buddypress')) {
+            // Check if folder already exists using BuddyBoss table
             global $wpdb;
-            $bp_prefix = bp_core_get_table_prefix();
-            $existing_folder = $wpdb->get_var($wpdb->prepare(
-                "SELECT id FROM {$bp_prefix}bp_document_folder WHERE user_id = %d AND title = %s LIMIT 1",
-                $user_id,
-                $folder_name
-            ));
+            $bp = buddypress();
+            if (isset($bp->document->table_name_folder)) {
+                $folder_table = $bp->document->table_name_folder;
+                $existing_folder = $wpdb->get_var($wpdb->prepare(
+                    "SELECT id FROM {$folder_table} WHERE user_id = %d AND title = %s LIMIT 1",
+                    $user_id,
+                    $folder_name
+                ));
 
-            if ($existing_folder) {
-                $folder_id = (int) $existing_folder;
-            } else {
-                // Create the folder
-                $new_folder_id = bp_document_folder_add([
-                    'user_id'  => $user_id,
-                    'title'    => $folder_name,
-                    'privacy'  => 'onlyme',
-                ]);
-                if ($new_folder_id && !is_wp_error($new_folder_id)) {
-                    $folder_id = $new_folder_id;
+                if ($existing_folder) {
+                    $folder_id = (int) $existing_folder;
+                } else {
+                    // Create the folder using bp_folder_add
+                    $new_folder_id = bp_folder_add([
+                        'user_id'  => $user_id,
+                        'title'    => $folder_name,
+                        'privacy'  => 'onlyme',
+                    ]);
+                    if ($new_folder_id && !is_wp_error($new_folder_id)) {
+                        $folder_id = $new_folder_id;
+                    }
                 }
             }
         }
