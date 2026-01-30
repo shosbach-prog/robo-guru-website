@@ -225,30 +225,46 @@ function generatePdf(calc){
     doc.setTextColor(...RG_BRAND.grey);
     doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', 14, 35);
 
-    // Metadata section (company and creator)
+    // Metadata section (company and creator) - prominent box
     let metaY = 35;
     const hasMetadata = calc.companyName || calc.creatorName;
     if (hasMetadata) {
-      metaY += 8;
-      doc.setFontSize(9);
-      doc.setTextColor(...RG_BRAND.grey);
+      metaY += 5;
+      // Draw metadata box
+      const metaBoxHeight = (calc.companyName && calc.creatorName) ? 28 : 20;
+      doc.setFillColor(248, 250, 252);
+      doc.setDrawColor(22, 198, 229);
+      doc.setLineWidth(0.8);
+      doc.roundedRect(14, metaY, 182, metaBoxHeight, 3, 3, 'FD');
+
+      let textY = metaY + 8;
       if (calc.companyName) {
-        doc.text('Erstellt fuer: ' + calc.companyName, 14, metaY);
-        metaY += 5;
+        doc.setFontSize(13);
+        doc.setTextColor(...RG_BRAND.dark);
+        doc.text('Die Berechnung ist fuer Firma: ', 18, textY);
+        doc.setFontSize(13);
+        doc.setTextColor(...RG_BRAND.primary);
+        doc.text(calc.companyName, 18 + doc.getTextWidth('Die Berechnung ist fuer Firma: '), textY);
+        textY += 8;
       }
       if (calc.creatorName) {
-        doc.text('Erstellt von: ' + calc.creatorName, 14, metaY);
-        metaY += 5;
+        doc.setFontSize(11);
+        doc.setTextColor(...RG_BRAND.grey);
+        doc.text('Erstellt von: ' + calc.creatorName, 18, textY);
+        textY += 6;
       }
-      // Add creation date
+      // Add creation date in the box
       const today = new Date();
       const dateStr = today.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-      doc.text('Datum: ' + dateStr, 14, metaY);
-      metaY += 3;
+      doc.setFontSize(9);
+      doc.setTextColor(...RG_BRAND.grey);
+      doc.text('Datum: ' + dateStr, 196 - 14, metaY + 8, { align: 'right' });
+
+      metaY += metaBoxHeight;
     }
 
     // Hero section - Main result (adjust Y position based on metadata)
-    const heroY = hasMetadata ? metaY + 4 : 42;
+    const heroY = hasMetadata ? metaY + 6 : 42;
     doc.setFillColor(240, 253, 255);
     doc.setDrawColor(22, 198, 229);
     doc.setLineWidth(0.5);
@@ -370,7 +386,7 @@ function generatePdf(calc){
     // Build parameter table body with optional metadata
     const paramTableBody = [];
     if (calc.companyName) {
-      paramTableBody.push(['Erstellt fuer (Firma)', calc.companyName]);
+      paramTableBody.push(['Die Berechnung ist fuer Firma', calc.companyName]);
     }
     if (calc.creatorName) {
       paramTableBody.push(['Erstellt von', calc.creatorName]);

@@ -97,7 +97,7 @@ final class RG_ROI_Calculator {
             <div class="rg-meta-row">
                 <div class="rg-meta-card">
                     <div class="rg-meta-field">
-                        <label>Erstellt für (Firma) <span class="rg-optional">(optional)</span>
+                        <label>Die Berechnung ist für Firma:
                             <input type="text" class="rg-in" data-rg="companyName" placeholder="z.B. Musterfirma GmbH">
                         </label>
                     </div>
@@ -353,8 +353,9 @@ final class RG_ROI_Calculator {
             wp_send_json_error(['message' => 'Bitte Leasingrate und Laufzeit eingeben.'], 400);
         }
 
-        if (strpos($pdf_base64, 'data:application/pdf;base64,') === 0) {
-            $pdf_base64 = substr($pdf_base64, strlen('data:application/pdf;base64,'));
+        // Handle various data URI formats from jsPDF (with or without filename parameter)
+        if (preg_match('/^data:application\/pdf[^,]*,/', $pdf_base64, $matches)) {
+            $pdf_base64 = substr($pdf_base64, strlen($matches[0]));
         }
         if (!$pdf_base64) {
             wp_send_json_error(['message' => 'PDF-Daten fehlen. Bitte zuerst PDF erzeugen.'], 400);
@@ -424,8 +425,9 @@ final class RG_ROI_Calculator {
         }
 
         $pdf_base64 = isset($payload['pdfBase64']) ? (string)$payload['pdfBase64'] : '';
-        if (strpos($pdf_base64, 'data:application/pdf;base64,') === 0) {
-            $pdf_base64 = substr($pdf_base64, strlen('data:application/pdf;base64,'));
+        // Handle various data URI formats from jsPDF (with or without filename parameter)
+        if (preg_match('/^data:application\/pdf[^,]*,/', $pdf_base64, $matches)) {
+            $pdf_base64 = substr($pdf_base64, strlen($matches[0]));
         }
         if (!$pdf_base64) {
             wp_send_json_error(['message' => 'PDF-Daten fehlen.'], 400);
