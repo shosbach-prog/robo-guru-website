@@ -381,3 +381,109 @@
   }
   .rg-result{border:2px solid #111 !important}
 }
+
+/* Success Lightbox */
+.rg-lightbox{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  animation:rg-fade-in .2s ease;
+}
+@keyframes rg-fade-in{
+  from{opacity:0}
+  to{opacity:1}
+}
+.rg-lightbox__backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(15,37,55,.6);
+  backdrop-filter:blur(4px);
+}
+.rg-lightbox__content{
+  position:relative;
+  background:#fff;
+  border-radius:20px;
+  padding:32px 28px;
+  max-width:400px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(15,37,55,.25);
+  animation:rg-slide-up .3s ease;
+}
+@keyframes rg-slide-up{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.rg-lightbox__close{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:32px;
+  height:32px;
+  border:none;
+  background:transparent;
+  font-size:24px;
+  color:#94a3b8;
+  cursor:pointer;
+  border-radius:50%;
+  transition:all .15s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.rg-lightbox__close:hover{
+  background:#f1f5f9;
+  color:#64748b;
+}
+.rg-lightbox__icon{
+  margin-bottom:16px;
+}
+.rg-lightbox__title{
+  margin:0 0 12px 0;
+  font-size:20px;
+  font-weight:700;
+  color:#0F2537;
+}
+.rg-lightbox__message{
+  margin:0 0 20px 0;
+  font-size:14px;
+  color:#64748b;
+  line-height:1.5;
+}
+.rg-lightbox__link{
+  display:inline-block;
+  margin-bottom:16px;
+  padding:10px 20px;
+  background:linear-gradient(135deg,#16C6E5 0%,#0EA5C2 100%);
+  color:#fff !important;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  border-radius:10px;
+  transition:all .15s ease;
+}
+.rg-lightbox__link:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(22,198,229,.4);
+}
+.rg-lightbox__btn{
+  display:block;
+  width:100%;
+  padding:12px 20px;
+  border:1.5px solid #e2e8f0;
+  background:#fff;
+  color:#64748b;
+  font-size:14px;
+  font-weight:600;
+  border-radius:10px;
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.rg-lightbox__btn:hover{
+  background:#f8fafc;
+  border-color:#cbd5e1;
+}

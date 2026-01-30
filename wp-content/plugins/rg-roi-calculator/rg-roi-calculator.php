@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.3.1';
+    const VERSION = '1.4.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -527,7 +527,20 @@ final class RG_ROI_Calculator {
             wp_send_json_error(['message' => 'Dokument konnte nicht im Profil gespeichert werden: ' . $doc_id->get_error_message()], 500);
         }
 
-        wp_send_json_success(['message' => 'ROI-Berechnung wurde in deinem Profil gespeichert.', 'doc_id' => $doc_id]);
+        // Build documents URL for the user
+        $docs_url = '';
+        if (function_exists('bp_core_get_user_domain')) {
+            $docs_url = bp_core_get_user_domain($user_id) . 'documents/';
+        } else {
+            $docs_url = home_url('/members/' . wp_get_current_user()->user_nicename . '/documents/');
+        }
+
+        wp_send_json_success([
+            'message' => 'ROI-Berechnung wurde in deinem Profil gespeichert.',
+            'doc_id' => $doc_id,
+            'docs_url' => $docs_url,
+            'filename' => $filename,
+        ]);
     }
 
     private static function mail_text(array $calc) {
