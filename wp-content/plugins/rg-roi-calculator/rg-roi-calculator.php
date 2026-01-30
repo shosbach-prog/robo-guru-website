@@ -56,6 +56,18 @@ final class RG_ROI_Calculator {
             true
         );
 
+        $user_name = '';
+        if (is_user_logged_in()) {
+            $current_user = wp_get_current_user();
+            $user_name = trim($current_user->display_name);
+            if (empty($user_name)) {
+                $user_name = trim($current_user->first_name . ' ' . $current_user->last_name);
+            }
+            if (empty($user_name)) {
+                $user_name = $current_user->user_login;
+            }
+        }
+
         wp_localize_script('rg-roi', 'rgRoi', [
             'ajaxUrl'    => admin_url('admin-ajax.php'),
             'nonce'      => wp_create_nonce(self::NONCE_ACTION),
@@ -63,6 +75,7 @@ final class RG_ROI_Calculator {
             'siteName'   => get_bloginfo('name'),
             'isLoggedIn' => is_user_logged_in() ? '1' : '0',
             'hasBbDocs'  => function_exists('bp_document_add') ? '1' : '0',
+            'userName'   => $user_name,
         ]);
     }
 
@@ -80,7 +93,24 @@ final class RG_ROI_Calculator {
                 <p><?php echo esc_html($atts['subtitle']); ?></p>
             </div>
 
-            
+
+            <div class="rg-meta-row">
+                <div class="rg-meta-card">
+                    <div class="rg-meta-field">
+                        <label>Erstellt für (Firma) <span class="rg-optional">(optional)</span>
+                            <input type="text" class="rg-in" data-rg="companyName" placeholder="z.B. Musterfirma GmbH">
+                        </label>
+                    </div>
+                    <?php if (!is_user_logged_in()) : ?>
+                    <div class="rg-meta-field">
+                        <label>Erstellt von <span class="rg-optional">(optional)</span>
+                            <input type="text" class="rg-in" data-rg="creatorName" placeholder="Vor- und Nachname">
+                        </label>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
             <div class="rg-grid">
                 <div class="rg-card">
                     <h4>Finanzierung</h4>

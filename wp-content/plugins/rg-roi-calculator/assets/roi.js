@@ -225,26 +225,49 @@ function generatePdf(calc){
     doc.setTextColor(...RG_BRAND.grey);
     doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', 14, 35);
 
-    // Hero section - Main result
+    // Metadata section (company and creator)
+    let metaY = 35;
+    const hasMetadata = calc.companyName || calc.creatorName;
+    if (hasMetadata) {
+      metaY += 8;
+      doc.setFontSize(9);
+      doc.setTextColor(...RG_BRAND.grey);
+      if (calc.companyName) {
+        doc.text('Erstellt fuer: ' + calc.companyName, 14, metaY);
+        metaY += 5;
+      }
+      if (calc.creatorName) {
+        doc.text('Erstellt von: ' + calc.creatorName, 14, metaY);
+        metaY += 5;
+      }
+      // Add creation date
+      const today = new Date();
+      const dateStr = today.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      doc.text('Datum: ' + dateStr, 14, metaY);
+      metaY += 3;
+    }
+
+    // Hero section - Main result (adjust Y position based on metadata)
+    const heroY = hasMetadata ? metaY + 4 : 42;
     doc.setFillColor(240, 253, 255);
     doc.setDrawColor(22, 198, 229);
     doc.setLineWidth(0.5);
-    doc.roundedRect(14, 42, 182, 32, 3, 3, 'FD');
+    doc.roundedRect(14, heroY, 182, 32, 3, 3, 'FD');
 
     doc.setFontSize(10);
     doc.setTextColor(...RG_BRAND.grey);
-    doc.text('Geschaetzte Netto-Ersparnis pro Jahr', 105, 50, { align: 'center' });
+    doc.text('Geschaetzte Netto-Ersparnis pro Jahr', 105, heroY + 8, { align: 'center' });
 
     doc.setFontSize(28);
     doc.setTextColor(...RG_BRAND.dark);
-    doc.text(fmtEUR(calc.net), 105, 64, { align: 'center' });
+    doc.text(fmtEUR(calc.net), 105, heroY + 22, { align: 'center' });
 
     doc.setFontSize(9);
     doc.setTextColor(...RG_BRAND.grey);
-    doc.text('entspricht ca. ' + fmtEUR(monthlyNet) + ' pro Monat', 105, 71, { align: 'center' });
+    doc.text('entspricht ca. ' + fmtEUR(monthlyNet) + ' pro Monat', 105, heroY + 29, { align: 'center' });
 
     // Key metrics in boxes
-    const metricsY = 80;
+    const metricsY = heroY + 38;
     const metricW = 58;
     const metricH = 22;
     const metricGap = 4;
@@ -344,26 +367,40 @@ function generatePdf(calc){
     doc.setTextColor(...RG_BRAND.grey);
     doc.text('Ihre eingegebenen Parameter', 14, 32);
 
+    // Build parameter table body with optional metadata
+    const paramTableBody = [];
+    if (calc.companyName) {
+      paramTableBody.push(['Erstellt fuer (Firma)', calc.companyName]);
+    }
+    if (calc.creatorName) {
+      paramTableBody.push(['Erstellt von', calc.creatorName]);
+    }
+    paramTableBody.push(
+      ['Finanzierungsmodell', (calc.mode==='lease' ? 'Leasing' : 'Kauf')],
+      ['Anzahl Roboter', String(calc.qty)]
+    );
+    if (calc.mode==='purchase') {
+      paramTableBody.push(['Kaufpreis pro Roboter', fmtEUR(calc.price)]);
+    } else {
+      paramTableBody.push(
+        ['Leasingrate pro Roboter/Monat', fmtEUR(calc.leaseRateMonthly)],
+        ['Laufzeit', String(calc.leaseTermMonths) + ' Monate']
+      );
+    }
+    paramTableBody.push(
+      ['Eingesparte Stunden/Tag (pro Roboter)', String(calc.hoursPerDay) + ' Std.'],
+      ['Lohnkosten pro Stunde', fmtEUR(calc.hourlyRate)],
+      ['Arbeitstage pro Jahr', String(calc.daysPerYear) + ' Tage'],
+      ['Servicekosten pro Roboter/Monat', fmtEUR(calc.serviceMonthly)],
+      ['Stromkosten pro Roboter/Jahr', fmtEUR(calc.powerPerYear)],
+      ['Flaeche pro Tag', (calc.areaSqmPerDay > 0 ? (new Intl.NumberFormat('de-DE').format(calc.areaSqmPerDay) + ' m2') : 'nicht angegeben')]
+    );
+
     doc.autoTable({
       startY: 38,
       theme: 'striped',
       head: [['Parameter', 'Wert']],
-      body: [
-        ['Finanzierungsmodell', (calc.mode==='lease' ? 'Leasing' : 'Kauf')],
-        ['Anzahl Roboter', String(calc.qty)],
-        ...(calc.mode==='purchase'
-          ? [['Kaufpreis pro Roboter', fmtEUR(calc.price)]]
-          : [
-              ['Leasingrate pro Roboter/Monat', fmtEUR(calc.leaseRateMonthly)],
-              ['Laufzeit', String(calc.leaseTermMonths) + ' Monate'],
-            ]),
-        ['Eingesparte Stunden/Tag (pro Roboter)', String(calc.hoursPerDay) + ' Std.'],
-        ['Lohnkosten pro Stunde', fmtEUR(calc.hourlyRate)],
-        ['Arbeitstage pro Jahr', String(calc.daysPerYear) + ' Tage'],
-        ['Servicekosten pro Roboter/Monat', fmtEUR(calc.serviceMonthly)],
-        ['Stromkosten pro Roboter/Jahr', fmtEUR(calc.powerPerYear)],
-        ['Flaeche pro Tag', (calc.areaSqmPerDay > 0 ? (new Intl.NumberFormat('de-DE').format(calc.areaSqmPerDay) + ' m2') : 'nicht angegeben')],
-      ],
+      body: paramTableBody,
       styles: { 
         fontSize: 9,
         cellPadding: 4,
@@ -463,6 +500,14 @@ function generatePdf(calc){
     const serviceMonthly = getNum('serviceMonthly');
     const powerPerYear = getNum('powerPerYear');
 
+    // Metadaten
+    const companyName = getStr('companyName').trim();
+    // Wenn eingeloggt, verwende den Benutzernamen aus dem Profil
+    let creatorName = getStr('creatorName').trim();
+    if (typeof rgRoi !== 'undefined' && rgRoi.isLoggedIn === '1' && rgRoi.userName) {
+      creatorName = rgRoi.userName;
+    }
+
     // Kostenblöcke
     const investUpfront = (mode === 'purchase') ? (price * qty) : 0;
     const contractVolume = (mode === 'purchase')
@@ -549,7 +594,9 @@ function generatePdf(calc){
       beText,
       rating,
       sqmPerHour,
-      canExport
+      canExport,
+      companyName,
+      creatorName
     };
   }
   function render(root, calc){
