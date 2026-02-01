@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.4.5';
+    const VERSION = '1.5.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -584,10 +584,13 @@ final class RG_ROI_Calculator {
             $doc_status = bb_document_get_published_status();
         }
 
+        // Remove .pdf extension from title (BuddyBoss stores without extension)
+        $doc_title = preg_replace('/\.pdf$/i', '', $filename);
+
         $doc_args = [
             'attachment_id' => $attachment_id,
             'user_id'       => $user_id,
-            'title'         => $filename,
+            'title'         => $doc_title,
             'privacy'       => 'onlyme',
             'status'        => $doc_status,
             'blog_id'       => get_current_blog_id(),
@@ -606,24 +609,55 @@ final class RG_ROI_Calculator {
             $doc_id = bp_document_add($doc_args);
             $debug_log[] = 'bp_document_add result: ' . (is_wp_error($doc_id) ? 'ERROR: ' . $doc_id->get_error_message() : $doc_id);
 
-            // If document was created successfully, ensure folder association and status
+            // If document was created successfully, create activity and link everything
             if (!is_wp_error($doc_id) && $doc_id) {
                 global $wpdb;
                 $bp = buddypress();
+
+                // Create BuddyPress activity for the document (required for visibility)
+                $activity_id = 0;
+                if (function_exists('bp_activity_add') && bp_is_active('activity')) {
+                    $activity_id = bp_activity_add([
+                        'user_id'       => $user_id,
+                        'component'     => 'document',
+                        'type'          => 'activity_update',
+                        'action'        => sprintf('%s uploaded a document', bp_core_get_user_displayname($user_id)),
+                        'content'       => '',
+                        'primary_link'  => '',
+                        'item_id'       => 0,
+                        'hide_sitewide' => 1, // Hide from activity feed since it's private
+                        'privacy'       => 'onlyme',
+                        'status'        => $doc_status,
+                    ]);
+                    $debug_log[] = 'Activity created: ' . ($activity_id ? $activity_id : 'FAILED');
+
+                    if ($activity_id) {
+                        // Set activity meta for the document
+                        bp_activity_update_meta($activity_id, 'bp_document_ids', $doc_id);
+
+                        // Set attachment meta for parent activity
+                        update_post_meta($attachment_id, 'bp_document_parent_activity_id', $activity_id);
+                        $debug_log[] = 'bp_document_parent_activity_id meta set: ' . $activity_id;
+                    }
+                }
+
                 if (isset($bp->document->table_name)) {
                     $doc_table = $bp->document->table_name;
 
-                    // Update document: folder_id and ensure status is correct
+                    // Update document: folder_id, status, and activity_id
                     $update_data = ['status' => $doc_status];
                     if ($folder_id > 0) {
                         $update_data['folder_id'] = $folder_id;
+                    }
+                    if ($activity_id > 0) {
+                        $update_data['activity_id'] = $activity_id;
                     }
 
                     $updated = $wpdb->update(
                         $doc_table,
                         $update_data,
                         ['id' => $doc_id],
-                        array_fill(0, count($update_data), '%s'),
+                        array_fill(0, count($update_data), is_int(reset($update_data)) ? '%d' : '%s'),
                         ['%d']
                     );
                     $debug_log[] = 'Direct DB update result: ' . ($updated !== false ? 'SUCCESS' : 'FAILED - ' . $wpdb->last_error);
