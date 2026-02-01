@@ -433,13 +433,13 @@ final class RG_ROI_Calculator {
             wp_send_json_error(['message' => 'PDF-Daten fehlen.'], 400);
         }
 
-        // Rate limit: 1 save per 60 seconds per user
+        // Rate limit: 1 save per 10 seconds per user (reduced for testing)
         $user_id = get_current_user_id();
         $rate_key = 'rg_roi_save_' . $user_id;
         if (get_transient($rate_key)) {
-            wp_send_json_error(['message' => 'Bitte kurz warten bevor du erneut speicherst.'], 429);
+            wp_send_json_error(['message' => 'Bitte 10 Sekunden warten bevor du erneut speicherst.'], 429);
         }
-        set_transient($rate_key, 1, 60);
+        set_transient($rate_key, 1, 10);
 
         // Clean base64 string: remove whitespace
         $pdf_base64 = preg_replace('/\s+/', '', $pdf_base64);
