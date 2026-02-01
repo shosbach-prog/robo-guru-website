@@ -2,14 +2,14 @@
 /**
  * Plugin Name: Robo Robot Admin Tabs (Robo-Guru)
  * Description: Zentraler Tab-Editor für alle Robo-Roboter-Parameter (Post Type: robo_robot) inkl. Galerie.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Robo-Guru
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 final class RG_Robot_Admin_Tabs {
-  const VERSION = '1.0.0';
+  const VERSION = '1.1.0';
   const META_GALLERY_IDS = '_rf_gallery_ids';
 
   public function __construct() {
@@ -29,6 +29,17 @@ final class RG_Robot_Admin_Tabs {
     wp_enqueue_media();
     wp_enqueue_script('rg-robot-admin-gallery', plugin_dir_url(__FILE__) . 'assets/admin-gallery.js', array('jquery','jquery-ui-sortable'), self::VERSION, true);
     wp_enqueue_style('rg-robot-admin-gallery', plugin_dir_url(__FILE__) . 'assets/admin-gallery.css', array(), self::VERSION);
+
+    // Gutenberg Sidebar Panel - shows link to scroll to meta boxes
+    if ($screen->is_block_editor) {
+      wp_enqueue_script(
+        'rg-robot-gutenberg-sidebar',
+        plugin_dir_url(__FILE__) . 'assets/gutenberg-sidebar.js',
+        array('wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components'),
+        self::VERSION,
+        true
+      );
+    }
   }
 
   public function add_metaboxes(){
@@ -39,7 +50,11 @@ final class RG_Robot_Admin_Tabs {
       array($this, 'render_details_tabs'),
       'robo_robot',
       'normal',
-      'high'
+      'high',
+      array(
+        '__block_editor_compatible_meta_box' => true,
+        '__back_compat_meta_box' => false,
+      )
     );
 
     // Gallery box
@@ -49,7 +64,11 @@ final class RG_Robot_Admin_Tabs {
       array($this, 'render_gallery'),
       'robo_robot',
       'side',
-      'default'
+      'default',
+      array(
+        '__block_editor_compatible_meta_box' => true,
+        '__back_compat_meta_box' => false,
+      )
     );
   }
 
