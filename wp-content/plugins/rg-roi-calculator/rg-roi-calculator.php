@@ -628,13 +628,33 @@ final class RG_ROI_Calculator {
                     );
                     $debug_log[] = 'Direct DB update result: ' . ($updated !== false ? 'SUCCESS' : 'FAILED - ' . $wpdb->last_error);
 
-                    // Verify what's actually in the database now
+                    // Verify what's actually in the database now - get ALL columns
                     $doc_row = $wpdb->get_row($wpdb->prepare(
-                        "SELECT id, user_id, folder_id, status, privacy, attachment_id, title FROM {$doc_table} WHERE id = %d",
+                        "SELECT * FROM {$doc_table} WHERE id = %d",
                         $doc_id
                     ), ARRAY_A);
                     if ($doc_row) {
-                        $debug_log[] = 'DB record after save: ' . json_encode($doc_row);
+                        $debug_log[] = 'Our document record: ' . json_encode($doc_row);
+                    }
+
+                    // Compare with an existing working document in the same folder (if any)
+                    $existing_doc = $wpdb->get_row($wpdb->prepare(
+                        "SELECT * FROM {$doc_table} WHERE folder_id = %d AND id != %d LIMIT 1",
+                        $folder_id,
+                        $doc_id
+                    ), ARRAY_A);
+                    if ($existing_doc) {
+                        $debug_log[] = 'Existing working document: ' . json_encode($existing_doc);
+                    } else {
+                        // Get any working document from the same user
+                        $any_doc = $wpdb->get_row($wpdb->prepare(
+                            "SELECT * FROM {$doc_table} WHERE user_id = %d AND id != %d LIMIT 1",
+                            $user_id,
+                            $doc_id
+                        ), ARRAY_A);
+                        if ($any_doc) {
+                            $debug_log[] = 'Other user document for comparison: ' . json_encode($any_doc);
+                        }
                     }
                 }
 
