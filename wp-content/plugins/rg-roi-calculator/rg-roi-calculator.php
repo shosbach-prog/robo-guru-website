@@ -420,8 +420,20 @@ final class RG_ROI_Calculator {
 
         $payload = json_decode(file_get_contents('php://input'), true);
         $nonce = isset($payload['nonce']) ? sanitize_text_field($payload['nonce']) : '';
-        if (!$nonce || !wp_verify_nonce($nonce, self::NONCE_ACTION)) {
-            wp_send_json_error(['message' => 'Sicherheitsprüfung fehlgeschlagen.'], 403);
+
+        // Debug nonce issue
+        $nonce_valid = wp_verify_nonce($nonce, self::NONCE_ACTION);
+        if (!$nonce || !$nonce_valid) {
+            wp_send_json_error([
+                'message' => 'Sicherheitsprüfung fehlgeschlagen.',
+                'debug' => [
+                    'nonce_received' => !empty($nonce) ? substr($nonce, 0, 5) . '...' : 'EMPTY',
+                    'nonce_result' => $nonce_valid,
+                    'user_id' => get_current_user_id(),
+                    'is_logged_in' => is_user_logged_in(),
+                    'action' => self::NONCE_ACTION,
+                ]
+            ], 403);
         }
 
         $pdf_base64 = isset($payload['pdfBase64']) ? (string)$payload['pdfBase64'] : '';
