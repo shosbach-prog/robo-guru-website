@@ -461,9 +461,16 @@ final class RG_ROI_Calculator {
         }
 
         // Get upload directory - use BuddyBoss bb_documents folder for proper integration
+        if (function_exists('bp_document_upload_dir_script')) {
+            add_filter('upload_dir', 'bp_document_upload_dir_script');
+        }
         $upload_dir = wp_upload_dir();
-        $bb_docs_dir = trailingslashit($upload_dir['basedir']) . 'bb_documents';
-        $bb_docs_url = trailingslashit($upload_dir['baseurl']) . 'bb_documents';
+        if (function_exists('bp_document_upload_dir_script')) {
+            remove_filter('upload_dir', 'bp_document_upload_dir_script');
+        }
+
+        $bb_docs_dir = $upload_dir['path'];
+        $bb_docs_url = $upload_dir['url'];
 
         // Create bb_documents directory if it doesn't exist
         if (!wp_mkdir_p($bb_docs_dir)) {
@@ -504,8 +511,12 @@ final class RG_ROI_Calculator {
         $attach_data = wp_generate_attachment_metadata($attachment_id, $dest_path);
         wp_update_attachment_metadata($attachment_id, $attach_data);
 
-        // Set the correct relative path for BuddyBoss (bb_documents/filename.pdf)
-        update_post_meta($attachment_id, '_wp_attached_file', 'bb_documents/' . $unique_filename);
+        // Set the correct relative path for BuddyBoss (bb_documents/...)
+        $subdir = ltrim($upload_dir['subdir'], '/');
+        if ('' === $subdir) {
+            $subdir = 'bb_documents';
+        }
+        update_post_meta($attachment_id, '_wp_attached_file', trailingslashit($subdir) . $unique_filename);
 
         // Mark as BuddyBoss document upload
         update_post_meta($attachment_id, 'bp_document_upload', 1);
