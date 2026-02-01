@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.4.3';
+    const VERSION = '1.4.4';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -581,6 +581,37 @@ final class RG_ROI_Calculator {
         if (function_exists('bp_document_add')) {
             $doc_id = bp_document_add($doc_args);
             $debug_log[] = 'bp_document_add result: ' . (is_wp_error($doc_id) ? 'ERROR: ' . $doc_id->get_error_message() : $doc_id);
+
+            // If document was created successfully, ensure folder association
+            if (!is_wp_error($doc_id) && $doc_id && $folder_id > 0) {
+                // Update document to ensure folder_id is set in database
+                global $wpdb;
+                $bp = buddypress();
+                if (isset($bp->document->table_name)) {
+                    $doc_table = $bp->document->table_name;
+                    $updated = $wpdb->update(
+                        $doc_table,
+                        ['folder_id' => $folder_id],
+                        ['id' => $doc_id],
+                        ['%d'],
+                        ['%d']
+                    );
+                    $debug_log[] = 'Direct folder_id update result: ' . ($updated !== false ? 'SUCCESS' : 'FAILED');
+                }
+
+                // Clear BuddyBoss document caches
+                if (function_exists('bp_core_reset_incrementor')) {
+                    bp_core_reset_incrementor('bp_document');
+                    bp_core_reset_incrementor('bp_document_folder');
+                    $debug_log[] = 'Cache reset: done';
+                }
+
+                // Update folder modification time
+                if (function_exists('bp_document_update_folder_modified_date')) {
+                    bp_document_update_folder_modified_date($folder_id);
+                    $debug_log[] = 'Folder modified date updated';
+                }
+            }
         } else {
             $debug_log[] = 'bp_document_add does NOT exist';
             $doc_id = new WP_Error('no_function', 'bp_document_add function not available');
