@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.4.4';
+    const VERSION = '1.4.5';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -566,37 +566,64 @@ final class RG_ROI_Calculator {
         $debug_log[] = 'Final folder_id: ' . $folder_id;
 
         // Create BuddyBoss document entry (with folder if available)
+        // Determine the published status for BuddyBoss documents
+        $doc_status = 'published';
+        if (function_exists('bb_document_get_published_status')) {
+            $doc_status = bb_document_get_published_status();
+        }
+
         $doc_args = [
             'attachment_id' => $attachment_id,
             'user_id'       => $user_id,
             'title'         => $filename,
             'privacy'       => 'onlyme',
+            'status'        => $doc_status,
+            'blog_id'       => get_current_blog_id(),
+            'group_id'      => 0,
+            'activity_id'   => 0,
+            'menu_order'    => 0,
             'error_type'    => 'wp_error',
         ];
         if ($folder_id > 0) {
             $doc_args['folder_id'] = $folder_id;
         }
+        $debug_log[] = 'Document status: ' . $doc_status;
         $debug_log[] = 'bp_document_add args: ' . json_encode($doc_args);
 
         if (function_exists('bp_document_add')) {
             $doc_id = bp_document_add($doc_args);
             $debug_log[] = 'bp_document_add result: ' . (is_wp_error($doc_id) ? 'ERROR: ' . $doc_id->get_error_message() : $doc_id);
 
-            // If document was created successfully, ensure folder association
-            if (!is_wp_error($doc_id) && $doc_id && $folder_id > 0) {
-                // Update document to ensure folder_id is set in database
+            // If document was created successfully, ensure folder association and status
+            if (!is_wp_error($doc_id) && $doc_id) {
                 global $wpdb;
                 $bp = buddypress();
                 if (isset($bp->document->table_name)) {
                     $doc_table = $bp->document->table_name;
+
+                    // Update document: folder_id and ensure status is correct
+                    $update_data = ['status' => $doc_status];
+                    if ($folder_id > 0) {
+                        $update_data['folder_id'] = $folder_id;
+                    }
+
                     $updated = $wpdb->update(
                         $doc_table,
-                        ['folder_id' => $folder_id],
+                        $update_data,
                         ['id' => $doc_id],
-                        ['%d'],
+                        array_fill(0, count($update_data), '%s'),
                         ['%d']
                     );
-                    $debug_log[] = 'Direct folder_id update result: ' . ($updated !== false ? 'SUCCESS' : 'FAILED');
+                    $debug_log[] = 'Direct DB update result: ' . ($updated !== false ? 'SUCCESS' : 'FAILED - ' . $wpdb->last_error);
+
+                    // Verify what's actually in the database now
+                    $doc_row = $wpdb->get_row($wpdb->prepare(
+                        "SELECT id, user_id, folder_id, status, privacy, attachment_id, title FROM {$doc_table} WHERE id = %d",
+                        $doc_id
+                    ), ARRAY_A);
+                    if ($doc_row) {
+                        $debug_log[] = 'DB record after save: ' . json_encode($doc_row);
+                    }
                 }
 
                 // Clear BuddyBoss document caches
@@ -606,8 +633,12 @@ final class RG_ROI_Calculator {
                     $debug_log[] = 'Cache reset: done';
                 }
 
+                // Also try clearing object cache
+                wp_cache_flush_group('bp_document');
+                wp_cache_delete('bp_document_' . $doc_id, 'bp');
+
                 // Update folder modification time
-                if (function_exists('bp_document_update_folder_modified_date')) {
+                if ($folder_id > 0 && function_exists('bp_document_update_folder_modified_date')) {
                     bp_document_update_folder_modified_date($folder_id);
                     $debug_log[] = 'Folder modified date updated';
                 }
