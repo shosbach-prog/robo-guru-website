@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Robo-Guru ROI Kalkulator
  * Description: Einfacher ROI-Kalkulator für Reinigungsrobotik inkl. PDF-Download, Druckansicht und Versand per E-Mail (PDF-Anhang). Shortcode: [rg_roi_calculator]
- * Version: 1.1.0
+ * Version: 1.5.0
  * Author: Robo-Guru
  * Text Domain: rg-roi
  */
@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.4.5';
+    const VERSION = '1.5.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -420,8 +420,20 @@ final class RG_ROI_Calculator {
 
         $payload = json_decode(file_get_contents('php://input'), true);
         $nonce = isset($payload['nonce']) ? sanitize_text_field($payload['nonce']) : '';
-        if (!$nonce || !wp_verify_nonce($nonce, self::NONCE_ACTION)) {
-            wp_send_json_error(['message' => 'Sicherheitsprüfung fehlgeschlagen.'], 403);
+
+        // Debug nonce issue
+        $nonce_valid = wp_verify_nonce($nonce, self::NONCE_ACTION);
+        if (!$nonce || !$nonce_valid) {
+            wp_send_json_error([
+                'message' => 'Sicherheitsprüfung fehlgeschlagen.',
+                'debug' => [
+                    'nonce_received' => !empty($nonce) ? substr($nonce, 0, 5) . '...' : 'EMPTY',
+                    'nonce_result' => $nonce_valid,
+                    'user_id' => get_current_user_id(),
+                    'is_logged_in' => is_user_logged_in(),
+                    'action' => self::NONCE_ACTION,
+                ]
+            ], 403);
         }
 
         $pdf_base64 = isset($payload['pdfBase64']) ? (string)$payload['pdfBase64'] : '';
@@ -583,10 +595,13 @@ final class RG_ROI_Calculator {
             $doc_status = bb_document_get_published_status();
         }
 
+        // Remove .pdf extension from title (BuddyBoss stores without extension)
+        $doc_title = preg_replace('/\.pdf$/i', '', $filename);
+
         $doc_args = [
             'attachment_id' => $attachment_id,
             'user_id'       => $user_id,
-            'title'         => $filename,
+            'title'         => $doc_title,
             'privacy'       => 'onlyme',
             'status'        => $doc_status,
             'blog_id'       => get_current_blog_id(),
@@ -605,35 +620,86 @@ final class RG_ROI_Calculator {
             $doc_id = bp_document_add($doc_args);
             $debug_log[] = 'bp_document_add result: ' . (is_wp_error($doc_id) ? 'ERROR: ' . $doc_id->get_error_message() : $doc_id);
 
-            // If document was created successfully, ensure folder association and status
+            // If document was created successfully, create activity and link everything
             if (!is_wp_error($doc_id) && $doc_id) {
                 global $wpdb;
                 $bp = buddypress();
+
+                // Create BuddyPress activity for the document (required for visibility)
+                $activity_id = 0;
+                if (function_exists('bp_activity_add') && bp_is_active('activity')) {
+                    $activity_id = bp_activity_add([
+                        'user_id'       => $user_id,
+                        'component'     => 'document',
+                        'type'          => 'activity_update',
+                        'action'        => sprintf('%s uploaded a document', bp_core_get_user_displayname($user_id)),
+                        'content'       => '',
+                        'primary_link'  => '',
+                        'item_id'       => 0,
+                        'hide_sitewide' => 1, // Hide from activity feed since it's private
+                        'privacy'       => 'onlyme',
+                        'status'        => $doc_status,
+                    ]);
+                    $debug_log[] = 'Activity created: ' . ($activity_id ? $activity_id : 'FAILED');
+
+                    if ($activity_id) {
+                        // Set activity meta for the document
+                        bp_activity_update_meta($activity_id, 'bp_document_ids', $doc_id);
+
+                        // Set attachment meta for parent activity
+                        update_post_meta($attachment_id, 'bp_document_parent_activity_id', $activity_id);
+                        $debug_log[] = 'bp_document_parent_activity_id meta set: ' . $activity_id;
+                    }
+                }
+
                 if (isset($bp->document->table_name)) {
                     $doc_table = $bp->document->table_name;
 
-                    // Update document: folder_id and ensure status is correct
+                    // Update document: folder_id, status, and activity_id
                     $update_data = ['status' => $doc_status];
                     if ($folder_id > 0) {
                         $update_data['folder_id'] = $folder_id;
+                    }
+                    if ($activity_id > 0) {
+                        $update_data['activity_id'] = $activity_id;
                     }
 
                     $updated = $wpdb->update(
                         $doc_table,
                         $update_data,
                         ['id' => $doc_id],
-                        array_fill(0, count($update_data), '%s'),
+                        array_fill(0, count($update_data), is_int(reset($update_data)) ? '%d' : '%s'),
                         ['%d']
                     );
                     $debug_log[] = 'Direct DB update result: ' . ($updated !== false ? 'SUCCESS' : 'FAILED - ' . $wpdb->last_error);
 
-                    // Verify what's actually in the database now
+                    // Verify what's actually in the database now - get ALL columns
                     $doc_row = $wpdb->get_row($wpdb->prepare(
-                        "SELECT id, user_id, folder_id, status, privacy, attachment_id, title FROM {$doc_table} WHERE id = %d",
+                        "SELECT * FROM {$doc_table} WHERE id = %d",
                         $doc_id
                     ), ARRAY_A);
                     if ($doc_row) {
-                        $debug_log[] = 'DB record after save: ' . json_encode($doc_row);
+                        $debug_log[] = 'Our document record: ' . json_encode($doc_row);
+                    }
+
+                    // Compare with an existing working document in the same folder (if any)
+                    $existing_doc = $wpdb->get_row($wpdb->prepare(
+                        "SELECT * FROM {$doc_table} WHERE folder_id = %d AND id != %d LIMIT 1",
+                        $folder_id,
+                        $doc_id
+                    ), ARRAY_A);
+                    if ($existing_doc) {
+                        $debug_log[] = 'Existing working document: ' . json_encode($existing_doc);
+                    } else {
+                        // Get any working document from the same user
+                        $any_doc = $wpdb->get_row($wpdb->prepare(
+                            "SELECT * FROM {$doc_table} WHERE user_id = %d AND id != %d LIMIT 1",
+                            $user_id,
+                            $doc_id
+                        ), ARRAY_A);
+                        if ($any_doc) {
+                            $debug_log[] = 'Other user document for comparison: ' . json_encode($any_doc);
+                        }
                     }
                 }
 
