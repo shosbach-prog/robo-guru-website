@@ -1,17 +1,17 @@
-# Copyright (C) 2025 SearchWP
+# Copyright (C) 2026 SearchWP
 # This file is distributed under the same license as the SearchWP plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: SearchWP 4.5.4\n"
+"Project-Id-Version: SearchWP 4.5.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/searchwp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-11T14:47:32+00:00\n"
+"POT-Creation-Date: 2026-01-28T11:41:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: searchwp\n"
 
 #. Plugin Name of the plugin
@@ -54,7 +54,6 @@ msgstr ""
 
 #. translators: %s: URL to the Taxonomy Source documentation.
 #: includes/Admin/AdminNotices/DeprecatedIntegrationAdminNotice.php:67
-#, php-format
 msgid "The <strong>SearchWP Term Archive Priority extension</strong> has been deprecated. Please consider using the <a href=\"%s\" target=\"_blank\">Taxonomy Source instead</a>."
 msgstr ""
 
@@ -64,7 +63,6 @@ msgstr ""
 
 #. Translators: Placeholder is a link to the Migration Guide.
 #: includes/Admin/AdminNotices/DirtyInstallAdminNotice.php:34
-#, php-format
 msgid "Error: Duplicate SearchWP version detected! When upgrading SearchWP from version 3.x to 4 you must follow the %1$s%2$s%3$s which will resolve this error."
 msgstr ""
 
@@ -74,30 +72,25 @@ msgstr ""
 
 #. Translators: 1st placeholder is the name of a Source. 2nd placeholder is the name of an Engine.
 #: includes/Admin/AdminNotices/MissingEngineSourceAdminNotice.php:35
-#, php-format
 msgid "Note: <strong>%1$s</strong> were not added to the <strong>%2$s</strong> SearchWP Engine, which is used for Admin searches. As a result default WordPress results are shown."
 msgstr ""
 
 #. Translators: 1st placeholder is a link, 2nd closes the link.
 #: includes/Admin/AdminNotices/MissingIntegrationAdminNotice.php:41
-#, php-format
 msgid "%1$senter your license key%2$s and"
 msgstr ""
 
 #. Translators: 1st placeholder is a link, 2nd closes the link.
 #: includes/Admin/AdminNotices/MissingIntegrationAdminNotice.php:48
-#, php-format
 msgid "%1$supgrade your license to Pro/All Access Bundle%2$s and"
 msgstr ""
 
 #. Translators: 1st placeholder is a plugin name, 2nd is an action requirement like "enter your license and", 3rd is a link to an Extension, 4th is the Extension name, 5th closes the link.
 #: includes/Admin/AdminNotices/MissingIntegrationAdminNotice.php:56
-#, php-format
 msgid "<strong>Missing SearchWP Integration Extension</strong>. For full integration with %1$s please %2$s install the %3$s%4$s%5$s Extension."
 msgstr ""
 
 #: includes/Admin/DashboardWidgets/StatisticsDashboardWidget.php:51
-#, php-format
 msgid "SearchWP Statistics %d Day Overview"
 msgstr ""
 
@@ -142,7 +135,6 @@ msgid "Activate Extension"
 msgstr ""
 
 #: includes/Admin/Extensions/CustomResultsOrderPreview.php:112
-#, php-format
 msgid "Curate your own results order and prioritize them based on what matters most to you. Tailor your search results to ensure that the most important and relevant information is displayed prominently. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -168,7 +160,6 @@ msgstr ""
 
 #. translators: %s is the post type name.
 #: includes/Admin/Extensions/ExcludeUIPreview.php:107
-#, php-format
 msgid "Activate the SearchWP Exclude UI extension and exclude any %s from your search results."
 msgstr ""
 
@@ -196,7 +187,6 @@ msgid "Redirects extension is not active"
 msgstr ""
 
 #: includes/Admin/Extensions/RedirectsPreview.php:112
-#, php-format
 msgid "Automatically redirect to a specific page when certain searches are performed! While SearchWP will find the most relevant search results for you, there are times where you simply want to help your visitor move directly to a page of your choosing, saving them a click in the process. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -225,7 +215,6 @@ msgid "Related extension is not active"
 msgstr ""
 
 #: includes/Admin/Extensions/RelatedPreview.php:112
-#, php-format
 msgid "Enhance your readers' experience with SearchWP Related extension. Seamlessly weave related articles and posts into your content, captivating your audience and driving them to explore more! <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -250,46 +239,38 @@ msgid "Flexible integration"
 msgstr ""
 
 #: includes/Admin/i18n.php:22
-#, php-format
 msgid "Add the taxonomies that should be searched for this source. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
 #: includes/Admin/i18n.php:26
-#, php-format
 msgid "Add the custom fields that should be searched for this source. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
 #. Translators: placeholder is the number "1"
 #: includes/Admin/i18n.php:31
-#, php-format
 msgid "%s Attribute"
 msgstr ""
 
 #. Translators: placeholder is the number of attributes
 #: includes/Admin/i18n.php:36
-#, php-format
 msgid "%s Attributes"
 msgstr ""
 
 #: includes/Admin/i18n.php:40
-#, php-format
 msgid "Attributes to search (slider sets relevance weight). <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
 #. Translators: placeholder is the number "1"
 #: includes/Admin/i18n.php:45
-#, php-format
 msgid "%s Rule"
 msgstr ""
 
 #. Translators: placeholder is the number of attributes
 #: includes/Admin/i18n.php:50
-#, php-format
 msgid "%s Rules"
 msgstr ""
 
 #: includes/Admin/i18n.php:54
-#, php-format
 msgid "Rules determine what content can and cannot show up in search results. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -298,13 +279,11 @@ msgid "This engine will be used for WordPress Admin searches, it will search the
 msgstr ""
 
 #: includes/Admin/i18n.php:59
-#, php-format
 msgid "When searching a supported Source, this Engine will be used. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
 #. Translators: placeholder is the label of the engine.
 #: includes/Admin/i18n.php:64
-#, php-format
 msgid "Already set: %s"
 msgstr ""
 
@@ -318,13 +297,11 @@ msgstr ""
 
 #. Translators: 1st placeholder is the name of a Source, 2nd placeholder is the label of the engine.
 #: includes/Admin/i18n.php:72
-#, php-format
 msgid "Choose which %1$s Attributes should be considered when searching the %2$s engine:"
 msgstr ""
 
 #. Translators: 1st placeholder is the label of a Source Attribute.
 #: includes/Admin/i18n.php:81
-#, php-format
 msgid "Type to search %1$s..."
 msgstr ""
 
@@ -354,13 +331,11 @@ msgstr ""
 
 #. Translators: 1st placeholder is the label of the Source, 2nd placeholder is the label of the Engine.
 #: includes/Admin/i18n.php:97
-#, php-format
 msgid "Edit Rules for %1$s (%2$s Engine)"
 msgstr ""
 
 #. Translators: placeholder is the label of the engine.
 #: includes/Admin/i18n.php:103
-#, php-format
 msgid "Edit Settings (%s engine)"
 msgstr ""
 
@@ -382,7 +357,6 @@ msgstr ""
 
 #. Translators: 1st placeholder is an opening link, 2nd placeholder is closing, 3rd placeholder is an email link.
 #: includes/Admin/i18n.php:116
-#, php-format
 msgid "<p>Your license key can be retrieved or renewed within your %1$sAccount%2$s</p><p>If you are unable to activate your license due to network restrictions, please email %3$s first including your license key and then describing your issue.</p>"
 msgstr ""
 
@@ -399,7 +373,6 @@ msgid "The index needs to be rebuilt."
 msgstr ""
 
 #: includes/Admin/i18n.php:127
-#, php-format
 msgid "After certain engine configuration changes the index must be rebuilt. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -412,7 +385,6 @@ msgid "The indexer is paused."
 msgstr ""
 
 #: includes/Admin/i18n.php:133
-#, php-format
 msgid "You can unpause the indexer from the Settings. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -421,7 +393,6 @@ msgid "Custom content Sources cannot be used in the Default engine"
 msgstr ""
 
 #: includes/Admin/i18n.php:138
-#, php-format
 msgid "Disregard keyword suffixes when searches are performed. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -435,7 +406,6 @@ msgstr ""
 
 #. Translators: 1st placeholder is the label of the Attribute, 2nd placeholder is the label of the Engine.
 #: includes/Admin/i18n.php:145
-#, php-format
 msgid "Manage %1$s Attributes (%2$s Engine)"
 msgstr ""
 
@@ -449,7 +419,6 @@ msgstr ""
 
 #. Translators: first placeholder is the SearchWP recommended RAM amount, second placeholder is the WordPress memory limit, third placeholder is the RAM available to PHP.
 #: includes/Admin/i18n.php:153
-#, php-format
 msgid "SearchWP recommends at least %1$s of memory. WordPress is set to use %2$s but there is %3$s available."
 msgstr ""
 
@@ -462,13 +431,11 @@ msgid "In order for results to be returned, you must add Attributes to be search
 msgstr ""
 
 #: includes/Admin/i18n.php:161
-#, php-format
 msgid "Use Rules to define what should or should not be included in your site search using different criteria. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
 #. Translators: placeholder is the label of the Rule.
 #: includes/Admin/i18n.php:166
-#, php-format
 msgid "There are currently no rules for %s."
 msgstr ""
 
@@ -477,7 +444,6 @@ msgid "In order for this engine to return results, you must add at least one sou
 msgstr ""
 
 #: includes/Admin/i18n.php:171
-#, php-format
 msgid "This content type will be searched as part of this engine. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -499,7 +465,6 @@ msgstr ""
 
 #. Translators: 1st placeholder opens the link, 2nd placeholder closes it.
 #: includes/Admin/i18n.php:184
-#, php-format
 msgid "Stopwords are <em>ignored</em> so as to improve relevancy and performance. %1$sMore info%2$s"
 msgstr ""
 
@@ -513,7 +478,6 @@ msgstr ""
 
 #. Translators: 1st placeholder opens the link, 2nd placeholder closes it.
 #: includes/Admin/i18n.php:195
-#, php-format
 msgid "Synonyms facilitate <em>replacement</em> of search terms. Use <code>*</code> wildcard for partial matching. %1$sMore info%2$s"
 msgstr ""
 
@@ -544,7 +508,6 @@ msgstr ""
 
 #. Translators: 1st placeholder is the name of a Source.
 #: includes/Admin/i18n.php:207
-#, php-format
 msgid "Save %1$s Attributes"
 msgstr ""
 
@@ -570,19 +533,16 @@ msgstr ""
 
 #. Translators: 1st placeholder opens the link, 2nd placeholder closes it.
 #: includes/Admin/i18n.php:218
-#, php-format
 msgid "<p>A default Engine has been generated as a starting point for you to customize. Once indexing is over, SearchWP will integrate into your current search and provide terrific search results automatically!</p><p>To find out more about customizing SearchWP, please %1$sreview the documentation%2$s.</p><p class=\"description\">Thank you!</p>"
 msgstr ""
 
 #. Translators: 1st placeholder opens the link, 2nd placeholder closes it.
 #: includes/Admin/i18n.php:227
-#, php-format
 msgid "Your settings from SearchWP 3.x have been migrated. To delete legacy data from SearchWP 3.x please use %1$sthis Extension%2$s."
 msgstr ""
 
 #. Translators: 1st placeholder opens the link, 2nd placeholder closes it.
 #: includes/Admin/i18n.php:236
-#, php-format
 msgid "All data from SearchWP 3.x has been migrated! Legacy data can be removed with %1$sthis Extension%2$s."
 msgstr ""
 
@@ -725,7 +685,7 @@ msgid "Delete"
 msgstr ""
 
 #: includes/Admin/i18n.php:280
-#: includes/Admin/Wizards/Embed-Wizard-Tooltip.php:36
+#: includes/Admin/Wizards/Embed-Wizard-Tooltip.php:37
 msgid "Done"
 msgstr ""
 
@@ -1178,7 +1138,6 @@ msgstr ""
 
 #. Translators: placeholder is the label of the Source.
 #: includes/Admin/i18n.php:392
-#, php-format
 msgid "Enter a %s ID to transfer the weight to."
 msgstr ""
 
@@ -1681,7 +1640,6 @@ msgstr ""
 
 #. translators: %s - SearchWP plugin settings URL.
 #: includes/Admin/Views/ExtensionsView.php:124
-#, php-format
 msgid "To access extensions please enter and activate your SearchWP license key in the plugin <a href=\"%s\">settings</a>."
 msgstr ""
 
@@ -1695,7 +1653,6 @@ msgstr ""
 
 #. translators: %s - SearchWP.com Account page URL.
 #: includes/Admin/Views/ExtensionsView.php:253
-#, php-format
 msgid "Want to get even more features? <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Upgrade your SearchWP account</a> and unlock the following extensions."
 msgstr ""
 
@@ -2000,7 +1957,6 @@ msgid "Split Pattern Keywords"
 msgstr ""
 
 #: includes/Admin/Views/MiscSettingsView.php:98
-#, php-format
 msgid "SearchWP detects typical pattern keywords (SKUs, dates, initials, etc) and keeps them as one token without splitting. Enable this option to split these keywords and generate additional smaller tokens. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -2147,7 +2103,7 @@ msgstr ""
 
 #: includes/Admin/Views/ResultsTemplatesView.php:607
 #: includes/Admin/Views/ResultsTemplatesView.php:931
-#: includes/Templates/Frontend.php:385
+#: includes/Templates/Frontend.php:389
 msgid "Read More"
 msgstr ""
 
@@ -2360,7 +2316,7 @@ msgid "When enabled, the pagination will be replaced by an Ajax powered Load Mor
 msgstr ""
 
 #: includes/Admin/Views/ResultsTemplatesView.php:1189
-#: includes/Templates/Frontend.php:502
+#: includes/Templates/Frontend.php:506
 msgid "Load More"
 msgstr ""
 
@@ -2557,13 +2513,11 @@ msgstr ""
 #. translators: %d - a post ID.
 #: includes/Admin/Views/ResultsTemplatesView.php:2112
 #: includes/Admin/Views/SearchFormsView.php:1906
-#, php-format
 msgid "#%d (no title)"
 msgstr ""
 
 #. translators: %s - link to the SearchWP documentation page.
 #: includes/Admin/Views/ResultsTemplatesView.php:2277
-#, php-format
 msgid "Click the plus button, search for SearchWP, click the Results block to<br>embed it. <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Learn More</a>"
 msgstr ""
 
@@ -2643,7 +2597,6 @@ msgstr ""
 
 #. translators: %s: Custom name of search input.
 #: includes/Admin/Views/SearchFormsView.php:723
-#, php-format
 msgid "Custom: %s"
 msgstr ""
 
@@ -2778,7 +2731,6 @@ msgstr ""
 
 #. translators: %s - link to the SearchWP documentation page.
 #: includes/Admin/Views/SearchFormsView.php:2129
-#, php-format
 msgid "Click the plus button, search for SearchWP, click the Form block to<br>embed it. <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Learn More</a>"
 msgstr ""
 
@@ -3234,7 +3186,6 @@ msgstr ""
 
 #. translators: %1$s - Searchwp.com Account Dashboard URL; %2$s - SearchWP Pricing Page URL.
 #: includes/Admin/Wizards/Onboarding.php:654
-#, php-format
 msgid "Your license key can be found in your <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">SearchWP Account Dashboard</a>. Don’t have a license? <a href=\"%2$s\" target=\"_blank\" rel=\"noopener noreferrer\">Sign up today!</a>"
 msgstr ""
 
@@ -3309,19 +3260,16 @@ msgstr ""
 
 #. translators: %1$s - SearchWP Search Forms URL.
 #: includes/Admin/Wizards/Onboarding.php:855
-#, php-format
 msgid "View and Embed your <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">Search Forms</a>."
 msgstr ""
 
 #. translators: %1$s - SearchWP Templates URL.
 #: includes/Admin/Wizards/Onboarding.php:873
-#, php-format
 msgid "Customize SearchWP <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">Search Results Page</a>."
 msgstr ""
 
 #. translators: %1$s - SearchWP Algorithm URL.
 #: includes/Admin/Wizards/Onboarding.php:891
-#, php-format
 msgid "Fine-tune your <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">Search Engine</a> settings."
 msgstr ""
 
@@ -3331,25 +3279,21 @@ msgstr ""
 
 #. translators: %1$s - Search Forms Documentation URL.
 #: includes/Admin/Wizards/Onboarding.php:915
-#, php-format
 msgid "Read Search Forms <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">documentation</a> to unlock its full potential."
 msgstr ""
 
 #. translators: %1$s - Live Autocomplete Article URL.
 #: includes/Admin/Wizards/Onboarding.php:933
-#, php-format
 msgid "Check how you can add <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">live autocomplete</a> to your search forms."
 msgstr ""
 
 #. translators: %1$s - Search PDF Article URL.
 #: includes/Admin/Wizards/Onboarding.php:951
-#, php-format
 msgid "See how you can make your <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">PDFs searchable</a>."
 msgstr ""
 
 #. translators: %1$s - Searchwp.com Account Support URL.
 #: includes/Admin/Wizards/Onboarding.php:972
-#, php-format
 msgid "If you have questions, or need further assistance with the setup, let us know via <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">Support Form</a>!"
 msgstr ""
 
@@ -3368,7 +3312,6 @@ msgid "SearchWP Attribute Error"
 msgstr ""
 
 #: includes/BackgroundProcess.php:72
-#, php-format
 msgid "Every %d Minutes"
 msgstr ""
 
@@ -3480,18 +3423,16 @@ msgstr ""
 
 #. translators: %d: Form id.
 #: includes/Forms/Storage.php:68
-#, php-format
 msgid "Search Form %d"
 msgstr ""
 
 #: includes/Index/Controller.php:448
-#: includes/Utils.php:121
+#: includes/Utils.php:122
 msgid "Invalid SearchWP Source name"
 msgstr ""
 
 #. Translators: placeholder is a human readable time reference e.g. "ten hours"
 #: includes/Index/Controller.php:1257
-#, php-format
 msgid "%s ago"
 msgstr ""
 
@@ -3569,19 +3510,16 @@ msgstr ""
 
 #. translators: %d: Form ID.
 #: includes/Integrations/PageBuilderBlocks.php:217
-#, php-format
 msgid "Form #%d"
 msgstr ""
 
 #. translators: %d: Template ID.
 #: includes/Integrations/PageBuilderBlocks.php:245
-#, php-format
 msgid "Template #%d"
 msgstr ""
 
 #. translators: %d: Engine ID.
 #: includes/Integrations/PageBuilderBlocks.php:273
-#, php-format
 msgid "Engine #%d"
 msgstr ""
 
@@ -3604,7 +3542,6 @@ msgstr ""
 
 #. Translators: %s is the date the license expired.
 #: includes/License.php:343
-#, php-format
 msgid "Your license key expired on %s"
 msgstr ""
 
@@ -3636,7 +3573,6 @@ msgstr ""
 
 #. Translators: First placeholder is the date of license expiration, second placeholder is the time until the license expires.
 #: includes/License.php:395
-#, php-format
 msgid "Active until %s (%s)"
 msgstr ""
 
@@ -3644,23 +3580,23 @@ msgstr ""
 msgid "\\SearchWP\\Mod cannot be instantiated until the wp_loaded action has fired."
 msgstr ""
 
-#: includes/Query.php:248
+#: includes/Query.php:260
 msgid "\\SearchWP\\Query cannot be instantiated until the wp_loaded action has fired."
 msgstr ""
 
-#: includes/Query.php:254
+#: includes/Query.php:274
 msgid "\\SearchWP\\Query cannot be instantiated until the initial settings have been saved."
 msgstr ""
 
-#: includes/Query.php:302
+#: includes/Query.php:325
 msgid "Invalid SearchWP Engine"
 msgstr ""
 
-#: includes/Query.php:306
+#: includes/Query.php:329
 msgid "Review SearchWP Documentation"
 msgstr ""
 
-#: includes/Query.php:469
+#: includes/Query.php:492
 msgid "Invalid engine provided to \\SearchWP\\Query"
 msgstr ""
 
@@ -3679,7 +3615,6 @@ msgstr ""
 
 #. Translators: Placeholder is the revised search string.
 #: includes/SearchWP.php:496
-#, php-format
 msgid "Showing results for <em class=\"searchwp-suggested-revision-query\">%s</em>"
 msgstr ""
 
@@ -3692,7 +3627,6 @@ msgid "Transfer Weight"
 msgstr ""
 
 #: includes/Source.php:339
-#, php-format
 msgid "When a %s entry matches a search, the designated entry in the weight transfer option will be displayed in its place. <a href=\"%s\" target=\"_blank\">View&nbsp;Docs</a>"
 msgstr ""
 
@@ -3792,7 +3726,6 @@ msgid "If you edit this content and update this Attachment, the changes will per
 msgstr ""
 
 #: includes/Sources/Attachment.php:501
-#, php-format
 msgid "<strong>NOTE:</strong> This content is too long to display (%s). Here is a <strong>sample from the indexed content</strong>:"
 msgstr ""
 
@@ -3838,7 +3771,6 @@ msgstr ""
 #. Translators: placeholder is singular post type label.
 #: includes/Sources/Comment.php:236
 #: includes/Sources/Post.php:457
-#, php-format
 msgid "To %s Parent"
 msgstr ""
 
@@ -3863,7 +3795,6 @@ msgstr ""
 
 #. Translators: %s is the plural label of a post type.
 #: includes/Sources/Post.php:136
-#, php-format
 msgid "Note: by default %s are set to be excluded from search. Enabling %s overrides this."
 msgstr ""
 
@@ -3888,7 +3819,6 @@ msgstr ""
 #. Translators: placeholder is singular taxonomy label.
 #: includes/Sources/Post.php:432
 #: includes/Sources/Taxonomy.php:212
-#, php-format
 msgid "To %s ID"
 msgstr ""
 
@@ -3978,7 +3908,6 @@ msgstr ""
 
 #. translators: %1$s - interval label like 'Weekly' or 'Periodic', %2$s - site domain.
 #: includes/Summaries/Client.php:72
-#, php-format
 msgid "Your %1$s SearchWP Summary for %2$s"
 msgstr ""
 
@@ -4000,7 +3929,6 @@ msgstr ""
 
 #. translators: placeholder is an interval label like 'week' or 'period'.
 #: includes/Summaries/Templates/summary-body.php:47
-#, php-format
 msgid "Let’s see how your site search performed in the past %s."
 msgstr ""
 
@@ -4027,7 +3955,7 @@ msgid "Average Clicks per search"
 msgstr ""
 
 #: includes/Summaries/Templates/summary-body.php:133
-msgid "There where no searches in the past week."
+msgid "There were no searches in the past week."
 msgstr ""
 
 #: includes/Summaries/Templates/summary-body.php:144
@@ -4048,7 +3976,6 @@ msgstr ""
 
 #. translators: %1$s - site URL, %2$s - link to the documentation.
 #: includes/Summaries/Templates/summary-footer.php:20
-#, php-format
 msgid "This email was auto-generated and sent from %1$s. Learn <a href=\"%2$s\">how to disable.</a>"
 msgstr ""
 
@@ -4056,42 +3983,39 @@ msgstr ""
 msgid "No results found, please search again."
 msgstr ""
 
-#: includes/Templates/Frontend.php:432
+#: includes/Templates/Frontend.php:436
 msgid "Found %total% results for %query%"
 msgstr ""
 
-#: includes/Templates/Frontend.php:482
+#: includes/Templates/Frontend.php:486
 msgid "Results navigation"
 msgstr ""
 
-#: includes/Templates/Frontend.php:549
+#: includes/Templates/Frontend.php:553
 msgid "Missing required parameters"
 msgstr ""
 
-#: includes/Templates/Frontend.php:564
+#: includes/Templates/Frontend.php:568
 msgid "Invalid template ID"
 msgstr ""
 
-#: includes/Templates/Frontend.php:573
+#: includes/Templates/Frontend.php:577
 msgid "Template not found"
 msgstr ""
 
 #. translators: %s is the search term.
-#: includes/Templates/Frontend.php:642
-#: includes/Templates/Frontend.php:670
-#, php-format
+#: includes/Templates/Frontend.php:646
+#: includes/Templates/Frontend.php:674
 msgid "Search results for: %s"
 msgstr ""
 
 #. translators: %s is the URL to the Search Forms page.
-#: includes/Templates/Frontend.php:1187
-#, php-format
+#: includes/Templates/Frontend.php:1191
 msgid "Search results will appear here, based on the settings of the <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Search Form</a> pointing to this page (see the Search Form's \"Target Page\" setting)."
 msgstr ""
 
 #. translators: %d: Form id.
 #: includes/Templates/Storage.php:84
-#, php-format
 msgid "Results Template %d"
 msgstr ""
 
@@ -4099,41 +4023,38 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: includes/Utils.php:114
+#: includes/Utils.php:115
 msgid "Invalid post type"
 msgstr ""
 
-#: includes/Utils.php:287
+#: includes/Utils.php:288
 msgid "Baseline Relevance"
 msgstr ""
 
-#: includes/Utils.php:288
+#: includes/Utils.php:289
 msgid "Increased Relevance"
 msgstr ""
 
-#: includes/Utils.php:289
+#: includes/Utils.php:290
 msgid "Highest Relevance"
 msgstr ""
 
-#: includes/Utils.php:2005
+#: includes/Utils.php:2025
 msgid "Not indexed"
 msgstr ""
 
 #. Translators: 1st placeholder is how long ago an entry was indexed.
-#: includes/Utils.php:2009
-#, php-format
+#: includes/Utils.php:2029
 msgid "Indexed %1$s ago"
 msgstr ""
 
 #. Translators: 1st placeholder is how long ago an entry was queued.
-#: includes/Utils.php:2015
-#, php-format
+#: includes/Utils.php:2035
 msgid "Queued for indexing %1$s ago"
 msgstr ""
 
 #. Translators: 1st placeholder is how long ago an entry was omitted.
-#: includes/Utils.php:2021
-#, php-format
+#: includes/Utils.php:2041
 msgid "Omitted from indexing %1$s ago"
 msgstr ""
 
@@ -4147,7 +4068,6 @@ msgstr ""
 
 #. Translators: placeholder is the number "1"
 #: index.php:90
-#, php-format
 msgid "SearchWP requires %s %s or higher and as a result has been deactivated. Please contact your host to upgrade %s before activating this plugin."
 msgstr ""
 

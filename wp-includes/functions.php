@@ -9226,9 +9226,3 @@ function wp_verify_fast_hash(
 
 	return hash_equals( $hash, wp_fast_hash( $message ) );
 }
-add_filter('register_post_type_args', function($args, $post_type){
-  if ($post_type === 'robo_robot') {
-    $args['has_archive'] = 'roboter'; // oder true
-  }
-  return $args;
-}, 10, 2);

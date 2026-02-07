@@ -42,15 +42,10 @@ var SearchWPEmbedWizard = window.SearchWPEmbedWizard || ( function ( window, $ )
 		 */
 		initTooltip: function () {
 
-			var $tooltip = $( '.searchwp-embed-wizard-tooltip' ),
-				anchor   = '.block-editor .edit-post-header';
-
-			// Create a dot element that will be the anchor for the tooltip.
-			var $dot = $( '<span class="searchwp-embed-wizard-dot">&nbsp;</span>' );
+			var $tooltip = $( '.searchwp-embed-wizard-tooltip' );
 
 			// Position the tooltip below the header.
 			$tooltip.addClass( 'searchwp-embed-wizard-tooltip-gutenberg' );
-			$( anchor ).after( $dot );
 
 			// Show the tooltip.
 			$tooltip.show();
@@ -60,7 +55,6 @@ var SearchWPEmbedWizard = window.SearchWPEmbedWizard || ( function ( window, $ )
 				'click',
 				function () {
 					$tooltip.remove();
-					$dot.remove();
 				}
 			);
 		},

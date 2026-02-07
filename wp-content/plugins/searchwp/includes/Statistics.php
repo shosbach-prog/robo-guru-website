@@ -404,6 +404,9 @@ class Statistics {
 
 		$args = wp_parse_args( $args, $defaults );
 
+		// Ensure $args['days'] is a valid integer.
+		$args['days'] = isset( $args['days'] ) && is_numeric( $args['days'] ) ? (int) $args['days'] : $defaults['days'];
+
 		if ( 'all' === $args['site'] ) {
 			$site_in = '1=1';
 			$values  = [ $args['days'], $args['engine'] ];

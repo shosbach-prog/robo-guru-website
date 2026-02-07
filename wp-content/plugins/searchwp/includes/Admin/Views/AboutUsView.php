@@ -393,7 +393,7 @@ class AboutUsView {
 	 *
 	 * @param string|null $file Plugin file to get data for a single plugin.
 	 */
-	public static function get( string $file = null ) {
+	public static function get( ?string $file = null ) {
 
 		if ( empty( self::$storage ) ) {
 			self::$storage = self::set_statuses( self::fetch() );

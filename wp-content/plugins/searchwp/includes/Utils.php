@@ -1572,7 +1572,10 @@ class Utils {
 			$engine_sources = $engine['sources'];
 
 			// If the Engine doesn't have this Source, bail out.
-			if ( ! array_key_exists( $source->get_name(), $engine_sources ) ) {
+			// Ensure source name is not null.
+			$source_name = $source->get_name();
+			$source_name = $source_name ?? '';
+			if ( ! array_key_exists( $source_name, $engine_sources ) ) {
 				continue;
 			}
 

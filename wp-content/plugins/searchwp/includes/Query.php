@@ -19,6 +19,7 @@ use SearchWP\Source;
 use SearchWP\Tokens;
 use SearchWP\Logic\AndLimiter;
 use SearchWP\Logic\PhraseLimiter;
+use SearchWP\Logic\Synonyms;
 
 /**
  * Class Query performs searches against the Index.
@@ -231,23 +232,42 @@ class Query {
 	 */
 	private $debug_data = [];
 
+
 	/**
 	 * Query constructor.
 	 *
 	 * @since 4.0
+	 *
 	 * @param string $search Search string.
 	 * @param array  $args   Arguments.
+	 *
 	 * @return void
 	 */
-	function __construct( string $search, array $args = [] ) {
+	public function __construct( string $search, array $args = [] ) {
 		// The Index may not exist yet.
 		if ( ! did_action( 'wp_loaded' ) && ! doing_action( 'wp_loaded' ) ) {
+			/**
+			 * Fires when Query is instantiated before wp_loaded.
+			 *
+			 * @since 4.0
+			 *
+			 * @param string $message Debug message.
+			 * @param string $context Debug context.
+			 */
 			do_action( 'searchwp\debug\log', 'Query instantiated before wp_loaded', 'query' );
 			$this->errors[] = new \WP_Error(
 				'init',
 				__( '\\SearchWP\\Query cannot be instantiated until the wp_loaded action has fired.','searchwp' )
 			);
 		} elseif ( empty( Settings::get_engines() ) ) {
+			/**
+			 * Fires when Query is instantiated before initial settings have been saved.
+			 *
+			 * @since 4.0
+			 *
+			 * @param string $message Debug message.
+			 * @param string $context Debug context.
+			 */
 			do_action( 'searchwp\debug\log', 'Query instantiated before initial settings have been saved', 'query' );
 			$this->errors[] = new \WP_Error(
 				'init',
@@ -257,6 +277,9 @@ class Query {
 			$time_start = microtime( true );
 
 			$this->index = \SearchWP::$index;
+
+			// Set query ID early so it's available when Synonyms::apply() runs.
+			$this->set_id();
 
 			// Allow for filtration of the search string.
 			$this->keywords_orig = Utils::decode_string( $search );
@@ -290,7 +313,7 @@ class Query {
 	 * @return void
 	 */
 	public function setup( array $args = [] ) {
-		$this->set_id();
+
 		$this->set_placeholder();
 		$this->set_args( $args );
 		$this->set_engine();
@@ -828,9 +851,11 @@ class Query {
 	 * Getter for raw results.
 	 *
 	 * @since 4.0
+	 *
 	 * @return array
 	 */
 	public function get_raw_results() {
+
 		return $this->raw_results;
 	}
 
@@ -838,17 +863,40 @@ class Query {
 	 * Determine and set the applicable logic passes for the search algorithm.
 	 *
 	 * @since 4.0
+	 *
 	 * @return void
 	 */
 	private function set_algorithm_logic_passes() {
 
-		$orignal_keywords = explode( ' ', $this->keywords_orig );
+		$original_keywords      = explode( ' ', $this->keywords_orig );
+		$original_keyword_count = count( array_filter( $original_keywords ) );
 
-		if ( count( $orignal_keywords ) < 2 ) {
-			return;
+		// Add AND logic pass if:
+		// 1. We have 2+ original keywords (existing behavior), OR
+		// 2. We have 1 original keyword that expands to multiple words via synonym replacement (new behavior).
+		$should_add_and_logic = false;
+
+		if ( $original_keyword_count >= 2 ) {
+			$should_add_and_logic = true;
+		} elseif ( $original_keyword_count === 1 ) {
+			// Check if this single word expands to multiple words via synonym replacement.
+			$single_to_multi_replacements = Synonyms::get_single_word_to_multi_word_replacements( $this );
+			if ( ! empty( $single_to_multi_replacements ) && count( $single_to_multi_replacements ) >= 2 ) {
+				$should_add_and_logic = true;
+			}
 		}
 
-		if ( apply_filters( 'searchwp\query\logic\and', true, $this ) ) {
+		/**
+		 * Filters whether to add AND logic to the query.
+		 *
+		 * @since 4.0
+		 *
+		 * @param bool  $should_add_and_logic Whether to add AND logic to the query.
+		 * @param Query $this                 The Query object.
+		 */
+		$query_logic_and = apply_filters( 'searchwp\query\logic\and', true, $this );
+
+		if ( $should_add_and_logic && $query_logic_and ) {
 			array_unshift( $this->algorithm_logic_passes, 'and' );
 		}
 
@@ -862,22 +910,40 @@ class Query {
 	 * Performs logical passes to retrieve optimal results set.
 	 *
 	 * @since 4.0
-	 * @param mixed $query Query
+	 *
+	 * @param mixed $query Query.
+	 *
 	 * @return array Search results.
 	 */
 	private function find_results( $query ) {
+
 		$results = [];
 
 		$this->set_algorithm_logic_passes();
 
 		// Logic goes from most restricted to least. Loop until we've got results.
-		foreach( $this->algorithm_logic_passes as $logic ) {
+		foreach ( $this->algorithm_logic_passes as $logic ) {
 			$logic_sql = '';
+			/**
+			 * Filters whether the logic pass should be strict.
+			 *
+			 * @since 4.0
+			 *
+			 * @param bool  $logic_is_strict Whether the logic pass should be strict.
+			 */
 			$logic_is_strict = apply_filters( 'searchwp\query\logic\\' . $logic . '\strict', false );
 
 			switch ( $logic ) {
 				case 'phrase':
 					// We only get here if there are phrases to search to begin with.
+					/**
+					 * Filters whether to add AND logic to the query.
+					 *
+					 * @since 4.0
+					 *
+					 * @param bool  $query_logic_and  Whether to add AND logic to the query.
+					 * @param Query $this             The Query object.
+					 */
 					$phrase_logic = new PhraseLimiter( $this, apply_filters( 'searchwp\query\logic\and', true, $this ), $logic_is_strict );
 					$logic_sql    = $phrase_logic->get_sql();
 					break;
@@ -1868,6 +1934,7 @@ class Query {
 
 		Arr::set( $this->debug_data, $key, $value );
 	}
+
 
 	/**
 	 * Get relevance debug data.

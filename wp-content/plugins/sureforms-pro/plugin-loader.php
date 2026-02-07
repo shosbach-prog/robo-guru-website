@@ -15,6 +15,7 @@ use SRFM_Pro\Inc\Block_Assets;
 
 use SRFM_Pro\Inc\Extensions\Conditional_Logic;
 use SRFM_Pro\Inc\Extensions\Additional_Form_Restrictions;
+use SRFM_Pro\Inc\Extensions\Field_Restrictions;
 use SRFM_Pro\Inc\Extensions\Entries_Management;
 use SRFM_Pro\Inc\Extensions\Gutenberg_Hooks;
 use SRFM_Pro\Inc\Extensions\Hooks;
@@ -176,11 +177,15 @@ class Plugin_Loader {
 
 		if ( ! defined( 'SRFM_VER' ) ) {
 			add_action( 'admin_notices', [ $this, 'fail_load' ] );
+			// Register for React early (before admin_enqueue_scripts).
+			add_action( 'admin_init', [ $this, 'register_fail_load_react_notice' ], 5 );
 			return;
 		}
 
 		if ( ! did_action( 'srfm_core_loaded' ) || ! version_compare( SRFM_VER, SRFM_PRO_CORE_RQD_VER, '>=' ) ) {
 			add_action( 'admin_notices', [ $this, 'fail_load_out_of_date' ] );
+			// Register for React early (before admin_enqueue_scripts).
+			add_action( 'admin_init', [ $this, 'register_fail_load_out_of_date_react_notice' ], 5 );
 			return;
 		}
 
@@ -200,6 +205,7 @@ class Plugin_Loader {
 		Licensing::get_instance();
 		Conditional_Logic::get_instance();
 		Additional_Form_Restrictions::get_instance();
+		Field_Restrictions::get_instance();
 		Sanitize_Callbacks::get_instance();
 		Conditional_Emails::get_instance();
 		Conditional_Confirmations::get_instance();
@@ -275,10 +281,11 @@ class Plugin_Loader {
 
 			$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $plugin . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $plugin );
 
-			$message = '<h3>' . esc_html__( 'Activate the SureForms Plugin', 'sureforms-pro' ) . '</h3>';
+			// Build PHP message for WordPress core pages.
+			$php_message = '<h3>' . esc_html__( 'Activate the SureForms Plugin', 'sureforms-pro' ) . '</h3>';
 			// translators: %s: SureForms Pro Product Name.
-			$message .= '<p>' . sprintf( esc_html__( 'Before you can use all the features of %s, you need to activate the SureForms plugin first.', 'sureforms-pro' ), esc_html( $pro_plugin_name ) ) . '</p>';
-			$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', esc_url( $activation_url ), esc_html__( 'Activate Now', 'sureforms-pro' ) ) . '</p>';
+			$php_message .= '<p>' . sprintf( esc_html__( 'Before you can use all the features of %s, you need to activate the SureForms plugin first.', 'sureforms-pro' ), esc_html( $pro_plugin_name ) ) . '</p>';
+			$php_message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', esc_url( $activation_url ), esc_html__( 'Activate Now', 'sureforms-pro' ) ) . '</p>';
 		} else {
 			if ( ! current_user_can( 'install_plugins' ) ) {
 				return;
@@ -286,14 +293,19 @@ class Plugin_Loader {
 
 			$install_url = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=sureforms' ), 'install-plugin_sureforms' );
 
-			$message = '<h3>' . esc_html__( 'Install and Activate the SureForms Plugin', 'sureforms-pro' ) . '</h3>';
+			// Build PHP message for WordPress core pages.
+			$php_message = '<h3>' . esc_html__( 'Install and Activate the SureForms Plugin', 'sureforms-pro' ) . '</h3>';
 			// translators: %s: SureForms Pro Product Name.
-			$message .= '<p>' . sprintf( esc_html__( 'Before you can use all the features of %s, you need to install and activate the SureForms plugin first.', 'sureforms-pro' ), esc_html( $pro_plugin_name ) ) . '</p>';
-			$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', esc_url( $install_url ), esc_html__( 'Install SureForms', 'sureforms-pro' ) ) . '</p>';
-		}//end if
+			$php_message .= '<p>' . sprintf( esc_html__( 'Before you can use all the features of %s, you need to install and activate the SureForms plugin first.', 'sureforms-pro' ), esc_html( $pro_plugin_name ) ) . '</p>';
+			$php_message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', esc_url( $install_url ), esc_html__( 'Install SureForms', 'sureforms-pro' ) ) . '</p>';
+		}
 
+		// Display in PHP (existing behavior - continues to work on WordPress core pages).
 		// Phpcs ignore comment is required as $message variable is already escaped.
-		echo '<div class="error">' . wp_kses_post( $message ) . '</div>';
+		echo '<div class="error">' . wp_kses_post( $php_message ) . '</div>';
+
+		// Note: React notice registration happens earlier on admin_init hook
+		// See register_fail_load_react_notice() method.
 	}
 
 	/**
@@ -318,11 +330,116 @@ class Plugin_Loader {
 		$file_path = 'sureforms/sureforms.php';
 
 		$upgrade_link = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $file_path, 'upgrade-plugin_' . $file_path );
-		$message      = '<p>' . esc_html__( 'SureForms Pro is not working because you are using an old version of SureForms.', 'sureforms-pro' ) . '</p>';
-		$message     .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', esc_url( $upgrade_link ), esc_html__( 'Update SureForms Now', 'sureforms-pro' ) ) . '</p>';
+		$message      = esc_html__( 'SureForms Pro is not working because you are using an old version of SureForms.', 'sureforms-pro' );
 
+		// Display in PHP (existing behavior - continues to work on WordPress core pages).
+		$php_message  = '<p>' . $message . '</p>';
+		$php_message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', esc_url( $upgrade_link ), esc_html__( 'Update SureForms Now', 'sureforms-pro' ) ) . '</p>';
 		// Phpcs ignore comment is required as $message variable is already escaped.
-		echo '<div class="error">' . wp_kses_post( $message ) . '</div>';
+		echo '<div class="error">' . wp_kses_post( $php_message ) . '</div>';
+
+		// Note: React notice registration happens earlier on admin_init hook.
+		// See register_fail_load_out_of_date_react_notice() method.
+	}
+
+	/**
+	 * Register React notice for missing core plugin.
+	 * Called early on admin_init to ensure notices are registered before script localization.
+	 *
+	 * @return void
+	 * @since 2.5.0
+	 */
+	public function register_fail_load_react_notice() {
+		// Only register for React if Notice_Manager is available.
+		if ( ! class_exists( 'SRFM\Admin\Notice_Manager' ) ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'install_plugins' ) && ! current_user_can( 'activate_plugins' ) ) {
+			return;
+		}
+
+		$plugin          = 'sureforms/sureforms.php';
+		$pro_plugin_name = defined( 'SRFM_PRO_PRODUCT' ) ? SRFM_PRO_PRODUCT : 'SureForms Pro';
+
+		if ( $this->is_core_installed() ) {
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				return;
+			}
+
+			$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $plugin . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $plugin );
+			$react_title    = esc_html__( 'Activate the SureForms Plugin', 'sureforms-pro' );
+			/* translators: %s: Pro plugin name */
+			$react_message = sprintf( esc_html__( 'Before you can use all the features of %s, you need to activate the SureForms plugin first.', 'sureforms-pro' ), esc_html( $pro_plugin_name ) );
+			$action_label  = esc_html__( 'Activate Now', 'sureforms-pro' );
+			$action_url    = $activation_url;
+		} else {
+			if ( ! current_user_can( 'install_plugins' ) ) {
+				return;
+			}
+
+			$install_url = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=sureforms' ), 'install-plugin_sureforms' );
+			$react_title = esc_html__( 'Install and Activate the SureForms Plugin', 'sureforms-pro' );
+			/* translators: %s: Pro plugin name */
+			$react_message = sprintf( esc_html__( 'Before you can use all the features of %s, you need to install and activate the SureForms plugin first.', 'sureforms-pro' ), esc_html( $pro_plugin_name ) );
+			$action_label  = esc_html__( 'Install SureForms', 'sureforms-pro' );
+			$action_url    = $install_url;
+		}
+
+		\SRFM\Admin\Notice_Manager::register_notice(
+			[
+				'id'      => 'sureforms-pro-missing-core',
+				'variant' => 'error',
+				'title'   => $react_title,
+				'message' => $react_message,
+				'actions' => [
+					[
+						'label'   => $action_label,
+						'url'     => $action_url,
+						'variant' => 'primary',
+					],
+				],
+				'pages'   => [ 'all' ],
+			]
+		);
+	}
+
+	/**
+	 * Register React notice for outdated core plugin.
+	 * Called early on admin_init to ensure notices are registered before script localization.
+	 *
+	 * @return void
+	 * @since 2.5.0
+	 */
+	public function register_fail_load_out_of_date_react_notice() {
+		// Only register for React if Notice_Manager is available.
+		if ( ! class_exists( 'SRFM\Admin\Notice_Manager' ) ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'update_plugins' ) ) {
+			return;
+		}
+
+		$file_path    = 'sureforms/sureforms.php';
+		$upgrade_link = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $file_path, 'upgrade-plugin_' . $file_path );
+		$message      = esc_html__( 'SureForms Pro is not working because you are using an old version of SureForms.', 'sureforms-pro' );
+
+		\SRFM\Admin\Notice_Manager::register_notice(
+			[
+				'id'      => 'sureforms-pro-outdated-core',
+				'variant' => 'error',
+				'message' => $message,
+				'actions' => [
+					[
+						'label'   => esc_html__( 'Update SureForms Now', 'sureforms-pro' ),
+						'url'     => $upgrade_link,
+						'variant' => 'primary',
+					],
+				],
+				'pages'   => [ 'all' ],
+			]
+		);
 	}
 
 	/**

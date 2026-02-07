@@ -44,7 +44,7 @@ class Block_Assets {
 		 // phpcs:ignore -- wordpress.Security.NonceVerification
 		if ( ! empty( $_GET['bricks'] ) && 'run' === $_GET['bricks'] || ! empty( $_GET['elementor-preview'] ) ) {
 		// phpcs:ignoreEnd
-			wp_enqueue_script( SRFM_PRO_SLUG . '-page-break-deps', SRFM_PRO_URL . 'dist/pageBreak.js', [ 'srfm-form-submit' ], SRFM_PRO_VER, true );
+			wp_enqueue_script( SRFM_PRO_SLUG . '-page-break-deps', SRFM_PRO_URL . 'dist/pageBreak.js', [ 'srfm-form-submit', 'wp-i18n' ], SRFM_PRO_VER, true );
 
 			wp_localize_script(
 				SRFM_PRO_SLUG . '-page-break-deps',
@@ -113,6 +113,9 @@ class Block_Assets {
 					wp_enqueue_style( SRFM_PRO_SLUG . '-vanillajs-datepicker', $css_vendor_uri . 'vanillajs-datepicker.min.css', [], SRFM_PRO_VER );
 					wp_enqueue_script( SRFM_PRO_SLUG . "-{$block_name}-vanillajs-datepicker-deps", $js_vendor_uri . 'vanillajs-datepicker.min.js', [], SRFM_PRO_VER, true );
 					wp_enqueue_script( SRFM_PRO_SLUG . "-{$block_name}-deps", SRFM_PRO_URL . 'dist/datePicker.js', [ 'srfm-form-submit' ], SRFM_PRO_VER, true );
+
+					// Load appropriate locale file for datepicker.
+					self::enqueue_datepicker_locale();
 					break;
 
 				case 'time-picker':
@@ -120,7 +123,8 @@ class Block_Assets {
 					break;
 
 				case 'page-break':
-					wp_enqueue_script( SRFM_PRO_SLUG . "-{$block_name}-deps", SRFM_PRO_URL . 'dist/pageBreak.js', [ 'srfm-form-submit' ], SRFM_PRO_VER, true );
+					wp_enqueue_script( SRFM_PRO_SLUG . "-{$block_name}-deps", SRFM_PRO_URL . 'dist/pageBreak.js', [ 'srfm-form-submit', 'wp-i18n' ], SRFM_PRO_VER, true );
+					Pro_Helper::register_script_translations( SRFM_PRO_SLUG . "-{$block_name}-deps" );
 					break;
 
 				case 'html':
@@ -144,4 +148,93 @@ class Block_Assets {
 			}
 		}
 	}
+
+	/**
+	 * Enqueue appropriate datepicker locale file based on WordPress locale.
+	 *
+	 * @return void
+	 * @since 2.5.0
+	 */
+	public static function enqueue_datepicker_locale() {
+		$wp_locale = get_locale();
+
+		// Map WordPress locale to datepicker language code.
+		$locale_map = [
+			// German.
+			'de_DE'          => 'de',
+			'de_DE_formal'   => 'de',
+			'de_CH'          => 'de',
+			'de_CH_informal' => 'de',
+			'de_AT'          => 'de',
+
+			// Spanish.
+			'es_ES'          => 'es',
+			'es_MX'          => 'es',
+			'es_AR'          => 'es',
+			'es_CL'          => 'es',
+			'es_CO'          => 'es',
+			'es_CR'          => 'es',
+			'es_DO'          => 'es',
+			'es_EC'          => 'es',
+			'es_GT'          => 'es',
+			'es_HN'          => 'es',
+			'es_PE'          => 'es',
+			'es_PR'          => 'es',
+			'es_UY'          => 'es',
+			'es_VE'          => 'es',
+
+			// French.
+			'fr_FR'          => 'fr',
+			'fr_CA'          => 'fr',
+			'fr_BE'          => 'fr',
+			'fr_CH'          => 'fr',
+
+			// Italian.
+			'it_IT'          => 'it',
+			'it_CH'          => 'it',
+
+			// Dutch.
+			'nl_NL'          => 'nl',
+			'nl_NL_formal'   => 'nl',
+			'nl_BE'          => 'nl',
+
+			// Polish.
+			'pl_PL'          => 'pl',
+
+			// Portuguese.
+			'pt_PT'          => 'pt',
+			'pt_PT_ao90'     => 'pt',
+			'pt_AO'          => 'pt',
+			'pt_BR'          => 'pt',
+		];
+
+		// Default to English.
+		$datepicker_locale = $locale_map[ $wp_locale ] ?? 'en';
+
+		// Enqueue locale script only if it's not English.
+		if ( 'en' !== $datepicker_locale ) {
+			$relative_path = 'assets/js/minified/deps/date-picker-locales/' . $datepicker_locale . '.js';
+			$local_path    = SRFM_PRO_DIR . $relative_path;
+
+			if ( file_exists( $local_path ) ) {
+				wp_enqueue_script(
+					SRFM_PRO_SLUG . '-datepicker-locale-' . $datepicker_locale,
+					SRFM_PRO_URL . $relative_path,
+					[ SRFM_PRO_SLUG . '-date-picker-vanillajs-datepicker-deps' ],
+					SRFM_PRO_VER,
+					true
+				);
+			}
+		}
+
+		// Always pass locale to JS (with English fallback).
+		wp_localize_script(
+			SRFM_PRO_SLUG . '-date-picker-deps',
+			'srfmDatepickerLocale',
+			[
+				'locale' => $datepicker_locale,
+			]
+		);
+	}
+
 }

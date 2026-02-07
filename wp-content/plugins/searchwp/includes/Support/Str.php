@@ -87,7 +87,7 @@ class Str {
 	 *
 	 * @return false/string
 	 */
-	public static function substr( string $haystack, int $start, int $length = null ) {
+	public static function substr( string $haystack, int $start, ?int $length = null ) {
 
 		return function_exists( 'mb_substr' ) ? mb_substr( $haystack, $start, $length ) : substr( $haystack, $start, $length );
 	}
@@ -103,7 +103,7 @@ class Str {
 	 *
 	 * @return false|string
 	 */
-	public static function strcut( string $haystack, int $start, int $length = null ) {
+	public static function strcut( string $haystack, int $start, ?int $length = null ) {
 
 		return function_exists( 'mb_strcut' ) ? mb_strcut( $haystack, $start, $length ) : substr( $haystack, $start, $length );
 	}

@@ -1794,7 +1794,7 @@ msgid "Delete"
 msgstr "Löschen"
 
 #: includes/Admin/i18n.php:280
-#: includes/Admin/Wizards/Embed-Wizard-Tooltip.php:36
+#: includes/Admin/Wizards/Embed-Wizard-Tooltip.php:37
 msgid "Done"
 msgstr "Erledigt"
 
@@ -2367,7 +2367,7 @@ msgid "Search Form %d"
 msgstr "Suchbegriff(e)"
 
 #: includes/Index/Controller.php:448
-#: includes/Utils.php:121
+#: includes/Utils.php:122
 msgid "Invalid SearchWP Source name"
 msgstr "Ungültiger SearchWP-Source name"
 
@@ -2428,23 +2428,23 @@ msgstr "Aktiv bis %s (%s)"
 msgid "\\SearchWP\\Mod cannot be instantiated until the wp_loaded action has fired."
 msgstr "\\SearchWP\\Mod kann erst instanziiert werden, wenn die Aktion wp_loaded ausgelöst wurde."
 
-#: includes/Query.php:248
+#: includes/Query.php:260
 msgid "\\SearchWP\\Query cannot be instantiated until the wp_loaded action has fired."
 msgstr "\\SearchWP\\Query kann erst initiiert werden, wenn die Aktion wp_loaded ausgelöst wurde."
 
-#: includes/Query.php:254
+#: includes/Query.php:274
 msgid "\\SearchWP\\Query cannot be instantiated until the initial settings have been saved."
 msgstr "\\SearchWP\\Query kann erst initiiert werden, wenn die initialen Einstellungen gespeichert wurden."
 
-#: includes/Query.php:302
+#: includes/Query.php:325
 msgid "Invalid SearchWP Engine"
 msgstr "Ungültige SearchWP-Engine"
 
-#: includes/Query.php:306
+#: includes/Query.php:329
 msgid "Review SearchWP Documentation"
 msgstr "Schauen Sie sich die SearchWP-Dokumentation an"
 
-#: includes/Query.php:469
+#: includes/Query.php:492
 msgid "Invalid engine provided to \\SearchWP\\Query"
 msgstr "Ungültige Engine für \\SearchWP\\Query"
 
@@ -2754,40 +2754,40 @@ msgstr "Anzahl"
 msgid "Default"
 msgstr "Standard"
 
-#: includes/Utils.php:114
+#: includes/Utils.php:115
 msgid "Invalid post type"
 msgstr "Ungültiger post type"
 
-#: includes/Utils.php:287
+#: includes/Utils.php:288
 msgid "Baseline Relevance"
 msgstr "Basisrelevanz"
 
-#: includes/Utils.php:288
+#: includes/Utils.php:289
 msgid "Increased Relevance"
 msgstr "Erhöhte Relevanz"
 
-#: includes/Utils.php:289
+#: includes/Utils.php:290
 msgid "Highest Relevance"
 msgstr "Höchste Relevanz"
 
-#: includes/Utils.php:2005
+#: includes/Utils.php:2025
 msgid "Not indexed"
 msgstr "Nicht indiziert"
 
 #. Translators: 1st placeholder is how long ago an entry was indexed.
-#: includes/Utils.php:2009
+#: includes/Utils.php:2029
 #, php-format
 msgid "Indexed %1$s ago"
 msgstr "Vor %1$s indiziert"
 
 #. Translators: 1st placeholder is how long ago an entry was queued.
-#: includes/Utils.php:2015
+#: includes/Utils.php:2035
 #, php-format
 msgid "Queued for indexing %1$s ago"
 msgstr "Vor %1$s  für die Indizierung in die Warteschlange gestellt"
 
 #. Translators: 1st placeholder is how long ago an entry was omitted.
-#: includes/Utils.php:2021
+#: includes/Utils.php:2041
 #, php-format
 msgid "Omitted from indexing %1$s ago"
 msgstr "Vor %1$s von der Indizierung ausgeschlossen"
@@ -3206,7 +3206,7 @@ msgstr ""
 
 #: includes/Admin/Views/ResultsTemplatesView.php:607
 #: includes/Admin/Views/ResultsTemplatesView.php:931
-#: includes/Templates/Frontend.php:385
+#: includes/Templates/Frontend.php:389
 msgid "Read More"
 msgstr ""
 
@@ -3694,7 +3694,7 @@ msgstr ""
 msgid "Finish and go to the Search Forms"
 msgstr ""
 
-#: includes/Templates/Frontend.php:482
+#: includes/Templates/Frontend.php:486
 msgid "Results navigation"
 msgstr ""
 
@@ -3839,7 +3839,7 @@ msgid "Average Clicks per search"
 msgstr ""
 
 #: includes/Summaries/Templates/summary-body.php:133
-msgid "There where no searches in the past week."
+msgid "There were no searches in the past week."
 msgstr ""
 
 #: includes/Summaries/Templates/summary-body.php:144
@@ -4010,7 +4010,7 @@ msgid "When enabled, the pagination will be replaced by an Ajax powered Load Mor
 msgstr ""
 
 #: includes/Admin/Views/ResultsTemplatesView.php:1189
-#: includes/Templates/Frontend.php:502
+#: includes/Templates/Frontend.php:506
 msgid "Load More"
 msgstr ""
 
@@ -4224,31 +4224,31 @@ msgstr ""
 msgid "pointing to this page (see the Search Form's \"Target Page\" setting)."
 msgstr ""
 
-#: includes/Templates/Frontend.php:432
+#: includes/Templates/Frontend.php:436
 msgid "Found %total% results for %query%"
 msgstr ""
 
-#: includes/Templates/Frontend.php:549
+#: includes/Templates/Frontend.php:553
 msgid "Missing required parameters"
 msgstr ""
 
-#: includes/Templates/Frontend.php:564
+#: includes/Templates/Frontend.php:568
 msgid "Invalid template ID"
 msgstr ""
 
-#: includes/Templates/Frontend.php:573
+#: includes/Templates/Frontend.php:577
 msgid "Template not found"
 msgstr ""
 
 #. translators: %s is the search term.
-#: includes/Templates/Frontend.php:642
-#: includes/Templates/Frontend.php:670
+#: includes/Templates/Frontend.php:646
+#: includes/Templates/Frontend.php:674
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
 #. translators: %s is the URL to the Search Forms page.
-#: includes/Templates/Frontend.php:1187
+#: includes/Templates/Frontend.php:1191
 #, php-format
 msgid "Search results will appear here, based on the settings of the <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Search Form</a> pointing to this page (see the Search Form's \"Target Page\" setting)."
 msgstr ""

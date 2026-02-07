@@ -57,13 +57,49 @@ class Synonyms {
 	private $synonyms = [];
 
 	/**
-	 * Grouped synonyms.
+	 * Grouped synonyms keyed by query ID.
 	 *
 	 * @since 4.2.3
 	 *
-	 * @var array
+	 * @var array<string, array>
 	 */
 	public static $synonym_groups = [];
+
+	/**
+	 * Multi-word synonym replacements keyed by query ID.
+	 *
+	 * Stores synonym tokens that represent multi-word replacements
+	 * (e.g., "midcentury" represents "mid century").
+	 *
+	 * @since 4.5.7
+	 *
+	 * @var array<string, array>
+	 */
+	private static $multi_word_synonym_replacements = [];
+
+	/**
+	 * Original source tokens that were replaced by multi-word synonyms, keyed by query ID.
+	 *
+	 * Stores the original source tokens (normalized) that were replaced
+	 * by multi-word synonym replacements (e.g., "mid century" was replaced by "midcentury").
+	 *
+	 * @since 4.5.7
+	 *
+	 * @var array<string, array>
+	 */
+	private static $multi_word_synonym_source_tokens = [];
+
+	/**
+	 * Single-word to multi-word synonym replacements keyed by query ID.
+	 *
+	 * Stores synonym tokens that result from replacing a single-word source
+	 * with multiple words (e.g., "JTI" → ["japan", "tobacco", "international"]).
+	 *
+	 * @since 4.5.7
+	 *
+	 * @var array<string, array>
+	 */
+	private static $single_word_to_multi_word_replacements = [];
 
 	/**
 	 * Synonyms constructor.
@@ -90,6 +126,9 @@ class Synonyms {
 
 		// Apply synonyms to query search string.
 		add_filter( 'searchwp\query\search_string', [ $this, 'apply' ], 5, 2 );
+
+		// Clean up query-specific data after query completes.
+		add_action( 'searchwp\query\ran', [ __CLASS__, 'cleanup_query_data' ], 999 );
 	}
 
 	/**
@@ -113,7 +152,7 @@ class Synonyms {
 		$query->set_debug_data( 'string.synonyms.before', $search_string );
 
 		$this->set_original_search_string( $search_string );
-		$this->set_initial_synonym_groups( $search_string );
+		$this->set_initial_synonym_groups( $search_string, $query );
 
 		$this->set_synonyms( $search_string, $query );
 		$this->set_partial_matches( $search_string, $query );
@@ -121,7 +160,7 @@ class Synonyms {
 		$search_string = $this->apply_synonyms( $search_string, $query );
 		$search_string = $this->remove_duplicate_words_from_string( $search_string );
 
-		$this->remove_duplicate_tokens_from_token_groups();
+		$this->remove_duplicate_tokens_from_token_groups( $query );
 
 		$query->set_debug_data( 'string.synonyms.after', $search_string );
 
@@ -208,15 +247,18 @@ class Synonyms {
 	 * @since 4.2.3
 	 *
 	 * @param string $search_string Search string.
+	 * @param Query  $query         Query object.
 	 *
 	 * @return void
 	 */
-	private function set_initial_synonym_groups( string $search_string ) {
+	private function set_initial_synonym_groups( string $search_string, Query $query ) {
 
 		// Remove any quote if present.
 		$search_string = Str::remove_quotes( $search_string );
 
-		self::$synonym_groups = array_fill_keys( explode( ' ', $search_string ), [] );
+		$query_id = $query->get_id();
+
+		self::$synonym_groups[ $query_id ] = array_fill_keys( explode( ' ', $search_string ), [] );
 	}
 
 	/**
@@ -354,7 +396,10 @@ class Synonyms {
 		$synonyms = $this->synonyms;
 
 		if ( empty( $synonyms ) ) {
-			self::$synonym_groups = [];
+			$query_id = $query->get_id();
+
+			self::$synonym_groups[ $query_id ] = [];
+
 			return $search_string;
 		}
 
@@ -369,7 +414,7 @@ class Synonyms {
 			// Reset the found synonyms flag before using it.
 			$this->found_synonym = false;
 
-			$search_string = $this->process_synonym_sources( $search_string, $sources, $synonym );
+			$search_string = $this->process_synonym_sources( $search_string, $sources, $synonym, $query );
 
 			// Assume that one synonym replacement is enough and in doing so prevent
 			// redundant synonym application, but also base that on a hook to allow
@@ -379,9 +424,10 @@ class Synonyms {
 			}
 		}
 
-		// If no synonyms match was found empty the synonym groups
-		if ( empty( array_values( self::$synonym_groups ) ) ) {
-			self::$synonym_groups = [];
+		// If no synonyms match was found empty the synonym groups.
+		$query_id = $query->get_id();
+		if ( empty( array_values( self::$synonym_groups[ $query_id ] ?? [] ) ) ) {
+			self::$synonym_groups[ $query_id ] = [];
 		}
 
 		return $search_string;
@@ -395,10 +441,11 @@ class Synonyms {
 	 * @param string $search_string Search string.
 	 * @param array  $sources       Single synonym sources.
 	 * @param array  $synonym       Single synonym data.
+	 * @param Query  $query         Query object.
 	 *
 	 * @return string
 	 */
-	private function process_synonym_sources( string $search_string, array $sources, array $synonym ): string {
+	private function process_synonym_sources( string $search_string, array $sources, array $synonym, Query $query ): string {
 
 		// Iterate over the sources to see if there's a match.
 		foreach ( $sources as $source ) {
@@ -420,9 +467,9 @@ class Synonyms {
 
 			// If there's a space in the search string and the synonym source opt to replace only the whole source.
 			if ( Str::contains( $search_string, ' ' ) && Str::contains( $source, ' ' ) ) {
-				$search_string = $this->process_compound_source( $search_string, $source, $synonym );
+				$search_string = $this->process_compound_source( $search_string, $source, $synonym, $query );
 			} else {
-				$search_string = $this->process_regular_source( $search_string, $source, $synonym );
+				$search_string = $this->process_regular_source( $search_string, $source, $synonym, $query );
 			}
 		}
 
@@ -437,10 +484,11 @@ class Synonyms {
 	 * @param string $search_string Search string.
 	 * @param string $source        Single source.
 	 * @param array  $synonym       Single synonym data.
+	 * @param Query  $query         Query object.
 	 *
 	 * @return string
 	 */
-	private function process_compound_source( string $search_string, string $source, array $synonym ): string {
+	private function process_compound_source( string $search_string, string $source, array $synonym, Query $query ): string {
 
 		$search_string_before = $search_string;
 
@@ -449,21 +497,22 @@ class Synonyms {
 		}
 
 		if ( $synonym['replace'] ) {
-			$search_string = $this->process_compound_source_replace( $search_string, $source, $synonym );
+			$search_string = $this->process_compound_source_replace( $search_string, $source, $synonym, $query );
 		} else {
 			$search_string = $this->process_compound_source_no_replace( $search_string, $synonym );
 		}
 
 		// If the synonyms are present in the group as a source they should be removed.
+		$query_id = $query->get_id();
 		foreach ( explode( ' ', $source ) as $source_tokens ) {
 			$source_tokens = Str::remove_quotes( $source_tokens );
-			if ( isset( self::$synonym_groups[ $source_tokens ] ) ) {
-				unset( self::$synonym_groups[ $source_tokens ] );
+			if ( isset( self::$synonym_groups[ $query_id ][ $source_tokens ] ) ) {
+				unset( self::$synonym_groups[ $query_id ][ $source_tokens ] );
 			}
 		}
 
 		// We can now add the synonyms tokens as new sources.
-		$this->add_synonym_tokens_to_synonym_groups( $synonym );
+		$this->add_synonym_tokens_to_synonym_groups( $synonym, $query );
 
 		if ( $search_string_before !== $search_string ) {
 			$this->found_synonym = true;
@@ -482,18 +531,73 @@ class Synonyms {
 	 * @param string $search_string Search string.
 	 * @param string $source        Single source.
 	 * @param array  $synonym       Single synonym data.
+	 * @param Query  $query         Query object.
 	 *
 	 * @return string
 	 */
-	private function process_compound_source_replace( string $search_string, string $source, array $synonym ): string {
+	private function process_compound_source_replace( string $search_string, string $source, array $synonym, Query $query ): string {
 
 		// Non strict quotes on synonyms sources.
+		/**
+		 * Allow disabling strict quotes on synonyms sources.
+		 *
+		 * @since 4.0.0
+		 *
+		 * @param bool $strict Whether to apply strict quotes on synonyms sources. Default true.
+		 */
 		if ( ! apply_filters( 'searchwp\synonyms\strict', false ) ) {
 
 			// Match quotes between search string and source.
 			$source = Str::remove_quotes( $source );
 			$source = Str::contains( $search_string, '"' ) ? '"' . $source . '"' : $source;
 		}
+
+		// Track multi-word synonym replacements for AND logic.
+		// Extract the synonym tokens that will replace the multi-word source.
+		// These tokens need to match the format that will be in the tokenized search string.
+		$synonyms       = Str::remove_quotes( $synonym['synonyms'] );
+		$synonym_tokens = array_filter( array_map( 'trim', explode( ' ', preg_replace( '/[,\s]+/', ' ', $synonyms ) ) ) );
+
+		// Normalize the tokens to match how they'll appear after tokenization
+		// (lowercase, accents removed if applicable).
+		$synonym_tokens = array_map(
+			function ( $token ) {
+				$token = Str::lower( $token );
+				if ( ! $this->is_strict_tokens() ) {
+					$token = remove_accents( $token );
+				}
+
+				return $token;
+			},
+			$synonym_tokens
+		);
+
+		// Get existing multi-word replacements and merge with new ones.
+		$existing_replacements = self::get_multi_word_synonym_replacements( $query );
+		self::set_multi_word_synonym_replacements( $query, array_merge( $existing_replacements, $synonym_tokens ) );
+
+		// Track original source tokens that were replaced for AND logic validation.
+		// Extract and normalize the original source tokens (the multi-word phrase being replaced).
+		$source_without_quotes = Str::remove_quotes( $source );
+		$source_tokens         = array_filter( array_map( 'trim', explode( ' ', preg_replace( '/[,\s]+/', ' ', $source_without_quotes ) ) ) );
+
+		// Normalize the source tokens to match how they'll appear after tokenization
+		// (lowercase, accents removed if applicable).
+		$source_tokens = array_map(
+			function ( $token ) {
+				$token = Str::lower( $token );
+				if ( ! $this->is_strict_tokens() ) {
+					$token = remove_accents( $token );
+				}
+
+				return $token;
+			},
+			$source_tokens
+		);
+
+		// Get existing source tokens and merge with new ones.
+		$existing_source_tokens = self::get_multi_word_synonym_source_tokens( $query );
+		self::set_multi_word_synonym_source_tokens( $query, array_merge( $existing_source_tokens, $source_tokens ) );
 
 		return $this->replace_source_with_synonyms_in_string( $search_string, $source, $synonym );
 	}
@@ -521,17 +625,18 @@ class Synonyms {
 	 * @param string $search_string Search string.
 	 * @param string $source        Single source.
 	 * @param array  $synonym       Single synonym data.
+	 * @param Query  $query         Query object.
 	 *
 	 * @return string
 	 */
-	private function process_regular_source( string $search_string, string $source, array $synonym ): string {
+	private function process_regular_source( string $search_string, string $source, array $synonym, Query $query ): string {
 
 		$search_string_before = $search_string;
 
 		if ( $synonym['replace'] ) {
-			$search_string = $this->process_regular_source_replace( $search_string, $source, $synonym );
+			$search_string = $this->process_regular_source_replace( $search_string, $source, $synonym, $query );
 		} else {
-			$search_string = $this->process_regular_source_no_replace( $search_string, $source, $synonym );
+			$search_string = $this->process_regular_source_no_replace( $search_string, $source, $synonym, $query );
 		}
 
 		if ( $search_string_before !== $search_string ) {
@@ -551,22 +656,50 @@ class Synonyms {
 	 * @param string $search_string Search string.
 	 * @param string $source        Single source.
 	 * @param array  $synonym       Single synonym data.
+	 * @param Query  $query         Query object.
 	 *
 	 * @return string
 	 */
-	private function process_regular_source_replace( string $search_string, string $source, array $synonym ): string {
+	private function process_regular_source_replace( string $search_string, string $source, array $synonym, Query $query ): string {
 
 		if ( $this->is_not_strict_synonym_match( $search_string, $source ) ) {
 			return $search_string;
 		}
 
-		$search_string = $this->replace_source_with_synonyms_in_string( $search_string, $source, $synonym );
+		// Track single-word to multi-word synonym replacements for AND logic.
+		// Extract the synonym tokens that will replace the single-word source.
+		$synonyms       = Str::remove_quotes( $synonym['synonyms'] );
+		$synonym_tokens = array_filter( array_map( 'trim', explode( ' ', preg_replace( '/[,\s]+/', ' ', $synonyms ) ) ) );
 
-		if ( isset( self::$synonym_groups[ $source ] ) ) {
-			unset( self::$synonym_groups[ $source ] );
+		// Check if the synonym contains multiple words (single-word to multi-word replacement).
+		if ( count( $synonym_tokens ) > 1 ) {
+			// Normalize the tokens to match how they'll appear after tokenization
+			// (lowercase, accents removed if applicable).
+			$synonym_tokens = array_map(
+				function ( $token ) {
+					$token = Str::lower( $token );
+					if ( ! $this->is_strict_tokens() ) {
+						$token = remove_accents( $token );
+					}
+
+					return $token;
+				},
+				$synonym_tokens
+			);
+
+			// Get existing single-word to multi-word replacements and merge with new ones.
+			$existing_replacements = self::get_single_word_to_multi_word_replacements( $query );
+			self::set_single_word_to_multi_word_replacements( $query, array_merge( $existing_replacements, $synonym_tokens ) );
 		}
 
-		$this->add_synonym_tokens_to_synonym_groups( $synonym );
+		$search_string = $this->replace_source_with_synonyms_in_string( $search_string, $source, $synonym );
+
+		$query_id = $query->get_id();
+		if ( isset( self::$synonym_groups[ $query_id ][ $source ] ) ) {
+			unset( self::$synonym_groups[ $query_id ][ $source ] );
+		}
+
+		$this->add_synonym_tokens_to_synonym_groups( $synonym, $query );
 
 		return $search_string;
 	}
@@ -579,17 +712,19 @@ class Synonyms {
 	 * @param string $search_string Search string.
 	 * @param string $source        Single source.
 	 * @param array  $synonym       Single synonym data.
+	 * @param Query  $query         Query object.
 	 *
 	 * @return string
 	 */
-	private function process_regular_source_no_replace( string $search_string, string $source, array $synonym ): string {
+	private function process_regular_source_no_replace( string $search_string, string $source, array $synonym, Query $query ): string {
 
 		$search_string .= ' ' . $synonym['synonyms'];
 
-		if ( in_array( $source, array_keys( self::$synonym_groups ), true ) ) {
-			self::$synonym_groups[ $source ] = array_merge( self::$synonym_groups[ $source ], array_map( 'trim', explode( ',', $synonym['synonyms'] ) ) );
+		$query_id = $query->get_id();
+		if ( in_array( $source, array_keys( self::$synonym_groups[ $query_id ] ?? [] ), true ) ) {
+			self::$synonym_groups[ $query_id ][ $source ] = array_merge( self::$synonym_groups[ $query_id ][ $source ], array_map( 'trim', explode( ',', $synonym['synonyms'] ) ) );
 		} else {
-			self::$synonym_groups[ $source ] = array_map( 'trim', explode( ',', $synonym['synonyms'] ) );
+			self::$synonym_groups[ $query_id ][ $source ] = array_map( 'trim', explode( ',', $synonym['synonyms'] ) );
 		}
 
 		return $search_string;
@@ -623,15 +758,22 @@ class Synonyms {
 	 * @since 4.2.4
 	 *
 	 * @param array $synonym Single synonym data.
+	 * @param Query $query   Query object.
+	 *
+	 * @return void
 	 */
-	private function add_synonym_tokens_to_synonym_groups( array $synonym ) {
+	private function add_synonym_tokens_to_synonym_groups( array $synonym, Query $query ) {
 
 		$synonyms = Str::remove_quotes( $synonym['synonyms'] );
 
 		$replace_synonyms = explode( ' ', preg_replace( '/[,\s]+/', ' ', $synonyms ) );
 		$new_tokens       = array_fill_keys( $replace_synonyms, [] );
 
-		self::$synonym_groups = array_merge( self::$synonym_groups, $new_tokens );
+		$query_id = $query->get_id();
+		if ( ! isset( self::$synonym_groups[ $query_id ] ) ) {
+			self::$synonym_groups[ $query_id ] = [];
+		}
+		self::$synonym_groups[ $query_id ] = array_merge( self::$synonym_groups[ $query_id ], $new_tokens );
 	}
 
 	/**
@@ -639,16 +781,23 @@ class Synonyms {
 	 *
 	 * @since 4.2.3
 	 *
+	 * @param Query $query Query object.
+	 *
 	 * @return void
 	 */
-	private function remove_duplicate_tokens_from_token_groups(): void {
+	private function remove_duplicate_tokens_from_token_groups( Query $query ) {
 
-		$synonym_groups_keys = array_keys( self::$synonym_groups );
+		$query_id = $query->get_id();
+		if ( ! isset( self::$synonym_groups[ $query_id ] ) ) {
+			return;
+		}
 
-		foreach ( self::$synonym_groups as $tokens ) {
+		$synonym_groups_keys = array_keys( self::$synonym_groups[ $query_id ] );
+
+		foreach ( self::$synonym_groups[ $query_id ] as $tokens ) {
 			foreach ( $tokens as $token ) {
-				if ( in_array( $token, $synonym_groups_keys, true ) && empty( self::$synonym_groups[ $token ] ) ) {
-					unset( self::$synonym_groups[ $token ] );
+				if ( in_array( $token, $synonym_groups_keys, true ) && empty( self::$synonym_groups[ $query_id ][ $token ] ) ) {
+					unset( self::$synonym_groups[ $query_id ][ $token ] );
 				}
 			}
 		}
@@ -695,18 +844,152 @@ class Synonyms {
 	 *
 	 * @since 4.2.4
 	 *
-	 * @param string $string Input string.
+	 * @param string $_string Input string.
 	 *
 	 * @return string
 	 */
-	private function remove_duplicate_words_from_string( string $string ): string {
+	private function remove_duplicate_words_from_string( string $_string ): string {
 
 		// Extract any single keyword and preserve quoted phrases as a single entry.
 		// "[^"]+" matches any quoted substring.
 		// [^\s,]+ matches any single keyword separated by commas or spaces.
-		preg_match_all( '/"[^"]+"|[^\s,]+/', $string, $matches );
+		preg_match_all( '/"[^"]+"|[^\s,]+/', $_string, $matches );
 
 		// Remove duplicates and return the final string.
 		return implode( ' ', array_unique( $matches[0] ) );
 	}
+
+	/**
+	 * Get synonym groups for a specific query.
+	 *
+	 * @since 4.2.3
+	 *
+	 * @param Query $query Query object.
+	 *
+	 * @return array Synonym groups for the query.
+	 */
+	public static function get_synonym_groups( Query $query ): array {
+
+		$query_id = $query->get_id();
+
+		return self::$synonym_groups[ $query_id ] ?? [];
+	}
+
+	/**
+	 * Getter for multi-word synonym replacements.
+	 *
+	 * @since 4.5.7
+	 *
+	 * @param Query $query Query object.
+	 *
+	 * @return array Array of synonym tokens that represent multi-word replacements.
+	 */
+	public static function get_multi_word_synonym_replacements( Query $query ): array {
+
+		$query_id = $query->get_id();
+
+		return self::$multi_word_synonym_replacements[ $query_id ] ?? [];
+	}
+
+	/**
+	 * Setter for multi-word synonym replacements.
+	 *
+	 * @since 4.5.7
+	 *
+	 * @param Query $query        Query object.
+	 * @param array $replacements Array of synonym tokens that represent multi-word replacements.
+	 *
+	 * @return void
+	 */
+	public static function set_multi_word_synonym_replacements( Query $query, array $replacements ) {
+
+		$query_id = $query->get_id();
+		self::$multi_word_synonym_replacements[ $query_id ] = $replacements;
+	}
+
+	/**
+	 * Getter for original source tokens replaced by multi-word synonyms.
+	 *
+	 * @since 4.5.7
+	 *
+	 * @param Query $query Query object.
+	 *
+	 * @return array Array of original source tokens (normalized) that were replaced by multi-word synonyms.
+	 */
+	public static function get_multi_word_synonym_source_tokens( Query $query ): array {
+
+		$query_id = $query->get_id();
+
+		return self::$multi_word_synonym_source_tokens[ $query_id ] ?? [];
+	}
+
+	/**
+	 * Setter for original source tokens replaced by multi-word synonyms.
+	 *
+	 * @since 4.5.7
+	 *
+	 * @param Query $query         Query object.
+	 * @param array $source_tokens Array of original source tokens (normalized) that were replaced by multi-word synonyms.
+	 *
+	 * @return void
+	 */
+	public static function set_multi_word_synonym_source_tokens( Query $query, array $source_tokens ) {
+
+		$query_id = $query->get_id();
+		self::$multi_word_synonym_source_tokens[ $query_id ] = $source_tokens;
+	}
+
+	/**
+	 * Getter for single-word to multi-word synonym replacements.
+	 *
+	 * @since 4.5.7
+	 *
+	 * @param Query $query Query object.
+	 *
+	 * @return array Array of synonym tokens that result from single-word to multi-word replacements.
+	 */
+	public static function get_single_word_to_multi_word_replacements( Query $query ): array {
+
+		$query_id = $query->get_id();
+
+		return self::$single_word_to_multi_word_replacements[ $query_id ] ?? [];
+	}
+
+	/**
+	 * Setter for single-word to multi-word synonym replacements.
+	 *
+	 * @since 4.5.7
+	 *
+	 * @param Query $query        Query object.
+	 * @param array $replacements Array of synonym tokens that result from single-word to multi-word replacements.
+	 *
+	 * @return void
+	 */
+	public static function set_single_word_to_multi_word_replacements( Query $query, array $replacements ) {
+
+		$query_id = $query->get_id();
+		self::$single_word_to_multi_word_replacements[ $query_id ] = $replacements;
+	}
+
+	/**
+	 * Clean up query-specific data from static properties.
+	 *
+	 * Prevents memory growth in long-running PHP environments by removing
+	 * data associated with completed queries.
+	 *
+	 * @since 4.5.7
+	 *
+	 * @param Query $query Query object.
+	 *
+	 * @return void
+	 */
+	public static function cleanup_query_data( Query $query ) {
+		$query_id = $query->get_id();
+
+		unset( self::$synonym_groups[ $query_id ] );
+		unset( self::$multi_word_synonym_replacements[ $query_id ] );
+		unset( self::$multi_word_synonym_source_tokens[ $query_id ] );
+		unset( self::$single_word_to_multi_word_replacements[ $query_id ] );
+	}
+
 }

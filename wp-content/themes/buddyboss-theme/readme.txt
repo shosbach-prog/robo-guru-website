@@ -2,7 +2,7 @@
 Contributors: BuddyBoss
 Requires at least: 4.9.1
 Tested up to: 6.8.1
-Version: 2.17.0
+Version: 2.18.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,6 +18,11 @@ BuddyBoss Theme is a community theme for the BuddyBoss Platform.
 4. Upload the file 'buddyboss-theme-child.zip'
 
 == Changelog ==
+
+= 2.18.0 =
+* Bug: Core - Fixed multiple XSS vulnerabilities by properly sanitizing and escaping user-supplied URL parameters in the theme
+* Bug: LifterLMS - Fixed an issue where private LifterLMS courses were not consistently displayed when loaded via AJAX
+* Bug: Styling - Fixed a visual alignment issue with the search icon in the menu icons modal to ensure consistent positioning
 
 = 2.17.0 =
 * Bug: Core - Fixed alignment and spacing issues in the Color Customizer text block to ensure a consistent and properly aligned layout

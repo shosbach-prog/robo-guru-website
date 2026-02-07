@@ -130,7 +130,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 												<?php endif; ?>
 											</table>
 										<?php else : ?>
-											<p><?php esc_html_e( 'There where no searches in the past week.', 'searchwp' ); ?></p>
+											<p><?php esc_html_e( 'There were no searches in the past week.', 'searchwp' ); ?></p>
 										<?php endif; ?>
 									</td>
 								</tr>

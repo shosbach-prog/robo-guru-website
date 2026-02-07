@@ -5,6 +5,7 @@ namespace BuddyBossTheme\GroundLevel\Mothership;
 
 use BuddyBossTheme\GroundLevel\Mothership\AbstractPluginConnection;
 use BuddyBossTheme\GroundLevel\Mothership\Service as MothershipService;
+use BuddyBossTheme\GroundLevel\Mothership\Util as MothershipUtil;
 use BuddyBossTheme\GroundLevel\Container\Concerns\HasStaticContainer;
 use BuddyBossTheme\GroundLevel\Container\Contracts\StaticContainerAwareness;
 /**
@@ -97,8 +98,8 @@ class Credentials implements StaticContainerAwareness
     /**
      * Checks and returns credentials if they are set in environment variables or constants otherwise returns false.
      *
-     * The key used for the environment variable and constant is a string that is the concatenation of the
-     * {@see \GroundLevel\Mothership\AbstractPluginConnection::pluginPrefix} and the $credentialName parameter.
+     * The key used for the environment variable and constant is the $credentialName prefixed with
+     * {@see \GroundLevel\Mothership\Util::composeConstantName()}.
      *
      * - An underscore is used as a separtor between the two strings
      * - The whole string is converted to uppercase
@@ -111,9 +112,7 @@ class Credentials implements StaticContainerAwareness
      */
     public static function isCredentialSetInEnvironmentOrConstants(string $credentialName)
     {
-        $prefix = self::getContainer()->get(AbstractPluginConnection::class)->pluginPrefix;
-        $prefix = '_' === \substr($prefix, -1) ? $prefix : $prefix . '_';
-        $constantKey = \strtoupper(\str_replace(['-', '.', ' '], '_', $prefix . $credentialName));
+        $constantKey = MothershipUtil::composeConstantName($credentialName);
         // Check if $constantKey is an environment variable.
         $envValue = \getenv($constantKey);
         if (\false !== $envValue) {

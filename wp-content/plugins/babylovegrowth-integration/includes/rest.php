@@ -48,6 +48,7 @@ function babylovegrowth_handle_publish(WP_REST_Request $request) {
 	$content_html = $body['content_html'] ?? '';
 	$content_md = $body['content_markdown'] ?? '';
 	$hero = esc_url_raw($body['heroImageUrl'] ?? '');
+	$hero_alt = sanitize_text_field($body['heroImageAlt'] ?? '');
 	$video_url = esc_url_raw($body['videoUrl'] ?? '');
 	$video_poster = esc_url_raw($body['videoPoster'] ?? '');
 	// Determine desired status: request-provided takes precedence; otherwise use plugin default
@@ -74,6 +75,10 @@ function babylovegrowth_handle_publish(WP_REST_Request $request) {
 	}
 
 	$post_id = babylovegrowth_find_post_id_by_slug($slug);
+	$author_id = (int) get_option('babylovegrowth_author', 0);
+	if (!$author_id || !get_userdata($author_id)) {
+		$author_id = get_current_user_id() ?: 1;
+	}
 	$post_data = [
 		'post_title'   => $title,
 		'post_name'    => $slug,
@@ -81,6 +86,7 @@ function babylovegrowth_handle_publish(WP_REST_Request $request) {
 		'post_type'    => 'post',
 		'post_content' => $content,
 		'post_excerpt' => $meta,
+		'post_author'  => $author_id,
 	];
 
 	// Temporarily allow iframe and wrapper styles during post save
@@ -184,6 +190,9 @@ add_filter('wp_kses_allowed_html', $allow_html, 10, 2);
 		$attachment_id = babylovegrowth_sideload_featured_image($hero, $post_id);
 		if (!is_wp_error($attachment_id) && $attachment_id) {
 			set_post_thumbnail($post_id, $attachment_id);
+			if ($hero_alt !== '') {
+				update_post_meta($attachment_id, '_wp_attachment_image_alt', $hero_alt);
+			}
 		}
 	}
 

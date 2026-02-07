@@ -58,8 +58,8 @@
 	font-family: 'bb-icons';
 	font-size: 16px;
 	font-weight: 400;
-	position: relative;
-	top: -24px;
+	position: absolute;
+	top: 28px;
 	right: 6px;
 }
 

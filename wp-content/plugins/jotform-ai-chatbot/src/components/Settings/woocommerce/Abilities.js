@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import cx from 'classnames';
 import { bool } from 'prop-types';
@@ -45,7 +46,7 @@ const Abilities = ({ isConnected }) => {
             <h4>{t(ALL_TEXTS.RECOMMEND_PRODUCTS)}</h4>
             <p>{t(ALL_TEXTS.SUGGESTS_BEST_SELLERS)}</p>
           </div>
-          <Toggle ariaLabel={`${t(ALL_TEXTS.RECOMMEND_PRODUCTS)} Toggle`} onChange={() => handleToggleChange(WOO_COMMERCE_PROPERTIES.PRODUCT_RECOMMENDATION, !recommendProducts)} />
+          <Toggle ariaLabel={`${t(ALL_TEXTS.RECOMMEND_PRODUCTS)} Toggle`} checked={recommendProducts} onChange={() => handleToggleChange(WOO_COMMERCE_PROPERTIES.PRODUCT_RECOMMENDATION, !recommendProducts)} />
         </div>
         {/* add & update cart */}
         <div className='jfpContent-wrapper--settings-options-ability-select'>

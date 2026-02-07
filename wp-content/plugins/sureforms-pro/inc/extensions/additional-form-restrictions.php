@@ -93,10 +93,11 @@ class Additional_Form_Restrictions {
 				'default'           => wp_json_encode(
 					[
 						'ip'       => [
-							'status'  => false, // Whether IP restriction is active.
-							'mode'    => 'block', // Block or allow mode.
-							'ips'     => '', // Comma-separated IP addresses.
-							'message' => __( "We're sorry, this form isn't accessible from your IP address.", 'sureforms-pro' ),
+							'status'                => false, // Whether IP restriction is active.
+							'mode'                  => 'block', // Block or allow mode.
+							'ips'                   => '', // Comma-separated IP addresses.
+							'includeDisallowedKeys' => false, // Whether to include IPs from WordPress disallowed_keys option.
+							'message'               => __( "We're sorry, this form isn't accessible from your IP address.", 'sureforms-pro' ),
 						],
 						'country'  => [
 							'status'    => false, // Whether country restriction is active.
@@ -105,9 +106,10 @@ class Additional_Form_Restrictions {
 							'message'   => __( "We're sorry, this form isn't available in your region right now.", 'sureforms-pro' ),
 						],
 						'keyword'  => [
-							'status'   => false, // Whether keyword restriction is active.
-							'keywords' => '', // Comma-separated keywords to check.
-							'message'  => __( 'Your submission contains restricted keywords.', 'sureforms-pro' ),
+							'status'                => false, // Whether keyword restriction is active.
+							'keywords'              => '', // Comma-separated keywords to check.
+							'includeDisallowedKeys' => false, // Whether to include keywords from WordPress disallowed_keys option.
+							'message'               => __( 'Your submission contains restricted keywords.', 'sureforms-pro' ),
 						],
 						'login'    => [
 							'status'  => false, // Whether login restriction is active.
@@ -152,10 +154,11 @@ class Additional_Form_Restrictions {
 
 		// Sanitize IP restriction data with type validation and fallbacks.
 		if ( isset( $data['ip'] ) && is_array( $data['ip'] ) ) {
-			$data['ip']['status']  = isset( $data['ip']['status'] ) ? (bool) $data['ip']['status'] : false; // Ensure boolean.
-			$data['ip']['mode']    = isset( $data['ip']['mode'] ) && in_array( $data['ip']['mode'], [ 'block', 'allow' ], true ) ? $data['ip']['mode'] : 'block'; // Validate allowed modes.
-			$data['ip']['ips']     = isset( $data['ip']['ips'] ) && is_string( $data['ip']['ips'] ) ? sanitize_text_field( $data['ip']['ips'] ) : ''; // Clean IP list string.
-			$data['ip']['message'] = isset( $data['ip']['message'] ) && is_string( $data['ip']['message'] ) ? sanitize_text_field( $data['ip']['message'] ) : ''; // Clean error message.
+			$data['ip']['status']                = isset( $data['ip']['status'] ) ? (bool) $data['ip']['status'] : false; // Ensure boolean.
+			$data['ip']['mode']                  = isset( $data['ip']['mode'] ) && in_array( $data['ip']['mode'], [ 'block', 'allow' ], true ) ? $data['ip']['mode'] : 'block'; // Validate allowed modes.
+			$data['ip']['ips']                   = isset( $data['ip']['ips'] ) && is_string( $data['ip']['ips'] ) ? sanitize_text_field( $data['ip']['ips'] ) : ''; // Clean IP list string.
+			$data['ip']['includeDisallowedKeys'] = isset( $data['ip']['includeDisallowedKeys'] ) ? (bool) $data['ip']['includeDisallowedKeys'] : false; // Include disallowed_keys IPs.
+			$data['ip']['message']               = isset( $data['ip']['message'] ) && is_string( $data['ip']['message'] ) ? sanitize_text_field( $data['ip']['message'] ) : ''; // Clean error message.
 		}
 
 		// Sanitize Country restriction data with type validation and fallbacks.
@@ -168,9 +171,10 @@ class Additional_Form_Restrictions {
 
 		// Sanitize Keyword restriction data with type validation and fallbacks.
 		if ( isset( $data['keyword'] ) && is_array( $data['keyword'] ) ) {
-			$data['keyword']['status']   = isset( $data['keyword']['status'] ) ? (bool) $data['keyword']['status'] : false; // Ensure boolean.
-			$data['keyword']['keywords'] = isset( $data['keyword']['keywords'] ) && is_string( $data['keyword']['keywords'] ) ? sanitize_text_field( $data['keyword']['keywords'] ) : ''; // Clean keyword list string.
-			$data['keyword']['message']  = isset( $data['keyword']['message'] ) && is_string( $data['keyword']['message'] ) ? sanitize_text_field( $data['keyword']['message'] ) : ''; // Clean error message.
+			$data['keyword']['status']                = isset( $data['keyword']['status'] ) ? (bool) $data['keyword']['status'] : false; // Ensure boolean.
+			$data['keyword']['keywords']              = isset( $data['keyword']['keywords'] ) && is_string( $data['keyword']['keywords'] ) ? sanitize_text_field( $data['keyword']['keywords'] ) : ''; // Clean keyword list string.
+			$data['keyword']['includeDisallowedKeys'] = isset( $data['keyword']['includeDisallowedKeys'] ) ? (bool) $data['keyword']['includeDisallowedKeys'] : false; // Include disallowed_keys keywords.
+			$data['keyword']['message']               = isset( $data['keyword']['message'] ) && is_string( $data['keyword']['message'] ) ? sanitize_text_field( $data['keyword']['message'] ) : ''; // Clean error message.
 		}
 
 		// Sanitize Login restriction data with type validation and fallbacks.
@@ -502,6 +506,32 @@ class Additional_Form_Restrictions {
 	}
 
 	/**
+	 * Get items from WordPress disallowed_keys option.
+	 * Extracts newline-separated items with optional filtering.
+	 *
+	 * @since 2.5.0
+	 * @param callable|null $filter_callback Optional callback to filter items. Receives item value, returns bool.
+	 * @return array Array of filtered items from disallowed_keys.
+	 */
+	private function get_disallowed_keys_items( $filter_callback = null ) {
+		$mod_keys = get_option( 'disallowed_keys' );
+		$mod_keys = is_string( $mod_keys ) ? trim( $mod_keys ) : '';
+
+		if ( '' === $mod_keys ) {
+			return [];
+		}
+
+		$items = explode( "\n", $mod_keys );
+		$items = array_map( 'trim', $items );
+
+		if ( is_callable( $filter_callback ) ) {
+			$items = array_filter( $items, $filter_callback );
+		}
+
+		return $items;
+	}
+
+	/**
 	 * Check if current user's IP address should be restricted based on the mode.
 	 * Handles both 'block' and 'allow' modes with different logic.
 	 *
@@ -513,6 +543,25 @@ class Additional_Form_Restrictions {
 	private function is_ip_restricted( $restrictions, $mode = 'block' ) {
 		// Get IP list from configuration.
 		$ip_list = trim( $restrictions['ip']['ips'] ?? '' );
+
+		// Check if we should include IPs from disallowed_keys option.
+		$include_disallowed_keys = $restrictions['ip']['includeDisallowedKeys'] ?? false;
+
+		if ( $include_disallowed_keys ) {
+			// Get valid IPs from disallowed_keys option.
+			$valid_ips = $this->get_disallowed_keys_items(
+				static function ( $value ) {
+					return filter_var( $value, FILTER_VALIDATE_IP ) !== false;
+				}
+			);
+
+			if ( ! empty( $valid_ips ) ) {
+				$joined = implode( ', ', $valid_ips );
+
+				// Append to existing IP list if not empty.
+				$ip_list .= ', ' . $joined;
+			}
+		}
 
 		// If no IPs configured, handle based on mode.
 		if ( empty( $ip_list ) ) {
@@ -801,6 +850,23 @@ class Additional_Form_Restrictions {
 	private function is_keyword_restricted( $restrictions, $form_data = [] ) {
 		// Get keyword list from configuration.
 		$keyword_list = trim( $restrictions['keyword']['keywords'] ?? '' );
+
+		// Check if we should include keywords from disallowed_keys option.
+		$include_disallowed_keys = $restrictions['keyword']['includeDisallowedKeys'] ?? false;
+
+		if ( $include_disallowed_keys ) {
+			// Get keywords from disallowed_keys option (excluding IPs).
+			$disallowed_keywords = $this->get_disallowed_keys_items(
+				static function ( $value ) {
+					return filter_var( $value, FILTER_VALIDATE_IP ) === false;
+				}
+			);
+
+			if ( ! empty( $disallowed_keywords ) ) {
+				$joined        = implode( ', ', $disallowed_keywords );
+				$keyword_list .= ',' . $joined;
+			}
+		}
 
 		// If no keywords configured, allow access.
 		if ( empty( $keyword_list ) ) {

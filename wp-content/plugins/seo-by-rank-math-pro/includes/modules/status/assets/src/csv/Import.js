@@ -75,9 +75,10 @@ export default ( { data } ) => {
 
 					<div>
 						<FormFileUpload
-							__next40pxDefaultSize
 							accept=".csv"
 							onChange={ ( event ) => setImportFile( event.currentTarget.files[ 0 ] ) }
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 						>
 							<span className="import-file-button">{ __( 'Choose File', 'rank-math-pro' ) }</span>
 							{ importFile && <span>{ importFile.name }</span> }
@@ -90,7 +91,6 @@ export default ( { data } ) => {
 
 					<div>
 						<CheckboxControl
-							__nextHasNoMarginBottom
 							label={ __( 'Do not overwrite existing data', 'rank-math-pro' ) }
 							help={ __( 'Check this to import meta fields only if their current meta value is empty.', 'rank-math-pro' ) }
 							checked={ noOverwrite }

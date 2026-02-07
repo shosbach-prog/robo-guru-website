@@ -165,7 +165,7 @@ msgid "Page Break Label"
 msgstr "Etichetta di interruzione di pagina"
 
 #: inc/extensions/page-break.php:119
-#: inc/pro/conversational-form.php:959
+#: inc/pro/conversational-form.php:951
 #: inc/pro/save-resume/init.php:670
 #: dist/entry.js:177
 msgid "Next"
@@ -190,7 +190,7 @@ msgid "Hidden Field"
 msgstr "Campo nascosto"
 
 #: inc/business/user-registration/password/password-markup.php:82
-#: inc/extensions/additional-form-restrictions.php:437
+#: inc/extensions/additional-form-restrictions.php:441
 #: inc/fields/password-markup.php:56
 #: assets/js/unminified/package/business/user-registration/login/editor/edit.js:58
 #: assets/js/unminified/package/business/user-registration/register/editor/edit.js:86
@@ -329,37 +329,47 @@ msgstr "Tipo di file non consentito."
 msgid "You can only upload up to %s files."
 msgstr "Puoi caricare solo fino a %s file."
 
-#: plugin-loader.php:290
+#: plugin-loader.php:297
+#: plugin-loader.php:383
 msgid "Activate the SureForms Plugin"
 msgstr "Attiva il plugin SureForms"
 
 #. translators: %s: SureForms Pro Product Name.
-#: plugin-loader.php:292
+#. translators: %s: Pro plugin name
+#: plugin-loader.php:299
+#: plugin-loader.php:385
 msgid "Before you can use all the features of %s, you need to activate the SureForms plugin first."
 msgstr "Prima di poter utilizzare tutte le funzionalità di %s, è necessario attivare prima il plugin SureForms."
 
-#: plugin-loader.php:293
+#: plugin-loader.php:300
+#: plugin-loader.php:386
 msgid "Activate Now"
 msgstr "Attiva ora"
 
-#: plugin-loader.php:301
+#: plugin-loader.php:309
+#: plugin-loader.php:394
 msgid "Install and Activate the SureForms Plugin"
 msgstr "Installa e attiva il plugin SureForms"
 
 #. translators: %s: SureForms Pro Product Name.
-#: plugin-loader.php:303
+#. translators: %s: Pro plugin name
+#: plugin-loader.php:311
+#: plugin-loader.php:396
 msgid "Before you can use all the features of %s, you need to install and activate the SureForms plugin first."
 msgstr "Prima di poter utilizzare tutte le funzionalità di %s, è necessario installare e attivare prima il plugin SureForms."
 
-#: plugin-loader.php:304
+#: plugin-loader.php:312
+#: plugin-loader.php:397
 msgid "Install SureForms"
 msgstr "Installa SureForms"
 
-#: plugin-loader.php:333
+#: plugin-loader.php:345
+#: plugin-loader.php:438
 msgid "SureForms Pro is not working because you are using an old version of SureForms."
 msgstr "SureForms Pro non funziona perché stai utilizzando una versione vecchia di SureForms."
 
-#: plugin-loader.php:334
+#: plugin-loader.php:349
+#: plugin-loader.php:447
 msgid "Update SureForms Now"
 msgstr "Aggiorna SureForms ora"
 
@@ -418,7 +428,9 @@ msgstr "Zapier"
 #: assets/js/unminified/package/business/repeater/editor/edit.js:88
 #: assets/js/unminified/package/business/user-registration/link/edit.js:84
 #: assets/js/unminified/package/business/user-registration/login/editor/edit.js:115
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:92
 #: assets/js/unminified/package/business/user-registration/password/editor/settings.js:40
+#: assets/js/unminified/package/business/user-registration/reset-password/editor/edit.js:83
 #: assets/js/unminified/package/pro/signature/editor/edit.js:66
 #: dist/blocks.js:172
 #: dist/blocks.js:180
@@ -442,6 +454,7 @@ msgstr "Richiesto"
 #: assets/js/unminified/package/pro/signature/editor/edit.js:78
 #: dist/blocks.js:180
 #: dist/blocks.js:182
+#: dist/formSettings.js:194
 #: dist/package/business/srfmUserRegistrationAdmin.js:172
 #: dist/package/pro/signatureAdmin.js:174
 msgid "Error Message"
@@ -476,7 +489,7 @@ msgstr "Tipo"
 msgid "Select Field"
 msgstr "Seleziona campo"
 
-#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:142
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:178
 #: assets/js/unminified/package/pro/native-integrations/form-settings/components/native-integrations-drawer-config.js:608
 #: dist/blocks.js:182
 #: dist/formSettings.js:189
@@ -764,18 +777,18 @@ msgstr "Inizia"
 msgid "Welcome Screen Image"
 msgstr "Immagine della schermata di benvenuto"
 
-#: inc/pro/conversational-form.php:627
+#: inc/pro/conversational-form.php:619
 msgid "Link to homepage"
 msgstr "Collegamento alla homepage"
 
-#: inc/pro/conversational-form.php:628
+#: inc/pro/conversational-form.php:620
 #: assets/js/unminified/package/pro/srfm-conversational-forms.js:434
 #: dist/package/pro/srfmConversationalForms.js:174
 msgid "Site Logo"
 msgstr "Logo del sito"
 
-#: inc/pro/conversational-form.php:616
-#: inc/pro/conversational-form.php:684
+#: inc/pro/conversational-form.php:608
+#: inc/pro/conversational-form.php:676
 msgid "Conversational Form Background"
 msgstr "Contesto del modulo conversazionale"
 
@@ -910,7 +923,7 @@ msgid "Show OttoKit Response"
 msgstr "Mostra risposta OttoKit"
 
 #. translators: %1$s: opening wrapper tag for the text, %2$s: opening tag for the bold text, %3$s: closing tag for the bold text, %4$s: closing wrapper tag
-#: inc/pro/conversational-form.php:963
+#: inc/pro/conversational-form.php:955
 msgid "%1$sPress %2$sEnter%3$s%4$s"
 msgstr "%1$sPremi %2$sInvio%3$s%4$s"
 
@@ -927,7 +940,7 @@ msgstr "Apri"
 msgid "Please enter a valid signature!"
 msgstr "Per favore, inserisci una firma valida!"
 
-#: inc/business/user-registration/init.php:156
+#: inc/business/user-registration/init.php:181
 #: inc/pro/signature/init.php:328
 msgid "This field is required."
 msgstr "Questo campo è obbligatorio."
@@ -1030,66 +1043,70 @@ msgstr "Durata massima che il modulo attenderà per ricevere una risposta da Ott
 msgid "Add New"
 msgstr "Aggiungi nuovo"
 
-#: inc/business/user-registration/init.php:89
-#: inc/business/user-registration/init.php:157
+#: inc/business/user-registration/init.php:112
+#: inc/business/user-registration/init.php:182
 msgid "Your password strength is weak."
 msgstr "La tua password è debole."
 
-#: inc/business/user-registration/init.php:90
-#: inc/business/user-registration/init.php:158
+#: inc/business/user-registration/init.php:113
+#: inc/business/user-registration/init.php:183
 msgid "Your password strength is moderate."
 msgstr "La forza della tua password è moderata."
 
-#: inc/business/user-registration/init.php:91
-#: inc/business/user-registration/init.php:159
+#: inc/business/user-registration/init.php:114
+#: inc/business/user-registration/init.php:184
 msgid "Your password strength is strong."
 msgstr "La forza della tua password è forte."
 
-#: inc/business/user-registration/init.php:92
-#: inc/business/user-registration/init.php:160
+#: inc/business/user-registration/init.php:115
+#: inc/business/user-registration/init.php:185
 msgid "Your password strength is very strong."
 msgstr "La forza della tua password è molto forte."
 
-#: inc/business/user-registration/init.php:93
-#: inc/business/user-registration/init.php:161
+#: inc/business/user-registration/init.php:116
+#: inc/business/user-registration/init.php:186
 msgid "Confirmation password does not match."
 msgstr "La password di conferma non corrisponde."
 
-#: inc/business/user-registration/init.php:430
+#: inc/business/user-registration/init.php:465
+#: inc/business/user-registration/init.php:533
+#: inc/business/user-registration/init.php:583
 msgid "Nonce Verification Failed"
 msgstr "Verifica del nonce fallita"
 
-#: inc/business/user-registration/init.php:439
+#: inc/business/user-registration/init.php:474
 msgid "You are already logged in."
 msgstr "Sei già connesso."
 
-#: inc/business/user-registration/init.php:477
+#: inc/business/user-registration/init.php:512
 msgid "Login successful."
 msgstr "Accesso riuscito."
 
-#: inc/business/user-registration/init.php:517
+#: inc/business/user-registration/init.php:686
 msgid "Login URL"
 msgstr "URL di accesso"
 
-#: inc/business/user-registration/init.php:518
+#: inc/business/user-registration/init.php:687
 msgid "Registration URL"
 msgstr "URL di registrazione"
 
-#: inc/business/user-registration/init.php:519
+#: inc/business/user-registration/init.php:688
 msgid "Forgot Password URL"
 msgstr "URL per il recupero della password"
 
-#: inc/business/user-registration/init.php:520
+#: inc/business/user-registration/init.php:689
 msgid "Logout URL"
 msgstr "URL di logout"
 
-#: inc/business/user-registration/init.php:778
+#: inc/business/user-registration/init.php:968
 #: assets/js/unminified/package/business/custom-post-type/components/UserMetaPanel.js:157
 #: dist/package/business/srfmCustomPostType.js:174
 msgid "Add Custom Meta"
 msgstr "Aggiungi Meta Personalizzato"
 
 #: inc/business/user-registration/login/login-markup.php:48
+#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:37
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
 msgid "Login"
 msgstr "Accesso"
 
@@ -1173,44 +1190,44 @@ msgid "You have selected %s."
 msgstr "Hai selezionato %s."
 
 #. translators: %s is the confirmation text
-#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:79
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:83
 #: dist/package/business/srfmUserRegistration.js:189
 msgid "Enable Custom Registration Page "
 msgstr "Abilita la pagina di registrazione personalizzata"
 
-#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:83
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:87
 #: dist/package/business/srfmUserRegistration.js:189
 msgid "Enable this to assign your Custom Registration page and offer a personalized sign-up experience."
 msgstr "Abilita questa opzione per assegnare la tua pagina di registrazione personalizzata e offrire un'esperienza di iscrizione personalizzata."
 
-#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:88
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:92
 #: dist/package/business/srfmUserRegistration.js:189
 msgid "Select Registration Page"
 msgstr "Seleziona la pagina di registrazione"
 
-#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:95
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:99
 #: dist/package/business/srfmUserRegistration.js:189
 msgid "Enable Custom Login Page "
 msgstr "Abilita la pagina di accesso personalizzata"
 
-#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:96
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:100
 #: dist/package/business/srfmUserRegistration.js:189
 msgid "Enable this to assign your Custom Login page and offer a personalized log-in experience."
 msgstr "Abilita questa opzione per assegnare la tua pagina di accesso personalizzata e offrire un'esperienza di accesso personalizzata."
 
-#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:101
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:105
 #: dist/package/business/srfmUserRegistration.js:189
 msgid "Select Login Page"
 msgstr "Seleziona la pagina di accesso"
 
 #: assets/js/unminified/conditional-confirmations/components/DefaultConfirmationTypes.js:161
-#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:135
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:171
 #: dist/package/business/ConditionalConfirmationSettings.js:172
 #: dist/package/business/srfmUserRegistration.js:189
 msgid "Search for a page"
 msgstr "Cerca una pagina"
 
-#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:220
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:256
 #: assets/js/unminified/package/business/user-registration/user-registration.js:58
 #: dist/package/business/srfmUserRegistration.js:189
 msgid "Login/Registration"
@@ -1252,6 +1269,7 @@ msgid "Right"
 msgstr "Destra"
 
 #: assets/js/unminified/package/business/user-registration/login/editor/edit.js:50
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:48
 #: dist/package/business/srfmUserRegistrationAdmin.js:172
 msgid "Email or Username"
 msgstr "Email o nome utente"
@@ -1269,22 +1287,28 @@ msgid "Forgot Password"
 msgstr "Password dimenticata"
 
 #: assets/js/unminified/package/business/user-registration/login/editor/edit.js:83
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:63
+#: assets/js/unminified/package/business/user-registration/reset-password/editor/edit.js:60
 #: dist/package/business/srfmUserRegistrationAdmin.js:172
 msgid "Sign In"
 msgstr "Accedi"
 
 #: assets/js/unminified/package/business/user-registration/login/editor/edit.js:89
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:72
 #: dist/package/business/srfmUserRegistrationAdmin.js:172
 msgid "Don't have an account? "
 msgstr "Non hai un account?"
 
 #: assets/js/unminified/package/business/user-registration/login/editor/edit.js:90
 #: assets/js/unminified/package/business/user-registration/login/editor/edit.js:140
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:73
 #: dist/package/business/srfmUserRegistrationAdmin.js:172
 msgid "Sign Up"
 msgstr "Iscriviti"
 
 #: assets/js/unminified/package/business/user-registration/login/editor/edit.js:149
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:114
+#: assets/js/unminified/package/business/user-registration/reset-password/editor/edit.js:96
 #: dist/package/business/srfmUserRegistrationAdmin.js:172
 msgid "Hide form for logged in users"
 msgstr "Nascondi il modulo per gli utenti connessi"
@@ -1337,9 +1361,10 @@ msgstr "Email"
 #: assets/js/unminified/package/business/user-registration/single-form-settings/components/context.js:36
 #: assets/js/unminified/package/business/user-registration/single-form-settings/components/user-registration-config.js:186
 #: assets/js/unminified/package/business/user-registration/single-form-settings/components/UserRegistration.js:340
-#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:262
-#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:283
+#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:377
+#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:398
 #: dist/package/business/srfmUserRegistrationAdmin.js:172
+#: dist/package/business/srfmUserRegistrationAdmin.js:173
 msgid "User Registration"
 msgstr "Registrazione utente"
 
@@ -1545,11 +1570,6 @@ msgstr "Conferma"
 #: dist/package/business/srfmUserRegistrationAdmin.js:172
 msgid "Add a Registration block to your form first to use User Registration Mapping."
 msgstr "Aggiungi prima un blocco di registrazione al tuo modulo per utilizzare la mappatura della registrazione utente."
-
-#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:96
-#: dist/package/business/srfmUserRegistrationAdmin.js:172
-msgid "Login block cannot be added when other blocks are present in the form."
-msgstr "Il blocco di accesso non può essere aggiunto quando sono presenti altri blocchi nel modulo."
 
 #: assets/js/unminified/package/business/user-registration/user-registration.js:13
 #: dist/package/business/srfmUserRegistration.js:189
@@ -2531,13 +2551,6 @@ msgstr "Per ulteriori opzioni, selezionare il blocco modulo principale."
 #: dist/package/pro/saveResumeEditor.js:171
 msgid "Add Shortcode"
 msgstr "Aggiungi shortcode"
-
-#: dist/blocks.js:182
-#: dist/package/business/ConditionalConfirmationSettings.js:172
-#: dist/package/business/srfmPdf.js:171
-#: dist/package/pro/saveResumeEditor.js:171
-msgid "Add media"
-msgstr "Aggiungi media"
 
 #: dist/blocks.js:182
 #: dist/package/business/ConditionalConfirmationSettings.js:172
@@ -4990,22 +5003,22 @@ msgstr "Connessione riuscita!"
 msgid "Authentication failed"
 msgstr "Autenticazione fallita"
 
-#: inc/extensions/additional-form-restrictions.php:99
+#: inc/extensions/additional-form-restrictions.php:100
 #: dist/formSettings.js:194
 msgid "We're sorry, this form isn't accessible from your IP address."
 msgstr "Siamo spiacenti, questo modulo non è accessibile dal tuo indirizzo IP."
 
-#: inc/extensions/additional-form-restrictions.php:105
+#: inc/extensions/additional-form-restrictions.php:106
 #: dist/formSettings.js:194
 msgid "We're sorry, this form isn't available in your region right now."
 msgstr "Siamo spiacenti, questo modulo non è disponibile nella tua regione al momento."
 
-#: inc/extensions/additional-form-restrictions.php:110
+#: inc/extensions/additional-form-restrictions.php:112
 #: dist/formSettings.js:194
 msgid "Your submission contains restricted keywords."
 msgstr "La tua presentazione contiene parole chiave riservate."
 
-#: inc/extensions/additional-form-restrictions.php:114
+#: inc/extensions/additional-form-restrictions.php:116
 #: dist/formSettings.js:194
 msgid "This form is only available to logged-in users. Please sign in to proceed."
 msgstr "Questo modulo è disponibile solo per gli utenti connessi. Effettua l'accesso per procedere."
@@ -5360,25 +5373,25 @@ msgstr "Restrizione basata sul login"
 msgid "Require users to be logged in to submit the form."
 msgstr "Richiedi agli utenti di essere loggati per inviare il modulo."
 
-#: inc/extensions/additional-form-restrictions.php:118
+#: inc/extensions/additional-form-restrictions.php:120
 msgid "This form is password-protected. To view it, please enter the password below."
 msgstr "Questo modulo è protetto da password. Per visualizzarlo, inserisci la password qui sotto."
 
-#: inc/extensions/additional-form-restrictions.php:119
+#: inc/extensions/additional-form-restrictions.php:121
 msgid "Incorrect password. Please try again!"
 msgstr "Password errata. Per favore riprova!"
 
-#: inc/extensions/additional-form-restrictions.php:394
+#: inc/extensions/additional-form-restrictions.php:398
 #: dist/formSettings.js:194
 msgid "Incorrect password. Please try again."
 msgstr "Password errata. Per favore riprova."
 
-#: inc/extensions/additional-form-restrictions.php:441
+#: inc/extensions/additional-form-restrictions.php:445
 #: dist/formSettings.js:194
 msgid "Enter password"
 msgstr "Inserisci la password"
 
-#: inc/extensions/additional-form-restrictions.php:450
+#: inc/extensions/additional-form-restrictions.php:454
 msgid "Enter"
 msgstr "Entra"
 
@@ -5944,7 +5957,7 @@ msgstr "PayPal selezionato per il pagamento"
 #: dist/package/business/paypal-form-editor.js:171
 #: dist/package/business/paypal-payment-settings.js:180
 msgid "PayPal"
-msgstr ""
+msgstr "PayPal"
 
 #: inc/business/payments/pay-pal/settings.php:637
 msgid "Pay with PayPal account"
@@ -6130,7 +6143,7 @@ msgstr "Mostra questa conferma solo quando sono soddisfatte condizioni specifich
 #: assets/js/unminified/conditional-confirmations/components/ConfirmationEditor.js:233
 #: dist/package/business/ConditionalConfirmationSettings.js:172
 msgid "Show this confirmation when "
-msgstr "Mostra questa conferma quando "
+msgstr "Mostra questa conferma quando"
 
 #: assets/js/unminified/conditional-confirmations/components/DefaultConfirmationTypes.js:21
 #: dist/package/business/ConditionalConfirmationSettings.js:172
@@ -6228,7 +6241,7 @@ msgstr "Visualizza in PayPal"
 #: assets/js/unminified/package/business/payments/paypal/form-editor.js:411
 #: dist/package/business/paypal-form-editor.js:172
 msgid "PayPal doesn't support the selected currency (%s). Please change your currency from "
-msgstr "PayPal non supporta la valuta selezionata (%s). Si prega di cambiare la valuta da "
+msgstr "PayPal non supporta la valuta selezionata (%s). Si prega di cambiare la valuta da"
 
 #: assets/js/unminified/package/business/payments/paypal/form-editor.js:431
 #: assets/js/unminified/package/business/payments/paypal/PayPalSettings.js:338
@@ -6242,7 +6255,7 @@ msgstr "Impostazioni"
 #: dist/package/business/paypal-form-editor.js:172
 #: dist/package/business/paypal-payment-settings.js:180
 msgid " to continue. "
-msgstr " per continuare. "
+msgstr "per continuare."
 
 #: assets/js/unminified/package/business/payments/paypal/form-editor.js:443
 #: assets/js/unminified/package/business/payments/paypal/PayPalSettings.js:347
@@ -6291,7 +6304,7 @@ msgstr "Webhook creato con successo!"
 #: assets/js/unminified/package/business/payments/paypal/PayPalSettings.js:329
 #: dist/package/business/paypal-payment-settings.js:180
 msgid "PayPal doesn't support the selected currency. Please change your currency from "
-msgstr "PayPal non supporta la valuta selezionata. Si prega di cambiare la valuta da "
+msgstr "PayPal non supporta la valuta selezionata. Si prega di cambiare la valuta da"
 
 #: assets/js/unminified/package/business/payments/paypal/PayPalSettings.js:352
 #: dist/package/business/paypal-payment-settings.js:180
@@ -6362,7 +6375,7 @@ msgstr "Connetti a PayPal"
 #: assets/js/unminified/package/business/payments/paypal/PayPalSettings.js:515
 #: dist/package/business/paypal-payment-settings.js:180
 msgid "Securely connect to PayPal with just a few clicks to begin accepting payments! "
-msgstr "Connettiti in modo sicuro a PayPal con pochi clic per iniziare ad accettare pagamenti! "
+msgstr "Connettiti in modo sicuro a PayPal con pochi clic per iniziare ad accettare pagamenti!"
 
 #: assets/js/unminified/package/business/payments/paypal/PayPalSettings.js:525
 #: dist/package/business/paypal-payment-settings.js:180
@@ -6373,6 +6386,183 @@ msgstr "Scopri di più"
 #: dist/package/business/paypal-payment-settings.js:180
 msgid "PayPal Settings"
 msgstr "Impostazioni di PayPal"
+
+#: inc/business/user-registration/init.php:543
+msgid "Please enter your username or email address."
+msgstr "Per favore, inserisci il tuo nome utente o indirizzo email."
+
+#: inc/business/user-registration/init.php:567
+msgid "Password reset email has been sent. Please check your inbox."
+msgstr "L'email per il reset della password è stata inviata. Si prega di controllare la tua casella di posta."
+
+#: inc/business/user-registration/init.php:596
+msgid "Invalid password reset link."
+msgstr "Link per il reset della password non valido."
+
+#: inc/business/user-registration/init.php:607
+msgid "Please enter a new password."
+msgstr "Per favore, inserisci una nuova password."
+
+#: inc/business/user-registration/init.php:619
+msgid "This password reset link has expired. Please request a new one."
+msgstr "Questo link per il reset della password è scaduto. Si prega di richiederne uno nuovo."
+
+#: inc/business/user-registration/init.php:621
+msgid "Invalid password reset link. Please request a new one."
+msgstr "Link per il reset della password non valido. Si prega di richiederne uno nuovo."
+
+#: inc/business/user-registration/init.php:649
+msgid "Your password has been reset successfully. You can now log in with your new password."
+msgstr "La tua password è stata reimpostata con successo. Ora puoi accedere con la tua nuova password."
+
+#: inc/business/user-registration/init.php:690
+msgid "Reset Password URL"
+msgstr "URL per reimpostare la password"
+
+#: inc/business/user-registration/lost-password/lost-password-markup.php:48
+#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:41
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Lost Password"
+msgstr "Password persa"
+
+#: inc/business/user-registration/reset-password/reset-password-markup.php:80
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:56
+#: assets/js/unminified/package/business/user-registration/reset-password/editor/edit.js:53
+#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:45
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Reset Password"
+msgstr "Reimposta la password"
+
+#: inc/business/user-registration/reset-password/reset-password-markup.php:155
+msgid "Please request a new one."
+msgstr "Si prega di richiederne uno nuovo."
+
+#. translators: %s: Link to request a new password reset
+#: inc/business/user-registration/reset-password/reset-password-markup.php:162
+#: inc/business/user-registration/reset-password/reset-password-markup.php:181
+msgid "Invalid password reset link. %s"
+msgstr "Link per il reset della password non valido. %s"
+
+#. translators: %s: Link to request a new password reset
+#: inc/business/user-registration/reset-password/reset-password-markup.php:175
+msgid "This password reset link has expired. %s"
+msgstr "Questo link per il reset della password è scaduto. %s"
+
+#: inc/extensions/field-restrictions.php:232
+#: dist/formSettings.js:194
+msgid "You are restricted from submitting this form."
+msgstr "Non sei autorizzato a inviare questo modulo."
+
+#. translators: %1$s: current step number, %2$s: total steps
+#: assets/js/unminified/blocks/page-break.js:14
+#: dist/pageBreak.js:3
+msgid "Step %1$s of %2$s"
+msgstr "Passo %1$s di %2$s"
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:112
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Enable Custom Lost Password Page "
+msgstr "Abilita la pagina personalizzata per la password smarrita "
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:116
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Enable this to assign your Custom Lost Password page and offer a personalized password recovery experience."
+msgstr "Abilita questa opzione per assegnare la tua pagina personalizzata di recupero password e offrire un'esperienza di recupero password personalizzata."
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:121
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Select Lost Password Page"
+msgstr "Seleziona la pagina Password persa"
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:128
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Enable Custom Reset Password Page "
+msgstr "Abilita la pagina personalizzata per il reset della password "
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:132
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Enable this to assign your Custom Reset Password page where users can set a new password after clicking the reset link."
+msgstr "Abilita questa opzione per assegnare la tua pagina personalizzata di reimpostazione della password, dove gli utenti possono impostare una nuova password dopo aver cliccato sul link di reimpostazione."
+
+#: assets/js/unminified/package/business/user-registration/global-settings/user-registration-settings.js:137
+#: dist/package/business/srfmUserRegistration.js:189
+msgid "Select Reset Password Page"
+msgstr "Seleziona la pagina Reimposta Password"
+
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:62
+#: assets/js/unminified/package/business/user-registration/reset-password/editor/edit.js:59
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Remember your password? "
+msgstr "Ricordi la tua password? "
+
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:96
+#: assets/js/unminified/package/business/user-registration/reset-password/editor/edit.js:87
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Login Link"
+msgstr "Link di accesso"
+
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:105
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Sign Up Link"
+msgstr "Link di registrazione"
+
+#: assets/js/unminified/package/business/user-registration/lost-password/editor/edit.js:128
+#: assets/js/unminified/package/business/user-registration/reset-password/editor/edit.js:110
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Logged In Message"
+msgstr "Messaggio di accesso"
+
+#: assets/js/unminified/package/business/user-registration/reset-password/editor/edit.js:41
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "New Password"
+msgstr "Nuova password"
+
+#: assets/js/unminified/package/business/user-registration/reset-password/editor/edit.js:45
+#: dist/package/business/srfmUserRegistrationAdmin.js:172
+msgid "Confirm New Password"
+msgstr "Conferma nuova password"
+
+#. translators: %s: block label
+#: assets/js/unminified/package/business/user-registration/user-registration-admin.js:117
+#: dist/package/business/srfmUserRegistrationAdmin.js:173
+msgid "%s block cannot be added when other blocks are present in the form."
+msgstr "Il blocco %s non può essere aggiunto quando sono presenti altri blocchi nel modulo."
+
+#: dist/blocks.js:182
+#: dist/package/business/ConditionalConfirmationSettings.js:172
+#: dist/package/business/srfmPdf.js:171
+#: dist/package/pro/saveResumeEditor.js:171
+msgid "Add Media"
+msgstr "Aggiungi media"
+
+#: dist/entry.js:177
+#: dist/entry.js:180
+msgid "File download unsuccessful due to CORS restrictions."
+msgstr "Download del file non riuscito a causa delle restrizioni CORS."
+
+#: dist/formSettings.js:194
+msgid "Include Disallowed Comment Keys"
+msgstr "Includi chiavi di commento non consentite"
+
+#: dist/formSettings.js:194
+msgid "Please configure the IP Address in the <a>Disallowed Comment Keys</a> setting."
+msgstr "Si prega di configurare l'indirizzo IP nell'impostazione <a>Chiavi di commento non consentite</a>."
+
+#: dist/formSettings.js:194
+msgid "Please configure the keywords in the <a>Disallowed Comment Keys</a> setting."
+msgstr "Si prega di configurare le parole chiave nell'impostazione <a>Chiavi di Commento Non Consentite</a>."
+
+#: dist/formSettings.js:194
+msgid "Field Restrictions"
+msgstr "Restrizioni del campo"
+
+#: dist/formSettings.js:194
+msgid "Form submissions to be restricted based on field values."
+msgstr "Le invii dei moduli devono essere limitati in base ai valori dei campi."
+
+#: dist/formSettings.js:194
+msgid "form submission when"
+msgstr "invio del modulo quando"
 
 #. Translators: %s is the number of corrupt files.
 #: inc/business/custom-app/load.php:365
@@ -6451,6 +6641,16 @@ msgstr "Ripetitore"
 msgctxt "block title"
 msgid "HTML"
 msgstr ""
+
+#: inc/business/user-registration/lost-password/block.json
+msgctxt "block title"
+msgid "Lost Password"
+msgstr "Password persa"
+
+#: inc/business/user-registration/reset-password/block.json
+msgctxt "block title"
+msgid "Reset Password"
+msgstr "Reimposta la password"
 
 #: inc/blocks/date-picker/block.json
 msgctxt "block keyword"
@@ -6600,6 +6800,32 @@ msgctxt "block keyword"
 msgid "code"
 msgstr "codice"
 
+#: inc/business/user-registration/lost-password/block.json
+msgctxt "block keyword"
+msgid "lost password"
+msgstr "password persa"
+
+#: inc/business/user-registration/lost-password/block.json
+msgctxt "block keyword"
+msgid "forgot password"
+msgstr "password dimenticata"
+
+#: inc/business/user-registration/lost-password/block.json
+#: inc/business/user-registration/reset-password/block.json
+msgctxt "block keyword"
+msgid "reset password"
+msgstr "reimposta la password"
+
+#: inc/business/user-registration/reset-password/block.json
+msgctxt "block keyword"
+msgid "new password"
+msgstr "nuova password"
+
+#: inc/business/user-registration/reset-password/block.json
+msgctxt "block keyword"
+msgid "change password"
+msgstr "cambia password"
+
 #: inc/blocks/date-picker/block.json
 msgctxt "block description"
 msgid "Displays a SureForms Date Field"
@@ -6669,3 +6895,13 @@ msgstr "Un campo che ti permette di ripetere un insieme di campi più volte."
 msgctxt "block description"
 msgid "Displays a SureForms HTML Content"
 msgstr "Visualizza un contenuto HTML di SureForms"
+
+#: inc/business/user-registration/lost-password/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Lost Password Form"
+msgstr "Visualizza un modulo di recupero password SureForms"
+
+#: inc/business/user-registration/reset-password/block.json
+msgctxt "block description"
+msgid "Displays a SureForms Reset Password Form"
+msgstr "Visualizza un modulo di reimpostazione password di SureForms"

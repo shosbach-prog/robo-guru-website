@@ -41,6 +41,7 @@ return array(
     'BuddyBossTheme\\GroundLevel\\Mothership\\Manager\\AddonsManager' => $vendorDir . '/caseproof/ground-level-mothership/Manager/AddonsManager.php',
     'BuddyBossTheme\\GroundLevel\\Mothership\\Manager\\LicenseManager' => $vendorDir . '/caseproof/ground-level-mothership/Manager/LicenseManager.php',
     'BuddyBossTheme\\GroundLevel\\Mothership\\Service' => $vendorDir . '/caseproof/ground-level-mothership/Service.php',
+    'BuddyBossTheme\\GroundLevel\\Mothership\\Util' => $vendorDir . '/caseproof/ground-level-mothership/Util.php',
     'BuddyBossTheme\\GroundLevel\\Support\\Casts' => $vendorDir . '/caseproof/ground-level-support/Casts.php',
     'BuddyBossTheme\\GroundLevel\\Support\\Concerns\\Factory' => $vendorDir . '/caseproof/ground-level-support/Concerns/Factory.php',
     'BuddyBossTheme\\GroundLevel\\Support\\Concerns\\HasAttributes' => $vendorDir . '/caseproof/ground-level-support/Concerns/HasAttributes.php',

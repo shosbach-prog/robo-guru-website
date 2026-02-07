@@ -354,6 +354,8 @@ abstract class Source implements \JsonSerializable {
 	 * @return void
 	 */
 	public function set_option_config( $option, $config ) {
+		// Ensure $option is not null.
+		$option = $option ?? '';
 		if ( ! array_key_exists( $option, $this->options ) ) {
 			return;
 		}
@@ -438,6 +440,8 @@ abstract class Source implements \JsonSerializable {
 		$search  = isset( $_REQUEST['search'] )  ? Utils::decode_string( $_REQUEST['search'] ) : false;
 		$include = isset( $_REQUEST['include'] ) ? $_REQUEST['include'] : [];
 
+		// Ensure $rule is not null.
+		$rule = $rule ?? '';
 		if ( ! $rule || ! $option || ! array_key_exists( $rule, $this->rules ) ) {
 			wp_send_json_error();
 		}
@@ -532,6 +536,8 @@ abstract class Source implements \JsonSerializable {
 	 * @return mixed|false The Attribute.
 	 */
 	public function get_attribute( string $attribute ) {
+		// Ensure $attribute is not null.
+		$attribute = $attribute ?? '';
 		return array_key_exists( $attribute, $this->attributes ) ? $this->attributes[ $attribute ] : false;
 	}
 
@@ -543,6 +549,8 @@ abstract class Source implements \JsonSerializable {
 	 * @return mixed|false The Rule.
 	 */
 	public function get_rule( string $rule ) {
+		// Ensure $rule is not null.
+		$rule = $rule ?? '';
 		return array_key_exists( $rule, $this->rules ) ? $this->rules[ $rule ] : false;
 	}
 

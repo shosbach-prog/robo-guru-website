@@ -1,15 +1,15 @@
-# Copyright (C) 2025 BuddyBoss
+# Copyright (C) 2026 BuddyBoss
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: BuddyBoss Sharing 1.1.1\n"
+"Project-Id-Version: BuddyBoss Sharing 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/buddyboss-sharing\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-15T08:20:14+00:00\n"
+"POT-Creation-Date: 2026-01-22T16:04:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: buddyboss-sharing\n"
@@ -52,11 +52,13 @@ msgid "Share to groups"
 msgstr ""
 
 #: includes/Admin/Activity_Settings.php:128
+#: includes/Frontend/Frontend.php:198
 #: templates/activity-sharing/share-modal-content.php:88
 msgid "Share to friend's profile"
 msgstr ""
 
 #: includes/Admin/Activity_Settings.php:143
+#: includes/Frontend/Frontend.php:199
 msgid "Share to message"
 msgstr ""
 
@@ -457,7 +459,7 @@ msgid "Settings saved successfully!"
 msgstr ""
 
 #: includes/Admin/Admin.php:930
-#: includes/Frontend/Frontend.php:166
+#: includes/Frontend/Frontend.php:172
 msgid "An error occurred. Please try again."
 msgstr ""
 
@@ -475,7 +477,7 @@ msgid "Activate License"
 msgstr ""
 
 #: includes/API/Link_Preview.php:246
-#: includes/Modules/Activity_Sharing_Enhanced.php:2427
+#: includes/Modules/Activity_Sharing_Enhanced.php:2501
 msgid "You do not have permission to view this activity."
 msgstr ""
 
@@ -537,51 +539,189 @@ msgstr ""
 msgid "License is valid and active."
 msgstr ""
 
-#: includes/Frontend/Frontend.php:163
+#: includes/Frontend/Frontend.php:166
 #: includes/Modules/Activity_Sharing.php:89
 #: includes/Modules/Activity_Sharing.php:91
 #: includes/Modules/Activity_Sharing.php:93
-#: includes/Modules/Activity_Sharing_Enhanced.php:455
 #: includes/Modules/Activity_Sharing_Enhanced.php:456
+#: includes/Modules/Activity_Sharing_Enhanced.php:457
 msgid "Share"
 msgstr ""
 
-#: includes/Frontend/Frontend.php:164
+#: includes/Frontend/Frontend.php:167
+#: includes/Modules/Activity_Sharing_Enhanced.php:222
+msgid "Shares"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:168
 msgid "Share Activity"
 msgstr ""
 
-#: includes/Frontend/Frontend.php:165
+#: includes/Frontend/Frontend.php:169
 #: includes/Modules/Activity_Sharing.php:128
-#: includes/Modules/Activity_Sharing_Enhanced.php:512
-#: includes/Modules/Activity_Sharing_Enhanced.php:895
+#: includes/Modules/Activity_Sharing_Enhanced.php:513
+#: includes/Modules/Activity_Sharing_Enhanced.php:930
 msgid "Activity shared successfully!"
 msgstr ""
 
-#: includes/Frontend/Frontend.php:167
+#: includes/Frontend/Frontend.php:170
+#: includes/Modules/Activity_Sharing_Enhanced.php:2142
+msgid "Shared to group successfully!"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:171
+#: includes/Modules/Activity_Sharing_Enhanced.php:2150
+msgid "Failed to share to group."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:173
 #: templates/activity-sharing/activity-modal.php:30
 #: templates/activity-sharing/share-group-modal.php:46
 #: templates/activity-sharing/share-message-modal.php:51
 msgid "Loading..."
 msgstr ""
 
-#: includes/Frontend/Frontend.php:168
+#: includes/Frontend/Frontend.php:174
+msgid "Posting..."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:175
+#: templates/activity-sharing/activity-modal.php:19
+#: templates/activity-sharing/share-activity-modal.php:73
+#: templates/activity-sharing/share-modal-content.php:290
+msgid "Post"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:176
+msgid "Sharing..."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:177
+msgid "Copied!"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:178
+msgid "Sending..."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:179
+#: templates/activity-sharing/share-message-modal.php:72
+msgid "Send"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:180
+msgid "Message sent successfully!"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:181
 msgid "Failed to load message modal."
 msgstr ""
 
-#: includes/Frontend/Frontend.php:169
+#: includes/Frontend/Frontend.php:182
 msgid "Failed to load activity content."
 msgstr ""
 
-#: includes/Frontend/Frontend.php:170
+#: includes/Frontend/Frontend.php:183
+msgid "Failed to load activity"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:184
+msgid "Failed to load activity. Please try again."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:185
+msgid "Activity modal system not available"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:186
 msgid "Please select a target."
 msgstr ""
 
-#: includes/Frontend/Frontend.php:171
+#: includes/Frontend/Frontend.php:187
 msgid "Please select at least one recipient."
 msgstr ""
 
-#: includes/Frontend/Frontend.php:172
+#: includes/Frontend/Frontend.php:188
+#: includes/Modules/Activity_Sharing_Enhanced.php:1506
+msgid "Please select at least one recipient or thread."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:189
+msgid "Activity ID not found."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:190
 msgid "Failed to send message."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:191
+msgid "No recent conversations found."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:192
+msgid "Error loading recent conversations."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:193
+#: templates/activity-sharing/share-modal-content.php:147
+msgid "No members found."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:194
+msgid "Error searching members. Please try again."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:195
+msgid "Error loading groups. Please try again."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:196
+#: templates/activity-sharing/share-activity-modal.php:21
+#: templates/activity-sharing/share-modal.php:66
+msgid "Create a post"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:197
+#: templates/activity-sharing/share-group-modal.php:22
+#: templates/activity-sharing/share-modal-content.php:52
+msgid "Share to a group"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:200
+#: templates/activity-sharing/share-group-modal.php:33
+msgid "Search for groups"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:201
+#: templates/activity-sharing/share-message-modal.php:33
+msgid "Search for members"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:202
+#: templates/activity-sharing/share-group-modal.php:40
+msgid "All Groups"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:203
+msgid "All Friends"
+msgstr ""
+
+#: includes/Frontend/Frontend.php:204
+msgid "Sorry, no members were found."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:205
+#: templates/activity-sharing/share-modal-content.php:114
+msgid "No friends found."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:206
+msgid "No groups match your search."
+msgstr ""
+
+#: includes/Frontend/Frontend.php:207
+#: templates/activity-sharing/share-modal-content.php:80
+msgid "No groups found."
 msgstr ""
 
 #. translators: %s: user's display name
@@ -593,43 +733,45 @@ msgid "Activity by %s"
 msgstr ""
 
 #: includes/Modules/Activity_Sharing.php:107
-#: includes/Modules/Activity_Sharing_Enhanced.php:487
-#: includes/Modules/Activity_Sharing_Enhanced.php:660
-#: includes/Modules/Activity_Sharing_Enhanced.php:716
-#: includes/Modules/Activity_Sharing_Enhanced.php:785
-#: includes/Modules/Activity_Sharing_Enhanced.php:1458
-#: includes/Modules/Activity_Sharing_Enhanced.php:1608
-#: includes/Modules/Activity_Sharing_Enhanced.php:1708
-#: includes/Modules/Activity_Sharing_Enhanced.php:1892
-#: includes/Modules/Activity_Sharing_Enhanced.php:2009
-#: includes/Modules/Activity_Sharing_Enhanced.php:2143
-#: includes/Modules/Activity_Sharing_Enhanced.php:2226
-#: includes/Modules/Activity_Sharing_Enhanced.php:2345
-#: includes/Modules/Activity_Sharing_Enhanced.php:2479
+#: includes/Modules/Activity_Sharing_Enhanced.php:488
+#: includes/Modules/Activity_Sharing_Enhanced.php:661
+#: includes/Modules/Activity_Sharing_Enhanced.php:717
+#: includes/Modules/Activity_Sharing_Enhanced.php:787
+#: includes/Modules/Activity_Sharing_Enhanced.php:820
+#: includes/Modules/Activity_Sharing_Enhanced.php:1493
+#: includes/Modules/Activity_Sharing_Enhanced.php:1643
+#: includes/Modules/Activity_Sharing_Enhanced.php:1743
+#: includes/Modules/Activity_Sharing_Enhanced.php:1927
+#: includes/Modules/Activity_Sharing_Enhanced.php:2044
+#: includes/Modules/Activity_Sharing_Enhanced.php:2217
+#: includes/Modules/Activity_Sharing_Enhanced.php:2300
+#: includes/Modules/Activity_Sharing_Enhanced.php:2419
+#: includes/Modules/Activity_Sharing_Enhanced.php:2723
 msgid "You must be logged in."
 msgstr ""
 
 #: includes/Modules/Activity_Sharing.php:116
-#: includes/Modules/Activity_Sharing_Enhanced.php:496
-#: includes/Modules/Activity_Sharing_Enhanced.php:667
-#: includes/Modules/Activity_Sharing_Enhanced.php:727
-#: includes/Modules/Activity_Sharing_Enhanced.php:800
-#: includes/Modules/Activity_Sharing_Enhanced.php:1467
-#: includes/Modules/Activity_Sharing_Enhanced.php:2021
+#: includes/Modules/Activity_Sharing_Enhanced.php:497
+#: includes/Modules/Activity_Sharing_Enhanced.php:668
+#: includes/Modules/Activity_Sharing_Enhanced.php:728
+#: includes/Modules/Activity_Sharing_Enhanced.php:798
+#: includes/Modules/Activity_Sharing_Enhanced.php:835
+#: includes/Modules/Activity_Sharing_Enhanced.php:1502
+#: includes/Modules/Activity_Sharing_Enhanced.php:2058
 msgid "Invalid activity."
 msgstr ""
 
 #: includes/Modules/Activity_Sharing.php:132
-#: includes/Modules/Activity_Sharing_Enhanced.php:517
-#: includes/Modules/Activity_Sharing_Enhanced.php:903
-#: includes/Modules/Activity_Sharing_Enhanced.php:2297
+#: includes/Modules/Activity_Sharing_Enhanced.php:518
+#: includes/Modules/Activity_Sharing_Enhanced.php:938
+#: includes/Modules/Activity_Sharing_Enhanced.php:2371
 msgid "Failed to share activity."
 msgstr ""
 
 #: includes/Modules/Activity_Sharing.php:214
-#: includes/Modules/Activity_Sharing_Enhanced.php:606
-#: includes/Modules/Activity_Sharing_Enhanced.php:1532
-#: includes/Modules/Activity_Sharing_Enhanced.php:1554
+#: includes/Modules/Activity_Sharing_Enhanced.php:607
+#: includes/Modules/Activity_Sharing_Enhanced.php:1567
+#: includes/Modules/Activity_Sharing_Enhanced.php:1589
 msgid "Shared Activity"
 msgstr ""
 
@@ -639,237 +781,226 @@ msgstr ""
 msgid "WhatsApp"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:219
+#: includes/Modules/Activity_Sharing_Enhanced.php:220
 msgid "Shared a post"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:221
-msgid "Shares"
-msgstr ""
-
-#: includes/Modules/Activity_Sharing_Enhanced.php:230
+#: includes/Modules/Activity_Sharing_Enhanced.php:231
 msgid "Shared a post in a group"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:232
+#: includes/Modules/Activity_Sharing_Enhanced.php:233
 msgid "Group Shares"
 msgstr ""
 
 #. translators: %1$s: user link, %2$s: friend link
-#: includes/Modules/Activity_Sharing_Enhanced.php:261
-#: includes/Modules/Activity_Sharing_Enhanced.php:2285
+#: includes/Modules/Activity_Sharing_Enhanced.php:262
+#: includes/Modules/Activity_Sharing_Enhanced.php:2359
 #, php-format
 msgid "%1$s shared a post with %2$s"
 msgstr ""
 
 #. translators: %s: user link
-#: includes/Modules/Activity_Sharing_Enhanced.php:269
-#: includes/Modules/Activity_Sharing_Enhanced.php:292
-#: includes/Modules/Activity_Sharing_Enhanced.php:302
+#: includes/Modules/Activity_Sharing_Enhanced.php:270
+#: includes/Modules/Activity_Sharing_Enhanced.php:293
+#: includes/Modules/Activity_Sharing_Enhanced.php:303
 #, php-format
 msgid "%s shared a post"
 msgstr ""
 
 #. translators: %1$s: user link, %2$s: group link
-#: includes/Modules/Activity_Sharing_Enhanced.php:311
+#: includes/Modules/Activity_Sharing_Enhanced.php:312
 #, php-format
 msgid "%1$s shared a post in the group %2$s"
 msgstr ""
 
 #. translators: %d: number of new shares
-#: includes/Modules/Activity_Sharing_Enhanced.php:341
+#: includes/Modules/Activity_Sharing_Enhanced.php:342
 #, php-format
 msgid "You have %d new shares"
 msgstr ""
 
 #. translators: %s: user's display name
-#: includes/Modules/Activity_Sharing_Enhanced.php:348
+#: includes/Modules/Activity_Sharing_Enhanced.php:349
 #, php-format
 msgid "%s shared a post with you"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:721
-#: includes/Modules/Activity_Sharing_Enhanced.php:790
+#: includes/Modules/Activity_Sharing_Enhanced.php:722
+#: includes/Modules/Activity_Sharing_Enhanced.php:792
+#: includes/Modules/Activity_Sharing_Enhanced.php:825
 msgid "Activity component is not available."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:736
-#: includes/Modules/Activity_Sharing_Enhanced.php:824
-#: includes/Modules/Activity_Sharing_Enhanced.php:1486
-#: includes/Modules/Activity_Sharing_Enhanced.php:2039
-#: includes/Modules/Activity_Sharing_Enhanced.php:2363
-#: includes/Modules/Activity_Sharing_Enhanced.php:2419
+#: includes/Modules/Activity_Sharing_Enhanced.php:737
+#: includes/Modules/Activity_Sharing_Enhanced.php:859
+#: includes/Modules/Activity_Sharing_Enhanced.php:1521
+#: includes/Modules/Activity_Sharing_Enhanced.php:2076
+#: includes/Modules/Activity_Sharing_Enhanced.php:2437
+#: includes/Modules/Activity_Sharing_Enhanced.php:2493
 msgid "Activity not found."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:815
+#: includes/Modules/Activity_Sharing_Enhanced.php:805
+msgid "This is not a shared activity."
+msgstr ""
+
+#: includes/Modules/Activity_Sharing_Enhanced.php:850
 msgid "Sharing activities cannot include media uploads, polls, or scheduled posts."
 msgstr ""
 
 #. translators: %1$s: number wrapped in span, %2$s: Share label
-#: includes/Modules/Activity_Sharing_Enhanced.php:1035
+#: includes/Modules/Activity_Sharing_Enhanced.php:1070
 #, php-format
 msgctxt "placeholder: activity share count"
 msgid "%1$s %2$s"
 msgstr ""
 
 #. translators: %1$s: number wrapped in span, %2$s: Share label
-#: includes/Modules/Activity_Sharing_Enhanced.php:1035
+#: includes/Modules/Activity_Sharing_Enhanced.php:1070
 msgctxt "singular share label"
 msgid "Share"
 msgstr ""
 
 #. translators: %1$s: number wrapped in span, %2$s: Shares label
-#: includes/Modules/Activity_Sharing_Enhanced.php:1038
+#: includes/Modules/Activity_Sharing_Enhanced.php:1073
 #, php-format
 msgctxt "placeholder: activity shares count"
 msgid "%1$s %2$s"
 msgstr ""
 
 #. translators: %1$s: number wrapped in span, %2$s: Shares label
-#: includes/Modules/Activity_Sharing_Enhanced.php:1038
+#: includes/Modules/Activity_Sharing_Enhanced.php:1073
 msgctxt "plural shares label"
 msgid "Shares"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1083
+#: includes/Modules/Activity_Sharing_Enhanced.php:1118
 msgid "Shared a Post: "
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1161
-#: includes/Modules/Activity_Sharing_Enhanced.php:1283
+#: includes/Modules/Activity_Sharing_Enhanced.php:1196
+#: includes/Modules/Activity_Sharing_Enhanced.php:1318
 #: templates/activity-sharing/no-access.php:27
 msgid "This content isn't available right now"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1162
-#: includes/Modules/Activity_Sharing_Enhanced.php:1284
+#: includes/Modules/Activity_Sharing_Enhanced.php:1197
+#: includes/Modules/Activity_Sharing_Enhanced.php:1319
 #: templates/activity-sharing/no-access.php:30
 msgid "When this happens, it's usually because the owner changed who can see it or it's been deleted."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1190
-#: includes/Modules/Activity_Sharing_Enhanced.php:1266
-#: includes/Modules/Activity_Sharing_Enhanced.php:1330
-#: includes/Modules/Activity_Sharing_Enhanced.php:2815
+#: includes/Modules/Activity_Sharing_Enhanced.php:1225
+#: includes/Modules/Activity_Sharing_Enhanced.php:1301
+#: includes/Modules/Activity_Sharing_Enhanced.php:1365
+#: includes/Modules/Activity_Sharing_Enhanced.php:3059
 msgid "Shared a Post"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1190
+#: includes/Modules/Activity_Sharing_Enhanced.php:1225
 msgid "[Activity not accessible]"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1266
+#: includes/Modules/Activity_Sharing_Enhanced.php:1301
 msgid "[Activity unavailable]"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1471
-msgid "Please select at least one recipient or thread."
-msgstr ""
-
-#: includes/Modules/Activity_Sharing_Enhanced.php:1476
+#: includes/Modules/Activity_Sharing_Enhanced.php:1511
 msgid "Messaging is not available."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1515
+#: includes/Modules/Activity_Sharing_Enhanced.php:1550
 msgid "You do not have permission to share this activity."
 msgstr ""
 
 #. translators: %d: number of conversations
-#: includes/Modules/Activity_Sharing_Enhanced.php:1578
+#: includes/Modules/Activity_Sharing_Enhanced.php:1613
 #, php-format
 msgid "Message sent to %d conversation successfully!"
 msgid_plural "Messages sent to %d conversations successfully!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1594
+#: includes/Modules/Activity_Sharing_Enhanced.php:1629
 msgid "Failed to send messages."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1712
+#: includes/Modules/Activity_Sharing_Enhanced.php:1747
 msgid "Messages component is not active."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1801
+#: includes/Modules/Activity_Sharing_Enhanced.php:1836
 msgid "Deleted Group"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1896
-#: includes/Modules/Activity_Sharing_Enhanced.php:2013
+#: includes/Modules/Activity_Sharing_Enhanced.php:1931
+#: includes/Modules/Activity_Sharing_Enhanced.php:2048
 msgid "Groups component is not active."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1947
+#: includes/Modules/Activity_Sharing_Enhanced.php:1982
 #: templates/activity-sharing/share-activity-modal.php:40
 #: templates/activity-sharing/share-modal-content.php:35
 msgid "Public"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1950
+#: includes/Modules/Activity_Sharing_Enhanced.php:1985
 msgid "Private"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:1953
+#: includes/Modules/Activity_Sharing_Enhanced.php:1988
 msgid "Hidden"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2025
+#: includes/Modules/Activity_Sharing_Enhanced.php:2062
 msgid "Invalid group."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2030
+#: includes/Modules/Activity_Sharing_Enhanced.php:2067
 msgid "You are not a member of this group."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2071
-msgid "Shared to group successfully!"
-msgstr ""
-
-#: includes/Modules/Activity_Sharing_Enhanced.php:2076
-msgid "Failed to share to group."
-msgstr ""
-
-#: includes/Modules/Activity_Sharing_Enhanced.php:2147
+#: includes/Modules/Activity_Sharing_Enhanced.php:2221
 msgid "Friends component is not active."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2236
-#: includes/Modules/Activity_Sharing_Enhanced.php:2352
-#: includes/Modules/Activity_Sharing_Enhanced.php:2412
+#: includes/Modules/Activity_Sharing_Enhanced.php:2310
+#: includes/Modules/Activity_Sharing_Enhanced.php:2426
+#: includes/Modules/Activity_Sharing_Enhanced.php:2486
 msgid "Invalid activity ID."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2240
+#: includes/Modules/Activity_Sharing_Enhanced.php:2314
 msgid "Invalid friend ID."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2246
+#: includes/Modules/Activity_Sharing_Enhanced.php:2320
 msgid "You can only share to friends."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2257
+#: includes/Modules/Activity_Sharing_Enhanced.php:2331
 msgid "Original activity not found."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2263
+#: includes/Modules/Activity_Sharing_Enhanced.php:2337
 msgid "Friend user not found."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2324
+#: includes/Modules/Activity_Sharing_Enhanced.php:2398
 msgid "Activity shared successfully on your friend's profile!"
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2340
-#: includes/Modules/Activity_Sharing_Enhanced.php:2405
+#: includes/Modules/Activity_Sharing_Enhanced.php:2414
+#: includes/Modules/Activity_Sharing_Enhanced.php:2479
 msgid "Security check failed."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2387
+#: includes/Modules/Activity_Sharing_Enhanced.php:2461
 msgid "Could not generate activity permalink."
 msgstr ""
 
-#: includes/Modules/Activity_Sharing_Enhanced.php:2484
+#: includes/Modules/Activity_Sharing_Enhanced.php:2728
 msgid "You do not have permission to create activities."
 msgstr ""
 
@@ -917,19 +1048,8 @@ msgstr ""
 msgid "View %s's profile"
 msgstr ""
 
-#: templates/activity-sharing/activity-modal.php:19
-#: templates/activity-sharing/share-activity-modal.php:73
-#: templates/activity-sharing/share-modal-content.php:290
-msgid "Post"
-msgstr ""
-
 #: templates/activity-sharing/activity-modal.php:20
 msgid "Close"
-msgstr ""
-
-#: templates/activity-sharing/share-activity-modal.php:21
-#: templates/activity-sharing/share-modal.php:66
-msgid "Create a post"
 msgstr ""
 
 #: templates/activity-sharing/share-activity-modal.php:41
@@ -952,25 +1072,8 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: templates/activity-sharing/share-group-modal.php:22
-#: templates/activity-sharing/share-modal-content.php:52
-msgid "Share to a group"
-msgstr ""
-
-#: templates/activity-sharing/share-group-modal.php:33
-msgid "Search for groups"
-msgstr ""
-
-#: templates/activity-sharing/share-group-modal.php:40
-msgid "All Groups"
-msgstr ""
-
 #: templates/activity-sharing/share-message-modal.php:22
 msgid "Send to"
-msgstr ""
-
-#: templates/activity-sharing/share-message-modal.php:33
-msgid "Search for members"
 msgstr ""
 
 #: templates/activity-sharing/share-message-modal.php:45
@@ -979,10 +1082,6 @@ msgstr ""
 
 #: templates/activity-sharing/share-message-modal.php:62
 msgid "Add additional message..."
-msgstr ""
-
-#: templates/activity-sharing/share-message-modal.php:72
-msgid "Send"
 msgstr ""
 
 #. Translators: %s is the user's display name.
@@ -995,16 +1094,8 @@ msgstr ""
 msgid "Search groups..."
 msgstr ""
 
-#: templates/activity-sharing/share-modal-content.php:80
-msgid "No groups found."
-msgstr ""
-
 #: templates/activity-sharing/share-modal-content.php:89
 msgid "Search friends..."
-msgstr ""
-
-#: templates/activity-sharing/share-modal-content.php:114
-msgid "No friends found."
 msgstr ""
 
 #: templates/activity-sharing/share-modal-content.php:122
@@ -1013,10 +1104,6 @@ msgstr ""
 
 #: templates/activity-sharing/share-modal-content.php:123
 msgid "Search members..."
-msgstr ""
-
-#: templates/activity-sharing/share-modal-content.php:147
-msgid "No members found."
 msgstr ""
 
 #: templates/activity-sharing/share-modal-content.php:155

@@ -479,6 +479,8 @@ class SWP_Query {
 
 		// Validate orders.
 		foreach ( $this->orderby as $index => $orderby ) {
+			// Ensure $index is not null.
+			$index = $index ?? '';
 			if ( ! array_key_exists( $index, $this->order ) ) {
 				$this->order[ $index ] = 'DESC';
 			}

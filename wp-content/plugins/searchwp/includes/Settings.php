@@ -158,6 +158,8 @@ class Settings {
 
 		$cache = wp_cache_get( SEARCHWP_PREFIX . 'settings_' . $setting, '' );
 
+		// Ensure $setting is not null.
+		$setting = $setting ?? '';
 		if ( ! empty( $cache ) && is_array( $cache ) && array_key_exists( $setting, $cache ) ) {
 			return self::normalize_value( $cache[ $setting ], $type );
 		}

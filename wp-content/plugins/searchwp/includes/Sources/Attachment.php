@@ -698,19 +698,27 @@ final class Attachment extends Post {
 	 * @return array The extracted metadata.
 	 */
 	public static function get_image_metadata( string $file ) {
-		list( , , $image_type ) = @getimagesize( $file );
+		// Ensure getimagesize() returns an array before destructuring.
+		$image_info = false;
+		if ( file_exists( $file ) && is_readable( $file ) ) {
+			$image_info = getimagesize( $file );
+		}
+		$image_type = is_array( $image_info ) && isset( $image_info[2] ) ? $image_info[2] : false;
 		$meta = [];
 		$iptc = [];
 		$exif = [];
 
-		if ( is_callable( 'iptcparse' ) ) {
-			@getimagesize( $file, $iptc );
+		if ( is_callable( 'iptcparse' ) && file_exists( $file ) && is_readable( $file ) ) {
+			getimagesize( $file, $iptc );
 		}
 
 		$exif_image_types = apply_filters( 'wp_read_image_metadata_types', [ IMAGETYPE_JPEG, IMAGETYPE_TIFF_II, IMAGETYPE_TIFF_MM ] );
 
-		if ( is_callable( 'exif_read_data' ) && in_array( $image_type, $exif_image_types, true ) ) {
-			$exif = @exif_read_data( $file );
+		if ( is_callable( 'exif_read_data' ) && in_array( $image_type, $exif_image_types, true ) && file_exists( $file ) && is_readable( $file ) ) {
+			$exif = exif_read_data( $file );
+			if ( $exif === false ) {
+				$exif = [];
+			}
 		}
 
 		$iptc = wp_kses_post_deep( $iptc );

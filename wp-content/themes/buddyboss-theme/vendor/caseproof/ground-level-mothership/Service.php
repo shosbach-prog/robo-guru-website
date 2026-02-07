@@ -10,6 +10,7 @@ use BuddyBossTheme\GroundLevel\Container\Service as BaseService;
 use BuddyBossTheme\GroundLevel\Mothership\Manager\AddonsManager;
 use BuddyBossTheme\GroundLevel\Mothership\Manager\LicenseManager;
 use BuddyBossTheme\GroundLevel\Mothership\AbstractPluginConnection;
+use BuddyBossTheme\GroundLevel\Mothership\Util as MothershipUtil;
 use BuddyBossTheme\GroundLevel\Container\Contracts\ContainerAwareness;
 use BuddyBossTheme\GroundLevel\Container\Contracts\LoadableDependency;
 use BuddyBossTheme\GroundLevel\Container\Contracts\ConfiguresParameters;
@@ -134,6 +135,7 @@ class Service extends BaseService implements ContainerAwareness, ConfiguresParam
         AddonsManager::setContainer($container);
         LicenseManager::setContainer($container);
         Request::setContainer($container);
+        MothershipUtil::setContainer($container);
         // Schedule the license manager events.
         LicenseManager::scheduleEvents($this->plugin->pluginId);
     }
@@ -145,8 +147,9 @@ class Service extends BaseService implements ContainerAwareness, ConfiguresParam
      */
     public function getApiBaseUrl() : string
     {
-        if (\defined(\strtoupper($this->plugin->pluginId) . '_MOTHERSHIP_API_BASE_URL')) {
-            return \constant(\strtoupper($this->plugin->pluginId) . '_MOTHERSHIP_API_BASE_URL');
+        $apiBaseUrlConstant = MothershipUtil::composeConstantName('MOTHERSHIP_API_BASE_URL');
+        if (\defined($apiBaseUrlConstant)) {
+            return \constant($apiBaseUrlConstant);
         }
         return self::$apiBaseUrl;
     }

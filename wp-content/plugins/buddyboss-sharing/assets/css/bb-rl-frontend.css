@@ -108,10 +108,30 @@
   border: none;
 }
 .shared-activity-preview .bb-rl-activity-media-elem.bb-rl-document-activity + .bb-rl-document-activity {
-  margin-top: 0;
+  margin-top: var(--bb-sharing-space-50);
 }
 .bb-rl-activity-form .shared-activity-preview {
   border-radius: var(--bb-sharing-radius-xl);
+}
+.bb-rl-activity-content .shared-activity-preview .bb-activity-media-wrap {
+  padding-top: var(--bb-sharing-space-50);
+  padding-left: var(--bb-sharing-space-50);
+}
+.bb-rl-activity-content .shared-activity-preview .bb-activity-media-wrap:has(.bb-rl-document-activity) {
+  padding-top: 0;
+  padding-left: 0;
+}
+.bb-rl-activity-content .shared-activity-preview .bb-activity-media-wrap .bb-rl-document-activity + .bb-rl-document-activity {
+  margin-top: var(--bb-sharing-space-50);
+}
+.shared-activity-preview .bb-rl-activity-media-elem.bb-rl-document-activity:has(.document-preview-wrap) .bb-code-extension-files-preview + .bb-rl-document-description-wrap {
+  border-radius: 0 0 var(--bb-sharing-radius-lg) var(--bb-sharing-radius-lg);
+}
+.shared-activity-preview .bb-rl-activity-media-elem.bb-rl-document-activity .document-preview-wrap {
+  border-radius: var(--bb-sharing-radius-lg) var(--bb-sharing-radius-lg) 0 0;
+}
+.shared-activity-preview .activity-link-preview-info {
+  margin-bottom: 0;
 }
 
 .bb-rl-activity-content .shared-activity-preview,
@@ -134,6 +154,23 @@
 
 .bb-rl-media-model-wrapper .bb-rl-activity-list .bp-generic-meta .generic-button:has(.share) {
   display: none !important; /* hide share button in media model */
+}
+
+.bb-rl-activity-update-form:not(.modal-popup) .buddyboss-shared-activity-preview {
+  display: none;
+}
+
+.shared-activity-wrapper.shared-activity-message .shared-activity-preview {
+  border-radius: var(--bb-sharing-radius-xl);
+}
+.shared-activity-wrapper.shared-activity-message .shared-activity-preview .shared-activity-media {
+  border-radius: var(--bb-sharing-radius-xl) var(--bb-sharing-radius-xl) 0 0;
+}
+.shared-activity-wrapper.shared-activity-message .shared-activity-preview .shared-activity-media img {
+  border-radius: var(--bb-sharing-radius-xl) var(--bb-sharing-radius-xl) 0 0;
+}
+.shared-activity-wrapper.shared-activity-message .shared-activity-preview .shared-activity-media video {
+  border-radius: var(--bb-sharing-radius-xl) var(--bb-sharing-radius-xl) 0 0;
 }
 
 /*# sourceMappingURL=bb-rl-frontend.css.map */

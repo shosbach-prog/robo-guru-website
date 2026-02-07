@@ -32,6 +32,7 @@ if ( ! \defined( 'ABSPATH' ) ) {
 				);
 				?>
 			</p>
+			<i class="searchwp-embed-wizard-tooltip-dot"></i>
 			<i class="searchwp-embed-wizard-tooltip-arrow"></i>
 		<button type="button" class="searchwp-embed-wizard-done-btn"><?php esc_html_e( 'Done', 'searchwp' ); ?></button>
 	</div>

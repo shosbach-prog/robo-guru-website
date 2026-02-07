@@ -76,6 +76,7 @@ class ComposerStaticInite760f672ea4606e549b371e109ad253e
         'BuddyBossTheme\\GroundLevel\\Mothership\\Manager\\AddonsManager' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Manager/AddonsManager.php',
         'BuddyBossTheme\\GroundLevel\\Mothership\\Manager\\LicenseManager' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Manager/LicenseManager.php',
         'BuddyBossTheme\\GroundLevel\\Mothership\\Service' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Service.php',
+        'BuddyBossTheme\\GroundLevel\\Mothership\\Util' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Util.php',
         'BuddyBossTheme\\GroundLevel\\Support\\Casts' => __DIR__ . '/..' . '/caseproof/ground-level-support/Casts.php',
         'BuddyBossTheme\\GroundLevel\\Support\\Concerns\\Factory' => __DIR__ . '/..' . '/caseproof/ground-level-support/Concerns/Factory.php',
         'BuddyBossTheme\\GroundLevel\\Support\\Concerns\\HasAttributes' => __DIR__ . '/..' . '/caseproof/ground-level-support/Concerns/HasAttributes.php',
