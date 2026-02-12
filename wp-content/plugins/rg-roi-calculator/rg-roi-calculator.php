@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '2.1.0';
+    const VERSION = '2.1.1';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';

@@ -706,10 +706,10 @@ function generatePdf(calc){
       if (txt) txt.textContent = calc.rating.text;
     }
 
-out('invest').textContent = fmtEUR(calc.invest);
-    out('gross').textContent  = fmtEUR(calc.grossSavings);
-    out('ops').textContent    = fmtEUR(calc.opsCosts);
-    out('net').textContent    = fmtEUR(calc.net);
+if (out('invest')) out('invest').textContent = fmtEUR(calc.invest);
+    if (out('gross')) out('gross').textContent = fmtEUR(calc.grossSavings);
+    if (out('ops')) out('ops').textContent = fmtEUR(calc.opsCosts);
+    if (out('net')) out('net').textContent = fmtEUR(calc.net);
     // ROI Dashboard outputs
     if (out('netHighlight')) out('netHighlight').textContent = fmtEUR(calc.net);
     if (out('monthlyHighlight')) out('monthlyHighlight').textContent = fmtEUR(calc.monthlyNet);
