@@ -5,6 +5,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 
 delete_option('babylovegrowth_api_key');
 delete_option('babylovegrowth_category');
+delete_option('babylovegrowth_author');
 delete_option('babylovegrowth_tags');
 delete_option('babylovegrowth_feature_image_enabled');
 

@@ -47,3 +47,18 @@ wp-content/uploads*/
 
 # Local WP Rocket config
 wp-content/wp-rocket-config/*.php
+/wp-admin/
+/wp-includes/
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/wflogs/
+/wp-content/upgrade/
+/wp-content/plugins/buddyboss-platform/
+/wp-content/plugins/buddyboss-platform-pro/
+/wp-content/plugins/buddyboss-sharing/
+/wp-content/plugins/searchwp/
+/wp-content/plugins/sureforms/
+/wp-content/plugins/sureforms-pro/
+/wp-content/plugins/seo-by-rank-math/
+/wp-content/plugins/jotform-ai-chatbot/
+
