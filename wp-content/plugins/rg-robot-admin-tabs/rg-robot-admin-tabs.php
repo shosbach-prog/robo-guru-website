@@ -100,6 +100,10 @@ final class RG_Robot_Admin_Tabs {
       '_rf_power_watts'      => $this->meta($id, '_rf_power_watts'),
       '_rf_consumables_per_1000m2' => $this->meta($id, '_rf_consumables_per_1000m2'),
       '_rf_recommended_area' => $this->meta($id, '_rf_recommended_area'),
+      // One-time costs
+      '_rf_docking_station'  => $this->meta($id, '_rf_docking_station'),
+      '_rf_accessories_cost' => $this->meta($id, '_rf_accessories_cost'),
+      '_rf_implementation_cost' => $this->meta($id, '_rf_implementation_cost'),
 
       '_rf_m2h'            => $this->meta($id, '_rf_m2h'),
       '_rf_battery_hours'  => $this->meta($id, '_rf_battery_hours'),
@@ -192,6 +196,16 @@ final class RG_Robot_Admin_Tabs {
             ?>
           </div>
           <p class="description" style="margin-top:5px;color:#666;">Verbrauchsmaterial = Bürsten, Pads, Gummilippen, Filter etc. Kosten werden im ROI-Kalkulator proportional zur Fläche berechnet.</p>
+
+          <h4>Einmalkosten (€ netto)</h4>
+          <div class="rg-grid2">
+            <?php
+              $this->field_text('_rf_docking_station','Docking-/Ladestation',$v['_rf_docking_station'],'z. B. 2500');
+              $this->field_text('_rf_accessories_cost','Zubehör (einmalig)',$v['_rf_accessories_cost'],'z. B. 800');
+              $this->field_text('_rf_implementation_cost','Implementierung / Setup',$v['_rf_implementation_cost'],'z. B. 1500');
+            ?>
+          </div>
+          <p class="description" style="margin-top:5px;color:#666;">Einmalkosten werden im ROI-Kalkulator zur Investitionssumme addiert.</p>
           <?php
           // Calculate yearly power cost based on watts
           // Assumptions: 4h usage/day, 260 days/year, 0.30€/kWh average
@@ -352,7 +366,7 @@ final class RG_Robot_Admin_Tabs {
     if ( isset($_POST['rg_robot_details_nonce']) && wp_verify_nonce($_POST['rg_robot_details_nonce'], 'rg_robot_details_save') ) {
       $keys = array(
         '_rf_manufacturer','_rf_segment','_rf_tagline','_rf_price_month','_rf_cta_url','_rf_datasheet_url',
-        '_rf_list_price','_rf_service_basic','_rf_service_standard','_rf_service_premium','_rf_power_watts','_rf_consumables_per_1000m2','_rf_recommended_area', // ROI fields
+        '_rf_list_price','_rf_service_basic','_rf_service_standard','_rf_service_premium','_rf_power_watts','_rf_consumables_per_1000m2','_rf_recommended_area','_rf_docking_station','_rf_accessories_cost','_rf_implementation_cost', // ROI fields
         '_rf_m2h','_rf_battery_hours','_rf_charge_time',
         '_rf_tank_liters','_rf_clean_water','_rf_dirty_water',
         '_rf_dimensions','_rf_working_width','_rf_noise',

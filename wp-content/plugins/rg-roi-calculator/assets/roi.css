@@ -765,3 +765,14 @@
     padding:8px 10px;
   }
 }
+
+/* One-time costs section */
+.rg-onetime-costs{
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px dashed #e2e8f0;
+}
+.rg-onetime-costs label{
+  display:block;
+  margin-bottom:12px;
+}

@@ -88,6 +88,11 @@ final class RG_ROI_Calculator {
             $service_standard = floatval(get_post_meta($id, '_rf_service_standard', true));
             $service_premium = floatval(get_post_meta($id, '_rf_service_premium', true));
 
+            // One-time costs
+            $docking_station = floatval(get_post_meta($id, '_rf_docking_station', true));
+            $accessories_cost = floatval(get_post_meta($id, '_rf_accessories_cost', true));
+            $implementation_cost = floatval(get_post_meta($id, '_rf_implementation_cost', true));
+
             // Calculate power cost per year (Watts × hours/day × 260 days × 0.30 €/kWh)
             $power_yearly = 0;
             if ($power_watts > 0) {
@@ -116,6 +121,9 @@ final class RG_ROI_Calculator {
                 'service_basic' => $service_basic,
                 'service_standard' => $service_standard,
                 'service_premium' => $service_premium,
+                'docking_station' => $docking_station,
+                'accessories_cost' => $accessories_cost,
+                'implementation_cost' => $implementation_cost,
                 'lease36' => $lease36,
                 'lease48' => $lease48,
                 'lease60' => $lease60,
@@ -309,6 +317,18 @@ final class RG_ROI_Calculator {
                     <div class="rg-mode rg-mode--purchase" data-rg-mode="purchase">
                         <label>Kaufpreis pro Roboter (€)
                             <input type="number" class="rg-in" data-rg="price" value="25000" min="0" step="100">
+                        </label>
+                    </div>
+
+                    <div class="rg-onetime-costs">
+                        <label>Docking-/Ladestation (€) <span class="rg-autofill" data-rg-autofill="docking">auto</span>
+                            <input type="number" class="rg-in" data-rg="dockingStation" value="0" min="0" step="100">
+                        </label>
+                        <label>Zubehör einmalig (€) <span class="rg-autofill" data-rg-autofill="accessories">auto</span>
+                            <input type="number" class="rg-in" data-rg="accessoriesCost" value="0" min="0" step="100">
+                        </label>
+                        <label>Implementierung / Setup (€) <span class="rg-autofill" data-rg-autofill="implementation">auto</span>
+                            <input type="number" class="rg-in" data-rg="implementationCost" value="0" min="0" step="100">
                         </label>
                     </div>
 

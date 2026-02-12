@@ -558,6 +558,9 @@ function generatePdf(calc){
     const serviceMonthly = getNum('serviceMonthly');
     const powerPerYear = getNum('powerPerYear');
     const consumablesPerYear = getNum('consumablesPerYear');
+    const dockingStation = getNum('dockingStation');
+    const accessoriesCost = getNum('accessoriesCost');
+    const implementationCost = getNum('implementationCost');
 
     // Metadaten
     const companyName = getStr('companyName').trim();
@@ -568,7 +571,8 @@ function generatePdf(calc){
     }
 
     // Kostenblöcke
-    const investUpfront = (mode === 'purchase') ? (price * qty) : 0;
+    const oneTimeCosts = dockingStation + accessoriesCost + implementationCost;
+    const investUpfront = (mode === 'purchase') ? (price * qty + oneTimeCosts) : oneTimeCosts;
     const contractVolume = (mode === 'purchase')
       ? investUpfront
       : (leaseRateMonthly * leaseTermMonths * qty);
@@ -817,6 +821,10 @@ out('invest').textContent = fmtEUR(calc.invest);
       var consumablesYear = Math.round(robot.consumables_per_1000m2 * areaSqmYear / 1000);
       consumInp.value = consumablesYear;
     }
+    // One-time costs
+    if (robot.docking_station >= 0) setField('dockingStation', robot.docking_station);
+    if (robot.accessories_cost >= 0) setField('accessoriesCost', robot.accessories_cost);
+    if (robot.implementation_cost >= 0) setField('implementationCost', robot.implementation_cost);
   }
 
   function updateHoursFromArea(root) {
