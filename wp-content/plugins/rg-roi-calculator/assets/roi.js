@@ -558,6 +558,18 @@ function generatePdf(calc){
     const serviceMonthly = getNum('serviceMonthly');
     const powerPerYear = getNum('powerPerYear');
     const consumablesPerYear = getNum('consumablesPerYear');
+    const dockingStation = getNum('dockingStation');
+    const accessoriesCost = getNum('accessoriesCost');
+    const implementationCost = getNum('implementationCost');
+
+    // Toggle-Optionen für Einwandbehandlung
+    const toggleAbsence = q('[data-rg="toggleAbsence"]', root);
+    const toggleWageGrowth = q('[data-rg="toggleWageGrowth"]', root);
+    const absenceActive = toggleAbsence && toggleAbsence.checked;
+    const wageGrowthActive = toggleWageGrowth && toggleWageGrowth.checked;
+
+    // Effektiver Stundensatz (mit Krankheit/Urlaub +15%)
+    const effectiveHourlyRate = absenceActive ? (hourlyRate * 1.15) : hourlyRate;
 
     // Metadaten
     const companyName = getStr('companyName').trim();
@@ -568,12 +580,25 @@ function generatePdf(calc){
     }
 
     // Kostenblöcke
-    const investUpfront = (mode === 'purchase') ? (price * qty) : 0;
+    const oneTimeCosts = dockingStation + accessoriesCost + implementationCost;
+    const investUpfront = (mode === 'purchase') ? (price * qty + oneTimeCosts) : oneTimeCosts;
     const contractVolume = (mode === 'purchase')
       ? investUpfront
       : (leaseRateMonthly * leaseTermMonths * qty);
 
-    const laborSavingsYear = hoursPerDay * hourlyRate * daysPerYear * qty;
+    const laborSavingsYear = hoursPerDay * effectiveHourlyRate * daysPerYear * qty;
+
+    // FTE-Äquivalent (2080 = 40h × 52 Wochen)
+    const savedHoursYear = hoursPerDay * daysPerYear * qty;
+    const fteEquivalent = savedHoursYear / 2080;
+
+    // Lohnsteigerung 3% p.a. über 3 Jahre
+    const wageYear1 = effectiveHourlyRate;
+    const wageYear2 = wageGrowthActive ? effectiveHourlyRate * 1.03 : effectiveHourlyRate;
+    const wageYear3 = wageGrowthActive ? effectiveHourlyRate * 1.06 : effectiveHourlyRate;
+    const savingsYear1 = hoursPerDay * wageYear1 * daysPerYear * qty;
+    const savingsYear2 = hoursPerDay * wageYear2 * daysPerYear * qty;
+    const savingsYear3 = hoursPerDay * wageYear3 * daysPerYear * qty;
 
     const serviceYear = serviceMonthly * 12 * qty;
     const powerYear = powerPerYear * qty;
@@ -654,6 +679,14 @@ function generatePdf(calc){
       beText,
       rating,
       sqmPerHour,
+      fteEquivalent,
+      savedHoursYear,
+      effectiveHourlyRate,
+      absenceActive,
+      wageGrowthActive,
+      savingsYear1,
+      savingsYear2,
+      savingsYear3,
       canExport,
       companyName,
       creatorName
@@ -677,6 +710,12 @@ out('invest').textContent = fmtEUR(calc.invest);
     out('gross').textContent  = fmtEUR(calc.grossSavings);
     out('ops').textContent    = fmtEUR(calc.opsCosts);
     out('net').textContent    = fmtEUR(calc.net);
+    // ROI Dashboard outputs
+    if (out('netHighlight')) out('netHighlight').textContent = fmtEUR(calc.net);
+    if (out('monthlyHighlight')) out('monthlyHighlight').textContent = fmtEUR(calc.monthlyNet);
+    if (out('breakEvenMonths')) out('breakEvenMonths').textContent = calc.breakEvenMonth || '-';
+    if (out('breakEvenPlus')) out('breakEvenPlus').textContent = calc.breakEvenMonth ? (calc.breakEvenMonth + 1) : '-';
+    if (out('fteEquivalent')) out('fteEquivalent').textContent = calc.fteEquivalent ? fmtNum(calc.fteEquivalent) : '-';
     if (out('monthly')) out('monthly').textContent = fmtEUR(calc.monthlyNet);
 
     if (out('finModel')) out('finModel').textContent = (calc.mode === 'lease') ? 'Leasing' : 'Kauf';
@@ -817,6 +856,10 @@ out('invest').textContent = fmtEUR(calc.invest);
       var consumablesYear = Math.round(robot.consumables_per_1000m2 * areaSqmYear / 1000);
       consumInp.value = consumablesYear;
     }
+    // One-time costs
+    if (robot.docking_station >= 0) setField('dockingStation', robot.docking_station);
+    if (robot.accessories_cost >= 0) setField('accessoriesCost', robot.accessories_cost);
+    if (robot.implementation_cost >= 0) setField('implementationCost', robot.implementation_cost);
   }
 
   function updateHoursFromArea(root) {
@@ -988,6 +1031,66 @@ out('invest').textContent = fmtEUR(calc.invest);
       presetSel.addEventListener('change', () => { applyPreset(); lastCalc = toCalc(root); render(root, lastCalc); });
       applyPreset();
     }
+
+
+    // ===== ROI 2.0 Features =====
+    let originalValues = {};
+    const storeOriginalValues = () => {
+      originalValues = {
+        areaSqmPerDay: parseFloat((q('[data-rg="areaSqmPerDay"]', root) || {}).value || '0'),
+        hoursPerDay: parseFloat((q('[data-rg="hoursPerDay"]', root) || {}).value || '0'),
+        qty: parseFloat((q('[data-rg="qty"]', root) || {}).value || '1'),
+        mode: (q('[data-rg="mode"]', root) || {}).value || 'purchase'
+      };
+    };
+    const setFieldVal = (key, val) => { const el = q('[data-rg="' + key + '"]', root); if (el) el.value = val; };
+    storeOriginalValues();
+
+    // Quick profile selection
+    const profileSel = q('[data-rg="presetProfile"]', root);
+    if (profileSel) {
+      profileSel.addEventListener('change', () => {
+        const profiles = { industry: { area: 1500, wage: 26, days: 230 }, logistics: { area: 3000, wage: 24, days: 250 }, hospital: { area: 2000, wage: 28, days: 260 }, retail: { area: 800, wage: 22, days: 280 }, office: { area: 1200, wage: 24, days: 250 } };
+        const p = profiles[profileSel.value];
+        if (p) { setFieldVal('areaSqmPerDay', p.area); setFieldVal('hourlyRate', p.wage); setFieldVal('daysPerYear', p.days); storeOriginalValues(); if (selectedRobots.length > 0) { applyRobotValues(root, selectedRobots[0]); updateHoursFromArea(root); } lastCalc = toCalc(root); render(root, lastCalc); renderBreakEvenChart(root, lastCalc); }
+      });
+    }
+
+    // Toggle handlers
+    const toggleAbsenceEl = q('[data-rg="toggleAbsence"]', root);
+    const toggleWageGrowthEl = q('[data-rg="toggleWageGrowth"]', root);
+    const onToggleChange = () => { lastCalc = toCalc(root); render(root, lastCalc); renderBreakEvenChart(root, lastCalc); };
+    if (toggleAbsenceEl) toggleAbsenceEl.addEventListener('change', onToggleChange);
+    if (toggleWageGrowthEl) toggleWageGrowthEl.addEventListener('change', onToggleChange);
+
+    // Scenario buttons
+    qa('[data-rg-scenario]', root).forEach(btn => {
+      btn.addEventListener('click', () => {
+        const scenario = btn.getAttribute('data-rg-scenario');
+        const currentArea = parseFloat((q('[data-rg="areaSqmPerDay"]', root) || {}).value || '0');
+        const currentHours = parseFloat((q('[data-rg="hoursPerDay"]', root) || {}).value || '0');
+        if (scenario === 'plus200') { setFieldVal('areaSqmPerDay', currentArea + 200); if (selectedRobots.length > 0) updateHoursFromArea(root); }
+        else if (scenario === 'plus2h') setFieldVal('hoursPerDay', currentHours + 2);
+        else if (scenario === 'doubleRobot') setFieldVal('qty', 2);
+        else if (scenario === 'leaseMode') { const modeEl = q('[data-rg="mode"]', root); if (modeEl) { modeEl.value = 'lease'; modeEl.dispatchEvent(new Event('change')); } }
+        else if (scenario === 'reset') { setFieldVal('areaSqmPerDay', originalValues.areaSqmPerDay || 1500); setFieldVal('hoursPerDay', originalValues.hoursPerDay || 2.5); setFieldVal('qty', originalValues.qty || 1); const modeEl2 = q('[data-rg="mode"]', root); if (modeEl2) { modeEl2.value = originalValues.mode || 'purchase'; modeEl2.dispatchEvent(new Event('change')); } }
+        lastCalc = toCalc(root); render(root, lastCalc); renderBreakEvenChart(root, lastCalc);
+      });
+    });
+
+    // Break-even Chart
+    let breakEvenChartInstance = null;
+    const renderBreakEvenChart = (rootEl, calc) => {
+      const canvas = q('[data-rg-chart="breakeven"]', rootEl);
+      if (!canvas || typeof Chart === 'undefined') return;
+      if (breakEvenChartInstance) { breakEvenChartInstance.destroy(); breakEvenChartInstance = null; }
+      if (!calc.canExport) return;
+      const months = Array.from({length: 36}, (_, i) => i + 1);
+      const personalCosts = months.map(m => m * (calc.grossSavings / 12));
+      const robotCosts = months.map(m => calc.mode === 'purchase' ? calc.investUpfront + (m * calc.opsCosts / 12) : m * (calc.opsCosts / 12 + calc.leaseYear / 12));
+      breakEvenChartInstance = new Chart(canvas, { type: 'line', data: { labels: months.map(m => 'M' + m), datasets: [{ label: 'Personalkosten (kumuliert)', data: personalCosts, borderColor: '#d9534f', backgroundColor: 'rgba(217, 83, 79, 0.1)', fill: true, tension: 0.1 }, { label: 'Roboterkosten (kumuliert)', data: robotCosts, borderColor: '#00B4A6', backgroundColor: 'rgba(0, 180, 166, 0.1)', fill: true, tension: 0.1 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true, ticks: { callback: function(v) { return fmtEUR(v); } } } } } });
+    };
+    setTimeout(() => renderBreakEvenChart(root, lastCalc), 100);
 
     qa('.rg-in', root).forEach(inp => {
       const recalc = () => {

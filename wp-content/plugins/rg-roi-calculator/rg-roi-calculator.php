@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '2.0.0';
+    const VERSION = '2.1.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -88,6 +88,11 @@ final class RG_ROI_Calculator {
             $service_standard = floatval(get_post_meta($id, '_rf_service_standard', true));
             $service_premium = floatval(get_post_meta($id, '_rf_service_premium', true));
 
+            // One-time costs
+            $docking_station = floatval(get_post_meta($id, '_rf_docking_station', true));
+            $accessories_cost = floatval(get_post_meta($id, '_rf_accessories_cost', true));
+            $implementation_cost = floatval(get_post_meta($id, '_rf_implementation_cost', true));
+
             // Calculate power cost per year (Watts × hours/day × 260 days × 0.30 €/kWh)
             $power_yearly = 0;
             if ($power_watts > 0) {
@@ -116,6 +121,9 @@ final class RG_ROI_Calculator {
                 'service_basic' => $service_basic,
                 'service_standard' => $service_standard,
                 'service_premium' => $service_premium,
+                'docking_station' => $docking_station,
+                'accessories_cost' => $accessories_cost,
+                'implementation_cost' => $implementation_cost,
                 'lease36' => $lease36,
                 'lease48' => $lease48,
                 'lease60' => $lease60,
@@ -191,16 +199,20 @@ final class RG_ROI_Calculator {
         // jsPDF + autoTable (CDN). You can override via filters if needed.
         $jspdf = apply_filters('rg_roi_jspdf_url', 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js');
         $autotable = apply_filters('rg_roi_autotable_url', 'https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.29/dist/jspdf.plugin.autotable.min.js');
+        $chartjs = apply_filters('rg_roi_chartjs_url', 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js');
+        $qrcode = apply_filters('rg_roi_qrcode_url', 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js');
 
         wp_enqueue_style('rg-roi', $base_url . 'assets/roi.css', [], self::VERSION);
 
         wp_enqueue_script('rg-jspdf', $jspdf, [], null, true);
         wp_enqueue_script('rg-jspdf-autotable', $autotable, ['rg-jspdf'], null, true);
+        wp_enqueue_script('rg-chartjs', $chartjs, [], null, true);
+        wp_enqueue_script('rg-qrcode', $qrcode, [], null, true);
 
         wp_enqueue_script(
             'rg-roi',
             $base_url . 'assets/roi.js',
-            ['rg-jspdf', 'rg-jspdf-autotable'],
+            ['rg-jspdf', 'rg-jspdf-autotable', 'rg-chartjs', 'rg-qrcode'],
             self::VERSION,
             true
         );
@@ -259,6 +271,20 @@ final class RG_ROI_Calculator {
                 </div>
             </div>
 
+            <!-- Außendienst-Schnellprofile -->
+            <div class="rg-quickprofiles">
+                <label>Schnellprofil
+                    <select class="rg-in rg-select" data-rg="presetProfile">
+                        <option value="">— Profil wählen —</option>
+                        <option value="industry">Industrie 1.500 m²</option>
+                        <option value="logistics">Logistik 3.000 m²</option>
+                        <option value="hospital">Krankenhaus 2.000 m²</option>
+                        <option value="retail">Einzelhandel 800 m²</option>
+                        <option value="office">Bürogebäude 1.200 m²</option>
+                    </select>
+                </label>
+            </div>
+
             <div class="rg-meta-row">
                 <div class="rg-meta-card">
                     <div class="rg-meta-field">
@@ -309,6 +335,18 @@ final class RG_ROI_Calculator {
                     <div class="rg-mode rg-mode--purchase" data-rg-mode="purchase">
                         <label>Kaufpreis pro Roboter (€)
                             <input type="number" class="rg-in" data-rg="price" value="25000" min="0" step="100">
+                        </label>
+                    </div>
+
+                    <div class="rg-onetime-costs">
+                        <label>Docking-/Ladestation (€) <span class="rg-autofill" data-rg-autofill="docking">auto</span>
+                            <input type="number" class="rg-in" data-rg="dockingStation" value="0" min="0" step="100">
+                        </label>
+                        <label>Zubehör einmalig (€) <span class="rg-autofill" data-rg-autofill="accessories">auto</span>
+                            <input type="number" class="rg-in" data-rg="accessoriesCost" value="0" min="0" step="100">
+                        </label>
+                        <label>Implementierung / Setup (€) <span class="rg-autofill" data-rg-autofill="implementation">auto</span>
+                            <input type="number" class="rg-in" data-rg="implementationCost" value="0" min="0" step="100">
                         </label>
                     </div>
 
@@ -381,6 +419,19 @@ final class RG_ROI_Calculator {
                     </label>
 
                     <div class="rg-note">Verbrauchsmaterial wird anhand Ihrer Fläche berechnet (Bürsten, Pads, Filter etc.)</div>
+
+                    <!-- Einwand-Toggle-System -->
+                    <div class="rg-toggles">
+                        <h5>Annahmen erweitern</h5>
+                        <label class="rg-toggle-label">
+                            <input type="checkbox" data-rg="toggleAbsence">
+                            <span>Krankheit & Urlaub berücksichtigen (+15 % Personalkosten)</span>
+                        </label>
+                        <label class="rg-toggle-label">
+                            <input type="checkbox" data-rg="toggleWageGrowth">
+                            <span>Lohnsteigerung 3 % p.a. simulieren (3-Jahres-Projektion)</span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="rg-card rg-result">
@@ -389,10 +440,42 @@ final class RG_ROI_Calculator {
                         <div class="rg-result__tag">Unabhängige Beispielrechnung</div>
                     </div>
 
-                    <div class="rg-hero">
-                        <div class="rg-hero__label">Geschätzte Netto-Ersparnis / Jahr</div>
-                        <div class="rg-hero__value" data-rg-out="net">–</div>
-                        <div class="rg-hero__sub">entspricht ca. <span data-rg-out="monthly">–</span> pro Monat</div>
+                    <!-- ROI Dashboard -->
+                    <div class="rg-roi-dashboard">
+                        <div class="rg-roi-highlight">
+                            <h2 data-rg-out="netHighlight">– €</h2>
+                            <p class="rg-roi-highlight__sub">Einsparung pro Jahr</p>
+                            <p class="rg-roi-highlight__monthly">entspricht <span data-rg-out="monthlyHighlight">–</span> pro Monat</p>
+                        </div>
+                        <div class="rg-roi-keyfacts">
+                            <div class="rg-keyfact">
+                                <span class="rg-keyfact__icon">📉</span>
+                                <span class="rg-keyfact__text">Break-even nach <strong data-rg-out="breakEvenMonths">–</strong> Monaten</span>
+                            </div>
+                            <div class="rg-keyfact rg-keyfact--highlight">
+                                <span class="rg-keyfact__icon">🚀</span>
+                                <span class="rg-keyfact__text">Ab Monat <strong data-rg-out="breakEvenPlus">–</strong> arbeitet der Roboter für Sie</span>
+                            </div>
+                            <div class="rg-keyfact">
+                                <span class="rg-keyfact__icon">👷</span>
+                                <span class="rg-keyfact__text">Entspricht <strong data-rg-out="fteEquivalent">–</strong> Vollzeitstellen</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Break-even Chart -->
+                    <div class="rg-chart-container">
+                        <canvas id="rgBreakEvenChart" data-rg-chart="breakeven"></canvas>
+                    </div>
+
+                    <!-- Szenario-Buttons für Außendienst -->
+                    <div class="rg-scenario-buttons">
+                        <span class="rg-scenario-label">Schnell-Szenarien:</span>
+                        <button type="button" class="rg-scenario-btn" data-rg-scenario="plus200">+200 m²</button>
+                        <button type="button" class="rg-scenario-btn" data-rg-scenario="plus2h">+2 Stunden</button>
+                        <button type="button" class="rg-scenario-btn" data-rg-scenario="doubleRobot">2 Roboter</button>
+                        <button type="button" class="rg-scenario-btn" data-rg-scenario="leaseMode">Leasing</button>
+                        <button type="button" class="rg-scenario-btn rg-scenario-btn--reset" data-rg-scenario="reset">↺ Zurücksetzen</button>
                     </div>
 
                     <div class="rg-metrics">
@@ -421,6 +504,13 @@ final class RG_ROI_Calculator {
                         <div class="rg-be__badge">Break-even</div>
                         <div class="rg-be__text" data-rg-out="beText">–</div>
                     </div>
+
+                    <!-- Glaubwürdigkeitsblock -->
+                    <ul class="rg-credibility">
+                        <li>✔ Konservativ gerechnet – ohne Förderungen</li>
+                        <li>✔ Keine Restwerte berücksichtigt</li>
+                        <li>✔ Personalausfall optional aktivierbar</li>
+                    </ul>
 
                     <div class="rg-warn" data-rg-out="warn" style="display:none;">
                         Hinweis: Mit den aktuellen Angaben entsteht keine positive Netto-Ersparnis.
