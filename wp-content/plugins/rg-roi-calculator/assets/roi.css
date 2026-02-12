@@ -776,3 +776,228 @@
   display:block;
   margin-bottom:12px;
 }
+
+/* ===== ROI 2.0 Styles ===== */
+
+/* Quick Profiles */
+.rg-quickprofiles {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #e7f3ff 0%, #f0f9ff 100%);
+  border-radius: 12px;
+  border: 1px solid #72aee6;
+}
+
+.rg-quickprofiles label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #0F2537;
+}
+
+.rg-quickprofiles select {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 2px solid #72aee6;
+  font-size: 1rem;
+  background: #fff;
+}
+
+/* Toggle System */
+.rg-toggles {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+}
+
+.rg-toggles h5 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rg-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.rg-toggle-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #00B4A6;
+}
+
+/* ROI Dashboard */
+.rg-roi-dashboard {
+  background: linear-gradient(135deg, #f8fdfc 0%, #e8f7f6 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  border: 2px solid #00B4A6;
+}
+
+.rg-roi-highlight {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.rg-roi-highlight h2 {
+  font-size: 2.5rem;
+  color: #00B4A6;
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.rg-roi-highlight__sub {
+  font-size: 1.1rem;
+  color: #0F2537;
+  margin: 0.25rem 0 0 0;
+  font-weight: 600;
+}
+
+.rg-roi-highlight__monthly {
+  font-size: 1rem;
+  color: #666;
+  margin: 0.5rem 0 0 0;
+}
+
+.rg-roi-keyfacts {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.rg-keyfact {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.rg-keyfact__icon {
+  font-size: 1.25rem;
+}
+
+.rg-keyfact__text {
+  color: #333;
+}
+
+.rg-keyfact__text strong {
+  color: #00B4A6;
+  font-weight: 700;
+}
+
+.rg-keyfact--highlight {
+  background: linear-gradient(135deg, #00B4A6 0%, #00a399 100%);
+}
+
+.rg-keyfact--highlight .rg-keyfact__text {
+  color: #fff;
+}
+
+.rg-keyfact--highlight .rg-keyfact__text strong {
+  color: #fff;
+}
+
+/* Break-even Chart */
+.rg-chart-container {
+  height: 300px;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Scenario Buttons */
+.rg-scenario-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #f0f0f0;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.rg-scenario-label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.rg-scenario-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid #00B4A6;
+  background: #fff;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #00B4A6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rg-scenario-btn:hover {
+  background: #00B4A6;
+  color: #fff;
+}
+
+.rg-scenario-btn--reset {
+  border-color: #666;
+  color: #666;
+}
+
+.rg-scenario-btn--reset:hover {
+  background: #666;
+  color: #fff;
+}
+
+/* Credibility Block */
+.rg-credibility {
+  list-style: none;
+  padding: 1rem;
+  margin: 1rem 0;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #2FBF71;
+}
+
+.rg-credibility li {
+  padding: 0.35rem 0;
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.rg-credibility li::before {
+  content: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rg-roi-highlight h2 {
+    font-size: 2rem;
+  }
+  
+  .rg-scenario-buttons {
+    justify-content: center;
+  }
+  
+  .rg-chart-container {
+    height: 250px;
+  }
+}
