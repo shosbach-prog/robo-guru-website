@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Robo-Guru ROI Kalkulator
  * Description: Einfacher ROI-Kalkulator für Reinigungsrobotik inkl. PDF-Download, Druckansicht und Versand per E-Mail (PDF-Anhang). Shortcode: [rg_roi_calculator]
- * Version: 1.5.0
+ * Version: 2.0.0
  * Author: Robo-Guru
  * Text Domain: rg-roi
  */
@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.6.0';
+    const VERSION = '2.0.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -37,6 +37,93 @@ final class RG_ROI_Calculator {
         add_action('admin_menu', [__CLASS__, 'admin_menu']);
         add_action('admin_init', [__CLASS__, 'register_settings']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts']);
+
+        // REST API for robots
+        add_action('rest_api_init', [__CLASS__, 'register_rest_routes']);
+    }
+
+    /**
+     * Register REST API routes for robot data
+     */
+    public static function register_rest_routes() {
+        register_rest_route('rg-roi/v1', '/robots', [
+            'methods' => 'GET',
+            'callback' => [__CLASS__, 'rest_get_robots'],
+            'permission_callback' => '__return_true',
+        ]);
+    }
+
+    /**
+     * REST API: Get all robots from CPT robo_robot with ROI data
+     */
+    public static function rest_get_robots() {
+        $robots = [];
+
+        $query = new WP_Query([
+            'post_type' => 'robo_robot',
+            'posts_per_page' => -1,
+            'post_status' => 'publish',
+            'orderby' => 'title',
+            'order' => 'ASC',
+        ]);
+
+        while ($query->have_posts()) {
+            $query->the_post();
+            $id = get_the_ID();
+
+            // Get thumbnail
+            $thumb_id = get_post_thumbnail_id($id);
+            $thumb_url = $thumb_id ? wp_get_attachment_image_url($thumb_id, 'thumbnail') : '';
+
+            // Get ROI meta fields
+            $list_price = floatval(get_post_meta($id, '_rf_list_price', true));
+            $m2h = floatval(get_post_meta($id, '_rf_m2h', true));
+            $battery_hours = floatval(get_post_meta($id, '_rf_battery_hours', true)) ?: 4;
+            $power_watts = floatval(get_post_meta($id, '_rf_power_watts', true));
+            $consumables = floatval(get_post_meta($id, '_rf_consumables_per_1000m2', true));
+            $recommended_area = get_post_meta($id, '_rf_recommended_area', true);
+
+            // Service costs
+            $service_basic = floatval(get_post_meta($id, '_rf_service_basic', true));
+            $service_standard = floatval(get_post_meta($id, '_rf_service_standard', true));
+            $service_premium = floatval(get_post_meta($id, '_rf_service_premium', true));
+
+            // Calculate power cost per year (Watts × hours/day × 260 days × 0.30 €/kWh)
+            $power_yearly = 0;
+            if ($power_watts > 0) {
+                $power_yearly = round(($power_watts / 1000) * $battery_hours * 260 * 0.30, 2);
+            }
+
+            // Calculate leasing rates
+            $lease36 = self::calculate_leasing_rate($list_price, 36);
+            $lease48 = self::calculate_leasing_rate($list_price, 48);
+            $lease60 = self::calculate_leasing_rate($list_price, 60);
+
+            $robots[] = [
+                'id' => $id,
+                'name' => get_the_title(),
+                'slug' => get_post_field('post_name', $id),
+                'thumbnail' => $thumb_url,
+                'manufacturer' => get_post_meta($id, '_rf_manufacturer', true),
+                'segment' => get_post_meta($id, '_rf_segment', true),
+                'list_price' => $list_price,
+                'm2h' => $m2h,
+                'battery_hours' => $battery_hours,
+                'power_watts' => $power_watts,
+                'power_yearly' => $power_yearly,
+                'consumables_per_1000m2' => $consumables,
+                'recommended_area' => $recommended_area,
+                'service_basic' => $service_basic,
+                'service_standard' => $service_standard,
+                'service_premium' => $service_premium,
+                'lease36' => $lease36,
+                'lease48' => $lease48,
+                'lease60' => $lease60,
+            ];
+        }
+        wp_reset_postdata();
+
+        return rest_ensure_response($robots);
     }
 
     /**
@@ -132,7 +219,9 @@ final class RG_ROI_Calculator {
 
         wp_localize_script('rg-roi', 'rgRoi', [
             'ajaxUrl'    => admin_url('admin-ajax.php'),
+            'restUrl'    => rest_url('rg-roi/v1/'),
             'nonce'      => wp_create_nonce(self::NONCE_ACTION),
+            'restNonce'  => wp_create_nonce('wp_rest'),
             'ccEmail'    => get_option(self::OPTION_CC_EMAIL, ''),
             'siteName'   => get_bloginfo('name'),
             'isLoggedIn' => is_user_logged_in() ? '1' : '0',
@@ -155,6 +244,20 @@ final class RG_ROI_Calculator {
                 <p><?php echo esc_html($atts['subtitle']); ?></p>
             </div>
 
+            <!-- Robot Selection Section -->
+            <div class="rg-robot-section">
+                <div class="rg-robot-header">
+                    <h4>Wählen Sie Ihren Roboter aus für den Sie den ROI berechnen wollen</h4>
+                    <p class="rg-robot-subtitle">Die Werte werden automatisch vorausgefüllt. Sie können alle Werte manuell anpassen.</p>
+                    <label class="rg-multiselect-toggle">
+                        <input type="checkbox" data-rg="multiSelect">
+                        <span>Mehrere Roboter vergleichen</span>
+                    </label>
+                </div>
+                <div class="rg-robot-grid" data-rg-robots>
+                    <div class="rg-robot-loading">Roboter werden geladen...</div>
+                </div>
+            </div>
 
             <div class="rg-meta-row">
                 <div class="rg-meta-card">
@@ -170,6 +273,25 @@ final class RG_ROI_Calculator {
                         </label>
                     </div>
                     <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Comparison Results (shown when multiple robots selected) -->
+            <div class="rg-comparison rg-hide" data-rg-comparison>
+                <h4>Vergleich: Mensch vs. Roboter</h4>
+                <div class="rg-comparison-table-wrap">
+                    <table class="rg-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Kostenfaktor</th>
+                                <th class="rg-col-human">Manuelle Reinigung</th>
+                                <th class="rg-col-robot" data-rg-robot-cols><!-- Dynamic columns --></th>
+                            </tr>
+                        </thead>
+                        <tbody data-rg-comparison-body>
+                            <!-- Dynamic rows -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -214,6 +336,12 @@ final class RG_ROI_Calculator {
 
                 <div class="rg-card">
                     <h4>Nutzung & Einsparung</h4>
+                    <label>Zu reinigende Fläche pro Tag (m²)
+                        <input type="number" class="rg-in" data-rg="areaSqmPerDay" value="1500" min="0" step="50">
+                    </label>
+                    <label>Reinigungsleistung Roboter (m²/h) <span class="rg-autofill" data-rg-autofill="m2h">auto</span>
+                        <input type="number" class="rg-in" data-rg="m2h" value="1200" min="0" step="50">
+                    </label>
                     <label>Eingesparte Stunden pro Tag (pro Roboter)
                         <input type="number" class="rg-in" data-rg="hoursPerDay" value="2.5" min="0" step="0.1">
                     </label>
@@ -224,34 +352,35 @@ final class RG_ROI_Calculator {
                         <input type="number" class="rg-in" data-rg="daysPerYear" value="260" min="0" step="1">
                     </label>
 
-                    <label>Zu reinigende Fläche pro Tag (m²) <span class="rg-optional">(optional)</span>
-                        <input type="number" class="rg-in" data-rg="areaSqmPerDay" value="0" min="0" step="50">
-                    </label>
-                    <div class="rg-note" data-rg-out="sqmHint">Tipp: Wird zur Einordnung genutzt (keine harte Rechenbasis).</div>
+                    <div class="rg-note" data-rg-out="sqmHint">Basierend auf Ihrer Fläche und der Reinigungsleistung des Roboters.</div>
                 </div>
 
                 <div class="rg-card">
                     <h4>Service & Betriebskosten</h4>
 
-                    <label>Servicepaket
+                    <label>Servicepaket <span class="rg-autofill" data-rg-autofill="service">auto</span>
                         <select class="rg-in rg-select" data-rg="servicePreset">
                             <option value="0">Kein Paket / bereits enthalten</option>
-                            <option value="99">Basic (ab 99 €/Monat)</option>
-                            <option value="179" selected>Standard (ab 179 €/Monat)</option>
-                            <option value="255">Premium (ab 255 €/Monat)</option>
+                            <option value="basic">Basic</option>
+                            <option value="standard" selected>Standard</option>
+                            <option value="premium">Premium</option>
                             <option value="-1">Eigener Wert</option>
                         </select>
                     </label>
 
                     <label>Servicekosten pro Roboter / Monat (€)
-                        <input type="number" class="rg-in" data-rg="serviceMonthly" value="149" min="0" step="5">
+                        <input type="number" class="rg-in" data-rg="serviceMonthly" value="179" min="0" step="5">
                     </label>
 
-                    <label>Stromkosten pro Roboter / Jahr (€)
+                    <label>Stromkosten pro Roboter / Jahr (€) <span class="rg-autofill" data-rg-autofill="power">auto</span>
                         <input type="number" class="rg-in" data-rg="powerPerYear" value="350" min="0" step="10">
                     </label>
 
-                    <div class="rg-note">Hinweis: Servicepaket kann je nach Anbieter/Modell variieren. Strom ist meist ein kleiner Hebel.</div>
+                    <label>Verbrauchsmaterial pro Jahr (€) <span class="rg-autofill" data-rg-autofill="consumables">auto</span>
+                        <input type="number" class="rg-in" data-rg="consumablesPerYear" value="0" min="0" step="50">
+                    </label>
+
+                    <div class="rg-note">Verbrauchsmaterial wird anhand Ihrer Fläche berechnet (Bürsten, Pads, Filter etc.)</div>
                 </div>
 
                 <div class="rg-card rg-result">
