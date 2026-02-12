@@ -1,0 +1,96 @@
+/* RG ROI Calculator Admin Styles */
+
+.rg-roi-admin .nav-tab-wrapper {
+    margin-bottom: 20px;
+}
+
+.rg-roi-admin .rg-tab-content {
+    display: none;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    border-top: none;
+}
+
+.rg-roi-admin .rg-tab-content.active {
+    display: block;
+}
+
+.rg-roi-admin #rg-robots-table {
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.rg-roi-admin #rg-robots-table th,
+.rg-roi-admin #rg-robots-table td {
+    padding: 10px 8px;
+    vertical-align: middle;
+}
+
+.rg-roi-admin #rg-robots-table .no-robots td {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+}
+
+.rg-roi-admin .rg-robot-form {
+    max-width: 600px;
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.rg-roi-admin .rg-robot-form .form-table th {
+    width: 180px;
+    padding: 10px 10px 10px 0;
+}
+
+.rg-roi-admin .rg-robot-form .form-table td {
+    padding: 10px 0;
+}
+
+.rg-roi-admin .rg-robot-form input[type="number"],
+.rg-roi-admin .rg-robot-form input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+}
+
+.rg-roi-admin .rg-leasing-preview {
+    background: #e7f3ff;
+    border: 1px solid #72aee6;
+    padding: 15px 20px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.rg-roi-admin .rg-leasing-preview h4 {
+    margin-top: 0;
+    color: #135e96;
+}
+
+.rg-roi-admin .rg-leasing-preview ul {
+    margin: 10px 0;
+}
+
+.rg-roi-admin .rg-leasing-preview li {
+    margin: 5px 0;
+}
+
+.rg-roi-admin .button-link-delete {
+    color: #b32d2e;
+}
+
+.rg-roi-admin .button-link-delete:hover {
+    color: #a00;
+    background: #fee;
+}
+
+.rg-roi-admin .rg-edit-robot {
+    margin-right: 5px;
+}
+
+/* Highlight row being edited */
+.rg-roi-admin #rg-robots-table tr.editing {
+    background-color: #fff8e5 !important;
+}

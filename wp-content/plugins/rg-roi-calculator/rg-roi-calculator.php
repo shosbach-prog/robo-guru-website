@@ -10,10 +10,15 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '1.5.0';
+    const VERSION = '1.6.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
+    const OPTION_ROBOTS = 'rg_roi_robots';
+
+    // Leasing parameters
+    const LEASING_RESIDUAL_PERCENT = 5;   // 5% Restwert
+    const LEASING_INTEREST_RATE = 6;      // 6% p.a. Verzinsung
 
     // Avoid strict return types for broader PHP compatibility on WordPress hosts
     public static function init() {
@@ -25,8 +30,65 @@ final class RG_ROI_Calculator {
 
         add_action('wp_ajax_rg_save_roi_to_profile', [__CLASS__, 'ajax_save_to_profile']);
 
+        // Admin robot management
+        add_action('wp_ajax_rg_save_robot', [__CLASS__, 'ajax_save_robot']);
+        add_action('wp_ajax_rg_delete_robot', [__CLASS__, 'ajax_delete_robot']);
+
         add_action('admin_menu', [__CLASS__, 'admin_menu']);
         add_action('admin_init', [__CLASS__, 'register_settings']);
+        add_action('admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts']);
+    }
+
+    /**
+     * Calculate monthly leasing rate
+     * @param float $price Purchase price
+     * @param int $months Lease term in months
+     * @return float Monthly rate
+     */
+    public static function calculate_leasing_rate($price, $months = 36) {
+        if ($price <= 0 || $months <= 0) return 0;
+
+        $residual_percent = self::LEASING_RESIDUAL_PERCENT / 100;
+        $annual_interest = self::LEASING_INTEREST_RATE / 100;
+        $monthly_interest = $annual_interest / 12;
+
+        // Residual value at end of lease
+        $residual_value = $price * $residual_percent;
+
+        // Amount to be financed (depreciation)
+        $depreciation_total = $price - $residual_value;
+        $monthly_depreciation = $depreciation_total / $months;
+
+        // Interest on average outstanding balance
+        $average_balance = ($price + $residual_value) / 2;
+        $monthly_interest_amount = $average_balance * $monthly_interest;
+
+        // Total monthly rate
+        return round($monthly_depreciation + $monthly_interest_amount, 2);
+    }
+
+    /**
+     * Get all robots from options
+     */
+    public static function get_robots() {
+        $robots = get_option(self::OPTION_ROBOTS, []);
+        return is_array($robots) ? $robots : [];
+    }
+
+    /**
+     * Enqueue admin scripts
+     */
+    public static function admin_enqueue_scripts($hook) {
+        if ($hook !== 'settings_page_rg-roi') return;
+
+        wp_enqueue_style('rg-roi-admin', plugin_dir_url(__FILE__) . 'assets/admin.css', [], self::VERSION);
+        wp_enqueue_script('rg-roi-admin', plugin_dir_url(__FILE__) . 'assets/admin.js', ['jquery'], self::VERSION, true);
+        wp_localize_script('rg-roi-admin', 'rgRoiAdmin', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('rg_roi_admin_nonce'),
+            'leasingResidual' => self::LEASING_RESIDUAL_PERCENT,
+            'leasingInterest' => self::LEASING_INTEREST_RATE,
+        ]);
     }
 
     public static function enqueue_assets() {
@@ -302,24 +364,204 @@ final class RG_ROI_Calculator {
 
     public static function render_settings() {
         if (!current_user_can('manage_options')) return;
+        $robots = self::get_robots();
         ?>
-        <div class="wrap">
+        <div class="wrap rg-roi-admin">
             <h1>Robo-Guru ROI Kalkulator</h1>
-            <form method="post" action="options.php">
-                <?php settings_fields(self::OPTION_GROUP); ?>
-                <table class="form-table" role="presentation">
-                    <tr>
-                        <th scope="row"><label for="<?php echo esc_attr(self::OPTION_CC_EMAIL); ?>">CC E-Mail (optional)</label></th>
-                        <td>
-                            <input type="email" name="<?php echo esc_attr(self::OPTION_CC_EMAIL); ?>" id="<?php echo esc_attr(self::OPTION_CC_EMAIL); ?>" value="<?php echo esc_attr(get_option(self::OPTION_CC_EMAIL, '')); ?>" class="regular-text" />
-                            <p class="description">Optional: Eine Kopie jeder Bericht-E-Mail wird neutral in CC gesendet (z. B. an dein Team).</p>
-                        </td>
-                    </tr>
+
+            <div class="nav-tab-wrapper">
+                <a href="#tab-robots" class="nav-tab nav-tab-active" data-tab="robots">Roboter verwalten</a>
+                <a href="#tab-settings" class="nav-tab" data-tab="settings">Einstellungen</a>
+            </div>
+
+            <!-- Roboter Tab -->
+            <div id="tab-robots" class="rg-tab-content active">
+                <h2>Roboter-Listenpreise</h2>
+                <p class="description">Hier können Sie Roboter mit ihren Listenpreisen und Spezifikationen verwalten. Die Leasingrate wird automatisch berechnet (<?php echo self::LEASING_RESIDUAL_PERCENT; ?>% Restwert, <?php echo self::LEASING_INTEREST_RATE; ?>% p.a. Verzinsung).</p>
+
+                <table class="wp-list-table widefat fixed striped" id="rg-robots-table">
+                    <thead>
+                        <tr>
+                            <th style="width:200px;">Name</th>
+                            <th style="width:120px;">Listenpreis (€)</th>
+                            <th style="width:100px;">Leistung (m²/h)</th>
+                            <th style="width:100px;">Service (€/Mon)</th>
+                            <th style="width:100px;">Strom (€/Jahr)</th>
+                            <th style="width:120px;">Leasing 36M</th>
+                            <th style="width:120px;">Leasing 48M</th>
+                            <th style="width:80px;">Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rg-robots-list">
+                        <?php if (empty($robots)) : ?>
+                        <tr class="no-robots">
+                            <td colspan="8">Noch keine Roboter hinzugefügt.</td>
+                        </tr>
+                        <?php else : ?>
+                        <?php foreach ($robots as $id => $robot) :
+                            $lease36 = self::calculate_leasing_rate($robot['price'], 36);
+                            $lease48 = self::calculate_leasing_rate($robot['price'], 48);
+                        ?>
+                        <tr data-id="<?php echo esc_attr($id); ?>">
+                            <td><strong><?php echo esc_html($robot['name']); ?></strong></td>
+                            <td><?php echo number_format($robot['price'], 0, ',', '.'); ?> €</td>
+                            <td><?php echo esc_html($robot['performance'] ?? '-'); ?> m²/h</td>
+                            <td><?php echo number_format($robot['service_monthly'] ?? 0, 0, ',', '.'); ?> €</td>
+                            <td><?php echo number_format($robot['power_yearly'] ?? 0, 0, ',', '.'); ?> €</td>
+                            <td><?php echo number_format($lease36, 2, ',', '.'); ?> €/Mon</td>
+                            <td><?php echo number_format($lease48, 2, ',', '.'); ?> €/Mon</td>
+                            <td>
+                                <button type="button" class="button button-small rg-edit-robot" data-id="<?php echo esc_attr($id); ?>">Bearbeiten</button>
+                                <button type="button" class="button button-small button-link-delete rg-delete-robot" data-id="<?php echo esc_attr($id); ?>">Löschen</button>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
                 </table>
-                <?php submit_button(); ?>
-            </form>
+
+                <h3>Roboter hinzufügen / bearbeiten</h3>
+                <form id="rg-robot-form" class="rg-robot-form">
+                    <input type="hidden" name="robot_id" id="robot_id" value="">
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="robot_name">Name *</label></th>
+                            <td><input type="text" name="robot_name" id="robot_name" class="regular-text" required placeholder="z.B. Pudu CC1 Pro"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="robot_price">Listenpreis (€) *</label></th>
+                            <td>
+                                <input type="number" name="robot_price" id="robot_price" class="regular-text" required min="0" step="100" placeholder="z.B. 25000">
+                                <p class="description">Netto-Listenpreis des Roboters</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="robot_performance">Reinigungsleistung (m²/h)</label></th>
+                            <td><input type="number" name="robot_performance" id="robot_performance" class="regular-text" min="0" step="50" placeholder="z.B. 1500"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="robot_service">Servicekosten (€/Monat)</label></th>
+                            <td><input type="number" name="robot_service" id="robot_service" class="regular-text" min="0" step="10" placeholder="z.B. 179"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="robot_power">Stromkosten (€/Jahr)</label></th>
+                            <td><input type="number" name="robot_power" id="robot_power" class="regular-text" min="0" step="10" placeholder="z.B. 350"></td>
+                        </tr>
+                    </table>
+
+                    <div class="rg-leasing-preview" id="leasing-preview" style="display:none;">
+                        <h4>Berechnete Leasingraten</h4>
+                        <p>Bei <strong id="preview-price">0</strong> € Listenpreis:</p>
+                        <ul>
+                            <li>36 Monate: <strong id="preview-lease36">0</strong> €/Monat</li>
+                            <li>48 Monate: <strong id="preview-lease48">0</strong> €/Monat</li>
+                            <li>60 Monate: <strong id="preview-lease60">0</strong> €/Monat</li>
+                        </ul>
+                        <p class="description">Berechnung: <?php echo self::LEASING_RESIDUAL_PERCENT; ?>% Restwert, <?php echo self::LEASING_INTEREST_RATE; ?>% p.a. Verzinsung</p>
+                    </div>
+
+                    <p class="submit">
+                        <button type="submit" class="button button-primary" id="rg-save-robot">Roboter speichern</button>
+                        <button type="button" class="button" id="rg-cancel-edit" style="display:none;">Abbrechen</button>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Einstellungen Tab -->
+            <div id="tab-settings" class="rg-tab-content">
+                <form method="post" action="options.php">
+                    <?php settings_fields(self::OPTION_GROUP); ?>
+                    <table class="form-table" role="presentation">
+                        <tr>
+                            <th scope="row"><label for="<?php echo esc_attr(self::OPTION_CC_EMAIL); ?>">CC E-Mail (optional)</label></th>
+                            <td>
+                                <input type="email" name="<?php echo esc_attr(self::OPTION_CC_EMAIL); ?>" id="<?php echo esc_attr(self::OPTION_CC_EMAIL); ?>" value="<?php echo esc_attr(get_option(self::OPTION_CC_EMAIL, '')); ?>" class="regular-text" />
+                                <p class="description">Optional: Eine Kopie jeder Bericht-E-Mail wird neutral in CC gesendet (z. B. an dein Team).</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <?php submit_button(); ?>
+                </form>
+            </div>
         </div>
         <?php
+    }
+
+    /**
+     * AJAX: Save robot
+     */
+    public static function ajax_save_robot() {
+        check_ajax_referer('rg_roi_admin_nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'Keine Berechtigung.'], 403);
+        }
+
+        $robot_id = sanitize_text_field($_POST['robot_id'] ?? '');
+        $name = sanitize_text_field($_POST['robot_name'] ?? '');
+        $price = floatval($_POST['robot_price'] ?? 0);
+        $performance = floatval($_POST['robot_performance'] ?? 0);
+        $service = floatval($_POST['robot_service'] ?? 0);
+        $power = floatval($_POST['robot_power'] ?? 0);
+
+        if (empty($name) || $price <= 0) {
+            wp_send_json_error(['message' => 'Name und Preis sind erforderlich.'], 400);
+        }
+
+        $robots = self::get_robots();
+
+        $robot_data = [
+            'name' => $name,
+            'price' => $price,
+            'performance' => $performance,
+            'service_monthly' => $service,
+            'power_yearly' => $power,
+        ];
+
+        if (empty($robot_id)) {
+            // New robot - generate ID
+            $robot_id = 'robot_' . time() . '_' . wp_rand(1000, 9999);
+        }
+
+        $robots[$robot_id] = $robot_data;
+        update_option(self::OPTION_ROBOTS, $robots);
+
+        // Calculate leasing rates for response
+        $lease36 = self::calculate_leasing_rate($price, 36);
+        $lease48 = self::calculate_leasing_rate($price, 48);
+
+        wp_send_json_success([
+            'message' => 'Roboter gespeichert.',
+            'robot_id' => $robot_id,
+            'robot' => $robot_data,
+            'lease36' => $lease36,
+            'lease48' => $lease48,
+        ]);
+    }
+
+    /**
+     * AJAX: Delete robot
+     */
+    public static function ajax_delete_robot() {
+        check_ajax_referer('rg_roi_admin_nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'Keine Berechtigung.'], 403);
+        }
+
+        $robot_id = sanitize_text_field($_POST['robot_id'] ?? '');
+        if (empty($robot_id)) {
+            wp_send_json_error(['message' => 'Roboter-ID fehlt.'], 400);
+        }
+
+        $robots = self::get_robots();
+        if (isset($robots[$robot_id])) {
+            unset($robots[$robot_id]);
+            update_option(self::OPTION_ROBOTS, $robots);
+            wp_send_json_success(['message' => 'Roboter gelöscht.']);
+        } else {
+            wp_send_json_error(['message' => 'Roboter nicht gefunden.'], 404);
+        }
     }
 
     public static function ajax_send_report() {
