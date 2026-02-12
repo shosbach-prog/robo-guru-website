@@ -98,6 +98,8 @@ final class RG_Robot_Admin_Tabs {
       '_rf_service_standard' => $this->meta($id, '_rf_service_standard'),
       '_rf_service_premium'  => $this->meta($id, '_rf_service_premium'),
       '_rf_power_watts'      => $this->meta($id, '_rf_power_watts'),
+      '_rf_consumables_per_1000m2' => $this->meta($id, '_rf_consumables_per_1000m2'),
+      '_rf_recommended_area' => $this->meta($id, '_rf_recommended_area'),
 
       '_rf_m2h'            => $this->meta($id, '_rf_m2h'),
       '_rf_battery_hours'  => $this->meta($id, '_rf_battery_hours'),
@@ -181,6 +183,15 @@ final class RG_Robot_Admin_Tabs {
               $this->field_text('_rf_power_watts','Leistungsaufnahme (Watt)',$v['_rf_power_watts'],'z. B. 800');
             ?>
           </div>
+
+          <h4>Verbrauchsmaterial</h4>
+          <div class="rg-grid2">
+            <?php
+              $this->field_text('_rf_consumables_per_1000m2','Verbrauchskosten pro 1.000 m²/Jahr (€)',$v['_rf_consumables_per_1000m2'],'z. B. 1800');
+              $this->field_text('_rf_recommended_area','Empfohlene Einsatzfläche (m²)',$v['_rf_recommended_area'],'z. B. 1500-3000');
+            ?>
+          </div>
+          <p class="description" style="margin-top:5px;color:#666;">Verbrauchsmaterial = Bürsten, Pads, Gummilippen, Filter etc. Kosten werden im ROI-Kalkulator proportional zur Fläche berechnet.</p>
           <?php
           // Calculate yearly power cost based on watts
           // Assumptions: 4h usage/day, 260 days/year, 0.30€/kWh average
@@ -341,7 +352,7 @@ final class RG_Robot_Admin_Tabs {
     if ( isset($_POST['rg_robot_details_nonce']) && wp_verify_nonce($_POST['rg_robot_details_nonce'], 'rg_robot_details_save') ) {
       $keys = array(
         '_rf_manufacturer','_rf_segment','_rf_tagline','_rf_price_month','_rf_cta_url','_rf_datasheet_url',
-        '_rf_list_price','_rf_service_basic','_rf_service_standard','_rf_service_premium','_rf_power_watts', // ROI fields
+        '_rf_list_price','_rf_service_basic','_rf_service_standard','_rf_service_premium','_rf_power_watts','_rf_consumables_per_1000m2','_rf_recommended_area', // ROI fields
         '_rf_m2h','_rf_battery_hours','_rf_charge_time',
         '_rf_tank_liters','_rf_clean_water','_rf_dirty_water',
         '_rf_dimensions','_rf_working_width','_rf_noise',
