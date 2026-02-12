@@ -962,12 +962,27 @@ out('invest').textContent = fmtEUR(calc.invest);
     const applyPreset = () => {
       if (!presetSel || !svcInp) return;
       const v = String(presetSel.value || '');
-      if (v === '-1') return; // custom
-      if (selectedRobots && selectedRobots.length > 0) return; // Let robot handle it
-      if (v === 'basic') svcInp.value = '99';
-      else if (v === 'standard') svcInp.value = '179';
-      else if (v === 'premium') svcInp.value = '255';
-      else if (v === '0') svcInp.value = '0';
+      if (v === '-1') return; // custom - user sets their own value
+      if (v === '0') { svcInp.value = '0'; return; }
+      
+      // If a robot is selected, use its specific service values
+      if (selectedRobots && selectedRobots.length > 0) {
+        const robot = selectedRobots[0];
+        if (v === 'basic' && robot.service_basic > 0) svcInp.value = robot.service_basic;
+        else if (v === 'standard' && robot.service_standard > 0) svcInp.value = robot.service_standard;
+        else if (v === 'premium' && robot.service_premium > 0) svcInp.value = robot.service_premium;
+        else {
+          // Fallback if robot has no value for this tier
+          if (v === 'basic') svcInp.value = '99';
+          else if (v === 'standard') svcInp.value = '179';
+          else if (v === 'premium') svcInp.value = '255';
+        }
+      } else {
+        // No robot selected - use default values
+        if (v === 'basic') svcInp.value = '99';
+        else if (v === 'standard') svcInp.value = '179';
+        else if (v === 'premium') svcInp.value = '255';
+      }
     };
     if (presetSel) {
       presetSel.addEventListener('change', () => { applyPreset(); lastCalc = toCalc(root); render(root, lastCalc); });
