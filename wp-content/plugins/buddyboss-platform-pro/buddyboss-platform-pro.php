@@ -9,7 +9,7 @@
  * Description: Adds premium features to BuddyBoss Platform.
  * Author:      BuddyBoss
  * Author URI:  https://buddyboss.com/
- * Version:     2.12.0
+ * Version:     2.13.0
  * Text Domain: buddyboss-pro
  * Domain Path: /languages/
  * License:     GPLv2 or later (license.txt)
@@ -101,7 +101,7 @@ function bb_platform_pro_register_with_drm() {
 		'buddyboss-platform-pro',
 		'BuddyBoss Platform Pro',
 		array(
-			'version' => defined( 'BB_PLATFORM_PRO_PLUGIN_FILE' ) ? bb_platform_pro()->version : '2.12.0',
+			'version' => defined( 'BB_PLATFORM_PRO_PLUGIN_FILE' ) ? bb_platform_pro()->version : '2.13.0',
 			'file'    => defined( 'BB_PLATFORM_PRO_PLUGIN_FILE' ) ? BB_PLATFORM_PRO_PLUGIN_FILE : __FILE__,
 		)
 	);

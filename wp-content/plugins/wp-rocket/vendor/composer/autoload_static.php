@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitac97b725757d6d5697175fb8afd973a1
+class ComposerStaticInit272b26a0a6a1be39945c14fa0ab18efe
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -27,10 +27,6 @@ class ComposerStaticInitac97b725757d6d5697175fb8afd973a1
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Component\\CssSelector\\' => 30,
-        ),
-        'B' =>
-        array (
-            'BerlinDB\\' => 9,
         ),
     );
 
@@ -63,10 +59,6 @@ class ComposerStaticInitac97b725757d6d5697175fb8afd973a1
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
-        'BerlinDB\\' =>
-        array (
-            0 => __DIR__ . '/..' . '/berlindb/core/src',
-        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -81,15 +73,6 @@ class ComposerStaticInitac97b725757d6d5697175fb8afd973a1
 
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
-        'BerlinDB\\Database\\Base' => __DIR__ . '/..' . '/berlindb/core/src/Database/Base.php',
-        'BerlinDB\\Database\\Column' => __DIR__ . '/..' . '/berlindb/core/src/Database/Column.php',
-        'BerlinDB\\Database\\Queries\\Compare' => __DIR__ . '/..' . '/berlindb/core/src/Database/Queries/Compare.php',
-        'BerlinDB\\Database\\Queries\\Date' => __DIR__ . '/..' . '/berlindb/core/src/Database/Queries/Date.php',
-        'BerlinDB\\Database\\Queries\\Meta' => __DIR__ . '/..' . '/berlindb/core/src/Database/Queries/Meta.php',
-        'BerlinDB\\Database\\Query' => __DIR__ . '/..' . '/berlindb/core/src/Database/Query.php',
-        'BerlinDB\\Database\\Row' => __DIR__ . '/..' . '/berlindb/core/src/Database/Row.php',
-        'BerlinDB\\Database\\Schema' => __DIR__ . '/..' . '/berlindb/core/src/Database/Schema.php',
-        'BerlinDB\\Database\\Table' => __DIR__ . '/..' . '/berlindb/core/src/Database/Table.php',
         'CloudFlare\\IpRewrite' => __DIR__ . '/..' . '/cloudflare/cf-ip-rewrite/src/CloudFlare/IpRewrite.php',
         'CloudFlare\\IpUtils' => __DIR__ . '/..' . '/cloudflare/cf-ip-rewrite/src/CloudFlare/IpUtils.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
@@ -477,6 +460,7 @@ class ComposerStaticInitac97b725757d6d5697175fb8afd973a1
         'WP_Rocket\\Engine\\License\\API\\User' => __DIR__ . '/../..' . '/inc/Engine/License/API/User.php',
         'WP_Rocket\\Engine\\License\\API\\UserClient' => __DIR__ . '/../..' . '/inc/Engine/License/API/UserClient.php',
         'WP_Rocket\\Engine\\License\\Renewal' => __DIR__ . '/../..' . '/inc/Engine/License/Renewal.php',
+        'WP_Rocket\\Engine\\License\\Revoked' => __DIR__ . '/../..' . '/inc/Engine/License/Revoked.php',
         'WP_Rocket\\Engine\\License\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/License/ServiceProvider.php',
         'WP_Rocket\\Engine\\License\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/License/Subscriber.php',
         'WP_Rocket\\Engine\\License\\Upgrade' => __DIR__ . '/../..' . '/inc/Engine/License/Upgrade.php',
@@ -691,6 +675,7 @@ class ComposerStaticInitac97b725757d6d5697175fb8afd973a1
         'WP_Rocket\\Logger\\LoggerAwareInterface' => __DIR__ . '/../..' . '/inc/Logger/LoggerAwareInterface.php',
         'WP_Rocket\\Logger\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Logger/ServiceProvider.php',
         'WP_Rocket\\Logger\\StreamHandler' => __DIR__ . '/../..' . '/inc/Logger/StreamHandler.php',
+        'WP_Rocket\\Logger\\Subscriber' => __DIR__ . '/../..' . '/inc/Logger/Subscriber.php',
         'WP_Rocket\\Plugin' => __DIR__ . '/../..' . '/inc/Plugin.php',
         'WP_Rocket\\ServiceProvider\\Common_Subscribers' => __DIR__ . '/../..' . '/inc/classes/ServiceProvider/class-common-subscribers.php',
         'WP_Rocket\\ServiceProvider\\Options' => __DIR__ . '/../..' . '/inc/classes/ServiceProvider/class-options.php',
@@ -820,10 +805,10 @@ class ComposerStaticInitac97b725757d6d5697175fb8afd973a1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitac97b725757d6d5697175fb8afd973a1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitac97b725757d6d5697175fb8afd973a1::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitac97b725757d6d5697175fb8afd973a1::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitac97b725757d6d5697175fb8afd973a1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit272b26a0a6a1be39945c14fa0ab18efe::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit272b26a0a6a1be39945c14fa0ab18efe::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit272b26a0a6a1be39945c14fa0ab18efe::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit272b26a0a6a1be39945c14fa0ab18efe::$classMap;
 
         }, null, ClassLoader::class);
     }
