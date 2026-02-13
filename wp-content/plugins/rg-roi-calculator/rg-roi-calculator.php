@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '2.1.0';
+    const VERSION = '2.2.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -29,6 +29,10 @@ final class RG_ROI_Calculator {
         add_action('wp_ajax_nopriv_rg_send_roi_report', [__CLASS__, 'ajax_send_report']);
 
         add_action('wp_ajax_rg_save_roi_to_profile', [__CLASS__, 'ajax_save_to_profile']);
+
+        // Logo upload for customers
+        add_action('wp_ajax_rg_upload_logo', [__CLASS__, 'ajax_upload_logo']);
+        add_action('wp_ajax_rg_delete_logo', [__CLASS__, 'ajax_delete_logo']);
 
         // Admin robot management
         add_action('wp_ajax_rg_save_robot', [__CLASS__, 'ajax_save_robot']);
@@ -218,6 +222,7 @@ final class RG_ROI_Calculator {
         );
 
         $user_name = '';
+        $user_logo_url = '';
         if (is_user_logged_in()) {
             $current_user = wp_get_current_user();
             $user_name = trim($current_user->display_name);
@@ -226,6 +231,11 @@ final class RG_ROI_Calculator {
             }
             if (empty($user_name)) {
                 $user_name = $current_user->user_login;
+            }
+            // Get user's custom logo
+            $logo_id = get_user_meta(get_current_user_id(), 'rg_customer_logo_id', true);
+            if ($logo_id) {
+                $user_logo_url = wp_get_attachment_image_url($logo_id, 'medium');
             }
         }
 
@@ -239,6 +249,7 @@ final class RG_ROI_Calculator {
             'isLoggedIn' => is_user_logged_in() ? '1' : '0',
             'hasBbDocs'  => function_exists('bp_document_add') ? '1' : '0',
             'userName'   => $user_name,
+            'userLogoUrl' => $user_logo_url,
         ]);
     }
 
@@ -301,6 +312,32 @@ final class RG_ROI_Calculator {
                     <?php endif; ?>
                 </div>
             </div>
+
+            <?php if (is_user_logged_in()) : ?>
+            <!-- Logo Upload für PDF-Berichte -->
+            <div class="rg-logo-upload-box">
+                <h5>Ihr Firmenlogo für PDF-Berichte</h5>
+                <div class="rg-logo-preview" id="rg_logo_preview">
+                    <?php
+                    $logo_id = get_user_meta(get_current_user_id(), 'rg_customer_logo_id', true);
+                    if ($logo_id) {
+                        echo wp_get_attachment_image($logo_id, 'medium', false, ['style' => 'max-height:80px;']);
+                    } else {
+                        echo '<span class="rg-logo-placeholder">Kein Logo hochgeladen</span>';
+                    }
+                    ?>
+                </div>
+                <div class="rg-logo-actions">
+                    <input type="file" id="rg_logo_upload" accept="image/png,image/jpeg,image/webp" style="display:none;">
+                    <button type="button" class="rg-btn rg-btn--small" id="rg_logo_select">Logo auswählen</button>
+                    <button type="button" class="rg-btn rg-btn--small rg-btn--primary" id="rg_logo_save" style="display:none;">Speichern</button>
+                    <?php if ($logo_id) : ?>
+                    <button type="button" class="rg-btn rg-btn--small rg-btn--danger" id="rg_logo_delete">Entfernen</button>
+                    <?php endif; ?>
+                </div>
+                <p class="rg-logo-hint">PNG, JPG oder WebP, max. 2 MB. Das Logo erscheint oben rechts in Ihrem PDF.</p>
+            </div>
+            <?php endif; ?>
 
             <!-- Comparison Results (shown when multiple robots selected) -->
             <div class="rg-comparison rg-hide" data-rg-comparison>
@@ -781,6 +818,93 @@ final class RG_ROI_Calculator {
         } else {
             wp_send_json_error(['message' => 'Roboter nicht gefunden.'], 404);
         }
+    }
+
+    /**
+     * AJAX: Upload customer logo
+     */
+    public static function ajax_upload_logo() {
+        // Only for logged-in users
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Nicht autorisiert.'], 401);
+        }
+
+        // Verify nonce
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], self::NONCE_ACTION)) {
+            wp_send_json_error(['message' => 'Sicherheitsprüfung fehlgeschlagen.'], 403);
+        }
+
+        // Check for file
+        if (!isset($_FILES['logo']) || empty($_FILES['logo']['tmp_name'])) {
+            wp_send_json_error(['message' => 'Keine Datei übergeben.'], 400);
+        }
+
+        // Validate file type
+        $allowed_types = ['image/png', 'image/jpeg', 'image/webp'];
+        $file_type = wp_check_filetype($_FILES['logo']['name']);
+        if (!in_array($_FILES['logo']['type'], $allowed_types)) {
+            wp_send_json_error(['message' => 'Nur PNG, JPG oder WebP erlaubt.'], 400);
+        }
+
+        // Validate file size (max 2MB)
+        if ($_FILES['logo']['size'] > 2 * 1024 * 1024) {
+            wp_send_json_error(['message' => 'Datei zu groß (max. 2 MB).'], 400);
+        }
+
+        // Include required files
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        require_once(ABSPATH . 'wp-admin/includes/media.php');
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+        // Handle the upload
+        $attachment_id = media_handle_upload('logo', 0);
+
+        if (is_wp_error($attachment_id)) {
+            wp_send_json_error(['message' => 'Upload fehlgeschlagen: ' . $attachment_id->get_error_message()], 500);
+        }
+
+        // Delete old logo if exists
+        $old_logo_id = get_user_meta(get_current_user_id(), 'rg_customer_logo_id', true);
+        if ($old_logo_id && $old_logo_id != $attachment_id) {
+            wp_delete_attachment($old_logo_id, true);
+        }
+
+        // Save new logo ID to user meta
+        update_user_meta(get_current_user_id(), 'rg_customer_logo_id', $attachment_id);
+
+        wp_send_json_success([
+            'message' => 'Logo erfolgreich gespeichert.',
+            'image_url' => wp_get_attachment_image_url($attachment_id, 'medium'),
+            'attachment_id' => $attachment_id,
+        ]);
+    }
+
+    /**
+     * AJAX: Delete customer logo
+     */
+    public static function ajax_delete_logo() {
+        // Only for logged-in users
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Nicht autorisiert.'], 401);
+        }
+
+        // Verify nonce
+        $payload = json_decode(file_get_contents('php://input'), true);
+        $nonce = isset($payload['nonce']) ? sanitize_text_field($payload['nonce']) : '';
+        if (!$nonce || !wp_verify_nonce($nonce, self::NONCE_ACTION)) {
+            wp_send_json_error(['message' => 'Sicherheitsprüfung fehlgeschlagen.'], 403);
+        }
+
+        $logo_id = get_user_meta(get_current_user_id(), 'rg_customer_logo_id', true);
+
+        if ($logo_id) {
+            // Delete the attachment
+            wp_delete_attachment($logo_id, true);
+            // Remove user meta
+            delete_user_meta(get_current_user_id(), 'rg_customer_logo_id');
+        }
+
+        wp_send_json_success(['message' => 'Logo entfernt.']);
     }
 
     public static function ajax_send_report() {
