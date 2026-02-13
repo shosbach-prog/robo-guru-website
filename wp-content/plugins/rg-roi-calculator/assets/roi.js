@@ -270,6 +270,13 @@ function generatePdf(calc){
     doc.setTextColor(...RG_BRAND.grey);
     doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', 14, 35);
 
+    // Add user logo if available (top right corner)
+    if (typeof rgRoi !== 'undefined' && rgRoi.userLogoUrl && rgRoi.userLogoUrl.length > 0) {
+      try {
+        doc.addImage(rgRoi.userLogoUrl, 'AUTO', 155, 10, 35, 0);
+      } catch(e) { /* Logo could not be added */ }
+    }
+
     // Metadata section (company and creator) - prominent box
     let metaY = 35;
     const hasMetadata = calc.companyName || calc.creatorName;
@@ -1197,6 +1204,78 @@ function generatePdf(calc){
       breakEvenChartInstance = new Chart(canvas, { type: 'line', data: { labels: months.map(m => 'M' + m), datasets: [{ label: 'Personalkosten (kumuliert)', data: personalCosts, borderColor: '#d9534f', backgroundColor: 'rgba(217, 83, 79, 0.1)', fill: true, tension: 0.1 }, { label: 'Roboterkosten (kumuliert)', data: robotCosts, borderColor: '#00B4A6', backgroundColor: 'rgba(0, 180, 166, 0.1)', fill: true, tension: 0.1 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true, ticks: { callback: function(v) { return fmtEUR(v); } } } } } });
     };
     setTimeout(() => renderBreakEvenChart(root, lastCalc), 100);
+
+
+    // ===== Logo Upload System =====
+    const logoSelect = document.getElementById('rg_logo_select');
+    const logoUpload = document.getElementById('rg_logo_upload');
+    const logoSave = document.getElementById('rg_logo_save');
+    const logoDelete = document.getElementById('rg_logo_delete');
+    const logoPreview = document.getElementById('rg_logo_preview');
+
+    if (logoSelect && logoUpload) {
+      logoSelect.addEventListener('click', () => logoUpload.click());
+      logoUpload.addEventListener('change', () => {
+        const file = logoUpload.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => { logoPreview.innerHTML = '<img src="' + e.target.result + '" style="max-height:80px;">'; };
+          reader.readAsDataURL(file);
+          if (logoSave) logoSave.style.display = 'inline-block';
+        }
+      });
+    }
+
+    if (logoSave) {
+      logoSave.addEventListener('click', () => {
+        const file = logoUpload.files[0];
+        if (!file) { alert('Bitte Logo auswählen.'); return; }
+        if (file.size > 2 * 1024 * 1024) { alert('Datei zu groß (max. 2 MB).'); return; }
+        const formData = new FormData();
+        formData.append('action', 'rg_upload_logo');
+        formData.append('nonce', rgRoi.nonce);
+        formData.append('logo', file);
+        logoSave.disabled = true;
+        logoSave.textContent = 'Speichern...';
+        fetch(rgRoi.ajaxUrl, { method: 'POST', body: formData })
+          .then(r => r.json())
+          .then(res => {
+            logoSave.disabled = false;
+            logoSave.textContent = 'Speichern';
+            if (res.success) {
+              logoPreview.innerHTML = '<img src="' + res.data.image_url + '" style="max-height:80px;">';
+              logoSave.style.display = 'none';
+              rgRoi.userLogoUrl = res.data.image_url;
+              if (!document.getElementById('rg_logo_delete')) {
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button'; delBtn.id = 'rg_logo_delete';
+                delBtn.className = 'rg-btn rg-btn--small rg-btn--danger';
+                delBtn.textContent = 'Entfernen';
+                logoSave.parentNode.appendChild(delBtn);
+                bindLogoDelete(delBtn);
+              }
+              alert('Logo erfolgreich gespeichert!');
+            } else { alert(res.data.message || 'Fehler beim Speichern.'); }
+          })
+          .catch(() => { logoSave.disabled = false; logoSave.textContent = 'Speichern'; alert('Netzwerkfehler.'); });
+      });
+    }
+
+    function bindLogoDelete(btn) {
+      btn.addEventListener('click', () => {
+        if (!confirm('Logo wirklich entfernen?')) return;
+        btn.disabled = true;
+        fetch(rgRoi.ajaxUrl + '?action=rg_delete_logo', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nonce: rgRoi.nonce })
+        }).then(r => r.json()).then(res => {
+            btn.disabled = false;
+            if (res.success) { logoPreview.innerHTML = '<span class="rg-logo-placeholder">Kein Logo hochgeladen</span>'; btn.remove(); rgRoi.userLogoUrl = ''; }
+            else { alert(res.data.message || 'Fehler.'); }
+          }).catch(() => { btn.disabled = false; alert('Netzwerkfehler.'); });
+      });
+    }
+    if (logoDelete) bindLogoDelete(logoDelete);
 
     qa('.rg-in', root).forEach(inp => {
       const recalc = () => {
