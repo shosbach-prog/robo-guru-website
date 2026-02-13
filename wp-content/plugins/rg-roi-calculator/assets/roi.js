@@ -1048,6 +1048,9 @@ function generatePdf(calc){
     if (advisorToggle && advisorPanel) {
       advisorToggle.addEventListener('change', function() {
         advisorPanel.classList.toggle('rg-hide', !advisorToggle.checked);
+        if (advisorToggle.checked) {
+          setTimeout(function() { advisorPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+        }
       });
     }
 

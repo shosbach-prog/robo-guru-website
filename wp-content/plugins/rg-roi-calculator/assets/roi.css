@@ -38,8 +38,11 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 /* === 2-Column Layout === */
 .rg-roi-layout{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start}
 .rg-roi-inputs{min-width:0}
-.rg-roi-summary{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
-.rg-roi-summary::-webkit-scrollbar{display:none}
+.rg-roi-summary{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(15,37,55,.12) transparent}
+.rg-roi-summary::-webkit-scrollbar{width:4px}
+.rg-roi-summary::-webkit-scrollbar-track{background:transparent}
+.rg-roi-summary::-webkit-scrollbar-thumb{background:rgba(15,37,55,.12);border-radius:4px}
+.rg-roi-summary::-webkit-scrollbar-thumb:hover{background:rgba(15,37,55,.25)}
 
 /* Summary card styling */
 .rg-summary-inner{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow-lg);padding:24px;display:flex;flex-direction:column;gap:16px}
