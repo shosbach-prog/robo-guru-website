@@ -939,12 +939,10 @@ function generatePdf(calc){
     var areaInp = q('[data-rg="areaSqmPerDay"]', root);
     var consumInp = q('[data-rg="consumablesPerYear"]', root);
     // Only auto-calculate consumables if in Auto mode (disabled) and robot has data
+    // Rate is annual cost per 1,000 m² daily cleaning area (already a yearly rate)
     if (areaInp && consumInp && consumInp.disabled && robot.consumables_per_1000m2 > 0) {
       var areaSqmDay = parseFloat(areaInp.value || 0);
-      var daysInp = q('[data-rg="daysPerYear"]', root);
-      var daysPerYear = daysInp ? parseFloat(daysInp.value || 260) : 260;
-      var areaSqmYear = areaSqmDay * daysPerYear;
-      var consumablesYear = Math.round(robot.consumables_per_1000m2 * areaSqmYear / 1000);
+      var consumablesYear = Math.round(robot.consumables_per_1000m2 * areaSqmDay / 1000);
       consumInp.value = consumablesYear;
     }
     // One-time costs
@@ -966,7 +964,8 @@ function generatePdf(calc){
     }
   }
 
-  // Keep consumables in sync when area or daysPerYear changes (Auto mode only)
+  // Keep consumables in sync when area changes (Auto mode only)
+  // Rate is annual cost per 1,000 m² daily cleaning area (already a yearly rate)
   function updateConsumablesFromArea(root) {
     var consumInp = q('[data-rg="consumablesPerYear"]', root);
     if (!consumInp || !consumInp.disabled) return; // Skip if manual mode
@@ -976,10 +975,7 @@ function generatePdf(calc){
     var areaInp = q('[data-rg="areaSqmPerDay"]', root);
     if (!areaInp) return;
     var areaSqmDay = parseFloat(areaInp.value || 0);
-    var daysInp = q('[data-rg="daysPerYear"]', root);
-    var daysPerYear = daysInp ? parseFloat(daysInp.value || 260) : 260;
-    var areaSqmYear = areaSqmDay * daysPerYear;
-    consumInp.value = Math.round(robot.consumables_per_1000m2 * areaSqmYear / 1000);
+    consumInp.value = Math.round(robot.consumables_per_1000m2 * areaSqmDay / 1000);
   }
 
   function updateComparison(root, calc) {
