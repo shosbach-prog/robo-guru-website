@@ -908,9 +908,11 @@ function generatePdf(calc){
     if (!robot) return;
     var setField = function(key, value) {
       var inp = q('[data-rg="' + key + '"]', root);
-      if (inp && value !== undefined && value !== null && value !== '') {
-        inp.value = value;
-      }
+      if (!inp || value === undefined || value === null || value === '') return;
+      // Respect Auto/Manual toggle - only overwrite if in Auto mode (disabled)
+      var amWrapper = inp.closest('[data-rg-am]');
+      if (amWrapper && !inp.disabled) return;
+      inp.value = value;
     };
     if (robot.list_price > 0) setField('price', robot.list_price);
     var termSel = q('[data-rg="leaseTermMonths"]', root);
@@ -926,7 +928,7 @@ function generatePdf(calc){
     if (robot.power_yearly > 0) setField('powerPerYear', Math.round(robot.power_yearly));
     var svcPreset = q('[data-rg="servicePreset"]', root);
     var svcInp = q('[data-rg="serviceMonthly"]', root);
-    if (svcPreset && svcInp) {
+    if (svcPreset && svcInp && svcInp.disabled) {
       var tier = svcPreset.value;
       var svcCost = 0;
       if (tier === 'basic' && robot.service_basic > 0) svcCost = robot.service_basic;
@@ -936,7 +938,8 @@ function generatePdf(calc){
     }
     var areaInp = q('[data-rg="areaSqmPerDay"]', root);
     var consumInp = q('[data-rg="consumablesPerYear"]', root);
-    if (areaInp && consumInp && robot.consumables_per_1000m2 > 0) {
+    // Only auto-calculate consumables if in Auto mode (disabled) and robot has data
+    if (areaInp && consumInp && consumInp.disabled && robot.consumables_per_1000m2 > 0) {
       var areaSqmDay = parseFloat(areaInp.value || 0);
       var daysInp = q('[data-rg="daysPerYear"]', root);
       var daysPerYear = daysInp ? parseFloat(daysInp.value || 260) : 260;
@@ -961,6 +964,22 @@ function generatePdf(calc){
         hoursInp.value = Math.round((area / m2h) * 10) / 10;
       }
     }
+  }
+
+  // Keep consumables in sync when area or daysPerYear changes (Auto mode only)
+  function updateConsumablesFromArea(root) {
+    var consumInp = q('[data-rg="consumablesPerYear"]', root);
+    if (!consumInp || !consumInp.disabled) return; // Skip if manual mode
+    if (typeof selectedRobots === 'undefined' || selectedRobots.length === 0) return;
+    var robot = selectedRobots[0];
+    if (!robot.consumables_per_1000m2 || robot.consumables_per_1000m2 <= 0) return;
+    var areaInp = q('[data-rg="areaSqmPerDay"]', root);
+    if (!areaInp) return;
+    var areaSqmDay = parseFloat(areaInp.value || 0);
+    var daysInp = q('[data-rg="daysPerYear"]', root);
+    var daysPerYear = daysInp ? parseFloat(daysInp.value || 260) : 260;
+    var areaSqmYear = areaSqmDay * daysPerYear;
+    consumInp.value = Math.round(robot.consumables_per_1000m2 * areaSqmYear / 1000);
   }
 
   function updateComparison(root, calc) {
@@ -1367,6 +1386,8 @@ function generatePdf(calc){
 
     qa('.rg-in', root).forEach(inp => {
       const recalc = () => {
+        // Keep auto-calculated fields in sync before running toCalc
+        updateConsumablesFromArea(root);
         lastCalc = toCalc(root);
         render(root, lastCalc);
         updateComparison(root, lastCalc);
