@@ -38,7 +38,8 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 /* === 2-Column Layout === */
 .rg-roi-layout{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start}
 .rg-roi-inputs{min-width:0}
-.rg-roi-summary{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:thin}
+.rg-roi-summary{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
+.rg-roi-summary::-webkit-scrollbar{display:none}
 
 /* Summary card styling */
 .rg-summary-inner{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow-lg);padding:24px;display:flex;flex-direction:column;gap:16px}
@@ -88,6 +89,7 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-toggle-switch{display:flex;border:1px solid #e2e8f0;border-radius:var(--rg-radius-sm);overflow:hidden;height:40px}
 .rg-toggle-switch__opt{flex:1;border:none;background:#f8fafc;cursor:pointer;font-size:13px;font-weight:600;color:#64748b;padding:0 16px;transition:all .15s;white-space:nowrap}
 .rg-toggle-switch__opt.is-active{background:var(--rg-primary);color:#fff}
+.rg-toggle-switch__opt:focus-visible{outline:2px solid var(--rg-primary);outline-offset:1px}
 
 /* === Auto/Manual Field Pattern === */
 .rg-am-field{margin-bottom:12px}
@@ -96,8 +98,19 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-am-switch{display:flex;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;flex-shrink:0}
 .rg-am-switch__btn{border:none;background:#f8fafc;cursor:pointer;font-size:11px;font-weight:600;color:#94a3b8;padding:4px 10px;transition:all .15s}
 .rg-am-switch__btn.is-active{background:var(--rg-primary);color:#fff}
+.rg-am-switch__btn:focus-visible{outline:2px solid var(--rg-primary);outline-offset:1px}
 .rg-am-field__source{font-size:11px;color:#94a3b8;font-style:italic;display:block;margin-top:2px}
 .rg-am-field[data-mode="manual"] .rg-am-field__source{display:none}
+
+/* === Tooltip Styles === */
+.rg-tooltip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e2e8f0;color:#64748b;font-size:10px;font-weight:700;cursor:help;margin-left:6px;flex-shrink:0;line-height:1}
+.rg-tooltip::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--rg-dark);color:#fff;font-size:11px;font-weight:400;padding:6px 10px;border-radius:6px;white-space:normal;width:220px;text-align:left;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10;line-height:1.4}
+.rg-tooltip:hover::after,.rg-tooltip:focus::after{opacity:1}
+
+/* === Mode badge on fields === */
+.rg-mode-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.rg-mode-badge--auto{background:rgba(22,198,229,.1);color:var(--rg-primary)}
+.rg-mode-badge--manual{background:rgba(245,158,11,.1);color:#b45309}
 
 /* === Robot Selection === */
 .rg-robot-section{padding:0 20px 8px}
@@ -298,33 +311,43 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 /* ===== Logo Upload Styles ===== */
 .rg-logo-upload-box {
   background: linear-gradient(135deg, #f8fdfc 0%, #e8f7f6 100%);
-  padding: 1.25rem;
+  padding: 10px 16px;
   border-radius: 12px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 12px;
   border: 1px solid #00B4A6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
 }
 
 .rg-logo-upload-box h5 {
-  margin: 0 0 0.75rem 0;
-  font-size: 1rem;
+  margin: 0;
+  font-size: 13px;
   color: #0F2537;
+  flex-shrink: 0;
 }
 
 .rg-logo-preview {
-  min-height: 50px;
-  margin-bottom: 0.75rem;
+  min-height: 0;
+  margin: 0;
+}
+
+.rg-logo-preview:empty {
+  display: none;
 }
 
 .rg-logo-preview img {
-  max-height: 80px;
-  max-width: 200px;
+  max-height: 40px;
+  max-width: 120px;
   border-radius: 4px;
   border: 1px solid #ddd;
+  vertical-align: middle;
 }
 
 .rg-logo-placeholder {
   color: #888;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-style: italic;
 }
 
@@ -332,7 +355,7 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-  margin-bottom: 0.5rem;
+  margin: 0;
 }
 
 .rg-btn--small {
@@ -353,6 +376,14 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 
 .rg-logo-hint {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 11px;
   color: #666;
+  width: 100%;
+}
+
+/* Expanded state when logo is present */
+.rg-logo-upload-box.has-logo {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14px 16px;
 }
