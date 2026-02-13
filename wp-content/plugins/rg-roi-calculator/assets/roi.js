@@ -250,6 +250,35 @@ function addHeaderFooter(doc){
     }
   }
 
+  // Helper: load an image URL as a data URL with dimensions
+  function loadImageToDataUrl(url) {
+    return new Promise(function(resolve) {
+      if (!url) { resolve(null); return; }
+      var img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function() {
+        try {
+          var canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          resolve({ dataUrl: canvas.toDataURL('image/png'), w: img.naturalWidth, h: img.naturalHeight });
+        } catch(e) { resolve(null); }
+      };
+      img.onerror = function() { resolve(null); };
+      img.src = url;
+    });
+  }
+
+  // Helper: fit image dimensions into a bounding box (mm)
+  function fitImageBox(imgW, imgH, maxW, maxH) {
+    var ratio = imgW / imgH;
+    var w = maxW, h = maxW / ratio;
+    if (h > maxH) { h = maxH; w = maxH * ratio; }
+    return { w: w, h: h };
+  }
+
 function generatePdf(calc){
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
@@ -259,23 +288,36 @@ function generatePdf(calc){
     const beText = 'ab Monat ' + beMonth + ' ist die Investition rechnerisch wieder drin.';
 
     // Page 1 - Results
+    var textStartX = 14;
+
+    // Add robot image if available (left side, below header)
+    if (calc.robotImageData) {
+      try {
+        var rFit = fitImageBox(calc.robotImageData.w, calc.robotImageData.h, 15, 15);
+        doc.addImage(calc.robotImageData.dataUrl, 'PNG', 14, 19, rFit.w, rFit.h);
+        textStartX = 14 + rFit.w + 3;
+      } catch(e) { /* Robot image could not be added */ }
+    }
+
+    // Add company logo if available (top right, below header)
+    if (calc.companyLogoData) {
+      try {
+        var lFit = fitImageBox(calc.companyLogoData.w, calc.companyLogoData.h, 35, 14);
+        doc.addImage(calc.companyLogoData.dataUrl, 'PNG', 196 - lFit.w, 19, lFit.w, lFit.h);
+      } catch(e) { /* Logo could not be added */ }
+    }
+
     // Title section (starts after header bar)
+    var maxTitleW = 180 - (textStartX - 14) - (calc.companyLogoData ? 40 : 0);
     doc.setTextColor(...RG_BRAND.dark);
     doc.setFontSize(20);
     var pdfTitle = 'ROI-Berechnung';
     if (calc.robotName) pdfTitle += ' – ' + calc.robotName;
     if (calc.qty > 1) pdfTitle += ' – ' + calc.qty + ' Roboter';
-    doc.text(pdfTitle, 14, 28, { maxWidth: 180 });
+    doc.text(pdfTitle, textStartX, 28, { maxWidth: maxTitleW });
     doc.setFontSize(12);
     doc.setTextColor(...RG_BRAND.grey);
-    doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', 14, 35);
-
-    // Add user logo if available (top right corner)
-    if (typeof rgRoi !== 'undefined' && rgRoi.userLogoUrl && rgRoi.userLogoUrl.length > 0) {
-      try {
-        doc.addImage(rgRoi.userLogoUrl, 'AUTO', 155, 10, 35, 0);
-      } catch(e) { /* Logo could not be added */ }
-    }
+    doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', textStartX, 35);
 
     // Metadata section (company and creator) - prominent box
     let metaY = 35;
@@ -540,6 +582,20 @@ function generatePdf(calc){
 
     addHeaderFooter(doc);
     return doc;
+  }
+
+  // Wrapper: pre-loads images then generates PDF
+  function prepareAndGeneratePdf(calc) {
+    var robotThumbUrl = (typeof selectedRobots !== 'undefined' && selectedRobots.length > 0 && selectedRobots[0].thumbnail) ? selectedRobots[0].thumbnail : '';
+    var logoUrl = (typeof rgRoi !== 'undefined' && rgRoi.userLogoUrl) ? rgRoi.userLogoUrl : '';
+    return Promise.all([
+      loadImageToDataUrl(robotThumbUrl),
+      loadImageToDataUrl(logoUrl)
+    ]).then(function(results) {
+      calc.robotImageData = results[0];
+      calc.companyLogoData = results[1];
+      return generatePdf(calc);
+    });
   }
 
   function toCalc(root){
@@ -1327,32 +1383,35 @@ function generatePdf(calc){
     if (printBtnEl) printBtnEl.addEventListener('click', () => {
       lastCalc = toCalc(root);
       if (!lastCalc.canExport) return;
-      const doc = generatePdf(lastCalc);
-      const blob = doc.output('blob');
-      const blobUrl = URL.createObjectURL(blob);
-      const printWindow = window.open(blobUrl, '_blank');
-      if (printWindow) {
-        printWindow.addEventListener('load', () => {
-          printWindow.focus();
-          printWindow.print();
-        });
-      } else {
-        // Fallback: Download if popup blocked
-        doc.save(`ROI-Berechnung-Robo-Guru-${new Date().toISOString().slice(0,10)}.pdf`);
-        alert('Popup blockiert. PDF wurde heruntergeladen - bitte manuell drucken.');
-      }
+      // Open window synchronously to avoid popup blocker
+      var printWindow = window.open('', '_blank');
+      prepareAndGeneratePdf(lastCalc).then(function(doc) {
+        const blob = doc.output('blob');
+        const blobUrl = URL.createObjectURL(blob);
+        if (printWindow && !printWindow.closed) {
+          printWindow.location.href = blobUrl;
+          printWindow.addEventListener('load', () => {
+            printWindow.focus();
+            printWindow.print();
+          });
+        } else {
+          doc.save(`ROI-Berechnung-Robo-Guru-${new Date().toISOString().slice(0,10)}.pdf`);
+          alert('Popup blockiert. PDF wurde heruntergeladen - bitte manuell drucken.');
+        }
+      });
     });
 
     var pdfBtn = q('[data-rg-btn="pdf"]', root);
     if (pdfBtn) pdfBtn.addEventListener('click', () => {
       lastCalc = toCalc(root);
       if (!lastCalc.canExport) return;
-      const doc = generatePdf(lastCalc);
       var fname = 'ROI-Berechnung';
       if (lastCalc.robotName) fname += '-' + lastCalc.robotName.replace(/[^a-zA-Z0-9]/g, '-');
       if (lastCalc.qty > 1) fname += '-' + lastCalc.qty + 'x';
       fname += '-' + new Date().toISOString().slice(0,10) + '.pdf';
-      doc.save(fname);
+      prepareAndGeneratePdf(lastCalc).then(function(doc) {
+        doc.save(fname);
+      });
     });
 
     const saveBtn = q('[data-rg-btn="save"]', root);
@@ -1362,39 +1421,39 @@ function generatePdf(calc){
         if (!lastCalc.canExport) return;
         if (saveBtn.disabled) return;
 
-        const doc = generatePdf(lastCalc);
-        const pdfBase64 = doc.output('datauristring');
-
         saveBtn.disabled = true;
         const origText = saveBtn.querySelector('span:last-child');
         const prevLabel = origText.textContent;
         origText.textContent = 'Wird gespeichert\u2026';
 
-        fetch(rgRoi.ajaxUrl + '?action=rg_save_roi_to_profile', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            nonce: rgRoi.nonce,
-            pdfBase64: pdfBase64,
-          }),
-        })
-        .then(r => r.json())
-        .then(res => {
-          origText.textContent = prevLabel;
-          saveBtn.disabled = false;
+        prepareAndGeneratePdf(lastCalc).then(function(doc) {
+          const pdfBase64 = doc.output('datauristring');
+          return fetch(rgRoi.ajaxUrl + '?action=rg_save_roi_to_profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              nonce: rgRoi.nonce,
+              pdfBase64: pdfBase64,
+            }),
+          })
+          .then(r => r.json())
+          .then(res => {
+            origText.textContent = prevLabel;
+            saveBtn.disabled = false;
 
-          if (res.success) {
-            const data = res.data || {};
-            showSuccessLightbox({
-              title: 'Erfolgreich gespeichert!',
-              message: 'Deine ROI-Berechnung wurde als PDF in deinem Profil unter "Dokumente" abgelegt.',
-              linkUrl: data.docs_url || null,
-              linkText: 'Zu meinen Dokumenten'
-            });
-          } else {
-            const msg = (res.data && res.data.message) ? res.data.message : 'Speichern fehlgeschlagen.';
-            alert(msg);
-          }
+            if (res.success) {
+              const data = res.data || {};
+              showSuccessLightbox({
+                title: 'Erfolgreich gespeichert!',
+                message: 'Deine ROI-Berechnung wurde als PDF in deinem Profil unter "Dokumente" abgelegt.',
+                linkUrl: data.docs_url || null,
+                linkText: 'Zu meinen Dokumenten'
+              });
+            } else {
+              const msg = (res.data && res.data.message) ? res.data.message : 'Speichern fehlgeschlagen.';
+              alert(msg);
+            }
+          });
         })
         .catch(() => {
           origText.textContent = prevLabel;
