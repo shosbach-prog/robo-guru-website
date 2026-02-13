@@ -516,13 +516,13 @@ final class RG_ROI_Calculator {
                     </div>
                 </div>
 
-                <!-- Section 5: Transparenz (Akkordeon) -->
+                <!-- Section 5: Transparenz (immer sichtbar) -->
                 <div class="rg-section rg-section--accordion" data-rg-section="transparency">
-                    <button type="button" class="rg-section__toggle" aria-expanded="false">
+                    <button type="button" class="rg-section__toggle" aria-expanded="true">
                         <h4 class="rg-section__title">Transparenz / Annahmen</h4>
                         <span class="rg-section__chevron" aria-hidden="true"></span>
                     </button>
-                    <div class="rg-section__body rg-section__body--collapsed" aria-hidden="true">
+                    <div class="rg-section__body rg-section__body--expanded" aria-hidden="false">
                         <ul class="rg-assumptions__list">
                             <li>Konstanter Betrieb über das Jahr (Arbeitstage laut Eingabe).</li>
                             <li>Personalkosten basieren auf dem eingegebenen Stundensatz.</li>

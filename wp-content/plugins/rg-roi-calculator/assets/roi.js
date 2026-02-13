@@ -1033,6 +1033,11 @@ function generatePdf(calc){
               applyRobotValues(root, selectedRobots[0]);
             }
           }
+          // Recalculate after mode switch
+          lastCalc = toCalc(root);
+          render(root, lastCalc);
+          updateComparison(root, lastCalc);
+          renderBreakEvenChart(root, lastCalc);
         });
       });
     });
