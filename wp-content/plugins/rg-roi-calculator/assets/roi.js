@@ -861,6 +861,7 @@ function generatePdf(calc){
     if (termSel && robot.list_price > 0) {
       var term = parseInt(termSel.value || '36', 10);
       var leaseRate = robot.lease36;
+      if (term === 24) leaseRate = robot.lease24;
       if (term === 48) leaseRate = robot.lease48;
       if (term === 60) leaseRate = robot.lease60;
       if (leaseRate > 0) setField('leaseRateMonthly', Math.round(leaseRate));
@@ -922,12 +923,13 @@ function generatePdf(calc){
     var manualTotal = manualLaborYear + manualConsumables;
 
     // Robot side: use calc totals (already scaled by qty)
-    var robotService = c.opsCosts ? (c.opsCosts - (c.consumablesPerYear || 0) * qty) : 0;
     var robotServiceYear = (c.serviceMonthly || 0) * 12 * qty;
     var robotPowerYear = (c.powerPerYear || 0) * qty;
     var robotConsumablesYear = (c.consumablesPerYear || 0) * qty;
     var robotLeaseYear = c.leaseYear || 0;
-    var robotTotal = robotServiceYear + robotPowerYear + robotConsumablesYear + robotLeaseYear;
+    // For purchase mode, amortize the investment over 3 years for comparison
+    var robotInvestYear = (c.mode === 'purchase' && c.investUpfront > 0) ? Math.round(c.investUpfront / 3) : 0;
+    var robotTotal = robotServiceYear + robotPowerYear + robotConsumablesYear + robotLeaseYear + robotInvestYear;
 
     // Header: always 2 columns
     var headerRow = q('thead tr', compEl);
@@ -945,9 +947,18 @@ function generatePdf(calc){
     if (c.mode === 'lease') {
       rows.push({ label: 'Leasing/Jahr', human: 0, robot: robotLeaseYear });
     }
+    if (c.mode === 'purchase' && robotInvestYear > 0) {
+      rows.push({ label: 'Investition/Jahr (auf 3 J.)', human: 0, robot: robotInvestYear });
+    }
+    var savings = manualTotal - robotTotal;
     rows.push({ label: '<strong>Gesamt/Jahr</strong>', human: manualTotal, robot: robotTotal, isTotal: true });
+    rows.push({ label: '<strong>Ersparnis/Jahr</strong>', human: savings, robot: null, isSavings: true });
 
     tbody.innerHTML = rows.map(function(row) {
+      if (row.isSavings) {
+        var cls = row.human > 0 ? ' class="rg-savings"' : '';
+        return '<tr><td>' + row.label + '</td><td colspan="2"' + cls + ' style="text-align:center;font-size:15px;">' + fmtEUR(row.human) + '</td></tr>';
+      }
       var cls = row.isTotal && (row.human - row.robot) > 0 ? ' class="rg-savings"' : '';
       return '<tr><td>' + row.label + '</td><td>' + fmtEUR(row.human) + '</td><td' + cls + '>' + fmtEUR(row.robot) + '</td></tr>';
     }).join('');
@@ -995,8 +1006,9 @@ function generatePdf(calc){
     if (setupModeWrap) {
       qa('.rg-toggle-switch__opt', setupModeWrap).forEach(function(btn) {
         btn.addEventListener('click', function() {
-          qa('.rg-toggle-switch__opt', setupModeWrap).forEach(function(b) { b.classList.remove('is-active'); });
+          qa('.rg-toggle-switch__opt', setupModeWrap).forEach(function(b) { b.classList.remove('is-active'); b.setAttribute('aria-pressed', 'false'); });
           btn.classList.add('is-active');
+          btn.setAttribute('aria-pressed', 'true');
           var hidden = q('[data-rg="setupMode"]', root);
           if (hidden) { hidden.value = btn.getAttribute('data-val'); hidden.dispatchEvent(new Event('input', { bubbles: true })); }
         });
@@ -1009,8 +1021,9 @@ function generatePdf(calc){
       var inp = q('.rg-in', field);
       btns.forEach(function(btn) {
         btn.addEventListener('click', function() {
-          btns.forEach(function(b) { b.classList.remove('is-active'); });
+          btns.forEach(function(b) { b.classList.remove('is-active'); b.setAttribute('aria-pressed', 'false'); });
           btn.classList.add('is-active');
+          btn.setAttribute('aria-pressed', 'true');
           var isManual = btn.getAttribute('data-am') === 'manual';
           field.setAttribute('data-mode', isManual ? 'manual' : 'auto');
           if (inp) {
@@ -1078,6 +1091,10 @@ function generatePdf(calc){
     if (termField) {
       termField.addEventListener('change', function() {
         if (selectedRobots.length > 0) applyRobotValues(root, selectedRobots[0]);
+        lastCalc = toCalc(root);
+        render(root, lastCalc);
+        updateComparison(root, lastCalc);
+        renderBreakEvenChart(root, lastCalc);
       });
     }
 
@@ -1092,7 +1109,7 @@ function generatePdf(calc){
       });
     };
     if (modeSel) {
-      modeSel.addEventListener('change', () => { applyModeUi(); lastCalc = toCalc(root); render(root, lastCalc); });
+      modeSel.addEventListener('change', () => { applyModeUi(); lastCalc = toCalc(root); render(root, lastCalc); updateComparison(root, lastCalc); renderBreakEvenChart(root, lastCalc); });
       applyModeUi();
     }
 
@@ -1126,7 +1143,7 @@ function generatePdf(calc){
       }
     };
     if (presetSel) {
-      presetSel.addEventListener('change', () => { applyPreset(); lastCalc = toCalc(root); render(root, lastCalc); });
+      presetSel.addEventListener('change', () => { applyPreset(); lastCalc = toCalc(root); render(root, lastCalc); updateComparison(root, lastCalc); renderBreakEvenChart(root, lastCalc); });
       applyPreset();
     }
 
@@ -1212,6 +1229,12 @@ function generatePdf(calc){
     const logoSave = document.getElementById('rg_logo_save');
     const logoDelete = document.getElementById('rg_logo_delete');
     const logoPreview = document.getElementById('rg_logo_preview');
+    const logoBox = logoPreview ? logoPreview.closest('.rg-logo-upload-box') : null;
+
+    // Set initial has-logo state
+    if (logoBox && logoPreview && logoPreview.querySelector('img')) {
+      logoBox.classList.add('has-logo');
+    }
 
     if (logoSelect && logoUpload) {
       logoSelect.addEventListener('click', () => logoUpload.click());
@@ -1219,7 +1242,10 @@ function generatePdf(calc){
         const file = logoUpload.files[0];
         if (file) {
           const reader = new FileReader();
-          reader.onload = (e) => { logoPreview.innerHTML = '<img src="' + e.target.result + '" style="max-height:80px;">'; };
+          reader.onload = (e) => {
+            logoPreview.innerHTML = '<img src="' + e.target.result + '" style="max-height:40px;">';
+            if (logoBox) logoBox.classList.add('has-logo');
+          };
           reader.readAsDataURL(file);
           if (logoSave) logoSave.style.display = 'inline-block';
         }
@@ -1243,9 +1269,10 @@ function generatePdf(calc){
             logoSave.disabled = false;
             logoSave.textContent = 'Speichern';
             if (res.success) {
-              logoPreview.innerHTML = '<img src="' + res.data.image_url + '" style="max-height:80px;">';
+              logoPreview.innerHTML = '<img src="' + res.data.image_url + '" style="max-height:40px;">';
               logoSave.style.display = 'none';
               rgRoi.userLogoUrl = res.data.image_url;
+              if (logoBox) logoBox.classList.add('has-logo');
               if (!document.getElementById('rg_logo_delete')) {
                 const delBtn = document.createElement('button');
                 delBtn.type = 'button'; delBtn.id = 'rg_logo_delete';
@@ -1270,7 +1297,7 @@ function generatePdf(calc){
           body: JSON.stringify({ nonce: rgRoi.nonce })
         }).then(r => r.json()).then(res => {
             btn.disabled = false;
-            if (res.success) { logoPreview.innerHTML = '<span class="rg-logo-placeholder">Kein Logo hochgeladen</span>'; btn.remove(); rgRoi.userLogoUrl = ''; }
+            if (res.success) { logoPreview.innerHTML = '<span class="rg-logo-placeholder">Kein Logo hochgeladen</span>'; btn.remove(); rgRoi.userLogoUrl = ''; if (logoBox) logoBox.classList.remove('has-logo'); }
             else { alert(res.data.message || 'Fehler.'); }
           }).catch(() => { btn.disabled = false; alert('Netzwerkfehler.'); });
       });
@@ -1282,6 +1309,7 @@ function generatePdf(calc){
         lastCalc = toCalc(root);
         render(root, lastCalc);
         updateComparison(root, lastCalc);
+        renderBreakEvenChart(root, lastCalc);
       };
       inp.addEventListener('input', recalc);
       inp.addEventListener('change', recalc);

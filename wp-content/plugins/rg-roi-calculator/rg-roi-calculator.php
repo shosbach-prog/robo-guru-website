@@ -104,6 +104,7 @@ final class RG_ROI_Calculator {
             }
 
             // Calculate leasing rates
+            $lease24 = self::calculate_leasing_rate($list_price, 24);
             $lease36 = self::calculate_leasing_rate($list_price, 36);
             $lease48 = self::calculate_leasing_rate($list_price, 48);
             $lease60 = self::calculate_leasing_rate($list_price, 60);
@@ -128,6 +129,7 @@ final class RG_ROI_Calculator {
                 'docking_station' => $docking_station,
                 'accessories_cost' => $accessories_cost,
                 'implementation_cost' => $implementation_cost,
+                'lease24' => $lease24,
                 'lease36' => $lease36,
                 'lease48' => $lease48,
                 'lease60' => $lease60,
@@ -302,24 +304,7 @@ final class RG_ROI_Calculator {
             </div>
             <?php endif; ?>
 
-            <!-- Comparison Results (shown when multiple robots selected) -->
-            <div class="rg-comparison rg-hide" data-rg-comparison>
-                <h4>Vergleich: Mensch vs. Roboter</h4>
-                <div class="rg-comparison-table-wrap">
-                    <table class="rg-comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Kostenfaktor</th>
-                                <th class="rg-col-human">Manuelle Reinigung</th>
-                                <th class="rg-col-robot" data-rg-robot-cols><!-- Dynamic columns --></th>
-                            </tr>
-                        </thead>
-                        <tbody data-rg-comparison-body>
-                            <!-- Dynamic rows -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- Comparison table moved to section below inputs -->
 
                 <!-- Section 1: Szenario -->
                 <div class="rg-section rg-section--open" data-rg-section="scenario">
@@ -344,10 +329,10 @@ final class RG_ROI_Calculator {
                             </div>
                         </div>
                         <div class="rg-field-group rg-field-group--setup">
-                            <label>Implementierung</label>
-                            <div class="rg-toggle-switch" data-rg-setup-mode>
-                                <button type="button" class="rg-toggle-switch__opt is-active" data-val="once">Einmalig</button>
-                                <button type="button" class="rg-toggle-switch__opt" data-val="per_robot">Pro Roboter</button>
+                            <label>Implementierung <span class="rg-tooltip" data-tip="Einmalig: Setup-Kosten fallen nur 1x an. Pro Roboter: Setup-Kosten pro Gerät." tabindex="0" role="img" aria-label="Hilfe">?</span></label>
+                            <div class="rg-toggle-switch" data-rg-setup-mode role="group" aria-label="Implementierungsmodus">
+                                <button type="button" class="rg-toggle-switch__opt is-active" data-val="once" aria-pressed="true">Einmalig</button>
+                                <button type="button" class="rg-toggle-switch__opt" data-val="per_robot" aria-pressed="false">Pro Roboter</button>
                                 <input type="hidden" class="rg-in" data-rg="setupMode" value="once">
                             </div>
                         </div>
@@ -358,16 +343,16 @@ final class RG_ROI_Calculator {
                 <div class="rg-section rg-section--open" data-rg-section="core">
                     <h4 class="rg-section__title">Kernannahmen</h4>
                     <div class="rg-section__body">
-                        <label>Zu reinigende Fläche pro Tag (m²)
-                            <input type="number" class="rg-in" data-rg="areaSqmPerDay" value="1500" min="0" step="50">
+                        <label>Zu reinigende Fläche pro Tag (m²) <span class="rg-tooltip" data-tip="Wie viele Quadratmeter sollen täglich gereinigt werden? Bei Roboterauswahl wird daraus die benötigte Zeit abgeleitet." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                            <input type="number" class="rg-in" data-rg="areaSqmPerDay" value="1500" min="0" step="50" aria-describedby="sqmHint">
                         </label>
-                        <label>Eingesparte Stunden pro Tag / Roboter
+                        <label>Eingesparte Stunden pro Tag / Roboter <span class="rg-tooltip" data-tip="Wie viele Arbeitsstunden pro Tag kann ein Roboter einsparen? Wird bei Roboterauswahl automatisch aus Fläche und m²/h berechnet." tabindex="0" role="img" aria-label="Hilfe">?</span>
                             <input type="number" class="rg-in" data-rg="hoursPerDay" value="2.5" min="0" step="0.1">
                         </label>
-                        <label>Lohnkosten pro Stunde inkl. Nebenkosten (€)
+                        <label>Lohnkosten pro Stunde inkl. Nebenkosten (€) <span class="rg-tooltip" data-tip="Vollkosten einer Reinigungskraft pro Stunde, inklusive Lohnnebenkosten (Sozialabgaben, Versicherung etc.)." tabindex="0" role="img" aria-label="Hilfe">?</span>
                             <input type="number" class="rg-in" data-rg="hourlyRate" value="22" min="0" step="0.5">
                         </label>
-                        <label>Arbeitstage pro Jahr
+                        <label>Arbeitstage pro Jahr <span class="rg-tooltip" data-tip="Anzahl der Tage im Jahr, an denen gereinigt wird. Typisch: 260 (Mo-Fr) oder 365 (7 Tage/Woche)." tabindex="0" role="img" aria-label="Hilfe">?</span>
                             <input type="number" class="rg-in" data-rg="daysPerYear" value="260" min="0" step="1">
                         </label>
                         <div class="rg-note" data-rg-out="sqmHint">Basierend auf Ihrer Fläche und der Reinigungsleistung des Roboters.</div>
@@ -385,8 +370,8 @@ final class RG_ROI_Calculator {
                         <!-- Finanzierung -->
                         <fieldset class="rg-fieldset">
                             <legend>Finanzierung</legend>
-                            <label>Modell
-                                <select class="rg-in rg-select" data-rg="mode">
+                            <label>Modell <span class="rg-tooltip" data-tip="Kauf: einmalige Investition. Leasing: monatliche Rate über eine feste Laufzeit (5 % Restwert, 6 % p.a. Zins)." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                                <select class="rg-in rg-select" data-rg="mode" aria-label="Finanzierungsmodell">
                                     <option value="purchase" selected>Kauf</option>
                                     <option value="lease">Leasing</option>
                                 </select>
@@ -398,50 +383,51 @@ final class RG_ROI_Calculator {
                             </div>
                             <div class="rg-mode rg-mode--lease rg-hide" data-rg-mode="lease">
                                 <label>Leasingrate pro Roboter / Monat (€)
-                                    <input type="number" class="rg-in" data-rg="leaseRateMonthly" value="950" min="0" step="10">
+                                    <input type="number" class="rg-in" data-rg="leaseRateMonthly" value="725" min="0" step="10">
                                 </label>
-                                <label>Laufzeit (Monate)
-                                    <select class="rg-in rg-select" data-rg="leaseTermMonths">
-                                        <option value="24">24</option>
-                                        <option value="36" selected>36</option>
-                                        <option value="48">48</option>
-                                        <option value="60">60</option>
+                                <label>Laufzeit (Monate) <span class="rg-tooltip" data-tip="Leasinglaufzeit. Kürzere Laufzeiten haben höhere Monatsraten, aber niedrigere Gesamtkosten." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                                    <select class="rg-in rg-select" data-rg="leaseTermMonths" aria-label="Leasinglaufzeit in Monaten">
+                                        <option value="24">24 Monate</option>
+                                        <option value="36" selected>36 Monate</option>
+                                        <option value="48">48 Monate</option>
+                                        <option value="60">60 Monate</option>
                                     </select>
                                 </label>
+                                <div class="rg-note">Einmalkosten (Docking, Zubehör, Setup) fallen auch beim Leasing zusätzlich an.</div>
                             </div>
 
                             <!-- Auto/Manual fields -->
                             <div class="rg-am-field" data-rg-am="dockingStation">
                                 <div class="rg-am-field__head">
-                                    <label>Docking-/Ladestation (€)</label>
-                                    <div class="rg-am-switch">
-                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
-                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    <label>Docking-/Ladestation (€) <span class="rg-tooltip" data-tip="Einmalige Kosten für die Lade-/Dockingstation. Auto = Wert aus Roboterdatenbank. Manuell = eigener Wert." tabindex="0" role="img" aria-label="Hilfe">?</span></label>
+                                    <div class="rg-am-switch" role="group" aria-label="Eingabemodus">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto" aria-pressed="true" title="Wert wird automatisch aus der Roboterdatenbank geladen">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual" aria-pressed="false" title="Wert manuell eingeben">Manuell</button>
                                     </div>
                                 </div>
-                                <input type="number" class="rg-in" data-rg="dockingStation" value="0" min="0" step="100" disabled>
+                                <input type="number" class="rg-in" data-rg="dockingStation" value="0" min="0" step="100" disabled aria-label="Docking-/Ladestation Kosten">
                                 <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
                             </div>
                             <div class="rg-am-field" data-rg-am="accessoriesCost">
                                 <div class="rg-am-field__head">
-                                    <label>Zubehör einmalig (€)</label>
-                                    <div class="rg-am-switch">
-                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
-                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    <label>Zubehör einmalig (€) <span class="rg-tooltip" data-tip="Einmalige Kosten für Zubehör (Bürsten, Pads, Erstausstattung etc.)." tabindex="0" role="img" aria-label="Hilfe">?</span></label>
+                                    <div class="rg-am-switch" role="group" aria-label="Eingabemodus">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto" aria-pressed="true" title="Wert wird automatisch aus der Roboterdatenbank geladen">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual" aria-pressed="false" title="Wert manuell eingeben">Manuell</button>
                                     </div>
                                 </div>
-                                <input type="number" class="rg-in" data-rg="accessoriesCost" value="0" min="0" step="100" disabled>
+                                <input type="number" class="rg-in" data-rg="accessoriesCost" value="0" min="0" step="100" disabled aria-label="Zubehör Kosten">
                                 <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
                             </div>
                             <div class="rg-am-field" data-rg-am="implementationCost">
                                 <div class="rg-am-field__head">
-                                    <label>Implementierung / Setup (€)</label>
-                                    <div class="rg-am-switch">
-                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
-                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    <label>Implementierung / Setup (€) <span class="rg-tooltip" data-tip="Einmalige Kosten für Einrichtung, Kartierung und Schulung. Auto = Wert aus Roboterdatenbank." tabindex="0" role="img" aria-label="Hilfe">?</span></label>
+                                    <div class="rg-am-switch" role="group" aria-label="Eingabemodus">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto" aria-pressed="true" title="Wert wird automatisch aus der Roboterdatenbank geladen">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual" aria-pressed="false" title="Wert manuell eingeben">Manuell</button>
                                     </div>
                                 </div>
-                                <input type="number" class="rg-in" data-rg="implementationCost" value="0" min="0" step="100" disabled>
+                                <input type="number" class="rg-in" data-rg="implementationCost" value="0" min="0" step="100" disabled aria-label="Implementierung Kosten">
                                 <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
                             </div>
                         </fieldset>
@@ -465,8 +451,8 @@ final class RG_ROI_Calculator {
                         <!-- Betriebskosten -->
                         <fieldset class="rg-fieldset">
                             <legend>Betriebskosten</legend>
-                            <label>Servicepaket
-                                <select class="rg-in rg-select" data-rg="servicePreset">
+                            <label>Servicepaket <span class="rg-tooltip" data-tip="Monatliche Servicekosten. Basic/Standard/Premium werden aus der Roboterdatenbank geladen. 'Eigener Wert' erlaubt manuelle Eingabe." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                                <select class="rg-in rg-select" data-rg="servicePreset" aria-label="Servicepaket wählen">
                                     <option value="0">Kein Paket / bereits enthalten</option>
                                     <option value="basic">Basic</option>
                                     <option value="standard" selected>Standard</option>
