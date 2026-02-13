@@ -262,44 +262,87 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-lightbox__btn{padding:10px 24px;background:var(--rg-primary);color:#fff;border:none;border-radius:var(--rg-radius-sm);cursor:pointer;font-size:14px;font-weight:600;font-family:inherit}
 @keyframes rgFadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 
-/* === Mobile: Bottom-Sheet Summary === */
+/* === Mobile: Summary below inputs (no bottom-sheet) === */
 .rg-summary-handle{display:none}
 
 @media(max-width:900px){
-  .rg-roi-layout{grid-template-columns:1fr;gap:0}
+  .rg-roi-layout{grid-template-columns:1fr;gap:24px}
 
-  /* Summary becomes bottom-sheet on mobile */
-  .rg-roi-summary{position:fixed;bottom:0;left:0;right:0;z-index:9999;max-height:85vh;top:auto;background:var(--rg-card-bg);border-radius:20px 20px 0 0;box-shadow:0 -4px 24px rgba(15,37,55,.15);transform:translateY(calc(100% - 72px));transition:transform .35s cubic-bezier(.4,0,.2,1);overflow:hidden}
-  .rg-roi-summary.is-expanded{transform:translateY(0);overflow-y:auto}
-  .rg-summary-inner{padding:16px 20px 100px}
+  /* Summary flows naturally below inputs */
+  .rg-roi-summary{
+    position:static!important;
+    max-height:none!important;
+    overflow-y:visible!important;
+    transform:none!important;
+    background:transparent;
+    border-radius:0;
+    box-shadow:none;
+    z-index:auto
+  }
+  .rg-roi-summary.is-expanded{transform:none!important;overflow-y:visible!important}
+  .rg-summary-handle{display:none!important}
+  .rg-summary-inner{padding:20px 16px}
+  .rg-roi-inputs{padding-bottom:0}
 
-  /* Bottom-sheet handle */
-  .rg-summary-handle{display:flex;flex-direction:column;align-items:center;padding:12px 20px 8px;cursor:pointer;position:absolute;top:0;left:0;right:0;background:var(--rg-card-bg);border-radius:20px 20px 0 0;z-index:1}
-  .rg-summary-handle__bar{width:40px;height:4px;background:#cbd5e1;border-radius:2px;margin-bottom:8px}
-  .rg-summary-handle__peek{font-size:16px;font-weight:800;color:var(--rg-success)}
-  .rg-roi-summary.is-expanded .rg-summary-handle__peek{display:none}
+  /* Section titles on mobile */
+  .rg-section--open>.rg-section__title{padding:16px 16px 6px}
+  .rg-section--open>.rg-section__body{padding:0 16px 16px}
+  .rg-section__body{padding:0 16px 16px}
+  .rg-section__body--expanded{padding:0 16px 16px}
+  .rg-section--accordion>.rg-section__toggle{padding:14px 16px}
 
-  /* Add padding to inputs for bottom-sheet overlap */
-  .rg-roi-inputs{padding-bottom:90px}
+  /* Comparison table responsive */
+  .rg-comparison{padding:16px}
+  .rg-comparison-table{font-size:12px}
+  .rg-comparison-table th,.rg-comparison-table td{padding:7px 8px}
+  .rg-col-human,.rg-col-robot{min-width:100px}
 
   /* Robot grid smaller */
   .rg-robot-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
   .rg-robot-card{padding:8px 6px;min-height:80px}
   .rg-robot-card img{width:48px;height:48px}
 
-  /* Keyfacts stack */
+  /* Keyfacts */
   .rg-roi-keyfacts{grid-template-columns:repeat(3,1fr);gap:6px}
   .rg-keyfact__value{font-size:18px}
 
+  /* Dashboard */
+  .rg-roi-highlight h2{font-size:28px}
+
+  /* CTA Buttons wrap nicely */
+  .rg-actions{gap:6px}
+  .rg-btn{padding:9px 12px;font-size:12px}
+
+  /* Chart */
+  .rg-chart-container{height:180px}
+
   /* Details grid single column */
   .rg-details__grid{grid-template-columns:1fr}
+
+  /* Fieldsets */
+  .rg-fieldset{padding:12px}
+  .rg-scenario-row{padding:12px 16px}
+
+  /* Meta row */
+  .rg-meta-card{padding:12px 16px}
+  .rg-meta-field{flex:1 1 100%;min-width:0;max-width:none}
 }
 
 @media(max-width:480px){
   .rg-roi{padding:0 8px}
   .rg-scenario-row{flex-direction:column}
-  .rg-roi-highlight h2{font-size:26px}
+  .rg-roi-highlight h2{font-size:24px}
   .rg-roi-keyfacts{grid-template-columns:1fr 1fr 1fr}
+  .rg-keyfact__value{font-size:16px}
+
+  /* Comparison table: tighter on small phones */
+  .rg-comparison-table{font-size:11px}
+  .rg-comparison-table th,.rg-comparison-table td{padding:6px 6px}
+  .rg-col-human,.rg-col-robot{min-width:85px}
+
+  /* Actions full width */
+  .rg-actions{flex-direction:column}
+  .rg-btn{width:100%;justify-content:center}
 }
 
 /* === Print === */
