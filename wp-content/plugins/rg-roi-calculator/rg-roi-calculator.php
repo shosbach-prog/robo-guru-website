@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '2.1.0';
+    const VERSION = '3.0.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -250,179 +250,220 @@ final class RG_ROI_Calculator {
 
         ob_start();
         ?>
-        <div class="rg-roi" data-rg-roi>
-            <div class="rg-roi__head">
-                <h3><?php echo esc_html($atts['title']); ?></h3>
-                <p><?php echo esc_html($atts['subtitle']); ?></p>
-            </div>
+        <div class="rg-roi rg-roi-page" data-rg-roi>
 
-            <!-- Robot Selection Section -->
-            <div class="rg-robot-section">
-                <div class="rg-robot-header">
-                    <h4>Wählen Sie Ihren Roboter aus für den Sie den ROI berechnen wollen</h4>
-                    <p class="rg-robot-subtitle">Die Werte werden automatisch vorausgefüllt. Sie können alle Werte manuell anpassen.</p>
-                    <label class="rg-multiselect-toggle">
-                        <input type="checkbox" data-rg="multiSelect">
-                        <span>Mehrere Roboter vergleichen</span>
-                    </label>
-                </div>
-                <div class="rg-robot-grid" data-rg-robots>
-                    <div class="rg-robot-loading">Roboter werden geladen...</div>
-                </div>
-            </div>
-
-            <!-- Außendienst-Schnellprofile -->
-            <div class="rg-quickprofiles">
-                <label>Schnellprofil
-                    <select class="rg-in rg-select" data-rg="presetProfile">
-                        <option value="">— Profil wählen —</option>
-                        <option value="industry">Industrie 1.500 m²</option>
-                        <option value="logistics">Logistik 3.000 m²</option>
-                        <option value="hospital">Krankenhaus 2.000 m²</option>
-                        <option value="retail">Einzelhandel 800 m²</option>
-                        <option value="office">Bürogebäude 1.200 m²</option>
-                    </select>
+            <!-- Beratermodus Toggle (top bar) -->
+            <div class="rg-advisor-bar">
+                <label class="rg-advisor-toggle">
+                    <input type="checkbox" data-rg="advisorMode">
+                    <span class="rg-advisor-toggle__slider"></span>
+                    <span class="rg-advisor-toggle__label">Beratermodus</span>
                 </label>
             </div>
 
-            <div class="rg-meta-row">
-                <div class="rg-meta-card">
-                    <div class="rg-meta-field">
-                        <label>Die Berechnung ist für Firma:
-                            <input type="text" class="rg-in" data-rg="companyName" placeholder="z.B. Musterfirma GmbH">
-                        </label>
-                    </div>
-                    <?php if (!is_user_logged_in()) : ?>
-                    <div class="rg-meta-field">
-                        <label>Erstellt von <span class="rg-optional">(optional)</span>
-                            <input type="text" class="rg-in" data-rg="creatorName" placeholder="Vor- und Nachname">
-                        </label>
-                    </div>
-                    <?php endif; ?>
-                </div>
-            </div>
+            <div class="rg-roi-layout">
 
-            <!-- Comparison Results (shown when multiple robots selected) -->
-            <div class="rg-comparison rg-hide" data-rg-comparison>
-                <h4>Vergleich: Mensch vs. Roboter</h4>
-                <div class="rg-comparison-table-wrap">
-                    <table class="rg-comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Kostenfaktor</th>
-                                <th class="rg-col-human">Manuelle Reinigung</th>
-                                <th class="rg-col-robot" data-rg-robot-cols><!-- Dynamic columns --></th>
-                            </tr>
-                        </thead>
-                        <tbody data-rg-comparison-body>
-                            <!-- Dynamic rows -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- LEFT COLUMN: Inputs -->
+            <div class="rg-roi-inputs">
 
-            <div class="rg-grid">
-                <div class="rg-card">
-                    <h4>Finanzierung</h4>
+                <!-- Section 1: Szenario -->
+                <div class="rg-section rg-section--open" data-rg-section="scenario">
+                    <h4 class="rg-section__title">Szenario</h4>
 
-                    <label>Modell
-                        <select class="rg-in rg-select" data-rg="mode">
-                            <option value="purchase" selected>Kauf</option>
-                            <option value="lease">Leasing</option>
-                        </select>
-                    </label>
-
-                    <div class="rg-mode rg-mode--purchase" data-rg-mode="purchase">
-                        <label>Kaufpreis pro Roboter (€)
-                            <input type="number" class="rg-in" data-rg="price" value="25000" min="0" step="100">
-                        </label>
+                    <div class="rg-robot-section">
+                        <div class="rg-robot-header">
+                            <p class="rg-robot-subtitle">Roboter wählen – Werte werden automatisch befüllt.</p>
+                        </div>
+                        <div class="rg-robot-grid" data-rg-robots>
+                            <div class="rg-robot-loading">Roboter werden geladen...</div>
+                        </div>
                     </div>
 
-                    <div class="rg-onetime-costs">
-                        <label>Docking-/Ladestation (€) <span class="rg-autofill" data-rg-autofill="docking">auto</span>
-                            <input type="number" class="rg-in" data-rg="dockingStation" value="0" min="0" step="100">
-                        </label>
-                        <label>Zubehör einmalig (€) <span class="rg-autofill" data-rg-autofill="accessories">auto</span>
-                            <input type="number" class="rg-in" data-rg="accessoriesCost" value="0" min="0" step="100">
-                        </label>
-                        <label>Implementierung / Setup (€) <span class="rg-autofill" data-rg-autofill="implementation">auto</span>
-                            <input type="number" class="rg-in" data-rg="implementationCost" value="0" min="0" step="100">
-                        </label>
+                    <div class="rg-scenario-row">
+                        <div class="rg-field-group rg-field-group--qty">
+                            <label>Anzahl Roboter</label>
+                            <div class="rg-stepper">
+                                <button type="button" class="rg-stepper__btn" data-rg-stepper="qty" data-dir="-1" aria-label="Weniger">−</button>
+                                <input type="number" class="rg-in rg-stepper__input" data-rg="qty" value="1" min="1" step="1">
+                                <button type="button" class="rg-stepper__btn" data-rg-stepper="qty" data-dir="1" aria-label="Mehr">+</button>
+                            </div>
+                        </div>
+                        <div class="rg-field-group rg-field-group--setup">
+                            <label>Implementierung</label>
+                            <div class="rg-toggle-switch" data-rg-setup-mode>
+                                <button type="button" class="rg-toggle-switch__opt is-active" data-val="once">Einmalig</button>
+                                <button type="button" class="rg-toggle-switch__opt" data-val="per_robot">Pro Roboter</button>
+                                <input type="hidden" class="rg-in" data-rg="setupMode" value="once">
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="rg-mode rg-mode--lease rg-hide" data-rg-mode="lease">
-                        <label>Leasingrate pro Roboter / Monat (€)
-                            <input type="number" class="rg-in" data-rg="leaseRateMonthly" value="950" min="0" step="10">
-                        </label>
-                        <label>Laufzeit (Monate)
-                            <select class="rg-in rg-select" data-rg="leaseTermMonths">
-                                <option value="24">24</option>
-                                <option value="36" selected>36</option>
-                                <option value="48">48</option>
-                                <option value="60">60</option>
-                            </select>
-                        </label>
-                        <div class="rg-note">Hinweis: Leasing wird als monatliche Rate × Laufzeit gerechnet (überschlägig).</div>
-                    </div>
-
-                    <label>Anzahl Roboter
-                        <input type="number" class="rg-in" data-rg="qty" value="1" min="1" step="1">
-                    </label>
-
-                    <div class="rg-note" data-rg-out="investHint">–</div>
                 </div>
 
-                <div class="rg-card">
-                    <h4>Nutzung & Einsparung</h4>
-                    <label>Zu reinigende Fläche pro Tag (m²)
-                        <input type="number" class="rg-in" data-rg="areaSqmPerDay" value="1500" min="0" step="50">
-                    </label>
-                    <label>Reinigungsleistung Roboter (m²/h) <span class="rg-autofill" data-rg-autofill="m2h">auto</span>
-                        <input type="number" class="rg-in" data-rg="m2h" value="1200" min="0" step="50">
-                    </label>
-                    <label>Eingesparte Stunden pro Tag (pro Roboter)
-                        <input type="number" class="rg-in" data-rg="hoursPerDay" value="2.5" min="0" step="0.1">
-                    </label>
-                    <label>Lohnkosten pro Stunde (inkl. Lohnnebenkosten) (€)
-                        <input type="number" class="rg-in" data-rg="hourlyRate" value="22" min="0" step="0.5">
-                    </label>
-                    <label>Arbeitstage pro Jahr
-                        <input type="number" class="rg-in" data-rg="daysPerYear" value="260" min="0" step="1">
-                    </label>
-
-                    <div class="rg-note" data-rg-out="sqmHint">Basierend auf Ihrer Fläche und der Reinigungsleistung des Roboters.</div>
+                <!-- Section 2: Kernannahmen -->
+                <div class="rg-section rg-section--open" data-rg-section="core">
+                    <h4 class="rg-section__title">Kernannahmen</h4>
+                    <div class="rg-section__body">
+                        <label>Zu reinigende Fläche pro Tag (m²)
+                            <input type="number" class="rg-in" data-rg="areaSqmPerDay" value="1500" min="0" step="50">
+                        </label>
+                        <label>Eingesparte Stunden pro Tag / Roboter
+                            <input type="number" class="rg-in" data-rg="hoursPerDay" value="2.5" min="0" step="0.1">
+                        </label>
+                        <label>Lohnkosten pro Stunde inkl. Nebenkosten (€)
+                            <input type="number" class="rg-in" data-rg="hourlyRate" value="22" min="0" step="0.5">
+                        </label>
+                        <label>Arbeitstage pro Jahr
+                            <input type="number" class="rg-in" data-rg="daysPerYear" value="260" min="0" step="1">
+                        </label>
+                        <div class="rg-note" data-rg-out="sqmHint">Basierend auf Ihrer Fläche und der Reinigungsleistung des Roboters.</div>
+                    </div>
                 </div>
 
-                <div class="rg-card">
-                    <h4>Service & Betriebskosten</h4>
+                <!-- Section 3: Erweiterte Einstellungen (Akkordeon) -->
+                <div class="rg-section rg-section--accordion" data-rg-section="advanced">
+                    <button type="button" class="rg-section__toggle" aria-expanded="false">
+                        <h4 class="rg-section__title">Erweiterte Einstellungen</h4>
+                        <span class="rg-section__chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="rg-section__body rg-section__body--collapsed" aria-hidden="true">
 
-                    <label>Servicepaket <span class="rg-autofill" data-rg-autofill="service">auto</span>
-                        <select class="rg-in rg-select" data-rg="servicePreset">
-                            <option value="0">Kein Paket / bereits enthalten</option>
-                            <option value="basic">Basic</option>
-                            <option value="standard" selected>Standard</option>
-                            <option value="premium">Premium</option>
-                            <option value="-1">Eigener Wert</option>
-                        </select>
-                    </label>
+                        <!-- Finanzierung -->
+                        <fieldset class="rg-fieldset">
+                            <legend>Finanzierung</legend>
+                            <label>Modell
+                                <select class="rg-in rg-select" data-rg="mode">
+                                    <option value="purchase" selected>Kauf</option>
+                                    <option value="lease">Leasing</option>
+                                </select>
+                            </label>
+                            <div class="rg-mode rg-mode--purchase" data-rg-mode="purchase">
+                                <label>Kaufpreis pro Roboter (€)
+                                    <input type="number" class="rg-in" data-rg="price" value="25000" min="0" step="100">
+                                </label>
+                            </div>
+                            <div class="rg-mode rg-mode--lease rg-hide" data-rg-mode="lease">
+                                <label>Leasingrate pro Roboter / Monat (€)
+                                    <input type="number" class="rg-in" data-rg="leaseRateMonthly" value="950" min="0" step="10">
+                                </label>
+                                <label>Laufzeit (Monate)
+                                    <select class="rg-in rg-select" data-rg="leaseTermMonths">
+                                        <option value="24">24</option>
+                                        <option value="36" selected>36</option>
+                                        <option value="48">48</option>
+                                        <option value="60">60</option>
+                                    </select>
+                                </label>
+                            </div>
 
-                    <label>Servicekosten pro Roboter / Monat (€)
-                        <input type="number" class="rg-in" data-rg="serviceMonthly" value="179" min="0" step="5">
-                    </label>
+                            <!-- Auto/Manual fields -->
+                            <div class="rg-am-field" data-rg-am="dockingStation">
+                                <div class="rg-am-field__head">
+                                    <label>Docking-/Ladestation (€)</label>
+                                    <div class="rg-am-switch">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="dockingStation" value="0" min="0" step="100" disabled>
+                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+                            </div>
+                            <div class="rg-am-field" data-rg-am="accessoriesCost">
+                                <div class="rg-am-field__head">
+                                    <label>Zubehör einmalig (€)</label>
+                                    <div class="rg-am-switch">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="accessoriesCost" value="0" min="0" step="100" disabled>
+                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+                            </div>
+                            <div class="rg-am-field" data-rg-am="implementationCost">
+                                <div class="rg-am-field__head">
+                                    <label>Implementierung / Setup (€)</label>
+                                    <div class="rg-am-switch">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="implementationCost" value="0" min="0" step="100" disabled>
+                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+                            </div>
+                        </fieldset>
 
-                    <label>Stromkosten pro Roboter / Jahr (€) <span class="rg-autofill" data-rg-autofill="power">auto</span>
-                        <input type="number" class="rg-in" data-rg="powerPerYear" value="350" min="0" step="10">
-                    </label>
+                        <!-- Reinigungsleistung -->
+                        <fieldset class="rg-fieldset">
+                            <legend>Reinigungsleistung</legend>
+                            <div class="rg-am-field" data-rg-am="m2h">
+                                <div class="rg-am-field__head">
+                                    <label>Reinigungsleistung Roboter (m²/h)</label>
+                                    <div class="rg-am-switch">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="m2h" value="1200" min="0" step="50" disabled>
+                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+                            </div>
+                        </fieldset>
 
-                    <label>Verbrauchsmaterial pro Jahr (€) <span class="rg-autofill" data-rg-autofill="consumables">auto</span>
-                        <input type="number" class="rg-in" data-rg="consumablesPerYear" value="0" min="0" step="50">
-                    </label>
+                        <!-- Betriebskosten -->
+                        <fieldset class="rg-fieldset">
+                            <legend>Betriebskosten</legend>
+                            <label>Servicepaket
+                                <select class="rg-in rg-select" data-rg="servicePreset">
+                                    <option value="0">Kein Paket / bereits enthalten</option>
+                                    <option value="basic">Basic</option>
+                                    <option value="standard" selected>Standard</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="-1">Eigener Wert</option>
+                                </select>
+                            </label>
+                            <div class="rg-am-field" data-rg-am="serviceMonthly">
+                                <div class="rg-am-field__head">
+                                    <label>Servicekosten pro Roboter / Monat (€)</label>
+                                    <div class="rg-am-switch">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="serviceMonthly" value="179" min="0" step="5" disabled>
+                                <span class="rg-am-field__source">Quelle: Servicepaket-Auswahl</span>
+                            </div>
+                            <div class="rg-am-field" data-rg-am="powerPerYear">
+                                <div class="rg-am-field__head">
+                                    <label>Stromkosten pro Roboter / Jahr (€)</label>
+                                    <div class="rg-am-switch">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="powerPerYear" value="350" min="0" step="10" disabled>
+                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+                            </div>
+                            <div class="rg-am-field" data-rg-am="consumablesPerYear">
+                                <div class="rg-am-field__head">
+                                    <label>Verbrauchsmaterial pro Jahr (€)</label>
+                                    <div class="rg-am-switch">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="consumablesPerYear" value="0" min="0" step="50" disabled>
+                                <span class="rg-am-field__source">Quelle: Flächenberechnung</span>
+                            </div>
+                        </fieldset>
+                        <div class="rg-note" data-rg-out="investHint">–</div>
+                    </div>
+                </div>
 
-                    <div class="rg-note">Verbrauchsmaterial wird anhand Ihrer Fläche berechnet (Bürsten, Pads, Filter etc.)</div>
-
-                    <!-- Einwand-Toggle-System -->
-                    <div class="rg-toggles">
-                        <h5>Annahmen erweitern</h5>
+                <!-- Section 4: Einwände & Szenarien (Akkordeon) -->
+                <div class="rg-section rg-section--accordion" data-rg-section="objections">
+                    <button type="button" class="rg-section__toggle" aria-expanded="false">
+                        <h4 class="rg-section__title">Einwände & Szenarien</h4>
+                        <span class="rg-section__chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="rg-section__body rg-section__body--collapsed" aria-hidden="true">
                         <label class="rg-toggle-label">
                             <input type="checkbox" data-rg="toggleAbsence">
                             <span>Krankheit & Urlaub berücksichtigen (+15 % Personalkosten)</span>
@@ -434,7 +475,64 @@ final class RG_ROI_Calculator {
                     </div>
                 </div>
 
-                <div class="rg-card rg-result">
+                <!-- Section 5: Transparenz (Akkordeon) -->
+                <div class="rg-section rg-section--accordion" data-rg-section="transparency">
+                    <button type="button" class="rg-section__toggle" aria-expanded="false">
+                        <h4 class="rg-section__title">Transparenz / Annahmen</h4>
+                        <span class="rg-section__chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="rg-section__body rg-section__body--collapsed" aria-hidden="true">
+                        <ul class="rg-assumptions__list">
+                            <li>Konstanter Betrieb über das Jahr (Arbeitstage laut Eingabe).</li>
+                            <li>Personalkosten basieren auf dem eingegebenen Stundensatz.</li>
+                            <li>Service- und Stromkosten basieren auf Ihren Angaben.</li>
+                            <li>Keine Förderungen, Steuern oder Restwerte berücksichtigt.</li>
+                            <li>Diese Werte sind überschlägig und ersetzen kein individuelles Angebot.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Comparison Table: 2 Spalten -->
+                <div class="rg-comparison" data-rg-comparison>
+                    <h4>Mensch vs. Roboter</h4>
+                    <div class="rg-comparison-table-wrap">
+                        <table class="rg-comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Kostenfaktor</th>
+                                    <th class="rg-col-human">Manuell (gesamt)</th>
+                                    <th class="rg-col-robot" data-rg-robot-cols>Roboterszenario</th>
+                                </tr>
+                            </thead>
+                            <tbody data-rg-comparison-body></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Metadata -->
+                <div class="rg-meta-row">
+                    <div class="rg-meta-card">
+                        <div class="rg-meta-field">
+                            <label>Die Berechnung ist für Firma:
+                                <input type="text" class="rg-in" data-rg="companyName" placeholder="z.B. Musterfirma GmbH">
+                            </label>
+                        </div>
+                        <?php if (!is_user_logged_in()) : ?>
+                        <div class="rg-meta-field">
+                            <label>Erstellt von <span class="rg-optional">(optional)</span>
+                                <input type="text" class="rg-in" data-rg="creatorName" placeholder="Vor- und Nachname">
+                            </label>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+            </div><!-- /.rg-roi-inputs -->
+
+            <!-- RIGHT COLUMN: Sticky Summary -->
+            <div class="rg-roi-summary" data-rg-summary>
+                <div class="rg-summary-inner">
+
                     <div class="rg-result__head">
                         <h4>Ergebnis</h4>
                         <div class="rg-result__tag">Unabhängige Beispielrechnung</div>
@@ -444,54 +542,26 @@ final class RG_ROI_Calculator {
                     <div class="rg-roi-dashboard">
                         <div class="rg-roi-highlight">
                             <h2 data-rg-out="netHighlight">– €</h2>
-                            <p class="rg-roi-highlight__sub">Einsparung pro Jahr</p>
-                            <p class="rg-roi-highlight__monthly">entspricht <span data-rg-out="monthlyHighlight">–</span> pro Monat</p>
+                            <p class="rg-roi-highlight__sub">Netto-Ersparnis pro Jahr</p>
+                            <p class="rg-roi-highlight__monthly">&#8776; <span data-rg-out="monthlyHighlight">–</span> / Monat</p>
                         </div>
                         <div class="rg-roi-keyfacts">
                             <div class="rg-keyfact">
-                                <span class="rg-keyfact__icon">📉</span>
-                                <span class="rg-keyfact__text">Break-even nach <strong data-rg-out="breakEvenMonths">–</strong> Monaten</span>
-                            </div>
-                            <div class="rg-keyfact rg-keyfact--highlight">
-                                <span class="rg-keyfact__icon">🚀</span>
-                                <span class="rg-keyfact__text">Ab Monat <strong data-rg-out="breakEvenPlus">–</strong> arbeitet der Roboter für Sie</span>
+                                <span class="rg-keyfact__value" data-rg-out="breakEvenMonths">–</span>
+                                <span class="rg-keyfact__label">Break-even (Monate)</span>
                             </div>
                             <div class="rg-keyfact">
-                                <span class="rg-keyfact__icon">👷</span>
-                                <span class="rg-keyfact__text">Entspricht <strong data-rg-out="fteEquivalent">–</strong> Vollzeitstellen</span>
+                                <span class="rg-keyfact__value" data-rg-out="roi">–</span>
+                                <span class="rg-keyfact__label">ROI</span>
+                            </div>
+                            <div class="rg-keyfact">
+                                <span class="rg-keyfact__value" data-rg-out="fteEquivalent">–</span>
+                                <span class="rg-keyfact__label">FTE</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Break-even Chart -->
-                    <div class="rg-chart-container">
-                        <canvas id="rgBreakEvenChart" data-rg-chart="breakeven"></canvas>
-                    </div>
-
-                    <!-- Szenario-Buttons für Außendienst -->
-                    <div class="rg-scenario-buttons">
-                        <span class="rg-scenario-label">Schnell-Szenarien:</span>
-                        <button type="button" class="rg-scenario-btn" data-rg-scenario="plus200">+200 m²</button>
-                        <button type="button" class="rg-scenario-btn" data-rg-scenario="plus2h">+2 Stunden</button>
-                        <button type="button" class="rg-scenario-btn" data-rg-scenario="doubleRobot">2 Roboter</button>
-                        <button type="button" class="rg-scenario-btn" data-rg-scenario="leaseMode">Leasing</button>
-                        <button type="button" class="rg-scenario-btn rg-scenario-btn--reset" data-rg-scenario="reset">↺ Zurücksetzen</button>
-                    </div>
-
-                    <div class="rg-metrics">
-                        <div class="rg-metric">
-                            <div class="rg-metric__k">Amortisationszeit</div>
-                            <div class="rg-metric__v" data-rg-out="payback">–</div>
-                            <div class="rg-metric__s">Monate</div>
-                        </div>
-                        <div class="rg-metric">
-                            <div class="rg-metric__k">ROI</div>
-                            <div class="rg-metric__v" data-rg-out="roi">–</div>
-                            <div class="rg-metric__s">vereinfachte Jahresbetrachtung</div>
-                        </div>
-                    </div>
-
-
+                    <!-- Status Ampel -->
                     <div class="rg-rating" data-rg-out="ratingWrap" data-level="ok">
                         <div class="rg-rating__dot" aria-hidden="true"></div>
                         <div class="rg-rating__content">
@@ -500,34 +570,52 @@ final class RG_ROI_Calculator {
                         </div>
                     </div>
 
-                    <div class="rg-be" aria-live="polite">
-                        <div class="rg-be__badge">Break-even</div>
-                        <div class="rg-be__text" data-rg-out="beText">–</div>
-                    </div>
-
-                    <!-- Glaubwürdigkeitsblock -->
-                    <ul class="rg-credibility">
-                        <li>✔ Konservativ gerechnet – ohne Förderungen</li>
-                        <li>✔ Keine Restwerte berücksichtigt</li>
-                        <li>✔ Personalausfall optional aktivierbar</li>
-                    </ul>
-
                     <div class="rg-warn" data-rg-out="warn" style="display:none;">
                         Hinweis: Mit den aktuellen Angaben entsteht keine positive Netto-Ersparnis.
                     </div>
 
+                    <!-- CTA Buttons -->
                     <div class="rg-actions">
-                        <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">📄</span><span>PDF herunterladen</span></button>
-                        <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">🖨</span><span>Drucken</span></button>
+                        <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">&#128196;</span><span>PDF</span></button>
+                        <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">&#128424;</span><span>Drucken</span></button>
                         <?php if (is_user_logged_in() && function_exists('bp_document_add')) : ?>
-                        <button class="rg-btn rg-btn--save" data-rg-btn="save" disabled><span class="rg-ico">💾</span><span>Im Profil speichern</span></button>
+                        <button class="rg-btn rg-btn--save" data-rg-btn="save" disabled><span class="rg-ico">&#128190;</span><span>Im Profil speichern</span></button>
                         <?php endif; ?>
+                    </div>
+                    <div class="rg-hint" data-rg-out="hint">
+                        Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
+                    </div>
 
-                        <div class="rg-hint" data-rg-out="hint">
-                            Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
+                    <!-- Break-even Chart -->
+                    <div class="rg-chart-container">
+                        <canvas id="rgBreakEvenChart" data-rg-chart="breakeven"></canvas>
+                    </div>
+
+                    <!-- Beratermodus: Presets + Szenarien (hidden by default) -->
+                    <div class="rg-advisor-panel rg-hide" data-rg-advisor-panel>
+                        <div class="rg-quickprofiles">
+                            <label>Branchenprofil
+                                <select class="rg-in rg-select" data-rg="presetProfile">
+                                    <option value="">— Profil wählen —</option>
+                                    <option value="industry">Industrie 1.500 m²</option>
+                                    <option value="logistics">Logistik 3.000 m²</option>
+                                    <option value="hospital">Krankenhaus 2.000 m²</option>
+                                    <option value="retail">Einzelhandel 800 m²</option>
+                                    <option value="office">Bürogebäude 1.200 m²</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="rg-scenario-buttons">
+                            <span class="rg-scenario-label">Schnell-Szenarien:</span>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus200">+200 m²</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus1h">+1,0 h/Tag</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="twoRobots">2 Roboter</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="leaseMode">Leasing 36M</button>
+                            <button type="button" class="rg-scenario-btn rg-scenario-btn--reset" data-rg-scenario="reset">&#8634; Zurücksetzen</button>
                         </div>
                     </div>
 
+                    <!-- Details -->
                     <details class="rg-details">
                         <summary>Details der Berechnung</summary>
                         <div class="rg-details__grid">
@@ -536,28 +624,34 @@ final class RG_ROI_Calculator {
                             <div class="rg-kpi"><div class="rg-k">Ersparnis/Jahr (brutto)</div><div class="rg-v" data-rg-out="gross">–</div></div>
                             <div class="rg-kpi"><div class="rg-k">Service+Strom/Jahr</div><div class="rg-v" data-rg-out="ops">–</div></div>
                             <div class="rg-kpi"><div class="rg-k">Leasingkosten/Jahr</div><div class="rg-v" data-rg-out="leaseYear">–</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Netto-Ersparnis/Jahr</div><div class="rg-v" data-rg-out="net">–</div></div>
                             <div class="rg-kpi"><div class="rg-k">Fläche (m²/Tag)</div><div class="rg-v" data-rg-out="area">–</div></div>
                             <div class="rg-kpi"><div class="rg-k">abgeleitet (m²/h)</div><div class="rg-v" data-rg-out="sqmPerHour">–</div></div>
-                        
-                        </div>
-
-                        <div class="rg-assumptions">
-                            <div class="rg-assumptions__title">Annahmen der Berechnung</div>
-                            <ul class="rg-assumptions__list">
-                                <li>Konstanter Betrieb über das Jahr (Arbeitstage laut Eingabe).</li>
-                                <li>Personalkosten basieren auf dem eingegebenen Stundensatz.</li>
-                                <li>Service- und Stromkosten basieren auf Ihren Angaben.</li>
-                                <li>Keine Förderungen, Steuern oder Restwerte berücksichtigt.</li>
-                            </ul>
                         </div>
                     </details>
 
+                    <div class="rg-be" aria-live="polite">
+                        <div class="rg-be__badge">Break-even</div>
+                        <div class="rg-be__text" data-rg-out="beText">–</div>
+                    </div>
 
                     <div class="rg-disclaimer">
                         Dieser Kalkulator dient zur überschlägigen Bewertung und ersetzt keine individuelle Projektprüfung.
                     </div>
+
+                </div><!-- /.rg-summary-inner -->
+
+                <!-- Mobile bottom-sheet handle -->
+                <div class="rg-summary-handle" data-rg-summary-handle>
+                    <div class="rg-summary-handle__bar"></div>
+                    <div class="rg-summary-handle__peek">
+                        <span data-rg-out="netPeek">– €</span> / Jahr
+                    </div>
                 </div>
-            </div>
+
+            </div><!-- /.rg-roi-summary -->
+
+            </div><!-- /.rg-roi-layout -->
         </div>
         <?php
         return (string)ob_get_clean();

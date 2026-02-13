@@ -262,7 +262,10 @@ function generatePdf(calc){
     // Title section (starts after header bar)
     doc.setTextColor(...RG_BRAND.dark);
     doc.setFontSize(20);
-    doc.text('ROI-Berechnung', 14, 28);
+    var pdfTitle = 'ROI-Berechnung';
+    if (calc.robotName) pdfTitle += ' – ' + calc.robotName;
+    if (calc.qty > 1) pdfTitle += ' – ' + calc.qty + ' Roboter';
+    doc.text(pdfTitle, 14, 28, { maxWidth: 180 });
     doc.setFontSize(12);
     doc.setTextColor(...RG_BRAND.grey);
     doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', 14, 35);
@@ -433,9 +436,13 @@ function generatePdf(calc){
     if (calc.creatorName) {
       paramTableBody.push(['Erstellt von', calc.creatorName]);
     }
+    if (calc.robotName) {
+      paramTableBody.push(['Robotermodell', calc.robotName]);
+    }
     paramTableBody.push(
       ['Finanzierungsmodell', (calc.mode==='lease' ? 'Leasing' : 'Kauf')],
-      ['Anzahl Roboter', String(calc.qty)]
+      ['Anzahl Roboter', String(calc.qty)],
+      ['Setup-Modus', calc.setupMode === 'per_robot' ? 'Pro Roboter' : 'Einmalig']
     );
     if (calc.mode==='purchase') {
       paramTableBody.push(['Kaufpreis pro Roboter', fmtEUR(calc.price)]);
@@ -561,6 +568,7 @@ function generatePdf(calc){
     const dockingStation = getNum('dockingStation');
     const accessoriesCost = getNum('accessoriesCost');
     const implementationCost = getNum('implementationCost');
+    const setupMode = getStr('setupMode') || 'once'; // 'once' | 'per_robot'
 
     // Toggle-Optionen für Einwandbehandlung
     const toggleAbsence = q('[data-rg="toggleAbsence"]', root);
@@ -579,8 +587,11 @@ function generatePdf(calc){
       creatorName = rgRoi.userName;
     }
 
-    // Kostenblöcke
-    const oneTimeCosts = dockingStation + accessoriesCost + implementationCost;
+    // Kostenblöcke (robot_count-aware)
+    const dockTotal = dockingStation * qty;
+    const accessoriesTotal = accessoriesCost * qty;
+    const setupTotal = (setupMode === 'per_robot') ? (implementationCost * qty) : implementationCost;
+    const oneTimeCosts = dockTotal + accessoriesTotal + setupTotal;
     const investUpfront = (mode === 'purchase') ? (price * qty + oneTimeCosts) : oneTimeCosts;
     const contractVolume = (mode === 'purchase')
       ? investUpfront
@@ -689,7 +700,14 @@ function generatePdf(calc){
       savingsYear3,
       canExport,
       companyName,
-      creatorName
+      creatorName,
+      setupMode,
+      oneTimeCosts,
+      dockTotal,
+      accessoriesTotal,
+      setupTotal,
+      consumablesPerYear,
+      robotName: (typeof selectedRobots !== 'undefined' && selectedRobots.length > 0) ? selectedRobots[0].name : ''
     };
   }
   function render(root, calc){
@@ -739,6 +757,9 @@ out('invest').textContent = fmtEUR(calc.invest);
       }
     }
 
+    // Net peek (mobile bottom-sheet)
+    if (out('netPeek')) out('netPeek').textContent = fmtEUR(calc.net);
+
     const warnEl = out('warn');
     const hintEl = out('hint');
 
@@ -748,25 +769,28 @@ out('invest').textContent = fmtEUR(calc.invest);
     const printBtn = q('[data-rg-btn="print"]', root);
     const saveBtn = q('[data-rg-btn="save"]', root);
 
-    pdfBtn.disabled = !canExport;
-    printBtn.disabled = !canExport;
+    if (pdfBtn) pdfBtn.disabled = !canExport;
+    if (printBtn) printBtn.disabled = !canExport;
     if (saveBtn) saveBtn.disabled = !canExport;
 
+    // BUGFIX: Warning nur bei net <= 0 anzeigen (nicht an canExport koppeln)
+    if (warnEl) {
+      warnEl.style.display = (calc.net <= 0) ? 'block' : 'none';
+    }
+
     if (!canExport){
-      out('roi').textContent = '–';
-      out('payback').textContent = '–';
+      if (out('roi')) out('roi').textContent = '–';
+      if (out('payback')) out('payback').textContent = '–';
       if (out('monthly')) out('monthly').textContent = '–';
-      out('beText').textContent = '–';
-      warnEl.style.display = 'block';
-      hintEl.textContent = 'Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.';
+      if (out('beText')) out('beText').textContent = '–';
+      if (hintEl) hintEl.textContent = 'Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.';
       return { canExport: false };
     }
 
-    warnEl.style.display = 'none';
-    out('roi').textContent = fmtNum(calc.roi) + ' %';
-    out('payback').textContent = (calc.mode === 'lease') ? 'ab Monat 1' : fmtNum(calc.paybackMonths);
-    out('beText').textContent = calc.beText;
-    hintEl.textContent = 'Export bereit. Break-even wird im Diagramm markiert.';
+    if (out('roi')) out('roi').textContent = fmtNum(calc.roi) + ' %';
+    if (out('payback')) out('payback').textContent = (calc.mode === 'lease') ? 'ab Monat 1' : fmtNum(calc.paybackMonths);
+    if (out('beText')) out('beText').textContent = calc.beText;
+    if (hintEl) hintEl.textContent = 'Export bereit. Break-even wird im Diagramm markiert.';
     return { canExport: true };
   }
 
@@ -875,55 +899,50 @@ out('invest').textContent = fmtEUR(calc.invest);
     }
   }
 
-  function updateComparison(root) {
+  function updateComparison(root, calc) {
     var compEl = q('[data-rg-comparison]', root);
-    if (!compEl || selectedRobots.length === 0) return;
+    if (!compEl) return;
     var tbody = q('[data-rg-comparison-body]', compEl);
     if (!tbody) return;
-    var areaInp = q('[data-rg="areaSqmPerDay"]', root);
-    var hourlyInp = q('[data-rg="hourlyRate"]', root);
-    var daysInp = q('[data-rg="daysPerYear"]', root);
-    var areaSqmDay = parseFloat(areaInp ? areaInp.value : 1500);
-    var hourlyRate = parseFloat(hourlyInp ? hourlyInp.value : 22);
-    var daysPerYear = parseFloat(daysInp ? daysInp.value : 260);
-    var manualM2h = 150;
-    var manualHoursYear = (areaSqmDay / manualM2h) * daysPerYear;
-    var manualCostYear = manualHoursYear * hourlyRate;
-    var robotCols = selectedRobots.map(function(r) { return r.name; }).join('</th><th class="rg-col-robot">');
+
+    // Use current calc values for consistent 2-column comparison
+    var c = calc || toCalc(root);
+    var qty = c.qty || 1;
+
+    // Manual side: labor savings represents what manual cleaning costs
+    var manualLaborYear = c.grossSavings; // This IS the manual labor cost being saved
+    var manualConsumables = 500; // fixed estimate for manual consumables
+    var manualTotal = manualLaborYear + manualConsumables;
+
+    // Robot side: use calc totals (already scaled by qty)
+    var robotService = c.opsCosts ? (c.opsCosts - (c.consumablesPerYear || 0) * qty) : 0;
+    var robotServiceYear = (c.serviceMonthly || 0) * 12 * qty;
+    var robotPowerYear = (c.powerPerYear || 0) * qty;
+    var robotConsumablesYear = (c.consumablesPerYear || 0) * qty;
+    var robotLeaseYear = c.leaseYear || 0;
+    var robotTotal = robotServiceYear + robotPowerYear + robotConsumablesYear + robotLeaseYear;
+
+    // Header: always 2 columns
     var headerRow = q('thead tr', compEl);
+    var qtyLabel = qty > 1 ? ' (' + qty + ' Roboter)' : '';
     if (headerRow) {
-      headerRow.innerHTML = '<th>Kostenfaktor</th><th class="rg-col-human">Manuelle Reinigung</th><th class="rg-col-robot">' + robotCols + '</th>';
+      headerRow.innerHTML = '<th>Kostenfaktor</th><th class="rg-col-human">Manuell (gesamt)</th><th class="rg-col-robot">Roboterszenario' + qtyLabel + '</th>';
     }
-    var robotData = selectedRobots.map(function(robot) {
-      var robotHoursYear = (robot.m2h > 0 ? areaSqmDay / robot.m2h : areaSqmDay / manualM2h) * daysPerYear;
-      var svcPreset = q('[data-rg="servicePreset"]', root);
-      var tier = svcPreset ? svcPreset.value : 'standard';
-      var serviceCost = robot.service_standard || 0;
-      if (tier === 'basic') serviceCost = robot.service_basic || 0;
-      if (tier === 'premium') serviceCost = robot.service_premium || 0;
-      var consumables = robot.consumables_per_1000m2 > 0 ? Math.round(robot.consumables_per_1000m2 * areaSqmDay * daysPerYear / 1000) : 0;
-      return {
-        labourCost: robotHoursYear * hourlyRate * 0.2,
-        serviceCost: serviceCost * 12,
-        powerCost: robot.power_yearly || 0,
-        consumables: consumables,
-        lease36: robot.lease36 || 0
-      };
-    });
+
     var rows = [
-      { label: 'Personalkosten/Jahr', human: manualCostYear, robots: robotData.map(function(r) { return r.labourCost; }) },
-      { label: 'Service/Jahr', human: 0, robots: robotData.map(function(r) { return r.serviceCost; }) },
-      { label: 'Strom/Jahr', human: 0, robots: robotData.map(function(r) { return r.powerCost; }) },
-      { label: 'Verbrauchsmaterial/Jahr', human: 500, robots: robotData.map(function(r) { return r.consumables; }) },
-      { label: 'Leasing (36M)/Jahr', human: 0, robots: robotData.map(function(r) { return r.lease36 * 12; }) },
-      { label: '<strong>Gesamt/Jahr</strong>', human: manualCostYear + 500, robots: robotData.map(function(r) { return r.labourCost + r.serviceCost + r.powerCost + r.consumables + r.lease36 * 12; }), isTotal: true }
+      { label: 'Personalkosten/Jahr', human: manualLaborYear, robot: 0 },
+      { label: 'Service/Jahr', human: 0, robot: robotServiceYear },
+      { label: 'Strom/Jahr', human: 0, robot: robotPowerYear },
+      { label: 'Verbrauchsmaterial/Jahr', human: manualConsumables, robot: robotConsumablesYear },
     ];
+    if (c.mode === 'lease') {
+      rows.push({ label: 'Leasing/Jahr', human: 0, robot: robotLeaseYear });
+    }
+    rows.push({ label: '<strong>Gesamt/Jahr</strong>', human: manualTotal, robot: robotTotal, isTotal: true });
+
     tbody.innerHTML = rows.map(function(row) {
-      var robotCells = row.robots.map(function(val) {
-        var cls = row.isTotal && (row.human - val) > 0 ? ' class="rg-savings"' : '';
-        return '<td' + cls + '>' + fmtEUR(val) + '</td>';
-      }).join('');
-      return '<tr><td>' + row.label + '</td><td>' + fmtEUR(row.human) + '</td>' + robotCells + '</tr>';
+      var cls = row.isTotal && (row.human - row.robot) > 0 ? ' class="rg-savings"' : '';
+      return '<tr><td>' + row.label + '</td><td>' + fmtEUR(row.human) + '</td><td' + cls + '>' + fmtEUR(row.robot) + '</td></tr>';
     }).join('');
   }
   // === End Robot Selection System ===
@@ -932,7 +951,92 @@ out('invest').textContent = fmtEUR(calc.invest);
     let lastCalc = toCalc(root);
     render(root, lastCalc);
 
-    // Robot selection setup
+    // === Accordion toggles ===
+    qa('.rg-section__toggle', root).forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        var body = btn.nextElementSibling;
+        if (!body) return;
+        btn.setAttribute('aria-expanded', String(!expanded));
+        body.setAttribute('aria-hidden', String(expanded));
+        if (expanded) {
+          body.classList.remove('rg-section__body--expanded');
+          body.classList.add('rg-section__body--collapsed');
+        } else {
+          body.classList.remove('rg-section__body--collapsed');
+          body.classList.add('rg-section__body--expanded');
+        }
+      });
+    });
+
+    // === Stepper buttons (Anzahl Roboter) ===
+    qa('[data-rg-stepper]', root).forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var key = btn.getAttribute('data-rg-stepper');
+        var dir = parseInt(btn.getAttribute('data-dir'), 10);
+        var inp = q('[data-rg="' + key + '"]', root);
+        if (!inp) return;
+        var val = parseInt(inp.value, 10) || 1;
+        var minVal = parseInt(inp.min, 10) || 1;
+        inp.value = Math.max(minVal, val + dir);
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+    });
+
+    // === Setup Mode Toggle (once / per_robot) ===
+    var setupModeWrap = q('[data-rg-setup-mode]', root);
+    if (setupModeWrap) {
+      qa('.rg-toggle-switch__opt', setupModeWrap).forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          qa('.rg-toggle-switch__opt', setupModeWrap).forEach(function(b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          var hidden = q('[data-rg="setupMode"]', root);
+          if (hidden) { hidden.value = btn.getAttribute('data-val'); hidden.dispatchEvent(new Event('input', { bubbles: true })); }
+        });
+      });
+    }
+
+    // === Auto/Manual Field Pattern ===
+    qa('[data-rg-am]', root).forEach(function(field) {
+      var btns = qa('.rg-am-switch__btn', field);
+      var inp = q('.rg-in', field);
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          btns.forEach(function(b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          var isManual = btn.getAttribute('data-am') === 'manual';
+          field.setAttribute('data-mode', isManual ? 'manual' : 'auto');
+          if (inp) {
+            inp.disabled = !isManual;
+            if (!isManual && selectedRobots.length > 0) {
+              // Restore auto value from robot data
+              applyRobotValues(root, selectedRobots[0]);
+            }
+          }
+        });
+      });
+    });
+
+    // === Advisor Mode Toggle ===
+    var advisorToggle = q('[data-rg="advisorMode"]', root);
+    var advisorPanel = q('[data-rg-advisor-panel]', root);
+    if (advisorToggle && advisorPanel) {
+      advisorToggle.addEventListener('change', function() {
+        advisorPanel.classList.toggle('rg-hide', !advisorToggle.checked);
+      });
+    }
+
+    // === Mobile Bottom-Sheet ===
+    var summaryEl = q('[data-rg-summary]', root);
+    var summaryHandle = q('[data-rg-summary-handle]', root);
+    if (summaryHandle && summaryEl) {
+      summaryHandle.addEventListener('click', function() {
+        summaryEl.classList.toggle('is-expanded');
+      });
+      // Close on outside click when expanded (optional)
+    }
+
+    // Robot selection setup (single select only - no multi-compare)
     var robotGrid = q('[data-rg-robots]', root);
     if (robotGrid) {
       loadRobots(robotGrid).then(function() {
@@ -940,31 +1044,17 @@ out('invest').textContent = fmtEUR(calc.invest);
           card.addEventListener('click', function() {
             var robotId = parseInt(card.getAttribute('data-robot-id'), 10);
             var robot = robotsData.find(function(r) { return r.id === robotId; });
-            if (multiSelectMode) {
-              var idx = selectedRobots.findIndex(function(r) { return r.id === robotId; });
-              if (idx >= 0) { selectedRobots.splice(idx, 1); card.classList.remove('is-selected'); }
-              else { selectedRobots.push(robot); card.classList.add('is-selected'); }
-              updateComparison(root);
-            } else {
-              qa('.rg-robot-card', robotGrid).forEach(function(c) { c.classList.remove('is-selected'); });
-              card.classList.add('is-selected');
-              selectedRobots = [robot];
-              applyRobotValues(root, robot);
-              updateHoursFromArea(root);
-              lastCalc = toCalc(root);
-              render(root, lastCalc);
-            }
+            qa('.rg-robot-card', robotGrid).forEach(function(c) { c.classList.remove('is-selected'); });
+            card.classList.add('is-selected');
+            selectedRobots = [robot];
+            applyRobotValues(root, robot);
+            updateHoursFromArea(root);
+            lastCalc = toCalc(root);
+            render(root, lastCalc);
+            updateComparison(root, lastCalc);
+            renderBreakEvenChart(root, lastCalc);
           });
         });
-      });
-    }
-
-    var multiToggle = q('[data-rg="multiSelect"]', root);
-    if (multiToggle) {
-      multiToggle.addEventListener('change', function() {
-        multiSelectMode = multiToggle.checked;
-        var comparisonEl = q('[data-rg-comparison]', root);
-        if (comparisonEl) comparisonEl.classList.toggle('rg-hide', !multiSelectMode);
       });
     }
 
@@ -1004,10 +1094,13 @@ out('invest').textContent = fmtEUR(calc.invest);
     const svcInp = q('[data-rg="serviceMonthly"]', root);
     const applyPreset = () => {
       if (!presetSel || !svcInp) return;
+      // Skip if serviceMonthly is in manual mode
+      var amField = q('[data-rg-am="serviceMonthly"]', root);
+      if (amField && amField.getAttribute('data-mode') === 'manual') return;
       const v = String(presetSel.value || '');
-      if (v === '-1') return; // custom - user sets their own value
+      if (v === '-1') { if (svcInp) svcInp.disabled = false; return; } // custom
       if (v === '0') { svcInp.value = '0'; return; }
-      
+
       // If a robot is selected, use its specific service values
       if (selectedRobots && selectedRobots.length > 0) {
         const robot = selectedRobots[0];
@@ -1015,13 +1108,11 @@ out('invest').textContent = fmtEUR(calc.invest);
         else if (v === 'standard' && robot.service_standard > 0) svcInp.value = robot.service_standard;
         else if (v === 'premium' && robot.service_premium > 0) svcInp.value = robot.service_premium;
         else {
-          // Fallback if robot has no value for this tier
           if (v === 'basic') svcInp.value = '99';
           else if (v === 'standard') svcInp.value = '179';
           else if (v === 'premium') svcInp.value = '255';
         }
       } else {
-        // No robot selected - use default values
         if (v === 'basic') svcInp.value = '99';
         else if (v === 'standard') svcInp.value = '179';
         else if (v === 'premium') svcInp.value = '255';
@@ -1033,7 +1124,7 @@ out('invest').textContent = fmtEUR(calc.invest);
     }
 
 
-    // ===== ROI 2.0 Features =====
+    // ===== ROI Features =====
     let originalValues = {};
     const storeOriginalValues = () => {
       originalValues = {
@@ -1046,35 +1137,50 @@ out('invest').textContent = fmtEUR(calc.invest);
     const setFieldVal = (key, val) => { const el = q('[data-rg="' + key + '"]', root); if (el) el.value = val; };
     storeOriginalValues();
 
-    // Quick profile selection
+    // Quick profile selection (Beratermodus)
     const profileSel = q('[data-rg="presetProfile"]', root);
     if (profileSel) {
       profileSel.addEventListener('change', () => {
-        const profiles = { industry: { area: 1500, wage: 26, days: 230 }, logistics: { area: 3000, wage: 24, days: 250 }, hospital: { area: 2000, wage: 28, days: 260 }, retail: { area: 800, wage: 22, days: 280 }, office: { area: 1200, wage: 24, days: 250 } };
+        const profiles = {
+          industry: { area: 1500, wage: 26, days: 230, hours: 2.0 },
+          logistics: { area: 3000, wage: 28, days: 240, hours: 3.0 },
+          hospital: { area: 2000, wage: 30, days: 250, hours: 2.5 },
+          retail: { area: 800, wage: 22, days: 280, hours: 1.5 },
+          office: { area: 1200, wage: 24, days: 250, hours: 2.0 }
+        };
         const p = profiles[profileSel.value];
-        if (p) { setFieldVal('areaSqmPerDay', p.area); setFieldVal('hourlyRate', p.wage); setFieldVal('daysPerYear', p.days); storeOriginalValues(); if (selectedRobots.length > 0) { applyRobotValues(root, selectedRobots[0]); updateHoursFromArea(root); } lastCalc = toCalc(root); render(root, lastCalc); renderBreakEvenChart(root, lastCalc); }
+        if (p) {
+          setFieldVal('areaSqmPerDay', p.area);
+          setFieldVal('hourlyRate', p.wage);
+          setFieldVal('daysPerYear', p.days);
+          setFieldVal('hoursPerDay', p.hours);
+          storeOriginalValues();
+          if (selectedRobots.length > 0) { applyRobotValues(root, selectedRobots[0]); updateHoursFromArea(root); }
+          lastCalc = toCalc(root); render(root, lastCalc); updateComparison(root, lastCalc); renderBreakEvenChart(root, lastCalc);
+        }
       });
     }
 
     // Toggle handlers
     const toggleAbsenceEl = q('[data-rg="toggleAbsence"]', root);
     const toggleWageGrowthEl = q('[data-rg="toggleWageGrowth"]', root);
-    const onToggleChange = () => { lastCalc = toCalc(root); render(root, lastCalc); renderBreakEvenChart(root, lastCalc); };
+    const onToggleChange = () => { lastCalc = toCalc(root); render(root, lastCalc); updateComparison(root, lastCalc); renderBreakEvenChart(root, lastCalc); };
     if (toggleAbsenceEl) toggleAbsenceEl.addEventListener('change', onToggleChange);
     if (toggleWageGrowthEl) toggleWageGrowthEl.addEventListener('change', onToggleChange);
 
-    // Scenario buttons
+    // Scenario buttons (updated for new button names)
     qa('[data-rg-scenario]', root).forEach(btn => {
       btn.addEventListener('click', () => {
         const scenario = btn.getAttribute('data-rg-scenario');
         const currentArea = parseFloat((q('[data-rg="areaSqmPerDay"]', root) || {}).value || '0');
         const currentHours = parseFloat((q('[data-rg="hoursPerDay"]', root) || {}).value || '0');
         if (scenario === 'plus200') { setFieldVal('areaSqmPerDay', currentArea + 200); if (selectedRobots.length > 0) updateHoursFromArea(root); }
+        else if (scenario === 'plus1h') setFieldVal('hoursPerDay', currentHours + 1.0);
         else if (scenario === 'plus2h') setFieldVal('hoursPerDay', currentHours + 2);
-        else if (scenario === 'doubleRobot') setFieldVal('qty', 2);
+        else if (scenario === 'twoRobots' || scenario === 'doubleRobot') setFieldVal('qty', 2);
         else if (scenario === 'leaseMode') { const modeEl = q('[data-rg="mode"]', root); if (modeEl) { modeEl.value = 'lease'; modeEl.dispatchEvent(new Event('change')); } }
         else if (scenario === 'reset') { setFieldVal('areaSqmPerDay', originalValues.areaSqmPerDay || 1500); setFieldVal('hoursPerDay', originalValues.hoursPerDay || 2.5); setFieldVal('qty', originalValues.qty || 1); const modeEl2 = q('[data-rg="mode"]', root); if (modeEl2) { modeEl2.value = originalValues.mode || 'purchase'; modeEl2.dispatchEvent(new Event('change')); } }
-        lastCalc = toCalc(root); render(root, lastCalc); renderBreakEvenChart(root, lastCalc);
+        lastCalc = toCalc(root); render(root, lastCalc); updateComparison(root, lastCalc); renderBreakEvenChart(root, lastCalc);
       });
     });
 
@@ -1096,12 +1202,17 @@ out('invest').textContent = fmtEUR(calc.invest);
       const recalc = () => {
         lastCalc = toCalc(root);
         render(root, lastCalc);
+        updateComparison(root, lastCalc);
       };
       inp.addEventListener('input', recalc);
       inp.addEventListener('change', recalc);
     });
 
-    q('[data-rg-btn="print"]', root).addEventListener('click', () => {
+    // Initial comparison table render
+    updateComparison(root, lastCalc);
+
+    var printBtnEl = q('[data-rg-btn="print"]', root);
+    if (printBtnEl) printBtnEl.addEventListener('click', () => {
       lastCalc = toCalc(root);
       if (!lastCalc.canExport) return;
       const doc = generatePdf(lastCalc);
@@ -1120,11 +1231,16 @@ out('invest').textContent = fmtEUR(calc.invest);
       }
     });
 
-    q('[data-rg-btn="pdf"]', root).addEventListener('click', () => {
+    var pdfBtn = q('[data-rg-btn="pdf"]', root);
+    if (pdfBtn) pdfBtn.addEventListener('click', () => {
       lastCalc = toCalc(root);
       if (!lastCalc.canExport) return;
       const doc = generatePdf(lastCalc);
-      doc.save(`ROI-Berechnung-Robo-Guru-${new Date().toISOString().slice(0,10)}.pdf`);
+      var fname = 'ROI-Berechnung';
+      if (lastCalc.robotName) fname += '-' + lastCalc.robotName.replace(/[^a-zA-Z0-9]/g, '-');
+      if (lastCalc.qty > 1) fname += '-' + lastCalc.qty + 'x';
+      fname += '-' + new Date().toISOString().slice(0,10) + '.pdf';
+      doc.save(fname);
     });
 
     const saveBtn = q('[data-rg-btn="save"]', root);
