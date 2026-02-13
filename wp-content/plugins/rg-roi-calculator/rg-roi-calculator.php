@@ -516,13 +516,13 @@ final class RG_ROI_Calculator {
                     </div>
                 </div>
 
-                <!-- Section 5: Transparenz (Akkordeon) -->
+                <!-- Section 5: Transparenz (immer sichtbar) -->
                 <div class="rg-section rg-section--accordion" data-rg-section="transparency">
-                    <button type="button" class="rg-section__toggle" aria-expanded="false">
+                    <button type="button" class="rg-section__toggle" aria-expanded="true">
                         <h4 class="rg-section__title">Transparenz / Annahmen</h4>
                         <span class="rg-section__chevron" aria-hidden="true"></span>
                     </button>
-                    <div class="rg-section__body rg-section__body--collapsed" aria-hidden="true">
+                    <div class="rg-section__body rg-section__body--expanded" aria-hidden="false">
                         <ul class="rg-assumptions__list">
                             <li>Konstanter Betrieb über das Jahr (Arbeitstage laut Eingabe).</li>
                             <li>Personalkosten basieren auf dem eingegebenen Stundensatz.</li>
@@ -579,6 +579,30 @@ final class RG_ROI_Calculator {
                         <div class="rg-result__tag">Unabhängige Beispielrechnung</div>
                     </div>
 
+                    <!-- Beratermodus: Presets + Szenarien (hidden by default, shown at top when active) -->
+                    <div class="rg-advisor-panel rg-hide" data-rg-advisor-panel>
+                        <div class="rg-quickprofiles">
+                            <label>Branchenprofil
+                                <select class="rg-in rg-select" data-rg="presetProfile">
+                                    <option value="">— Profil wählen —</option>
+                                    <option value="industry">Industrie 1.500 m²</option>
+                                    <option value="logistics">Logistik 3.000 m²</option>
+                                    <option value="hospital">Krankenhaus 2.000 m²</option>
+                                    <option value="retail">Einzelhandel 800 m²</option>
+                                    <option value="office">Bürogebäude 1.200 m²</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="rg-scenario-buttons">
+                            <span class="rg-scenario-label">Schnell-Szenarien:</span>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus200">+200 m²</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus1h">+1,0 h/Tag</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="twoRobots">2 Roboter</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="leaseMode">Leasing 36M</button>
+                            <button type="button" class="rg-scenario-btn rg-scenario-btn--reset" data-rg-scenario="reset">&#8634; Zurücksetzen</button>
+                        </div>
+                    </div>
+
                     <!-- ROI Dashboard -->
                     <div class="rg-roi-dashboard">
                         <div class="rg-roi-highlight">
@@ -630,30 +654,6 @@ final class RG_ROI_Calculator {
                     <!-- Break-even Chart -->
                     <div class="rg-chart-container">
                         <canvas id="rgBreakEvenChart" data-rg-chart="breakeven"></canvas>
-                    </div>
-
-                    <!-- Beratermodus: Presets + Szenarien (hidden by default) -->
-                    <div class="rg-advisor-panel rg-hide" data-rg-advisor-panel>
-                        <div class="rg-quickprofiles">
-                            <label>Branchenprofil
-                                <select class="rg-in rg-select" data-rg="presetProfile">
-                                    <option value="">— Profil wählen —</option>
-                                    <option value="industry">Industrie 1.500 m²</option>
-                                    <option value="logistics">Logistik 3.000 m²</option>
-                                    <option value="hospital">Krankenhaus 2.000 m²</option>
-                                    <option value="retail">Einzelhandel 800 m²</option>
-                                    <option value="office">Bürogebäude 1.200 m²</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="rg-scenario-buttons">
-                            <span class="rg-scenario-label">Schnell-Szenarien:</span>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus200">+200 m²</button>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus1h">+1,0 h/Tag</button>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="twoRobots">2 Roboter</button>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="leaseMode">Leasing 36M</button>
-                            <button type="button" class="rg-scenario-btn rg-scenario-btn--reset" data-rg-scenario="reset">&#8634; Zurücksetzen</button>
-                        </div>
                     </div>
 
                     <!-- Details -->
