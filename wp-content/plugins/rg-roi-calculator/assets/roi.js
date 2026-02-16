@@ -1321,13 +1321,18 @@ function generatePdf(calc){
     if (robot.power_yearly > 0) setField('powerPerYear', Math.round(robot.power_yearly));
     var svcPreset = q('[data-rg="servicePreset"]', root);
     var svcInp = q('[data-rg="serviceMonthly"]', root);
+    // Apply the robot's default service package preset
+    if (svcPreset && robot.service_default) {
+      svcPreset.value = robot.service_default;
+    }
     if (svcPreset && svcInp && svcInp.disabled) {
       var tier = svcPreset.value;
       var svcCost = 0;
       if (tier === 'basic' && robot.service_basic > 0) svcCost = robot.service_basic;
       else if (tier === 'standard' && robot.service_standard > 0) svcCost = robot.service_standard;
       else if (tier === 'premium' && robot.service_premium > 0) svcCost = robot.service_premium;
-      if (svcCost > 0) svcInp.value = svcCost;
+      if (tier === '0') svcInp.value = '0';
+      else if (svcCost > 0) svcInp.value = svcCost;
     }
     var areaInp = q('[data-rg="areaSqmPerDay"]', root);
     var consumInp = q('[data-rg="consumablesPerYear"]', root);

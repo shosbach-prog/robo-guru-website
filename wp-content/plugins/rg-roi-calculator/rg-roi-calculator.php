@@ -124,6 +124,8 @@ final class RG_ROI_Calculator {
             $service_basic = floatval(get_post_meta($id, '_rf_service_basic', true));
             $service_standard = floatval(get_post_meta($id, '_rf_service_standard', true));
             $service_premium = floatval(get_post_meta($id, '_rf_service_premium', true));
+            $service_default = get_post_meta($id, '_rf_service_default', true);
+            if ($service_default === '' || $service_default === null) $service_default = 'standard';
 
             // One-time costs
             $docking_station = floatval(get_post_meta($id, '_rf_docking_station', true));
@@ -167,6 +169,7 @@ final class RG_ROI_Calculator {
                 'service_basic' => $service_basic,
                 'service_standard' => $service_standard,
                 'service_premium' => $service_premium,
+                'service_default' => $service_default,
                 'docking_station' => $docking_station,
                 'accessories_cost' => $accessories_cost,
                 'implementation_cost' => $implementation_cost,
