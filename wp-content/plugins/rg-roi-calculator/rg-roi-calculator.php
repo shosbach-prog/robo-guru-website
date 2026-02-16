@@ -9,8 +9,12 @@
 
 if (!defined('ABSPATH')) { exit; }
 
+if (!defined('RG_ROI_CALCULATOR_VERSION')) {
+    define('RG_ROI_CALCULATOR_VERSION', '4.0.0');
+}
+
 final class RG_ROI_Calculator {
-    const VERSION = '4.0.0';
+    const VERSION = RG_ROI_CALCULATOR_VERSION;
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -44,6 +48,18 @@ final class RG_ROI_Calculator {
 
         // REST API for robots
         add_action('rest_api_init', [__CLASS__, 'register_rest_routes']);
+
+        // Invalidate robot data transient cache when robot posts change
+        add_action('save_post_robo_robot', [__CLASS__, 'invalidate_robot_cache']);
+        add_action('deleted_post', [__CLASS__, 'invalidate_robot_cache']);
+        add_action('trashed_post', [__CLASS__, 'invalidate_robot_cache']);
+    }
+
+    /**
+     * Invalidate server-side robot data cache
+     */
+    public static function invalidate_robot_cache() {
+        delete_transient('rg_roi_robotdb_v1');
     }
 
     /**
@@ -58,9 +74,26 @@ final class RG_ROI_Calculator {
     }
 
     /**
-     * REST API: Get all robots from CPT robo_robot with ROI data
+     * REST API: Get all robots from CPT robo_robot with ROI data.
+     * Uses a 10-minute transient cache to reduce DB load.
      */
     public static function rest_get_robots() {
+        $cached = get_transient('rg_roi_robotdb_v1');
+        if ($cached !== false) {
+            return rest_ensure_response($cached);
+        }
+
+        $robots = self::query_all_robots();
+
+        set_transient('rg_roi_robotdb_v1', $robots, 10 * MINUTE_IN_SECONDS);
+
+        return rest_ensure_response($robots);
+    }
+
+    /**
+     * Query all robot data from DB (no caching).
+     */
+    private static function query_all_robots() {
         $robots = [];
 
         $query = new WP_Query([
@@ -152,7 +185,7 @@ final class RG_ROI_Calculator {
         }
         wp_reset_postdata();
 
-        return rest_ensure_response($robots);
+        return $robots;
     }
 
     /**
@@ -257,16 +290,18 @@ final class RG_ROI_Calculator {
         }
 
         wp_localize_script('rg-roi', 'rgRoi', [
-            'ajaxUrl'    => admin_url('admin-ajax.php'),
-            'restUrl'    => rest_url('rg-roi/v1/'),
-            'nonce'      => wp_create_nonce(self::NONCE_ACTION),
-            'restNonce'  => wp_create_nonce('wp_rest'),
-            'ccEmail'    => get_option(self::OPTION_CC_EMAIL, ''),
-            'siteName'   => get_bloginfo('name'),
-            'isLoggedIn' => is_user_logged_in() ? '1' : '0',
-            'hasBbDocs'  => function_exists('bp_document_add') ? '1' : '0',
-            'userName'   => $user_name,
-            'userLogoUrl' => $user_logo_url,
+            'ajaxUrl'       => admin_url('admin-ajax.php'),
+            'restUrl'       => rest_url('rg-roi/v1/'),
+            'nonce'         => wp_create_nonce(self::NONCE_ACTION),
+            'restNonce'     => wp_create_nonce('wp_rest'),
+            'ccEmail'       => get_option(self::OPTION_CC_EMAIL, ''),
+            'siteName'      => get_bloginfo('name'),
+            'isLoggedIn'    => is_user_logged_in() ? '1' : '0',
+            'hasBbDocs'     => function_exists('bp_document_add') ? '1' : '0',
+            'userName'      => $user_name,
+            'userLogoUrl'   => $user_logo_url,
+            'pluginVersion' => self::VERSION,
+            'debug'         => defined('WP_DEBUG') && WP_DEBUG,
         ]);
     }
 
@@ -1384,86 +1419,50 @@ final class RG_ROI_Calculator {
             $doc_id = bp_document_add($doc_args);
             $debug_log[] = 'bp_document_add result: ' . (is_wp_error($doc_id) ? 'ERROR: ' . $doc_id->get_error_message() : $doc_id);
 
-            // If document was created successfully, create activity and link everything
+            // If document was created successfully, store metadata and link everything
             if (!is_wp_error($doc_id) && $doc_id) {
                 global $wpdb;
                 $bp = buddypress();
 
-                // Create BuddyPress activity for the document (required for visibility)
-                $activity_id = 0;
-                if (function_exists('bp_activity_add') && bp_is_active('activity')) {
-                    $activity_id = bp_activity_add([
-                        'user_id'       => $user_id,
-                        'component'     => 'document',
-                        'type'          => 'activity_update',
-                        'action'        => sprintf('%s uploaded a document', bp_core_get_user_displayname($user_id)),
-                        'content'       => '',
-                        'primary_link'  => '',
-                        'item_id'       => 0,
-                        'hide_sitewide' => 1, // Hide from activity feed since it's private
-                        'privacy'       => 'onlyme',
-                        'status'        => $doc_status,
-                    ]);
-                    $debug_log[] = 'Activity created: ' . ($activity_id ? $activity_id : 'FAILED');
-
-                    if ($activity_id) {
-                        // Set activity meta for the document
-                        bp_activity_update_meta($activity_id, 'bp_document_ids', $doc_id);
-
-                        // Set attachment meta for parent activity
-                        update_post_meta($attachment_id, 'bp_document_parent_activity_id', $activity_id);
-                        $debug_log[] = 'bp_document_parent_activity_id meta set: ' . $activity_id;
-                    }
+                // Store document metadata (required by BuddyBoss for document display in Documents tab)
+                if (function_exists('bp_document_update_meta')) {
+                    bp_document_update_meta($doc_id, 'file_name', $unique_filename);
+                    bp_document_update_meta($doc_id, 'extension', '.pdf');
+                    $debug_log[] = 'Document meta set: file_name=' . $unique_filename . ', extension=.pdf';
                 }
 
+                // Update document record: folder_id, status, and activity_id
                 if (isset($bp->document->table_name)) {
                     $doc_table = $bp->document->table_name;
 
-                    // Update document: folder_id, status, and activity_id
-                    $update_data = ['status' => $doc_status];
+                    $update_data = [];
+                    $update_formats = [];
+
+                    // Always set status
+                    $update_data['status'] = $doc_status;
+                    $update_formats[] = '%s';
+
                     if ($folder_id > 0) {
                         $update_data['folder_id'] = $folder_id;
-                    }
-                    if ($activity_id > 0) {
-                        $update_data['activity_id'] = $activity_id;
+                        $update_formats[] = '%d';
                     }
 
                     $updated = $wpdb->update(
                         $doc_table,
                         $update_data,
                         ['id' => $doc_id],
-                        array_fill(0, count($update_data), is_int(reset($update_data)) ? '%d' : '%s'),
+                        $update_formats,
                         ['%d']
                     );
                     $debug_log[] = 'Direct DB update result: ' . ($updated !== false ? 'SUCCESS' : 'FAILED - ' . $wpdb->last_error);
 
-                    // Verify what's actually in the database now - get ALL columns
+                    // Verify what's actually in the database now
                     $doc_row = $wpdb->get_row($wpdb->prepare(
                         "SELECT * FROM {$doc_table} WHERE id = %d",
                         $doc_id
                     ), ARRAY_A);
                     if ($doc_row) {
                         $debug_log[] = 'Our document record: ' . json_encode($doc_row);
-                    }
-
-                    // Compare with an existing working document in the same folder (if any)
-                    $existing_doc = $wpdb->get_row($wpdb->prepare(
-                        "SELECT * FROM {$doc_table} WHERE folder_id = %d AND id != %d LIMIT 1",
-                        $folder_id,
-                        $doc_id
-                    ), ARRAY_A);
-                    if ($existing_doc) {
-                        $debug_log[] = 'Existing working document: ' . json_encode($existing_doc);
-                    } else {
-                        // Get any working document from the same user
-                        $any_doc = $wpdb->get_row($wpdb->prepare(
-                            "SELECT * FROM {$doc_table} WHERE user_id = %d AND id != %d LIMIT 1",
-                            $user_id,
-                            $doc_id
-                        ), ARRAY_A);
-                        if ($any_doc) {
-                            $debug_log[] = 'Other user document for comparison: ' . json_encode($any_doc);
-                        }
                     }
                 }
 
