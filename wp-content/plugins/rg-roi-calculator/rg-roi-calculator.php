@@ -305,8 +305,11 @@ final class RG_ROI_Calculator {
             </div>
             <?php else : ?>
             <!-- Hinweis für nicht-eingeloggte Benutzer -->
-            <div class="rg-note" style="margin-bottom:12px;padding:8px 12px;background:#f0fdff;border:1px solid rgba(22,198,229,.15);border-radius:8px;">
-                &#128274; <a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>">Einloggen</a>, um Ihr Firmenlogo im PDF-Bericht anzuzeigen und Berechnungen im Profil zu speichern.
+            <div class="rg-login-hint">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <div>
+                    <strong><a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>">Jetzt einloggen</a></strong> &ndash; Ihr Firmenlogo im PDF anzeigen, Berechnungen im Profil speichern und mehr.
+                </div>
             </div>
             <?php endif; ?>
 
