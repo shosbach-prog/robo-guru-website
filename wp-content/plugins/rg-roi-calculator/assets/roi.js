@@ -560,8 +560,13 @@ function generatePdf(calc){
       },
     });
 
-    // Assumptions section
-    const afterY = doc.lastAutoTable.finalY + 12;
+    // Assumptions section - page break if not enough space for boxes + footer
+    const assumptionsNeeded = 90; // Annahmen box (48) + gap + QR box (36)
+    let afterY = doc.lastAutoTable.finalY + 12;
+    if (afterY + assumptionsNeeded > 275) {
+      doc.addPage();
+      afterY = 22;
+    }
     doc.setFillColor(248, 250, 252);
     doc.setDrawColor(230, 235, 240);
     doc.setLineWidth(0.3);
