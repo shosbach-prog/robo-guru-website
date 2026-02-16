@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '3.2.0';
+    const VERSION = '4.0.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -109,6 +109,14 @@ final class RG_ROI_Calculator {
             $lease48 = self::calculate_leasing_rate($list_price, 48);
             $lease60 = self::calculate_leasing_rate($list_price, 60);
 
+            // New v4 fields for 5-year model
+            $service_life_hours = floatval(get_post_meta($id, '_rf_service_life_hours', true)) ?: 3000;
+            $efficiency_factor = floatval(get_post_meta($id, '_rf_efficiency_factor', true)) ?: 0.70;
+            $maintenance_hours_week = floatval(get_post_meta($id, '_rf_maintenance_hours_week', true)) ?: 0.5;
+            $hub_license_month = floatval(get_post_meta($id, '_rf_hub_license_month', true));
+            $hub_license_start_year = intval(get_post_meta($id, '_rf_hub_license_start_year', true)) ?: 4;
+            $consumables_year = floatval(get_post_meta($id, '_rf_consumables_year', true)) ?: 100;
+
             $robots[] = [
                 'id' => $id,
                 'name' => get_the_title(),
@@ -133,6 +141,13 @@ final class RG_ROI_Calculator {
                 'lease36' => $lease36,
                 'lease48' => $lease48,
                 'lease60' => $lease60,
+                // v4: 5-year model fields
+                'service_life_hours' => $service_life_hours,
+                'efficiency_factor' => $efficiency_factor,
+                'maintenance_hours_week' => $maintenance_hours_week,
+                'hub_license_month' => $hub_license_month,
+                'hub_license_start_year' => $hub_license_start_year,
+                'consumables_year' => $consumables_year,
             ];
         }
         wp_reset_postdata();
@@ -356,17 +371,22 @@ final class RG_ROI_Calculator {
                             <input type="number" class="rg-in" data-rg="areaSqmPerDay" value="1500" min="0" step="50" aria-describedby="sqmHint">
                             <span class="rg-field-warn" data-rg-warn="areaSqmPerDay"></span>
                         </label>
-                        <label>Eingesparte Stunden pro Tag / Roboter <span class="rg-tooltip" data-tip="Wie viele Arbeitsstunden pro Tag kann ein Roboter einsparen? Wird bei Roboterauswahl automatisch aus Fläche und m²/h berechnet." tabindex="0" role="img" aria-label="Hilfe">?</span>
-                            <input type="number" class="rg-in" data-rg="hoursPerDay" value="2.5" min="0" step="0.1">
-                            <span class="rg-field-warn" data-rg-warn="hoursPerDay"></span>
+                        <label>Manuelle Produktivität (m²/h) <span class="rg-tooltip" data-tip="Wie viel m² schafft manuelle Reinigung pro Stunde? Standard: 200–400 m²/h." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                            <input type="number" class="rg-in" data-rg="manuelleProduktivitaet" value="300" min="50" step="10">
+                        </label>
+                        <label>Reinigungszyklen / Woche <span class="rg-tooltip" data-tip="Reinigungshäufigkeit pro Woche (z.B. 5 = Mo–Fr)." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                            <input type="number" class="rg-in" data-rg="reinigungszyklenWoche" value="5" min="1" max="7" step="1">
                         </label>
                         <label>Lohnkosten pro Stunde inkl. Nebenkosten (€) <span class="rg-tooltip" data-tip="Vollkosten einer Reinigungskraft pro Stunde, inklusive Lohnnebenkosten (Sozialabgaben, Versicherung etc.). Üblich: 18–35 €/h." tabindex="0" role="img" aria-label="Hilfe">?</span>
                             <input type="number" class="rg-in" data-rg="hourlyRate" value="22" min="0" step="0.5">
                             <span class="rg-field-warn" data-rg-warn="hourlyRate"></span>
                         </label>
-                        <label>Arbeitstage pro Jahr <span class="rg-tooltip" data-tip="Anzahl der Tage im Jahr, an denen gereinigt wird. Typisch: 260 (Mo-Fr) oder 365 (7 Tage/Woche)." tabindex="0" role="img" aria-label="Hilfe">?</span>
-                            <input type="number" class="rg-in" data-rg="daysPerYear" value="260" min="0" step="1">
+                        <label>Eingesparte Stunden pro Tag / Roboter <span class="rg-tooltip" data-tip="Wird automatisch berechnet: (Fläche / manuelle Produktivität × Zyklen/Woche) / 5 / Anzahl Roboter." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                            <input type="number" class="rg-in rg-in--computed" data-rg="hoursPerDay" value="2.5" min="0" step="0.1" readonly>
+                            <span class="rg-field-warn" data-rg-warn="hoursPerDay"></span>
                         </label>
+                        <!-- Hidden field for backward compatibility -->
+                        <input type="hidden" class="rg-in" data-rg="daysPerYear" value="260">
                         <div class="rg-note" data-rg-out="sqmHint">Basierend auf Ihrer Fläche und der Reinigungsleistung des Roboters.</div>
                     </div>
                 </div>
@@ -459,11 +479,39 @@ final class RG_ROI_Calculator {
                                 <input type="number" class="rg-in" data-rg="m2h" value="1200" min="0" step="50" disabled>
                                 <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
                             </div>
+                            <label>Effizienzfaktor (%) <span class="rg-tooltip" data-tip="Effektive Reinigungsquote (70% = konservativer Standard, berücksichtigt Fahrzeiten/Hindernisse)." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                                <div class="rg-slider-wrap">
+                                    <input type="range" class="rg-in rg-slider" data-rg="effizienzfaktor" value="70" min="50" max="100" step="1">
+                                    <output class="rg-slider-value" data-rg-out="effizienzfaktorDisplay">70 %</output>
+                                </div>
+                            </label>
+                            <div class="rg-am-field" data-rg-am="roboterLebensdauer">
+                                <div class="rg-am-field__head">
+                                    <label>Lebensdauer (Betriebsstunden) <span class="rg-tooltip" data-tip="Erwartete Lebensdauer in Betriebsstunden. Standard: 3.000 h." tabindex="0" role="img" aria-label="Hilfe">?</span></label>
+                                    <div class="rg-am-switch" role="group" aria-label="Eingabemodus">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto" aria-pressed="true" title="Wert aus Roboterdatenbank">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual" aria-pressed="false" title="Wert manuell eingeben">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="roboterLebensdauer" value="3000" min="500" step="100" disabled aria-label="Lebensdauer Betriebsstunden">
+                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+                            </div>
                         </fieldset>
 
                         <!-- Betriebskosten -->
                         <fieldset class="rg-fieldset">
                             <legend>Betriebskosten <span class="rg-tooltip" data-tip="Auto/Manuell-Schalter: &laquo;Auto&raquo; = Wert wird automatisch berechnet. &laquo;Manuell&raquo; = eigener Wert. Blaue Farbe = Auto-Modus aktiv." tabindex="0" role="img" aria-label="Hilfe">?</span></legend>
+                            <div class="rg-am-field" data-rg-am="wartungsfaktor">
+                                <div class="rg-am-field__head">
+                                    <label>Wartung / Restmanual (Std./Woche pro Roboter) <span class="rg-tooltip" data-tip="Verbleibende manuelle Arbeit pro Roboter/Woche (Ecken, Wartung, Befüllung). Standard: 0,5 h." tabindex="0" role="img" aria-label="Hilfe">?</span></label>
+                                    <div class="rg-am-switch" role="group" aria-label="Eingabemodus">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto" aria-pressed="true" title="Wert aus Roboterdatenbank">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual" aria-pressed="false" title="Wert manuell eingeben">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="wartungsfaktor" value="0.5" min="0" step="0.1" disabled aria-label="Wartungsstunden pro Woche">
+                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+                            </div>
                             <label>Servicepaket <span class="rg-tooltip" data-tip="Monatliche Servicekosten. Basic/Standard/Premium werden aus der Roboterdatenbank geladen. 'Eigener Wert' erlaubt manuelle Eingabe." tabindex="0" role="img" aria-label="Hilfe">?</span>
                                 <select class="rg-in rg-select" data-rg="servicePreset" aria-label="Servicepaket wählen">
                                     <option value="0">Kein Paket / bereits enthalten</option>
@@ -497,14 +545,25 @@ final class RG_ROI_Calculator {
                             </div>
                             <div class="rg-am-field" data-rg-am="consumablesPerYear">
                                 <div class="rg-am-field__head">
-                                    <label>Verbrauchsmaterial pro Jahr (€)</label>
+                                    <label>Verbrauchsmaterial pro Roboter / Jahr (€) <span class="rg-tooltip" data-tip="Bürsten, Pads, Filter etc. pro Roboter und Jahr." tabindex="0" role="img" aria-label="Hilfe">?</span></label>
                                     <div class="rg-am-switch">
                                         <button type="button" class="rg-am-switch__btn is-active" data-am="auto">Auto</button>
                                         <button type="button" class="rg-am-switch__btn" data-am="manual">Manuell</button>
                                     </div>
                                 </div>
-                                <input type="number" class="rg-in" data-rg="consumablesPerYear" value="0" min="0" step="50" disabled>
-                                <span class="rg-am-field__source">Quelle: Flächenberechnung</span>
+                                <input type="number" class="rg-in" data-rg="consumablesPerYear" value="100" min="0" step="10" disabled>
+                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+                            </div>
+                            <div class="rg-am-field" data-rg-am="hubLizenzMonat">
+                                <div class="rg-am-field__head">
+                                    <label>HUB-Lizenz pro Roboter / Monat (€) <span class="rg-tooltip" data-tip="Nexaro HUB Softwarelizenz, fällig ab Jahr 4. Setzen Sie 0 wenn keine Lizenz anfällt." tabindex="0" role="img" aria-label="Hilfe">?</span></label>
+                                    <div class="rg-am-switch" role="group" aria-label="Eingabemodus">
+                                        <button type="button" class="rg-am-switch__btn is-active" data-am="auto" aria-pressed="true" title="Wert aus Roboterdatenbank">Auto</button>
+                                        <button type="button" class="rg-am-switch__btn" data-am="manual" aria-pressed="false" title="Wert manuell eingeben">Manuell</button>
+                                    </div>
+                                </div>
+                                <input type="number" class="rg-in" data-rg="hubLizenzMonat" value="17" min="0" step="1" disabled aria-label="HUB-Lizenz pro Monat">
+                                <span class="rg-am-field__source">Quelle: Roboterdatenbank (ab Jahr 4)</span>
                             </div>
                         </fieldset>
                         <div class="rg-note" data-rg-out="investHint">–</div>
@@ -663,6 +722,25 @@ final class RG_ROI_Calculator {
                     </div>
                     <div class="rg-hint" data-rg-out="hint">
                         Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
+                    </div>
+
+                    <!-- 5-Jahres Projektionstabelle -->
+                    <div class="rg-projection" data-rg-projection>
+                        <h5 class="rg-projection__title">5-Jahres-Projektion</h5>
+                        <div class="rg-projection-table-wrap">
+                            <table class="rg-projection-table" data-rg-projection-table>
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Lebensdauer-Indikator -->
+                    <div class="rg-lifetime" data-rg-lifetime>
+                        <div class="rg-lifetime__label" data-rg-out="lifetimeLabel">Betriebsstunden: – / – h (–%)</div>
+                        <div class="rg-lifetime__bar">
+                            <div class="rg-lifetime__fill" data-rg-out="lifetimeFill" style="width:0%"></div>
+                        </div>
                     </div>
 
                     <!-- Break-even Chart -->
