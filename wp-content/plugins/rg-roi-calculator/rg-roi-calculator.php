@@ -124,6 +124,8 @@ final class RG_ROI_Calculator {
             $service_basic = floatval(get_post_meta($id, '_rf_service_basic', true));
             $service_standard = floatval(get_post_meta($id, '_rf_service_standard', true));
             $service_premium = floatval(get_post_meta($id, '_rf_service_premium', true));
+            $service_default = get_post_meta($id, '_rf_service_default', true);
+            if ($service_default === '' || $service_default === null) $service_default = 'standard';
 
             // One-time costs
             $docking_station = floatval(get_post_meta($id, '_rf_docking_station', true));
@@ -167,6 +169,7 @@ final class RG_ROI_Calculator {
                 'service_basic' => $service_basic,
                 'service_standard' => $service_standard,
                 'service_premium' => $service_premium,
+                'service_default' => $service_default,
                 'docking_station' => $docking_station,
                 'accessories_cost' => $accessories_cost,
                 'implementation_cost' => $implementation_cost,
@@ -640,23 +643,6 @@ final class RG_ROI_Calculator {
                     </div>
                 </div>
 
-                <!-- Comparison Table: 2 Spalten -->
-                <div class="rg-comparison" data-rg-comparison>
-                    <h4>Mensch vs. Roboter</h4>
-                    <div class="rg-comparison-table-wrap">
-                        <table class="rg-comparison-table">
-                            <thead>
-                                <tr>
-                                    <th>Kostenfaktor</th>
-                                    <th class="rg-col-human">Manuell (gesamt)</th>
-                                    <th class="rg-col-robot" data-rg-robot-cols>Roboterszenario</th>
-                                </tr>
-                            </thead>
-                            <tbody data-rg-comparison-body></tbody>
-                        </table>
-                    </div>
-                </div>
-
                 <!-- Metadata -->
                 <div class="rg-meta-row">
                     <div class="rg-meta-card">
@@ -683,53 +669,51 @@ final class RG_ROI_Calculator {
 
                     <div class="rg-result__head">
                         <h4>Ergebnis</h4>
-                        <div class="rg-result__tag">Unabhängige Beispielrechnung</div>
+                        <div class="rg-result__tag">Unabh&auml;ngige Beispielrechnung</div>
                     </div>
 
                     <!-- Beratermodus: Presets + Szenarien (hidden by default, shown at top when active) -->
                     <div class="rg-advisor-panel rg-hide" data-rg-advisor-panel>
                         <div class="rg-quickprofiles">
-                            <label>Branchenprofil <span class="rg-tooltip" data-tip="Wählen Sie ein Branchenprofil, um Fläche, Stundenlohn, Arbeitstage und Stunden/Tag automatisch mit branchentypischen Werten vorzubelegen." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                            <label>Branchenprofil <span class="rg-tooltip" data-tip="W&auml;hlen Sie ein Branchenprofil, um Fl&auml;che, Stundenlohn, Arbeitstage und Stunden/Tag automatisch mit branchentypischen Werten vorzubelegen." tabindex="0" role="img" aria-label="Hilfe">?</span>
                                 <select class="rg-in rg-select" data-rg="presetProfile">
-                                    <option value="">— Profil wählen —</option>
-                                    <option value="industry">Industrie 1.500 m²</option>
-                                    <option value="logistics">Logistik 3.000 m²</option>
-                                    <option value="hospital">Krankenhaus 2.000 m²</option>
-                                    <option value="retail">Einzelhandel 800 m²</option>
-                                    <option value="office">Bürogebäude 1.200 m²</option>
+                                    <option value="">&mdash; Profil w&auml;hlen &mdash;</option>
+                                    <option value="industry">Industrie 1.500 m&sup2;</option>
+                                    <option value="logistics">Logistik 3.000 m&sup2;</option>
+                                    <option value="hospital">Krankenhaus 2.000 m&sup2;</option>
+                                    <option value="retail">Einzelhandel 800 m&sup2;</option>
+                                    <option value="office">B&uuml;rogeb&auml;ude 1.200 m&sup2;</option>
                                 </select>
                             </label>
                         </div>
                         <div class="rg-scenario-buttons">
                             <span class="rg-scenario-label">Schnell-Szenarien: <span class="rg-tooltip" data-tip="Klicken Sie auf ein Szenario, um einzelne Werte schnell anzupassen und deren Auswirkung auf das Ergebnis zu sehen." tabindex="0" role="img" aria-label="Hilfe">?</span></span>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus200" title="Erhöht die tägliche Reinigungsfläche um 200 m²">+200 m²</button>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus1h" title="Erhöht die eingesparten Stunden pro Tag um 1 Stunde">+1,0 h/Tag</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus200" title="Erh&ouml;ht die t&auml;gliche Reinigungsfl&auml;che um 200 m&sup2;">+200 m&sup2;</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus1h" title="Erh&ouml;ht die eingesparten Stunden pro Tag um 1 Stunde">+1,0 h/Tag</button>
                             <button type="button" class="rg-scenario-btn" data-rg-scenario="twoRobots" title="Setzt die Anzahl auf 2 Roboter">2 Roboter</button>
                             <button type="button" class="rg-scenario-btn" data-rg-scenario="leaseMode" title="Wechselt das Finanzierungsmodell auf Leasing (36 Monate)">Leasing 36M</button>
-                            <button type="button" class="rg-scenario-btn rg-scenario-btn--reset" data-rg-scenario="reset" title="Setzt Fläche, Stunden, Roboteranzahl und Finanzierungsmodell auf die ursprünglichen Werte zurück">&#8634; Zurücksetzen</button>
+                            <button type="button" class="rg-scenario-btn rg-scenario-btn--reset" data-rg-scenario="reset" title="Setzt Fl&auml;che, Stunden, Roboteranzahl und Finanzierungsmodell auf die urspr&uuml;nglichen Werte zur&uuml;ck">&#8634; Zur&uuml;cksetzen</button>
                         </div>
                     </div>
 
-                    <!-- ROI Dashboard -->
-                    <div class="rg-roi-dashboard">
-                        <div class="rg-roi-highlight">
-                            <h2 data-rg-out="netHighlight">– €</h2>
-                            <p class="rg-roi-highlight__sub">Netto-Ersparnis pro Jahr</p>
-                            <p class="rg-roi-highlight__monthly">&#8776; <span data-rg-out="monthlyHighlight">–</span> / Monat</p>
+                    <!-- 1. KPI Hero Section: 4 Cards -->
+                    <div class="rg-kpi-hero" data-rg-kpi-hero>
+                        <div class="rg-kpi-card">
+                            <span class="rg-kpi-card__value" data-rg-out="netHighlight">&ndash; &euro;</span>
+                            <span class="rg-kpi-card__label">Netto-Ersparnis / Jahr</span>
+                            <span class="rg-kpi-card__sub">&#8776; <span data-rg-out="monthlyHighlight">&ndash;</span> / Monat</span>
                         </div>
-                        <div class="rg-roi-keyfacts">
-                            <div class="rg-keyfact">
-                                <span class="rg-keyfact__value" data-rg-out="breakEvenMonths">–</span>
-                                <span class="rg-keyfact__label">Break-even (Monate)</span>
-                            </div>
-                            <div class="rg-keyfact">
-                                <span class="rg-keyfact__value" data-rg-out="roi">–</span>
-                                <span class="rg-keyfact__label">ROI</span>
-                            </div>
-                            <div class="rg-keyfact">
-                                <span class="rg-keyfact__value" data-rg-out="fteEquivalent">–</span>
-                                <span class="rg-keyfact__label">FTE</span>
-                            </div>
+                        <div class="rg-kpi-card">
+                            <span class="rg-kpi-card__value" data-rg-out="roi">&ndash;</span>
+                            <span class="rg-kpi-card__label">ROI (5 Jahre)</span>
+                        </div>
+                        <div class="rg-kpi-card">
+                            <span class="rg-kpi-card__value" data-rg-out="breakEvenMonths">&ndash;</span>
+                            <span class="rg-kpi-card__label">Amortisation (Monate)</span>
+                        </div>
+                        <div class="rg-kpi-card">
+                            <span class="rg-kpi-card__value" data-rg-out="totalSavings5Y">&ndash; &euro;</span>
+                            <span class="rg-kpi-card__label">5-Jahres Gesamtersparnis</span>
                         </div>
                     </div>
 
@@ -737,14 +721,14 @@ final class RG_ROI_Calculator {
                     <div class="rg-rating" data-rg-out="ratingWrap" data-level="ok">
                         <div class="rg-rating__dot" aria-hidden="true"></div>
                         <div class="rg-rating__content">
-                            <div class="rg-rating__label" data-rg-out="ratingLabel">–</div>
-                            <div class="rg-rating__text" data-rg-out="ratingText">–</div>
+                            <div class="rg-rating__label" data-rg-out="ratingLabel">&ndash;</div>
+                            <div class="rg-rating__text" data-rg-out="ratingText">&ndash;</div>
                         </div>
                     </div>
 
                     <div class="rg-warn" data-rg-out="warn" style="display:none;">
                         Hinweis: Mit den aktuellen Angaben entsteht keine positive Netto-Ersparnis.
-                        <div class="rg-warn__detail" data-rg-out="warnDetail">Mögliche Ursachen: Die Betriebskosten (Service, Strom, Leasing) übersteigen die eingesparten Personalkosten. Prüfen Sie Stundenlohn, Einsatzstunden oder Roboterkosten.</div>
+                        <div class="rg-warn__detail" data-rg-out="warnDetail">M&ouml;gliche Ursachen: Die Betriebskosten (Service, Strom, Leasing) &uuml;bersteigen die eingesparten Personalkosten. Pr&uuml;fen Sie Stundenlohn, Einsatzstunden oder Roboterkosten.</div>
                     </div>
 
                     <!-- CTA Buttons -->
@@ -759,52 +743,80 @@ final class RG_ROI_Calculator {
                         Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
                     </div>
 
-                    <!-- 5-Jahres Projektionstabelle -->
-                    <div class="rg-projection" data-rg-projection>
-                        <h5 class="rg-projection__title">5-Jahres-Projektion</h5>
-                        <div class="rg-projection-table-wrap">
-                            <table class="rg-projection-table" data-rg-projection-table>
-                                <thead></thead>
-                                <tbody></tbody>
-                            </table>
+                    <!-- 2. Zusammengeführte Vergleichstabelle (Mensch vs Roboter, 1/3/5 Jahre) -->
+                    <div class="rg-comparison-v2" data-rg-comparison>
+                        <h5 class="rg-comparison-v2__title">Mensch vs. Roboter</h5>
+                        <table class="rg-comparison-v2__table" data-rg-comparison-table>
+                            <thead>
+                                <tr>
+                                    <th>Zeitraum</th>
+                                    <th>Manuell</th>
+                                    <th>Roboter</th>
+                                    <th>Differenz</th>
+                                </tr>
+                            </thead>
+                            <tbody data-rg-comparison-body></tbody>
+                        </table>
+                    </div>
+
+                    <!-- 3. Break-Even Timeline -->
+                    <div class="rg-timeline" data-rg-timeline>
+                        <h5 class="rg-timeline__title">Break-Even Verlauf</h5>
+                        <div class="rg-timeline__track">
+                            <div class="rg-timeline__line"></div>
+                            <div class="rg-timeline__fill" data-rg-timeline-fill></div>
+                            <div class="rg-timeline__point rg-timeline__point--start" data-rg-timeline-start>
+                                <span class="rg-timeline__dot"></span>
+                                <span class="rg-timeline__label">Investition</span>
+                            </div>
+                            <div class="rg-timeline__point rg-timeline__point--breakeven" data-rg-timeline-be style="display:none;">
+                                <span class="rg-timeline__dot rg-timeline__dot--be"></span>
+                                <span class="rg-timeline__label" data-rg-timeline-be-label>Monat –</span>
+                            </div>
+                            <div class="rg-timeline__point rg-timeline__point--end" data-rg-timeline-end>
+                                <span class="rg-timeline__dot"></span>
+                                <span class="rg-timeline__label">60 Monate</span>
+                            </div>
                         </div>
+                        <div class="rg-timeline__text" data-rg-out="beText">&ndash;</div>
                     </div>
 
                     <!-- Lebensdauer-Indikator -->
                     <div class="rg-lifetime" data-rg-lifetime>
-                        <div class="rg-lifetime__label" data-rg-out="lifetimeLabel">Betriebsstunden: – / – h (–%)</div>
+                        <div class="rg-lifetime__label" data-rg-out="lifetimeLabel">Betriebsstunden: &ndash; / &ndash; h (&ndash;%)</div>
                         <div class="rg-lifetime__bar">
                             <div class="rg-lifetime__fill" data-rg-out="lifetimeFill" style="width:0%"></div>
                         </div>
                     </div>
 
-                    <!-- Break-even Chart -->
-                    <div class="rg-chart-container">
-                        <canvas id="rgBreakEvenChart" data-rg-chart="breakeven"></canvas>
-                    </div>
-
-                    <!-- Details -->
+                    <!-- 4. Details Accordion -->
                     <details class="rg-details">
                         <summary>Details der Berechnung</summary>
                         <div class="rg-details__grid">
-                            <div class="rg-kpi"><div class="rg-k">Finanzierung</div><div class="rg-v" data-rg-out="finModel">–</div></div>
-                            <div class="rg-kpi"><div class="rg-k">Investition / Vertragsvolumen</div><div class="rg-v" data-rg-out="invest">–</div></div>
-                            <div class="rg-kpi"><div class="rg-k">Ersparnis/Jahr (brutto)</div><div class="rg-v" data-rg-out="gross">–</div></div>
-                            <div class="rg-kpi"><div class="rg-k">Service+Strom/Jahr</div><div class="rg-v" data-rg-out="ops">–</div></div>
-                            <div class="rg-kpi"><div class="rg-k">Leasingkosten/Jahr</div><div class="rg-v" data-rg-out="leaseYear">–</div></div>
-                            <div class="rg-kpi"><div class="rg-k">Netto-Ersparnis/Jahr</div><div class="rg-v" data-rg-out="net">–</div></div>
-                            <div class="rg-kpi"><div class="rg-k">Fläche (m²/Tag)</div><div class="rg-v" data-rg-out="area">–</div></div>
-                            <div class="rg-kpi"><div class="rg-k">abgeleitet (m²/h)</div><div class="rg-v" data-rg-out="sqmPerHour">–</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Finanzierung</div><div class="rg-v" data-rg-out="finModel">&ndash;</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Investition / Vertragsvolumen</div><div class="rg-v" data-rg-out="invest">&ndash;</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Ersparnis/Jahr (brutto)</div><div class="rg-v" data-rg-out="gross">&ndash;</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Service+Strom/Jahr</div><div class="rg-v" data-rg-out="ops">&ndash;</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Leasingkosten/Jahr</div><div class="rg-v" data-rg-out="leaseYear">&ndash;</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Netto-Ersparnis/Jahr</div><div class="rg-v" data-rg-out="net">&ndash;</div></div>
+                            <div class="rg-kpi"><div class="rg-k">Fl&auml;che (m&sup2;/Tag)</div><div class="rg-v" data-rg-out="area">&ndash;</div></div>
+                            <div class="rg-kpi"><div class="rg-k">abgeleitet (m&sup2;/h)</div><div class="rg-v" data-rg-out="sqmPerHour">&ndash;</div></div>
+                        </div>
+
+                        <!-- 5-Jahres Projektionstabelle (innerhalb Details) -->
+                        <div class="rg-projection" data-rg-projection>
+                            <h5 class="rg-projection__title">5-Jahres-Projektion (Detail)</h5>
+                            <div class="rg-projection-table-wrap">
+                                <table class="rg-projection-table" data-rg-projection-table>
+                                    <thead></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
                     </details>
 
-                    <div class="rg-be" aria-live="polite">
-                        <div class="rg-be__badge">Break-even</div>
-                        <div class="rg-be__text" data-rg-out="beText">–</div>
-                    </div>
-
                     <div class="rg-disclaimer">
-                        Dieser Kalkulator dient zur überschlägigen Bewertung und ersetzt keine individuelle Projektprüfung.
+                        Dieser Kalkulator dient zur &uuml;berschl&auml;gigen Bewertung und ersetzt keine individuelle Projektpr&uuml;fung.
                     </div>
 
                 </div><!-- /.rg-summary-inner -->
@@ -813,7 +825,7 @@ final class RG_ROI_Calculator {
                 <div class="rg-summary-handle" data-rg-summary-handle>
                     <div class="rg-summary-handle__bar"></div>
                     <div class="rg-summary-handle__peek">
-                        <span data-rg-out="netPeek">– €</span> / Jahr
+                        <span data-rg-out="netPeek">&ndash; &euro;</span> / Jahr
                     </div>
                 </div>
 

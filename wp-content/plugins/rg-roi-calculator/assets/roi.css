@@ -130,18 +130,26 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-result__head h4{margin:0;font-size:16px;font-weight:700}
 .rg-result__tag{font-size:10px;color:#64748b;background:#f1f5f9;padding:3px 8px;border-radius:6px;font-weight:600}
 
-/* Dashboard */
-.rg-roi-dashboard{text-align:center}
+/* === KPI Hero Section (4 Cards) === */
+.rg-kpi-hero{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rg-kpi-card{background:#fff;border:1px solid var(--rg-border);border-radius:var(--rg-radius);padding:20px 16px;text-align:center;box-shadow:0 2px 8px rgba(15,37,55,.05);transition:box-shadow .2s}
+.rg-kpi-card:first-child{grid-column:1/-1;background:linear-gradient(135deg,#f0fdff 0%,#e0f7fa 100%);border-color:rgba(22,198,229,.2)}
+.rg-kpi-card__value{display:block;font-size:28px;font-weight:800;color:var(--rg-primary);line-height:1.2;letter-spacing:-0.5px;transition:color .3s}
+.rg-kpi-card:first-child .rg-kpi-card__value{font-size:36px;letter-spacing:-1px}
+.rg-kpi-card__label{display:block;font-size:11px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+.rg-kpi-card__sub{display:block;font-size:13px;color:var(--rg-dark);font-weight:600;margin-top:2px}
+.rg-kpi-card[data-positive="true"] .rg-kpi-card__value{color:var(--rg-success)}
+.rg-kpi-card[data-positive="false"] .rg-kpi-card__value{color:var(--rg-danger)}
+
+/* Legacy Dashboard support (keep for PDF) */
+.rg-roi-dashboard{text-align:center;display:none}
 .rg-roi-highlight h2{font-size:32px;font-weight:800;margin:0;color:var(--rg-success);letter-spacing:-1px}
 .rg-roi-highlight__sub{font-size:13px;color:#64748b;margin:2px 0}
 .rg-roi-highlight__monthly{font-size:14px;color:var(--rg-dark);font-weight:600;margin:0}
-
-/* Keyfacts row */
 .rg-roi-keyfacts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .rg-keyfact{text-align:center;padding:10px 6px;background:#f8fafc;border-radius:var(--rg-radius-sm);border:1px solid rgba(15,37,55,.04)}
 .rg-keyfact__value{display:block;font-size:22px;font-weight:800;color:var(--rg-dark);line-height:1.2}
 .rg-keyfact__label{display:block;font-size:10px;color:#64748b;margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
-/* Legacy keyfact support */
 .rg-keyfact__icon{margin-right:4px}
 .rg-keyfact__text{font-size:13px}
 
@@ -178,14 +186,36 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-ico{font-size:16px;line-height:1}
 .rg-hint{font-size:12px;color:#94a3b8;width:100%;margin-top:4px}
 
-/* Chart */
-.rg-chart-container{position:relative;height:220px;margin:0 -4px}
-.rg-chart-container canvas{width:100%!important;height:100%!important}
+/* === Comparison v2 Table (Mensch vs Roboter, 1/3/5 Jahre) === */
+.rg-comparison-v2__title{margin:0 0 10px;font-size:14px;font-weight:700;color:var(--rg-dark)}
+.rg-comparison-v2__table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+.rg-comparison-v2__table th{padding:10px 12px;text-align:right;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.3px;color:#64748b;border-bottom:2px solid var(--rg-dark)}
+.rg-comparison-v2__table th:first-child{text-align:left}
+.rg-comparison-v2__table td{padding:12px;text-align:right;border-bottom:1px solid rgba(15,37,55,.06);font-variant-numeric:tabular-nums}
+.rg-comparison-v2__table td:first-child{text-align:left;font-weight:700;color:var(--rg-dark)}
+.rg-comparison-v2__table .rg-diff-pos{color:var(--rg-success);font-weight:700;background:rgba(47,191,113,.06)}
+.rg-comparison-v2__table .rg-diff-neg{color:var(--rg-danger);font-weight:700;background:rgba(239,68,68,.06)}
+.rg-comparison-v2__table tbody tr:last-child td{border-bottom:none;font-weight:700}
 
-/* Break-even bar */
-.rg-be{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f0fdff;border:1px solid rgba(22,198,229,.15);border-radius:var(--rg-radius-sm)}
-.rg-be__badge{background:var(--rg-primary);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap}
-.rg-be__text{font-size:13px;color:var(--rg-dark)}
+/* === Break-Even Timeline === */
+.rg-timeline__title{margin:0 0 16px;font-size:14px;font-weight:700;color:var(--rg-dark)}
+.rg-timeline__track{position:relative;height:48px;margin:0 24px}
+.rg-timeline__line{position:absolute;top:12px;left:0;right:0;height:3px;background:#e2e8f0;border-radius:2px}
+.rg-timeline__fill{position:absolute;top:12px;left:0;height:3px;background:var(--rg-primary);border-radius:2px;transition:width .5s ease}
+.rg-timeline__point{position:absolute;top:0;display:flex;flex-direction:column;align-items:center;transform:translateX(-50%)}
+.rg-timeline__point--start{left:0;transform:translateX(0)}
+.rg-timeline__point--end{left:100%;transform:translateX(-100%)}
+.rg-timeline__point--breakeven{z-index:2}
+.rg-timeline__dot{width:12px;height:12px;border-radius:50%;background:#cbd5e1;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.15);flex-shrink:0}
+.rg-timeline__dot--be{width:18px;height:18px;background:var(--rg-success);border:3px solid #fff;box-shadow:0 2px 8px rgba(47,191,113,.4);margin-top:-3px}
+.rg-timeline__label{font-size:10px;font-weight:600;color:#64748b;margin-top:4px;white-space:nowrap}
+.rg-timeline__point--breakeven .rg-timeline__label{color:var(--rg-success);font-weight:700;font-size:11px}
+.rg-timeline__text{font-size:13px;color:var(--rg-dark);margin-top:8px;text-align:center}
+
+/* Legacy chart (hidden, kept for potential PDF use) */
+.rg-chart-container{display:none;position:relative;height:220px;margin:0 -4px}
+.rg-chart-container canvas{width:100%!important;height:100%!important}
+.rg-be{display:none}
 
 /* Details (collapsible) */
 .rg-details{border:none;margin:0}
@@ -215,17 +245,8 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-scenario-btn--reset{color:var(--rg-danger);border-color:rgba(239,68,68,.2)}
 .rg-scenario-btn--reset:hover{color:#fff;background:var(--rg-danger);border-color:var(--rg-danger)}
 
-/* === Comparison Table === */
-.rg-comparison{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow);padding:20px;margin-bottom:16px}
-.rg-comparison h4{margin:0 0 12px;font-size:16px;font-weight:700}
-.rg-comparison-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.rg-comparison-table{width:100%;border-collapse:collapse;font-size:13px}
-.rg-comparison-table th{background:var(--rg-dark);color:#fff;padding:10px 14px;text-align:left;font-weight:600;white-space:nowrap}
-.rg-comparison-table td{padding:8px 14px;border-bottom:1px solid rgba(15,37,55,.06)}
-.rg-comparison-table tr:nth-child(even) td{background:#f8fafc}
-.rg-comparison-table .rg-savings{color:var(--rg-success);font-weight:700}
-.rg-col-human{min-width:140px}
-.rg-col-robot{min-width:140px}
+/* === Legacy Comparison Table (removed from layout) === */
+.rg-comparison{display:none}
 
 /* === Toggle Labels (Checkboxes) === */
 .rg-toggle-label{display:flex!important;flex-direction:row!important;align-items:center;gap:10px;cursor:pointer;padding:8px 0;font-weight:400!important}
@@ -293,23 +314,20 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
   .rg-section__body--expanded{padding:0 16px 16px}
   .rg-section--accordion>.rg-section__toggle{padding:14px 16px}
 
-  /* Comparison table responsive */
-  .rg-comparison{padding:16px}
-  .rg-comparison-table{font-size:12px}
-  .rg-comparison-table th,.rg-comparison-table td{padding:7px 8px}
-  .rg-col-human,.rg-col-robot{min-width:100px}
+  /* Comparison v2 responsive */
+  .rg-comparison-v2__table{font-size:12px}
+  .rg-comparison-v2__table th,.rg-comparison-v2__table td{padding:8px}
 
   /* Robot grid smaller */
   .rg-robot-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
   .rg-robot-card{padding:8px 6px;min-height:80px}
   .rg-robot-card img{width:48px;height:48px}
 
-  /* Keyfacts */
-  .rg-roi-keyfacts{grid-template-columns:repeat(3,1fr);gap:6px}
-  .rg-keyfact__value{font-size:18px}
-
-  /* Dashboard */
-  .rg-roi-highlight h2{font-size:28px}
+  /* KPI Hero responsive tablet */
+  .rg-kpi-hero{gap:10px}
+  .rg-kpi-card{padding:16px 12px}
+  .rg-kpi-card__value{font-size:24px}
+  .rg-kpi-card:first-child .rg-kpi-card__value{font-size:30px}
 
   /* CTA Buttons wrap nicely */
   .rg-actions{gap:6px}
@@ -333,14 +351,20 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 @media(max-width:480px){
   .rg-roi{padding:0 8px}
   .rg-scenario-row{flex-direction:column}
-  .rg-roi-highlight h2{font-size:24px}
-  .rg-roi-keyfacts{grid-template-columns:1fr 1fr 1fr}
-  .rg-keyfact__value{font-size:16px}
 
-  /* Comparison table: tighter on small phones */
-  .rg-comparison-table{font-size:11px}
-  .rg-comparison-table th,.rg-comparison-table td{padding:6px 6px}
-  .rg-col-human,.rg-col-robot{min-width:85px}
+  /* KPI Hero: single column on mobile */
+  .rg-kpi-hero{grid-template-columns:1fr}
+  .rg-kpi-card:first-child{grid-column:auto}
+  .rg-kpi-card__value{font-size:22px}
+  .rg-kpi-card:first-child .rg-kpi-card__value{font-size:28px}
+  .rg-kpi-card{padding:14px 12px}
+
+  /* Comparison v2 mobile */
+  .rg-comparison-v2__table{font-size:11px}
+  .rg-comparison-v2__table th,.rg-comparison-v2__table td{padding:8px 6px}
+
+  /* Timeline mobile */
+  .rg-timeline__track{margin:0 16px}
 
   /* Actions full width */
   .rg-actions{flex-direction:column}

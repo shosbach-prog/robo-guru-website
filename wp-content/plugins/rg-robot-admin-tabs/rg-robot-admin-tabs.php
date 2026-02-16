@@ -68,6 +68,19 @@ final class RG_Robot_Admin_Tabs {
     <?php
   }
 
+  private function field_select($name, $label, $value, $options=array()){
+    ?>
+    <div class="rg-field">
+      <label class="rg-label" for="<?php echo esc_attr($name); ?>"><?php echo esc_html($label); ?></label>
+      <select class="rg-input" id="<?php echo esc_attr($name); ?>" name="<?php echo esc_attr($name); ?>">
+        <?php foreach ($options as $opt_value => $opt_label) : ?>
+          <option value="<?php echo esc_attr($opt_value); ?>" <?php selected($value, $opt_value); ?>><?php echo esc_html($opt_label); ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+    <?php
+  }
+
   private function field_textarea($name, $label, $value, $placeholder=''){
     ?>
     <div class="rg-field">
@@ -97,6 +110,7 @@ final class RG_Robot_Admin_Tabs {
       '_rf_service_basic'    => $this->meta($id, '_rf_service_basic'),
       '_rf_service_standard' => $this->meta($id, '_rf_service_standard'),
       '_rf_service_premium'  => $this->meta($id, '_rf_service_premium'),
+      '_rf_service_default'  => $this->meta($id, '_rf_service_default', 'standard'),
       '_rf_power_watts'      => $this->meta($id, '_rf_power_watts'),
       '_rf_consumables_per_1000m2' => $this->meta($id, '_rf_consumables_per_1000m2'),
       '_rf_recommended_area' => $this->meta($id, '_rf_recommended_area'),
@@ -178,6 +192,12 @@ final class RG_Robot_Admin_Tabs {
               $this->field_text('_rf_service_basic','Basic',$v['_rf_service_basic'],'z. B. 99');
               $this->field_text('_rf_service_standard','Standard',$v['_rf_service_standard'],'z. B. 179');
               $this->field_text('_rf_service_premium','Premium',$v['_rf_service_premium'],'z. B. 255');
+              $this->field_select('_rf_service_default','Vorausgewähltes Servicepaket',$v['_rf_service_default'], array(
+                '0'        => 'Kein Paket',
+                'basic'    => 'Basic',
+                'standard' => 'Standard',
+                'premium'  => 'Premium',
+              ));
             ?>
           </div>
 
@@ -366,7 +386,7 @@ final class RG_Robot_Admin_Tabs {
     if ( isset($_POST['rg_robot_details_nonce']) && wp_verify_nonce($_POST['rg_robot_details_nonce'], 'rg_robot_details_save') ) {
       $keys = array(
         '_rf_manufacturer','_rf_segment','_rf_tagline','_rf_price_month','_rf_cta_url','_rf_datasheet_url',
-        '_rf_list_price','_rf_service_basic','_rf_service_standard','_rf_service_premium','_rf_power_watts','_rf_consumables_per_1000m2','_rf_recommended_area','_rf_docking_station','_rf_accessories_cost','_rf_implementation_cost', // ROI fields
+        '_rf_list_price','_rf_service_basic','_rf_service_standard','_rf_service_premium','_rf_service_default','_rf_power_watts','_rf_consumables_per_1000m2','_rf_recommended_area','_rf_docking_station','_rf_accessories_cost','_rf_implementation_cost', // ROI fields
         '_rf_m2h','_rf_battery_hours','_rf_charge_time',
         '_rf_tank_liters','_rf_clean_water','_rf_dirty_water',
         '_rf_dimensions','_rf_working_width','_rf_noise',

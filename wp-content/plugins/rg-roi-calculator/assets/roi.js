@@ -993,13 +993,26 @@ function generatePdf(calc){
     if (out('gross'))  out('gross').textContent  = fmtEUR(calc.grossSavings);
     if (out('ops'))    out('ops').textContent    = fmtEUR(calc.opsCosts);
     if (out('net'))    out('net').textContent    = fmtEUR(calc.net);
-    // ROI Dashboard outputs
+    // KPI Hero Cards
     if (out('netHighlight')) out('netHighlight').textContent = fmtEUR(calc.net);
     if (out('monthlyHighlight')) out('monthlyHighlight').textContent = fmtEUR(calc.monthlyNet);
-    if (out('breakEvenMonths')) out('breakEvenMonths').textContent = calc.breakEvenMonth || '-';
-    if (out('breakEvenPlus')) out('breakEvenPlus').textContent = calc.breakEvenMonth ? (calc.breakEvenMonth + 1) : '-';
-    if (out('fteEquivalent')) out('fteEquivalent').textContent = calc.fteEquivalent ? fmtNum(calc.fteEquivalent) : '-';
+    if (out('breakEvenMonths')) out('breakEvenMonths').textContent = calc.breakEvenMonth || '\u2013';
+    if (out('breakEvenPlus')) out('breakEvenPlus').textContent = calc.breakEvenMonth ? (calc.breakEvenMonth + 1) : '\u2013';
+    if (out('fteEquivalent')) out('fteEquivalent').textContent = calc.fteEquivalent ? fmtNum(calc.fteEquivalent) : '\u2013';
     if (out('monthly')) out('monthly').textContent = fmtEUR(calc.monthlyNet);
+    if (out('totalSavings5Y')) out('totalSavings5Y').textContent = fmtEUR(calc.totalSavings5Y || 0);
+
+    // Set positive/negative state on KPI cards
+    var kpiCards = qa('.rg-kpi-card', root);
+    kpiCards.forEach(function(card) {
+      var valEl = card.querySelector('.rg-kpi-card__value');
+      if (!valEl) return;
+      var attr = valEl.getAttribute('data-rg-out');
+      if (attr === 'netHighlight' || attr === 'totalSavings5Y') {
+        var v = attr === 'netHighlight' ? calc.net : (calc.totalSavings5Y || 0);
+        card.setAttribute('data-positive', v > 0 ? 'true' : 'false');
+      }
+    });
 
     if (out('finModel')) out('finModel').textContent = (calc.mode === 'lease') ? 'Leasing' : 'Kauf';
     if (out('leaseYear')) out('leaseYear').textContent = (calc.mode === 'lease') ? fmtEUR(calc.leaseYear) : '–';
@@ -1059,7 +1072,7 @@ function generatePdf(calc){
     if (out('roi')) out('roi').textContent = fmtNum(calc.roi) + ' %';
     if (out('payback')) out('payback').textContent = (calc.mode === 'lease') ? 'ab Monat 1' : fmtNum(calc.paybackMonths);
     if (out('beText')) out('beText').textContent = calc.beText;
-    if (hintEl) hintEl.textContent = 'Export bereit. Break-even wird im Diagramm markiert.';
+    if (hintEl) hintEl.textContent = 'Export bereit.';
     return { canExport: true };
   }
 
@@ -1321,13 +1334,18 @@ function generatePdf(calc){
     if (robot.power_yearly > 0) setField('powerPerYear', Math.round(robot.power_yearly));
     var svcPreset = q('[data-rg="servicePreset"]', root);
     var svcInp = q('[data-rg="serviceMonthly"]', root);
+    // Apply the robot's default service package preset
+    if (svcPreset && robot.service_default) {
+      svcPreset.value = robot.service_default;
+    }
     if (svcPreset && svcInp && svcInp.disabled) {
       var tier = svcPreset.value;
       var svcCost = 0;
       if (tier === 'basic' && robot.service_basic > 0) svcCost = robot.service_basic;
       else if (tier === 'standard' && robot.service_standard > 0) svcCost = robot.service_standard;
       else if (tier === 'premium' && robot.service_premium > 0) svcCost = robot.service_premium;
-      if (svcCost > 0) svcInp.value = svcCost;
+      if (tier === '0') svcInp.value = '0';
+      else if (svcCost > 0) svcInp.value = svcCost;
     }
     var areaInp = q('[data-rg="areaSqmPerDay"]', root);
     var consumInp = q('[data-rg="consumablesPerYear"]', root);
@@ -1378,53 +1396,27 @@ function generatePdf(calc){
     if (!tbody) return;
 
     var c = calc || toCalc(root);
-    var qty = c.qty || 1;
+    if (!c.projection || c.projection.length < 5) return;
 
-    // Use 5-year projection data (year 2 = recurring costs without investment)
-    var p2 = (c.projection && c.projection.length > 1) ? c.projection[1] : null;
-    var manualLaborYear = c.manuelleKostenJahr || c.grossSavings;
-    var manualTotal = manualLaborYear;
-
-    // Robot side from projection (year 2 = without investment)
-    var robotWartung = p2 ? p2.wartungRestmanual : 0;
-    var robotServiceYear = (c.serviceMonthly || 0) * 12 * qty;
-    var robotPowerYear = (c.powerPerYear || 0) * qty;
-    var robotConsumablesYear = (c.consumablesPerYear || 0) * qty;
-    var robotLeaseYear = c.leaseYear || 0;
-    var robotInvestYear = (c.mode === 'purchase' && c.investUpfront > 0) ? Math.round(c.investUpfront / 5) : 0;
-    var robotTotal = robotWartung + robotServiceYear + robotPowerYear + robotConsumablesYear + robotLeaseYear + robotInvestYear;
-
-    var headerRow = q('thead tr', compEl);
-    var qtyLabel = qty > 1 ? ' (' + qty + ' Roboter)' : '';
-    if (headerRow) {
-      headerRow.innerHTML = '<th>Kostenfaktor</th><th class="rg-col-human">Manuell (gesamt)</th><th class="rg-col-robot">Roboterszenario' + qtyLabel + '</th>';
-    }
-
-    var rows = [
-      { label: 'Personalkosten/Jahr', human: manualLaborYear, robot: 0 },
-      { label: 'Wartung/Restmanual/Jahr', human: 0, robot: robotWartung },
-      { label: 'Service/Jahr', human: 0, robot: robotServiceYear },
-      { label: 'Strom/Jahr', human: 0, robot: robotPowerYear },
-      { label: 'Verbrauchsmaterial/Jahr', human: 0, robot: robotConsumablesYear },
+    // Calculate cumulative costs for 1, 3, and 5 years from projection data
+    var periods = [
+      { label: '1 Jahr', years: 1 },
+      { label: '3 Jahre', years: 3 },
+      { label: '5 Jahre', years: 5 }
     ];
-    if (c.mode === 'lease') {
-      rows.push({ label: 'Leasing/Jahr', human: 0, robot: robotLeaseYear });
-    }
-    if (c.mode === 'purchase' && robotInvestYear > 0) {
-      rows.push({ label: 'Investition/Jahr (auf 5 J.)', human: 0, robot: robotInvestYear });
-    }
-    var savings = manualTotal - robotTotal;
-    rows.push({ label: '<strong>Gesamt/Jahr</strong>', human: manualTotal, robot: robotTotal, isTotal: true });
-    rows.push({ label: '<strong>Ersparnis/Jahr</strong>', human: savings, robot: null, isSavings: true });
 
-    tbody.innerHTML = rows.map(function(row) {
-      if (row.isSavings) {
-        var cls = row.human > 0 ? ' class="rg-savings"' : '';
-        var negNote = row.human < 0 ? '<div style="font-size:11px;color:#64748b;font-weight:400;margin-top:4px;">Roboterkosten \u00fcbersteigen die Personalersparnis \u2013 pr\u00fcfen Sie die Eingaben.</div>' : '';
-        return '<tr><td>' + row.label + '</td><td colspan="2"' + cls + ' style="text-align:center;font-size:15px;">' + fmtEUR(row.human) + negNote + '</td></tr>';
+    tbody.innerHTML = periods.map(function(period) {
+      var manualTotal = 0;
+      var robotTotal = 0;
+      for (var i = 0; i < period.years; i++) {
+        var p = c.projection[i];
+        manualTotal += p.manuelleKosten;
+        robotTotal += p.robotGesamt;
       }
-      var cls = row.isTotal && (row.human - row.robot) > 0 ? ' class="rg-savings"' : '';
-      return '<tr><td>' + row.label + '</td><td>' + fmtEUR(row.human) + '</td><td' + cls + '>' + fmtEUR(row.robot) + '</td></tr>';
+      var diff = manualTotal - robotTotal;
+      var diffCls = diff > 0 ? 'rg-diff-pos' : (diff < 0 ? 'rg-diff-neg' : '');
+      var diffPrefix = diff > 0 ? '+' : '';
+      return '<tr><td>' + period.label + '</td><td>' + fmtEUR(manualTotal) + '</td><td>' + fmtEUR(robotTotal) + '</td><td class="' + diffCls + '">' + diffPrefix + fmtEUR(diff) + '</td></tr>';
     }).join('');
   }
   // === End Robot Selection System ===
@@ -1691,59 +1683,31 @@ function generatePdf(calc){
     });
 
     // Break-even Chart (60 Monate mit Jahresmarkierungen)
-    let breakEvenChartInstance = null;
+    // === Break-Even Timeline ===
     const renderBreakEvenChart = (rootEl, calc) => {
-      const canvas = q('[data-rg-chart="breakeven"]', rootEl);
-      if (!canvas || typeof Chart === 'undefined') return;
-      if (breakEvenChartInstance) { breakEvenChartInstance.destroy(); breakEvenChartInstance = null; }
-      if (!calc.canExport || !calc.projection) return;
+      var timelineEl = q('[data-rg-timeline]', rootEl);
+      if (!timelineEl) return;
 
-      const months = Array.from({length: 60}, (_, i) => i + 1);
-      // Build cumulative manual costs and robot costs from projection
-      const cumulManual = [];
-      const cumulRobot = [];
-      let runManual = 0;
-      let runRobot = 0;
-      for (let m = 1; m <= 60; m++) {
-        const yi = Math.min(Math.floor((m - 1) / 12), 4);
-        const p = calc.projection[yi];
-        runManual += p.manuelleKosten / 12;
-        runRobot += p.robotGesamt / 12;
-        cumulManual.push(runManual);
-        cumulRobot.push(runRobot);
+      var fillEl = q('[data-rg-timeline-fill]', timelineEl);
+      var bePoint = q('[data-rg-timeline-be]', timelineEl);
+      var beLabel = q('[data-rg-timeline-be-label]', timelineEl);
+
+      if (!calc.canExport || !calc.breakEvenMonth) {
+        if (fillEl) fillEl.style.width = '0%';
+        if (bePoint) bePoint.style.display = 'none';
+        return;
       }
 
-      // Year markers as vertical annotations
-      const yearAnnotations = {};
-      for (let y = 1; y <= 5; y++) {
-        yearAnnotations['year' + y] = {
-          type: 'line', xMin: y * 12 - 0.5, xMax: y * 12 - 0.5,
-          borderColor: 'rgba(15,37,55,0.15)', borderWidth: 1, borderDash: [4, 3],
-          label: { display: true, content: 'J' + y, position: 'start', font: { size: 10 }, color: '#94a3b8' }
-        };
-      }
+      var beMonth = calc.breakEvenMonth;
+      var pct = Math.min((beMonth / 60) * 100, 100);
 
-      breakEvenChartInstance = new Chart(canvas, {
-        type: 'line',
-        data: {
-          labels: months.map(m => 'M' + m),
-          datasets: [
-            { label: 'Personalkosten (kumuliert)', data: cumulManual, borderColor: '#d9534f', backgroundColor: 'rgba(217,83,79,0.1)', fill: true, tension: 0.1, pointRadius: 0 },
-            { label: 'Roboterkosten (kumuliert)', data: cumulRobot, borderColor: '#00B4A6', backgroundColor: 'rgba(0,180,166,0.1)', fill: true, tension: 0.1, pointRadius: 0 }
-          ]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'bottom' },
-            annotation: { annotations: yearAnnotations }
-          },
-          scales: {
-            x: { ticks: { maxTicksLimit: 12, callback: function(v, i) { return (i + 1) % 12 === 0 ? 'J' + ((i + 1) / 12) : ''; } } },
-            y: { beginAtZero: true, ticks: { callback: function(v) { return fmtEUR(v); } } }
-          }
-        }
-      });
+      if (fillEl) fillEl.style.width = pct + '%';
+      if (bePoint) {
+        bePoint.style.display = '';
+        bePoint.style.left = pct + '%';
+        bePoint.style.transform = 'translateX(-50%)';
+      }
+      if (beLabel) beLabel.textContent = 'Monat ' + beMonth;
     };
     setTimeout(() => renderBreakEvenChart(root, lastCalc), 100);
 
