@@ -130,6 +130,11 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-result__head h4{margin:0;font-size:16px;font-weight:700}
 .rg-result__tag{font-size:10px;color:#64748b;background:#f1f5f9;padding:3px 8px;border-radius:6px;font-weight:600}
 
+/* === No Robot Placeholder === */
+.rg-no-robot{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 16px;text-align:center}
+.rg-no-robot__value{font-size:48px;font-weight:800;color:#cbd5e1;line-height:1;letter-spacing:-2px}
+.rg-no-robot__text{font-size:14px;color:#94a3b8;margin-top:12px;font-weight:500}
+
 /* === KPI Hero Section (4 Cards) === */
 .rg-kpi-hero{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .rg-kpi-card{background:#fff;border:1px solid var(--rg-border);border-radius:var(--rg-radius);padding:20px 16px;text-align:center;box-shadow:0 2px 8px rgba(15,37,55,.05);transition:box-shadow .2s}

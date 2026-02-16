@@ -696,8 +696,14 @@ final class RG_ROI_Calculator {
                         </div>
                     </div>
 
+                    <!-- Placeholder: kein Roboter gewählt -->
+                    <div class="rg-no-robot" data-rg-no-robot>
+                        <div class="rg-no-robot__value">0 &euro;</div>
+                        <div class="rg-no-robot__text">Bitte w&auml;hlen Sie zuerst einen Roboter aus.</div>
+                    </div>
+
                     <!-- 1. KPI Hero Section: 4 Cards -->
-                    <div class="rg-kpi-hero" data-rg-kpi-hero>
+                    <div class="rg-kpi-hero rg-hide" data-rg-kpi-hero>
                         <div class="rg-kpi-card">
                             <span class="rg-kpi-card__value" data-rg-out="netHighlight">&ndash; &euro;</span>
                             <span class="rg-kpi-card__label">Netto-Ersparnis / Jahr</span>
@@ -718,7 +724,7 @@ final class RG_ROI_Calculator {
                     </div>
 
                     <!-- Status Ampel -->
-                    <div class="rg-rating" data-rg-out="ratingWrap" data-level="ok">
+                    <div class="rg-rating rg-hide" data-rg-out="ratingWrap" data-level="ok">
                         <div class="rg-rating__dot" aria-hidden="true"></div>
                         <div class="rg-rating__content">
                             <div class="rg-rating__label" data-rg-out="ratingLabel">&ndash;</div>
@@ -726,25 +732,25 @@ final class RG_ROI_Calculator {
                         </div>
                     </div>
 
-                    <div class="rg-warn" data-rg-out="warn" style="display:none;">
+                    <div class="rg-warn rg-hide" data-rg-out="warn" style="display:none;">
                         Hinweis: Mit den aktuellen Angaben entsteht keine positive Netto-Ersparnis.
                         <div class="rg-warn__detail" data-rg-out="warnDetail">M&ouml;gliche Ursachen: Die Betriebskosten (Service, Strom, Leasing) &uuml;bersteigen die eingesparten Personalkosten. Pr&uuml;fen Sie Stundenlohn, Einsatzstunden oder Roboterkosten.</div>
                     </div>
 
                     <!-- CTA Buttons -->
-                    <div class="rg-actions">
+                    <div class="rg-actions rg-hide" data-rg-actions>
                         <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">&#128196;</span><span>PDF</span></button>
                         <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">&#128424;</span><span>Drucken</span></button>
                         <?php if (is_user_logged_in() && function_exists('bp_document_add')) : ?>
                         <button class="rg-btn rg-btn--save" data-rg-btn="save" disabled><span class="rg-ico">&#128190;</span><span>Im Profil speichern</span></button>
                         <?php endif; ?>
                     </div>
-                    <div class="rg-hint" data-rg-out="hint">
+                    <div class="rg-hint rg-hide" data-rg-out="hint">
                         Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
                     </div>
 
                     <!-- 2. Zusammengeführte Vergleichstabelle (Mensch vs Roboter, 1/3/5 Jahre) -->
-                    <div class="rg-comparison-v2" data-rg-comparison>
+                    <div class="rg-comparison-v2 rg-hide" data-rg-comparison>
                         <h5 class="rg-comparison-v2__title">Mensch vs. Roboter</h5>
                         <table class="rg-comparison-v2__table" data-rg-comparison-table>
                             <colgroup>
@@ -766,7 +772,7 @@ final class RG_ROI_Calculator {
                     </div>
 
                     <!-- 3. Break-Even Timeline -->
-                    <div class="rg-timeline" data-rg-timeline>
+                    <div class="rg-timeline rg-hide" data-rg-timeline>
                         <h5 class="rg-timeline__title">Break-Even Verlauf</h5>
                         <div class="rg-timeline__track">
                             <div class="rg-timeline__line"></div>
@@ -788,7 +794,7 @@ final class RG_ROI_Calculator {
                     </div>
 
                     <!-- Lebensdauer-Indikator -->
-                    <div class="rg-lifetime" data-rg-lifetime>
+                    <div class="rg-lifetime rg-hide" data-rg-lifetime>
                         <div class="rg-lifetime__label" data-rg-out="lifetimeLabel">Betriebsstunden: &ndash; / &ndash; h (&ndash;%)</div>
                         <div class="rg-lifetime__bar">
                             <div class="rg-lifetime__fill" data-rg-out="lifetimeFill" style="width:0%"></div>
@@ -796,7 +802,7 @@ final class RG_ROI_Calculator {
                     </div>
 
                     <!-- 4. Details Accordion -->
-                    <details class="rg-details">
+                    <details class="rg-details rg-hide" data-rg-details>
                         <summary>Details der Berechnung</summary>
                         <div class="rg-details__grid">
                             <div class="rg-kpi"><div class="rg-k">Finanzierung</div><div class="rg-v" data-rg-out="finModel">&ndash;</div></div>

@@ -970,8 +970,32 @@ function generatePdf(calc){
     fill.setAttribute('data-level', level);
   }
 
+  function toggleResultSections(root, hasRobot) {
+    var noRobotEl = q('[data-rg-no-robot]', root);
+    var sections = [
+      q('[data-rg-kpi-hero]', root),
+      q('[data-rg-out="ratingWrap"]', root),
+      q('[data-rg-out="warn"]', root),
+      q('[data-rg-actions]', root),
+      q('[data-rg-out="hint"]', root),
+      q('[data-rg-comparison]', root),
+      q('[data-rg-timeline]', root),
+      q('[data-rg-lifetime]', root),
+      q('[data-rg-details]', root)
+    ];
+    if (noRobotEl) noRobotEl.classList.toggle('rg-hide', hasRobot);
+    sections.forEach(function(el) {
+      if (el) el.classList.toggle('rg-hide', !hasRobot);
+    });
+  }
+
   function render(root, calc){
     const out = (name) => q(`[data-rg-out="${name}"]`, root);
+
+    // Toggle placeholder vs results
+    var hasRobot = typeof selectedRobots !== 'undefined' && selectedRobots.length > 0;
+    toggleResultSections(root, hasRobot);
+    if (!hasRobot) return { canExport: false };
 
     // Effizienzfaktor-Slider Display
     var effDisplay = out('effizienzfaktorDisplay');
