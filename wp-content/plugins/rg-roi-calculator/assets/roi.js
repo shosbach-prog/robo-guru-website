@@ -542,11 +542,12 @@ function generatePdf(calc){
       theme: 'striped',
       head: [['Parameter', 'Wert']],
       body: paramTableBody,
-      styles: { 
+      margin: { top: 22, bottom: 22 },
+      styles: {
         fontSize: 9,
-        cellPadding: 4,
+        cellPadding: 3,
       },
-      headStyles: { 
+      headStyles: {
         fillColor: RG_BRAND.dark,
         textColor: [255, 255, 255],
         fontStyle: 'bold',
@@ -563,7 +564,7 @@ function generatePdf(calc){
     // Assumptions section - page break if not enough space for boxes + footer
     const assumptionsNeeded = 90; // Annahmen box (48) + gap + QR box (36)
     let afterY = doc.lastAutoTable.finalY + 12;
-    if (afterY + assumptionsNeeded > 275) {
+    if (afterY + assumptionsNeeded > 270) {
       doc.addPage();
       afterY = 22;
     }
@@ -591,11 +592,15 @@ function generatePdf(calc){
       yy += 5.5; 
     });
 
-    // QR-Code section
+    // QR-Code section - page break if QR box would overflow into footer
     try {
       const qrSize = 25;
       const qrX = 196 - qrSize;
-      const qrY = afterY + 50;
+      let qrY = afterY + 50;
+      if (qrY + 32 > 270) {
+        doc.addPage();
+        qrY = 22;
+      }
 
       doc.setFillColor(248, 250, 252);
       doc.setDrawColor(230, 235, 240);
