@@ -368,6 +368,17 @@ final class RG_ROI_Calculator {
             </div>
             <?php endif; ?>
 
+            <!-- Firmenname -->
+            <div class="rg-meta-row" style="margin-bottom:12px;">
+                <div class="rg-meta-card">
+                    <div class="rg-meta-field" style="flex:1 1 100%;">
+                        <label>Die Berechnung ist für Firma:
+                            <input type="text" class="rg-in" data-rg="companyName" placeholder="z.B. Musterfirma GmbH">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <!-- Comparison table moved to section below inputs -->
 
                 <!-- Section 1: Szenario -->
@@ -645,23 +656,18 @@ final class RG_ROI_Calculator {
                     </div>
                 </div>
 
-                <!-- Metadata -->
+                <?php if (!is_user_logged_in()) : ?>
+                <!-- Metadata (nur für nicht-eingeloggte User) -->
                 <div class="rg-meta-row">
                     <div class="rg-meta-card">
-                        <div class="rg-meta-field">
-                            <label>Die Berechnung ist für Firma:
-                                <input type="text" class="rg-in" data-rg="companyName" placeholder="z.B. Musterfirma GmbH">
-                            </label>
-                        </div>
-                        <?php if (!is_user_logged_in()) : ?>
                         <div class="rg-meta-field">
                             <label>Erstellt von <span class="rg-optional">(optional)</span>
                                 <input type="text" class="rg-in" data-rg="creatorName" placeholder="Vor- und Nachname">
                             </label>
                         </div>
-                        <?php endif; ?>
                     </div>
                 </div>
+                <?php endif; ?>
 
             </div><!-- /.rg-roi-inputs -->
 
