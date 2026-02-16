@@ -38,10 +38,10 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 /* === 2-Column Layout === */
 .rg-roi-layout{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start}
 .rg-roi-inputs{min-width:0}
-.rg-roi-summary{position:sticky;top:24px}
+.rg-roi-summary{position:sticky;top:24px;min-width:0;overflow:hidden}
 
 /* Summary card styling */
-.rg-summary-inner{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow-lg);padding:24px;display:flex;flex-direction:column;gap:16px}
+.rg-summary-inner{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow-lg);padding:24px;display:flex;flex-direction:column;gap:16px;max-width:100%;overflow:hidden}
 
 /* === Sections (Input side) === */
 .rg-section{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow);margin-bottom:16px;overflow:hidden}
@@ -130,12 +130,17 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-result__head h4{margin:0;font-size:16px;font-weight:700}
 .rg-result__tag{font-size:10px;color:#64748b;background:#f1f5f9;padding:3px 8px;border-radius:6px;font-weight:600}
 
+/* === No Robot Placeholder === */
+.rg-no-robot{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 16px;text-align:center}
+.rg-no-robot__value{font-size:48px;font-weight:800;color:#cbd5e1;line-height:1;letter-spacing:-2px}
+.rg-no-robot__text{font-size:14px;color:#94a3b8;margin-top:12px;font-weight:500}
+
 /* === KPI Hero Section (4 Cards) === */
 .rg-kpi-hero{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .rg-kpi-card{background:#fff;border:1px solid var(--rg-border);border-radius:var(--rg-radius);padding:20px 16px;text-align:center;box-shadow:0 2px 8px rgba(15,37,55,.05);transition:box-shadow .2s}
 .rg-kpi-card:first-child{grid-column:1/-1;background:linear-gradient(135deg,#f0fdff 0%,#e0f7fa 100%);border-color:rgba(22,198,229,.2)}
-.rg-kpi-card__value{display:block;font-size:28px;font-weight:800;color:var(--rg-primary);line-height:1.2;letter-spacing:-0.5px;transition:color .3s}
-.rg-kpi-card:first-child .rg-kpi-card__value{font-size:36px;letter-spacing:-1px}
+.rg-kpi-card__value{display:block;font-size:22px;font-weight:800;color:var(--rg-primary);line-height:1.2;letter-spacing:-0.5px;transition:color .3s;overflow-wrap:break-word;word-break:break-word}
+.rg-kpi-card:first-child .rg-kpi-card__value{font-size:30px;letter-spacing:-1px}
 .rg-kpi-card__label{display:block;font-size:11px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
 .rg-kpi-card__sub{display:block;font-size:13px;color:var(--rg-dark);font-weight:600;margin-top:2px}
 .rg-kpi-card[data-positive="true"] .rg-kpi-card__value{color:var(--rg-success)}
@@ -187,11 +192,13 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-hint{font-size:12px;color:#94a3b8;width:100%;margin-top:4px}
 
 /* === Comparison v2 Table (Mensch vs Roboter, 1/3/5 Jahre) === */
+.rg-comparison-v2{max-width:100%;overflow:hidden}
 .rg-comparison-v2__title{margin:0 0 10px;font-size:14px;font-weight:700;color:var(--rg-dark)}
-.rg-comparison-v2__table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
-.rg-comparison-v2__table th{padding:10px 12px;text-align:right;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.3px;color:#64748b;border-bottom:2px solid var(--rg-dark)}
+.rg-comparison-v2__table{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed}
+.rg-comparison-v2__table col:first-child{width:50px}
+.rg-comparison-v2__table th{padding:6px 3px;text-align:right;font-weight:600;font-size:9px;text-transform:uppercase;letter-spacing:.1px;color:#64748b;border-bottom:2px solid var(--rg-dark);white-space:nowrap}
 .rg-comparison-v2__table th:first-child{text-align:left}
-.rg-comparison-v2__table td{padding:12px;text-align:right;border-bottom:1px solid rgba(15,37,55,.06);font-variant-numeric:tabular-nums}
+.rg-comparison-v2__table td{padding:8px 3px;text-align:right;border-bottom:1px solid rgba(15,37,55,.06);font-variant-numeric:tabular-nums;white-space:nowrap}
 .rg-comparison-v2__table td:first-child{text-align:left;font-weight:700;color:var(--rg-dark)}
 .rg-comparison-v2__table .rg-diff-pos{color:var(--rg-success);font-weight:700;background:rgba(47,191,113,.06)}
 .rg-comparison-v2__table .rg-diff-neg{color:var(--rg-danger);font-weight:700;background:rgba(239,68,68,.06)}
@@ -223,7 +230,7 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-details summary::-webkit-details-marker{display:none}
 .rg-details summary::before{content:'+ '}
 .rg-details[open] summary::before{content:'− '}
-.rg-details__grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
+.rg-details__grid{display:grid;grid-template-columns:1fr;gap:6px}
 .rg-kpi{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(15,37,55,.04);font-size:12px}
 .rg-k{color:#64748b}
 .rg-v{font-weight:700;color:var(--rg-dark)}
@@ -480,9 +487,9 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-projection__title{margin:0 0 8px;font-size:14px;font-weight:700;color:var(--rg-dark)}
 .rg-projection-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .rg-projection-table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
-.rg-projection-table th{background:var(--rg-dark);color:#fff;padding:8px 10px;text-align:right;font-weight:600;font-size:11px}
-.rg-projection-table th:first-child{text-align:left;min-width:130px}
-.rg-projection-table td{padding:6px 10px;border-bottom:1px solid rgba(15,37,55,.06);text-align:right;font-variant-numeric:tabular-nums}
+.rg-projection-table th{background:var(--rg-dark);color:#fff;padding:8px;text-align:right;font-weight:600;font-size:10px}
+.rg-projection-table th:first-child{text-align:left;min-width:100px}
+.rg-projection-table td{padding:6px 8px;border-bottom:1px solid rgba(15,37,55,.06);text-align:right;font-variant-numeric:tabular-nums}
 .rg-projection-table td:first-child{text-align:left;font-weight:600;color:var(--rg-dark)}
 .rg-projection-table tr:nth-child(even) td{background:#f8fafc}
 .rg-projection-table .rg-row-total td{font-weight:700;border-top:2px solid var(--rg-dark)}
