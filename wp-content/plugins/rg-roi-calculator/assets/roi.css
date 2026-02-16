@@ -136,10 +136,12 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-no-robot__text{font-size:14px;color:#94a3b8;margin-top:12px;font-weight:500}
 
 /* === KPI Hero Section (4 Cards) === */
-.rg-kpi-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.rg-kpi-card{background:#fff;border:1px solid var(--rg-border);border-radius:var(--rg-radius);padding:24px 16px;text-align:center;box-shadow:0 2px 12px rgba(15,37,55,.06);transition:box-shadow .2s}
-.rg-kpi-card:first-child{background:linear-gradient(135deg,#f0fdff 0%,#e0f7fa 100%);border-color:rgba(22,198,229,.2)}
-.rg-kpi-card__value{display:block;font-size:32px;font-weight:800;color:var(--rg-primary);line-height:1.2;letter-spacing:-0.5px;transition:color .3s;overflow-wrap:break-word;word-break:break-word}
+/* Desktop sidebar (420px): 2×2 grid, first card spans full width */
+.rg-kpi-hero{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rg-kpi-card{background:#fff;border:1px solid var(--rg-border);border-radius:var(--rg-radius);padding:20px 16px;text-align:center;box-shadow:0 2px 12px rgba(15,37,55,.06);transition:box-shadow .2s}
+.rg-kpi-card:first-child{grid-column:1/-1;background:linear-gradient(135deg,#f0fdff 0%,#e0f7fa 100%);border-color:rgba(22,198,229,.2)}
+.rg-kpi-card__value{display:block;font-size:24px;font-weight:800;color:var(--rg-primary);line-height:1.2;letter-spacing:-0.5px;transition:color .3s;overflow-wrap:break-word;word-break:break-word}
+.rg-kpi-card:first-child .rg-kpi-card__value{font-size:32px;letter-spacing:-1px}
 .rg-kpi-card__label{display:block;font-size:11px;color:#64748b;margin-top:6px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
 .rg-kpi-card__sub{display:block;font-size:13px;color:var(--rg-dark);font-weight:600;margin-top:4px}
 .rg-kpi-card[data-positive="true"] .rg-kpi-card__value{color:var(--rg-success)}
@@ -334,10 +336,12 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
   .rg-robot-card{padding:8px 6px;min-height:80px}
   .rg-robot-card img{width:48px;height:48px}
 
-  /* KPI Hero responsive tablet: 2x2 grid */
-  .rg-kpi-hero{grid-template-columns:1fr 1fr;gap:10px}
-  .rg-kpi-card{padding:18px 14px}
+  /* KPI Hero: full-width → 4 columns, no spanning */
+  .rg-kpi-hero{grid-template-columns:repeat(4,1fr);gap:10px}
+  .rg-kpi-card:first-child{grid-column:auto}
+  .rg-kpi-card{padding:20px 14px}
   .rg-kpi-card__value{font-size:26px}
+  .rg-kpi-card:first-child .rg-kpi-card__value{font-size:28px}
 
   /* CTA Buttons wrap nicely */
   .rg-actions{gap:6px}
@@ -364,7 +368,9 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 
   /* KPI Hero: single column on mobile */
   .rg-kpi-hero{grid-template-columns:1fr}
-  .rg-kpi-card__value{font-size:28px}
+  .rg-kpi-card:first-child{grid-column:auto}
+  .rg-kpi-card__value{font-size:26px}
+  .rg-kpi-card:first-child .rg-kpi-card__value{font-size:28px}
   .rg-kpi-card{padding:16px 14px}
 
   /* Comparison v2 mobile */
