@@ -842,11 +842,15 @@ function generatePdf(calc){
     }
 
     if (!canExport){
-      if (out('roi')) out('roi').textContent = '–';
-      if (out('payback')) out('payback').textContent = '–';
-      if (out('monthly')) out('monthly').textContent = '–';
-      if (out('beText')) out('beText').textContent = '–';
-      if (hintEl) hintEl.textContent = 'Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.';
+      if (out('roi')) out('roi').textContent = '\u2013';
+      if (out('payback')) out('payback').textContent = '\u2013';
+      if (out('monthly')) out('monthly').textContent = '\u2013';
+      if (out('beText')) out('beText').textContent = calc.net <= 0
+        ? 'Kein Break-even m\u00f6glich \u2013 die laufenden Kosten \u00fcbersteigen die Einsparung.'
+        : '\u2013';
+      if (hintEl) hintEl.textContent = calc.net <= 0
+        ? 'Tipp: Erh\u00f6hen Sie die Einsatzstunden oder pr\u00fcfen Sie die Betriebskosten.'
+        : 'Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.';
       return { canExport: false };
     }
 
@@ -1028,7 +1032,8 @@ function generatePdf(calc){
     tbody.innerHTML = rows.map(function(row) {
       if (row.isSavings) {
         var cls = row.human > 0 ? ' class="rg-savings"' : '';
-        return '<tr><td>' + row.label + '</td><td colspan="2"' + cls + ' style="text-align:center;font-size:15px;">' + fmtEUR(row.human) + '</td></tr>';
+        var negNote = row.human < 0 ? '<div style="font-size:11px;color:#64748b;font-weight:400;margin-top:4px;">Roboterkosten \u00fcbersteigen die Personalersparnis \u2013 pr\u00fcfen Sie die Eingaben.</div>' : '';
+        return '<tr><td>' + row.label + '</td><td colspan="2"' + cls + ' style="text-align:center;font-size:15px;">' + fmtEUR(row.human) + negNote + '</td></tr>';
       }
       var cls = row.isTotal && (row.human - row.robot) > 0 ? ' class="rg-savings"' : '';
       return '<tr><td>' + row.label + '</td><td>' + fmtEUR(row.human) + '</td><td' + cls + '>' + fmtEUR(row.robot) + '</td></tr>';
@@ -1380,10 +1385,32 @@ function generatePdf(calc){
     }
     if (logoDelete) bindLogoDelete(logoDelete);
 
+    // === Input Validation ===
+    function validateInputs(rootEl) {
+      var rules = [
+        { key: 'hourlyRate', min: 5, max: 150, warnLow: 'Sehr niedriger Stundensatz \u2013 \u00fcblich sind 18\u201335 \u20ac/h inkl. Nebenkosten.', warnHigh: 'Sehr hoher Stundensatz \u2013 bitte pr\u00fcfen.' },
+        { key: 'hoursPerDay', min: 0.5, max: 16, warnLow: 'Unter 0,5 h/Tag ist untypisch f\u00fcr Robotereinsatz.', warnHigh: 'Mehr als 16 h/Tag \u00fcbersteigt die \u00fcbliche Akkulaufzeit.' },
+        { key: 'areaSqmPerDay', min: 50, max: 50000, warnLow: 'Unter 50 m\u00b2/Tag ist sehr wenig \u2013 lohnt sich ein Roboter?', warnHigh: 'Extrem gro\u00dfe Fl\u00e4che \u2013 pr\u00fcfen Sie die Angabe.' }
+      ];
+      rules.forEach(function(rule) {
+        var inp = q('[data-rg="' + rule.key + '"]', rootEl);
+        var warn = q('[data-rg-warn="' + rule.key + '"]', rootEl);
+        if (!inp || !warn) return;
+        var val = parseFloat(inp.value || 0);
+        var msg = '';
+        if (val > 0 && val < rule.min) msg = rule.warnLow;
+        else if (val > rule.max) msg = rule.warnHigh;
+        warn.textContent = msg;
+        warn.classList.toggle('is-visible', msg !== '');
+        inp.classList.toggle('rg-in--warn', msg !== '');
+      });
+    }
+
     qa('.rg-in', root).forEach(inp => {
       const recalc = () => {
         // Keep auto-calculated fields in sync before running toCalc
         updateConsumablesFromArea(root);
+        validateInputs(root);
         lastCalc = toCalc(root);
         render(root, lastCalc);
         updateComparison(root, lastCalc);

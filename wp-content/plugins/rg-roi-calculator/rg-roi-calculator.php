@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 final class RG_ROI_Calculator {
-    const VERSION = '3.1.0';
+    const VERSION = '3.2.0';
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -271,6 +271,7 @@ final class RG_ROI_Calculator {
                     <input type="checkbox" data-rg="advisorMode">
                     <span class="rg-advisor-toggle__slider"></span>
                     <span class="rg-advisor-toggle__label">Beratermodus</span>
+                    <span class="rg-tooltip" data-tip="Aktiviert Branchenprofile und Schnell-Szenarien im Ergebnis-Panel, um verschiedene Szenarien schnell durchzuspielen." tabindex="0" role="img" aria-label="Hilfe">?</span>
                 </label>
             </div>
 
@@ -281,7 +282,7 @@ final class RG_ROI_Calculator {
             <?php if (is_user_logged_in()) : ?>
             <!-- Logo Upload für PDF-Berichte -->
             <div class="rg-logo-upload-box">
-                <h5>Ihr Firmenlogo für PDF-Berichte</h5>
+                <h5>&#128247; Ihr Firmenlogo für PDF-Berichte</h5>
                 <div class="rg-logo-preview" id="rg_logo_preview">
                     <?php
                     $logo_id = get_user_meta(get_current_user_id(), 'rg_customer_logo_id', true);
@@ -300,7 +301,12 @@ final class RG_ROI_Calculator {
                     <button type="button" class="rg-btn rg-btn--small rg-btn--danger" id="rg_logo_delete">Entfernen</button>
                     <?php endif; ?>
                 </div>
-                <p class="rg-logo-hint">PNG, JPG oder WebP, max. 2 MB. Das Logo erscheint oben rechts in Ihrem PDF.</p>
+                <p class="rg-logo-hint">PNG, JPG oder WebP, max. 2 MB. Das Logo erscheint oben rechts in Ihrem PDF-Bericht.</p>
+            </div>
+            <?php else : ?>
+            <!-- Hinweis für nicht-eingeloggte Benutzer -->
+            <div class="rg-note" style="margin-bottom:12px;padding:8px 12px;background:#f0fdff;border:1px solid rgba(22,198,229,.15);border-radius:8px;">
+                &#128274; <a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>">Einloggen</a>, um Ihr Firmenlogo im PDF-Bericht anzuzeigen und Berechnungen im Profil zu speichern.
             </div>
             <?php endif; ?>
 
@@ -345,12 +351,15 @@ final class RG_ROI_Calculator {
                     <div class="rg-section__body">
                         <label>Zu reinigende Fläche pro Tag (m²) <span class="rg-tooltip" data-tip="Wie viele Quadratmeter sollen täglich gereinigt werden? Bei Roboterauswahl wird daraus die benötigte Zeit abgeleitet." tabindex="0" role="img" aria-label="Hilfe">?</span>
                             <input type="number" class="rg-in" data-rg="areaSqmPerDay" value="1500" min="0" step="50" aria-describedby="sqmHint">
+                            <span class="rg-field-warn" data-rg-warn="areaSqmPerDay"></span>
                         </label>
                         <label>Eingesparte Stunden pro Tag / Roboter <span class="rg-tooltip" data-tip="Wie viele Arbeitsstunden pro Tag kann ein Roboter einsparen? Wird bei Roboterauswahl automatisch aus Fläche und m²/h berechnet." tabindex="0" role="img" aria-label="Hilfe">?</span>
                             <input type="number" class="rg-in" data-rg="hoursPerDay" value="2.5" min="0" step="0.1">
+                            <span class="rg-field-warn" data-rg-warn="hoursPerDay"></span>
                         </label>
-                        <label>Lohnkosten pro Stunde inkl. Nebenkosten (€) <span class="rg-tooltip" data-tip="Vollkosten einer Reinigungskraft pro Stunde, inklusive Lohnnebenkosten (Sozialabgaben, Versicherung etc.)." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                        <label>Lohnkosten pro Stunde inkl. Nebenkosten (€) <span class="rg-tooltip" data-tip="Vollkosten einer Reinigungskraft pro Stunde, inklusive Lohnnebenkosten (Sozialabgaben, Versicherung etc.). Üblich: 18–35 €/h." tabindex="0" role="img" aria-label="Hilfe">?</span>
                             <input type="number" class="rg-in" data-rg="hourlyRate" value="22" min="0" step="0.5">
+                            <span class="rg-field-warn" data-rg-warn="hourlyRate"></span>
                         </label>
                         <label>Arbeitstage pro Jahr <span class="rg-tooltip" data-tip="Anzahl der Tage im Jahr, an denen gereinigt wird. Typisch: 260 (Mo-Fr) oder 365 (7 Tage/Woche)." tabindex="0" role="img" aria-label="Hilfe">?</span>
                             <input type="number" class="rg-in" data-rg="daysPerYear" value="260" min="0" step="1">
@@ -377,12 +386,13 @@ final class RG_ROI_Calculator {
                                 </select>
                             </label>
                             <div class="rg-mode rg-mode--purchase" data-rg-mode="purchase">
-                                <label>Kaufpreis pro Roboter (€)
+                                <label>Kaufpreis pro Roboter (€) <span class="rg-tooltip" data-tip="Einmalige Anschaffungskosten für den Roboter. Docking-Station, Zubehör und Setup kommen als Einmalkosten hinzu." tabindex="0" role="img" aria-label="Hilfe">?</span>
                                     <input type="number" class="rg-in" data-rg="price" value="25000" min="0" step="100">
                                 </label>
+                                <div class="rg-note">Gesamtinvestition = Kaufpreis + Einmalkosten (Docking, Zubehör, Setup) weiter unten.</div>
                             </div>
                             <div class="rg-mode rg-mode--lease rg-hide" data-rg-mode="lease">
-                                <label>Leasingrate pro Roboter / Monat (€)
+                                <label>Leasingrate pro Roboter / Monat (€) <span class="rg-tooltip" data-tip="Monatliche Leasingrate nur für den Roboter. Docking-Station, Zubehör und Setup sind nicht im Leasing enthalten und fallen separat als Einmalkosten an." tabindex="0" role="img" aria-label="Hilfe">?</span>
                                     <input type="number" class="rg-in" data-rg="leaseRateMonthly" value="725" min="0" step="10">
                                 </label>
                                 <label>Laufzeit (Monate) <span class="rg-tooltip" data-tip="Leasinglaufzeit. Kürzere Laufzeiten haben höhere Monatsraten, aber niedrigere Gesamtkosten." tabindex="0" role="img" aria-label="Hilfe">?</span>
@@ -393,7 +403,7 @@ final class RG_ROI_Calculator {
                                         <option value="60">60 Monate</option>
                                     </select>
                                 </label>
-                                <div class="rg-note">Einmalkosten (Docking, Zubehör, Setup) fallen auch beim Leasing zusätzlich an.</div>
+                                <div class="rg-note" style="color:var(--rg-warning);font-weight:600">&#9888; Einmalkosten (Docking, Zubehör, Setup) sind nicht im Leasing enthalten und fallen zusätzlich an.</div>
                             </div>
 
                             <!-- Auto/Manual fields -->
@@ -434,7 +444,7 @@ final class RG_ROI_Calculator {
 
                         <!-- Reinigungsleistung -->
                         <fieldset class="rg-fieldset">
-                            <legend>Reinigungsleistung</legend>
+                            <legend>Reinigungsleistung <span class="rg-tooltip" data-tip="Auto/Manuell-Schalter: &laquo;Auto&raquo; = Wert wird automatisch aus der Roboterdatenbank geladen. &laquo;Manuell&raquo; = Sie k&ouml;nnen den Wert selbst eingeben." tabindex="0" role="img" aria-label="Hilfe">?</span></legend>
                             <div class="rg-am-field" data-rg-am="m2h">
                                 <div class="rg-am-field__head">
                                     <label>Reinigungsleistung Roboter (m²/h)</label>
@@ -450,7 +460,7 @@ final class RG_ROI_Calculator {
 
                         <!-- Betriebskosten -->
                         <fieldset class="rg-fieldset">
-                            <legend>Betriebskosten</legend>
+                            <legend>Betriebskosten <span class="rg-tooltip" data-tip="Auto/Manuell-Schalter: &laquo;Auto&raquo; = Wert wird automatisch berechnet. &laquo;Manuell&raquo; = eigener Wert. Blaue Farbe = Auto-Modus aktiv." tabindex="0" role="img" aria-label="Hilfe">?</span></legend>
                             <label>Servicepaket <span class="rg-tooltip" data-tip="Monatliche Servicekosten. Basic/Standard/Premium werden aus der Roboterdatenbank geladen. 'Eigener Wert' erlaubt manuelle Eingabe." tabindex="0" role="img" aria-label="Hilfe">?</span>
                                 <select class="rg-in rg-select" data-rg="servicePreset" aria-label="Servicepaket wählen">
                                     <option value="0">Kein Paket / bereits enthalten</option>
@@ -582,7 +592,7 @@ final class RG_ROI_Calculator {
                     <!-- Beratermodus: Presets + Szenarien (hidden by default, shown at top when active) -->
                     <div class="rg-advisor-panel rg-hide" data-rg-advisor-panel>
                         <div class="rg-quickprofiles">
-                            <label>Branchenprofil
+                            <label>Branchenprofil <span class="rg-tooltip" data-tip="Wählen Sie ein Branchenprofil, um Fläche, Stundenlohn, Arbeitstage und Stunden/Tag automatisch mit branchentypischen Werten vorzubelegen." tabindex="0" role="img" aria-label="Hilfe">?</span>
                                 <select class="rg-in rg-select" data-rg="presetProfile">
                                     <option value="">— Profil wählen —</option>
                                     <option value="industry">Industrie 1.500 m²</option>
@@ -594,12 +604,12 @@ final class RG_ROI_Calculator {
                             </label>
                         </div>
                         <div class="rg-scenario-buttons">
-                            <span class="rg-scenario-label">Schnell-Szenarien:</span>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus200">+200 m²</button>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus1h">+1,0 h/Tag</button>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="twoRobots">2 Roboter</button>
-                            <button type="button" class="rg-scenario-btn" data-rg-scenario="leaseMode">Leasing 36M</button>
-                            <button type="button" class="rg-scenario-btn rg-scenario-btn--reset" data-rg-scenario="reset">&#8634; Zurücksetzen</button>
+                            <span class="rg-scenario-label">Schnell-Szenarien: <span class="rg-tooltip" data-tip="Klicken Sie auf ein Szenario, um einzelne Werte schnell anzupassen und deren Auswirkung auf das Ergebnis zu sehen." tabindex="0" role="img" aria-label="Hilfe">?</span></span>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus200" title="Erhöht die tägliche Reinigungsfläche um 200 m²">+200 m²</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="plus1h" title="Erhöht die eingesparten Stunden pro Tag um 1 Stunde">+1,0 h/Tag</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="twoRobots" title="Setzt die Anzahl auf 2 Roboter">2 Roboter</button>
+                            <button type="button" class="rg-scenario-btn" data-rg-scenario="leaseMode" title="Wechselt das Finanzierungsmodell auf Leasing (36 Monate)">Leasing 36M</button>
+                            <button type="button" class="rg-scenario-btn rg-scenario-btn--reset" data-rg-scenario="reset" title="Setzt Fläche, Stunden, Roboteranzahl und Finanzierungsmodell auf die ursprünglichen Werte zurück">&#8634; Zurücksetzen</button>
                         </div>
                     </div>
 
@@ -637,6 +647,7 @@ final class RG_ROI_Calculator {
 
                     <div class="rg-warn" data-rg-out="warn" style="display:none;">
                         Hinweis: Mit den aktuellen Angaben entsteht keine positive Netto-Ersparnis.
+                        <div class="rg-warn__detail" data-rg-out="warnDetail">Mögliche Ursachen: Die Betriebskosten (Service, Strom, Leasing) übersteigen die eingesparten Personalkosten. Prüfen Sie Stundenlohn, Einsatzstunden oder Roboterkosten.</div>
                     </div>
 
                     <!-- CTA Buttons -->

@@ -1,4 +1,4 @@
-/* === Robo-Guru ROI Calculator v3.0.0 === */
+/* === Robo-Guru ROI Calculator v3.2.0 === */
 :root{
   --rg-primary:#16C6E5;
   --rg-primary-dark:#0EA5C2;
@@ -38,11 +38,7 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 /* === 2-Column Layout === */
 .rg-roi-layout{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start}
 .rg-roi-inputs{min-width:0}
-.rg-roi-summary{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(15,37,55,.12) transparent}
-.rg-roi-summary::-webkit-scrollbar{width:4px}
-.rg-roi-summary::-webkit-scrollbar-track{background:transparent}
-.rg-roi-summary::-webkit-scrollbar-thumb{background:rgba(15,37,55,.12);border-radius:4px}
-.rg-roi-summary::-webkit-scrollbar-thumb:hover{background:rgba(15,37,55,.25)}
+.rg-roi-summary{position:sticky;top:24px}
 
 /* Summary card styling */
 .rg-summary-inner{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow-lg);padding:24px;display:flex;flex-direction:column;gap:16px}
@@ -163,6 +159,12 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 
 /* Warning */
 .rg-warn{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);color:var(--rg-danger);padding:10px 14px;border-radius:var(--rg-radius-sm);font-size:13px;font-weight:600}
+.rg-warn__detail{font-weight:400;margin-top:6px;font-size:12px;color:#64748b}
+
+/* Input validation warning */
+.rg-field-warn{font-size:11px;color:var(--rg-warning);font-weight:600;margin-top:2px;display:none}
+.rg-field-warn.is-visible{display:block}
+.rg-roi .rg-in.rg-in--warn{border-color:var(--rg-warning);box-shadow:0 0 0 2px rgba(245,158,11,.15)}
 
 /* CTA Buttons */
 .rg-actions{display:flex;flex-wrap:wrap;gap:8px}
