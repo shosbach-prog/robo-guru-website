@@ -34,7 +34,9 @@ final class RG_ROI_Calculator {
 
         add_action('wp_ajax_rg_save_roi_to_profile', [__CLASS__, 'ajax_save_to_profile']);
 
-        // Logo upload for customers
+        // Logo upload for customers (allow SVG MIME type)
+        add_filter('upload_mimes', [__CLASS__, 'allow_svg_upload']);
+        add_filter('wp_check_filetype_and_ext', [__CLASS__, 'fix_svg_filetype'], 10, 5);
         add_action('wp_ajax_rg_upload_logo', [__CLASS__, 'ajax_upload_logo']);
         add_action('wp_ajax_rg_delete_logo', [__CLASS__, 'ajax_delete_logo']);
 
@@ -347,14 +349,14 @@ final class RG_ROI_Calculator {
                     ?>
                 </div>
                 <div class="rg-logo-actions">
-                    <input type="file" id="rg_logo_upload" accept="image/png,image/jpeg,image/webp" style="display:none;">
+                    <input type="file" id="rg_logo_upload" accept="image/png,image/jpeg,image/webp,image/svg+xml" style="display:none;">
                     <button type="button" class="rg-btn rg-btn--small" id="rg_logo_select">Logo auswählen</button>
                     <button type="button" class="rg-btn rg-btn--small rg-btn--primary" id="rg_logo_save" style="display:none;">Speichern</button>
                     <?php if ($logo_id) : ?>
                     <button type="button" class="rg-btn rg-btn--small rg-btn--danger" id="rg_logo_delete">Entfernen</button>
                     <?php endif; ?>
                 </div>
-                <p class="rg-logo-hint">PNG, JPG oder WebP, max. 2 MB. Das Logo erscheint oben rechts in Ihrem PDF-Bericht.</p>
+                <p class="rg-logo-hint">PNG, JPG, WebP oder SVG, max. 2 MB. Das Logo erscheint oben rechts in Ihrem PDF-Bericht.</p>
             </div>
             <?php else : ?>
             <!-- Hinweis für nicht-eingeloggte Benutzer -->
@@ -365,6 +367,17 @@ final class RG_ROI_Calculator {
                 </div>
             </div>
             <?php endif; ?>
+
+            <!-- Firmenname -->
+            <div class="rg-meta-row" style="margin-bottom:12px;">
+                <div class="rg-meta-card">
+                    <div class="rg-meta-field" style="flex:1 1 100%;">
+                        <label>Die Berechnung ist für Firma:
+                            <input type="text" class="rg-in" data-rg="companyName" placeholder="z.B. Musterfirma GmbH">
+                        </label>
+                    </div>
+                </div>
+            </div>
 
             <!-- Comparison table moved to section below inputs -->
 
@@ -642,23 +655,18 @@ final class RG_ROI_Calculator {
                     </div>
                 </div>
 
-                <!-- Metadata -->
+                <?php if (!is_user_logged_in()) : ?>
+                <!-- Metadata (nur für nicht-eingeloggte User) -->
                 <div class="rg-meta-row">
                     <div class="rg-meta-card">
-                        <div class="rg-meta-field">
-                            <label>Die Berechnung ist für Firma:
-                                <input type="text" class="rg-in" data-rg="companyName" placeholder="z.B. Musterfirma GmbH">
-                            </label>
-                        </div>
-                        <?php if (!is_user_logged_in()) : ?>
                         <div class="rg-meta-field">
                             <label>Erstellt von <span class="rg-optional">(optional)</span>
                                 <input type="text" class="rg-in" data-rg="creatorName" placeholder="Vor- und Nachname">
                             </label>
                         </div>
-                        <?php endif; ?>
                     </div>
                 </div>
+                <?php endif; ?>
 
             </div><!-- /.rg-roi-inputs -->
 
@@ -1072,6 +1080,31 @@ final class RG_ROI_Calculator {
     }
 
     /**
+     * Allow SVG uploads in WordPress for logo upload
+     */
+    public static function allow_svg_upload($mimes) {
+        $mimes['svg']  = 'image/svg+xml';
+        $mimes['svgz'] = 'image/svg+xml';
+        return $mimes;
+    }
+
+    /**
+     * Fix SVG file type detection (WordPress blocks SVG by default)
+     */
+    public static function fix_svg_filetype($data, $file, $filename, $mimes, $real_mime = '') {
+        if (!empty($data['ext']) && !empty($data['type'])) {
+            return $data;
+        }
+        $filetype = wp_check_filetype($filename, $mimes);
+        if ($filetype['ext'] === 'svg') {
+            $data['ext']             = 'svg';
+            $data['type']            = 'image/svg+xml';
+            $data['proper_filename'] = $filename;
+        }
+        return $data;
+    }
+
+    /**
      * AJAX: Upload customer logo
      */
     public static function ajax_upload_logo() {
@@ -1091,10 +1124,10 @@ final class RG_ROI_Calculator {
         }
 
         // Validate file type
-        $allowed_types = ['image/png', 'image/jpeg', 'image/webp'];
+        $allowed_types = ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml'];
         $file_type = wp_check_filetype($_FILES['logo']['name']);
         if (!in_array($_FILES['logo']['type'], $allowed_types)) {
-            wp_send_json_error(['message' => 'Nur PNG, JPG oder WebP erlaubt.'], 400);
+            wp_send_json_error(['message' => 'Nur PNG, JPG, WebP oder SVG erlaubt.'], 400);
         }
 
         // Validate file size (max 2MB)

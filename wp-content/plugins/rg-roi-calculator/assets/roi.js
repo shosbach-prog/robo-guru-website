@@ -261,12 +261,15 @@ function addHeaderFooter(doc){
       img.crossOrigin = 'anonymous';
       img.onload = function() {
         try {
+          // SVGs without explicit width/height report 0 — use fallback
+          var w = img.naturalWidth  || 300;
+          var h = img.naturalHeight || 300;
           var canvas = document.createElement('canvas');
-          canvas.width = img.naturalWidth;
-          canvas.height = img.naturalHeight;
+          canvas.width = w;
+          canvas.height = h;
           var ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          resolve({ dataUrl: canvas.toDataURL('image/png'), w: img.naturalWidth, h: img.naturalHeight });
+          ctx.drawImage(img, 0, 0, w, h);
+          resolve({ dataUrl: canvas.toDataURL('image/png'), w: w, h: h });
         } catch(e) { resolve(null); }
       };
       img.onerror = function() { resolve(null); };
