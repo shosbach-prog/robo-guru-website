@@ -435,3 +435,8 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
   align-items: flex-start;
   padding: 14px 16px;
 }
+
+/* Login hint for non-authenticated users */
+.rg-login-hint{display:flex;align-items:center;gap:12px;padding:14px 18px;margin-bottom:16px;background:linear-gradient(135deg,#f0fdff 0%,#e0f2fe 100%);border:1px solid var(--rg-primary);border-radius:var(--rg-radius-sm);font-size:14px;color:var(--rg-dark);line-height:1.5}
+.rg-login-hint svg{color:var(--rg-primary)}
+.rg-login-hint a{color:var(--rg-primary);font-weight:700;text-decoration:underline}
