@@ -2,15 +2,19 @@
 /**
  * Plugin Name: Robo-Guru ROI Kalkulator
  * Description: Einfacher ROI-Kalkulator für Reinigungsrobotik inkl. PDF-Download, Druckansicht und Versand per E-Mail (PDF-Anhang). Shortcode: [rg_roi_calculator]
- * Version: 3.0.0
+ * Version: 4.0.0
  * Author: Robo-Guru
  * Text Domain: rg-roi
  */
 
 if (!defined('ABSPATH')) { exit; }
 
+if (!defined('RG_ROI_CALCULATOR_VERSION')) {
+    define('RG_ROI_CALCULATOR_VERSION', '4.0.0');
+}
+
 final class RG_ROI_Calculator {
-    const VERSION = '4.0.0';
+    const VERSION = RG_ROI_CALCULATOR_VERSION;
     const NONCE_ACTION = 'rg_roi_nonce';
     const OPTION_GROUP = 'rg_roi_options';
     const OPTION_CC_EMAIL = 'rg_roi_cc_email';
@@ -44,6 +48,18 @@ final class RG_ROI_Calculator {
 
         // REST API for robots
         add_action('rest_api_init', [__CLASS__, 'register_rest_routes']);
+
+        // Invalidate robot data transient cache when robot posts change
+        add_action('save_post_robo_robot', [__CLASS__, 'invalidate_robot_cache']);
+        add_action('deleted_post', [__CLASS__, 'invalidate_robot_cache']);
+        add_action('trashed_post', [__CLASS__, 'invalidate_robot_cache']);
+    }
+
+    /**
+     * Invalidate server-side robot data cache
+     */
+    public static function invalidate_robot_cache() {
+        delete_transient('rg_roi_robotdb_v1');
     }
 
     /**
@@ -58,9 +74,26 @@ final class RG_ROI_Calculator {
     }
 
     /**
-     * REST API: Get all robots from CPT robo_robot with ROI data
+     * REST API: Get all robots from CPT robo_robot with ROI data.
+     * Uses a 10-minute transient cache to reduce DB load.
      */
     public static function rest_get_robots() {
+        $cached = get_transient('rg_roi_robotdb_v1');
+        if ($cached !== false) {
+            return rest_ensure_response($cached);
+        }
+
+        $robots = self::query_all_robots();
+
+        set_transient('rg_roi_robotdb_v1', $robots, 10 * MINUTE_IN_SECONDS);
+
+        return rest_ensure_response($robots);
+    }
+
+    /**
+     * Query all robot data from DB (no caching).
+     */
+    private static function query_all_robots() {
         $robots = [];
 
         $query = new WP_Query([
@@ -152,7 +185,7 @@ final class RG_ROI_Calculator {
         }
         wp_reset_postdata();
 
-        return rest_ensure_response($robots);
+        return $robots;
     }
 
     /**
@@ -257,16 +290,18 @@ final class RG_ROI_Calculator {
         }
 
         wp_localize_script('rg-roi', 'rgRoi', [
-            'ajaxUrl'    => admin_url('admin-ajax.php'),
-            'restUrl'    => rest_url('rg-roi/v1/'),
-            'nonce'      => wp_create_nonce(self::NONCE_ACTION),
-            'restNonce'  => wp_create_nonce('wp_rest'),
-            'ccEmail'    => get_option(self::OPTION_CC_EMAIL, ''),
-            'siteName'   => get_bloginfo('name'),
-            'isLoggedIn' => is_user_logged_in() ? '1' : '0',
-            'hasBbDocs'  => function_exists('bp_document_add') ? '1' : '0',
-            'userName'   => $user_name,
-            'userLogoUrl' => $user_logo_url,
+            'ajaxUrl'       => admin_url('admin-ajax.php'),
+            'restUrl'       => rest_url('rg-roi/v1/'),
+            'nonce'         => wp_create_nonce(self::NONCE_ACTION),
+            'restNonce'     => wp_create_nonce('wp_rest'),
+            'ccEmail'       => get_option(self::OPTION_CC_EMAIL, ''),
+            'siteName'      => get_bloginfo('name'),
+            'isLoggedIn'    => is_user_logged_in() ? '1' : '0',
+            'hasBbDocs'     => function_exists('bp_document_add') ? '1' : '0',
+            'userName'      => $user_name,
+            'userLogoUrl'   => $user_logo_url,
+            'pluginVersion' => self::VERSION,
+            'debug'         => defined('WP_DEBUG') && WP_DEBUG,
         ]);
     }
 

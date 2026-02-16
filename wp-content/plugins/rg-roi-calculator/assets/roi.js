@@ -1064,45 +1064,232 @@ function generatePdf(calc){
   }
 
 
+  // === Robot Data Cache ===
+  var ROBOT_CACHE_KEY = 'rg_roi_robotdb_cache_v1';
+  var ROBOT_CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+  var ROBOT_FETCH_TIMEOUT = 8000; // 8 seconds
+
+  function robotCacheDebug(msg) {
+    if (typeof rgRoi !== 'undefined' && rgRoi.debug) {
+      console.debug('[RG-ROI Cache] ' + msg);
+    }
+  }
+
+  function getStorage() {
+    try { localStorage.setItem('__rg_test', '1'); localStorage.removeItem('__rg_test'); return localStorage; }
+    catch(e) {
+      try { sessionStorage.setItem('__rg_test', '1'); sessionStorage.removeItem('__rg_test'); return sessionStorage; }
+      catch(e2) { return null; }
+    }
+  }
+
+  function readRobotCache() {
+    var store = getStorage();
+    if (!store) return null;
+    try {
+      var raw = store.getItem(ROBOT_CACHE_KEY);
+      if (!raw) return null;
+      var cache = JSON.parse(raw);
+      if (!cache || !Array.isArray(cache.data)) return null;
+      // Version mismatch → discard
+      var currentVersion = (typeof rgRoi !== 'undefined' && rgRoi.pluginVersion) || '';
+      if (currentVersion && cache.pluginVersion !== currentVersion) {
+        robotCacheDebug('Version mismatch (cache=' + cache.pluginVersion + ', current=' + currentVersion + ') → bust');
+        store.removeItem(ROBOT_CACHE_KEY);
+        return null;
+      }
+      cache._isFresh = (Date.now() - cache.timestamp) < ROBOT_CACHE_TTL;
+      robotCacheDebug(cache._isFresh ? 'Cache HIT (fresh)' : 'Cache HIT (stale)');
+      return cache;
+    } catch(e) {
+      return null;
+    }
+  }
+
+  function writeRobotCache(data) {
+    var store = getStorage();
+    if (!store) return;
+    try {
+      store.setItem(ROBOT_CACHE_KEY, JSON.stringify({
+        timestamp: Date.now(),
+        pluginVersion: (typeof rgRoi !== 'undefined' && rgRoi.pluginVersion) || '',
+        data: data
+      }));
+      robotCacheDebug('Cache written (' + data.length + ' robots)');
+    } catch(e) { /* quota exceeded or similar – ignore */ }
+  }
+
+  function clearRobotCache() {
+    var store = getStorage();
+    if (store) store.removeItem(ROBOT_CACHE_KEY);
+    robotCacheDebug('Cache cleared');
+  }
+
+  function fetchWithTimeout(url, opts, timeout) {
+    return new Promise(function(resolve, reject) {
+      var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      var timer = setTimeout(function() {
+        if (controller) controller.abort();
+        reject(new Error('Timeout nach ' + Math.round(timeout/1000) + 's'));
+      }, timeout);
+      var fetchOpts = Object.assign({}, opts);
+      if (controller) fetchOpts.signal = controller.signal;
+      fetch(url, fetchOpts).then(function(r) {
+        clearTimeout(timer);
+        resolve(r);
+      }).catch(function(err) {
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
+  }
+
+  function fetchRobotsFromAPI() {
+    var url = rgRoi.restUrl + 'robots';
+    robotCacheDebug('Fetching from API: ' + url);
+    return fetchWithTimeout(url, {}, ROBOT_FETCH_TIMEOUT)
+      .then(function(r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function(data) {
+        if (!Array.isArray(data)) throw new Error('Invalid response format');
+        robotCacheDebug('API returned ' + data.length + ' robots');
+        writeRobotCache(data);
+        return data;
+      });
+  }
+
+
   // === Robot Selection System ===
   let robotsData = [];
   let selectedRobots = [];
   let multiSelectMode = false;
 
+  function renderStaleHint(container) {
+    if (!container) return;
+    var existing = container.parentNode && container.parentNode.querySelector('.rg-robot-stale-hint');
+    if (existing) return;
+    var hint = document.createElement('div');
+    hint.className = 'rg-robot-stale-hint';
+    hint.style.cssText = 'text-align:center;font-size:12px;color:#6b7280;padding:4px 0;';
+    hint.textContent = 'Datenstand evtl. nicht aktuell.';
+    container.parentNode.insertBefore(hint, container.nextSibling);
+  }
+
+  function renderRefreshLink(container) {
+    if (!container) return;
+    var existing = container.parentNode && container.parentNode.querySelector('.rg-robot-refresh');
+    if (existing) return;
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'rg-robot-refresh';
+    link.style.cssText = 'display:block;text-align:center;font-size:12px;color:#16c6e5;padding:4px 0;cursor:pointer;';
+    link.textContent = 'Roboterdaten aktualisieren';
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      clearRobotCache();
+      // Remove hints and old refresh link
+      var parent = container.parentNode;
+      if (parent) {
+        parent.querySelectorAll('.rg-robot-stale-hint, .rg-robot-refresh').forEach(function(el) { el.remove(); });
+      }
+      container.innerHTML = '<div class="rg-robot-loading">Roboter werden geladen...</div>';
+      loadRobots(container);
+    });
+    container.parentNode.insertBefore(link, container.nextSibling);
+  }
+
   function loadRobots(container) {
     if (!container || typeof rgRoi === 'undefined' || !rgRoi.restUrl) {
-      container.innerHTML = '<div class="rg-robot-loading">Keine Roboter verfügbar</div>';
+      if (container) container.innerHTML = '<div class="rg-robot-loading">Keine Roboter verfügbar</div>';
       return Promise.resolve([]);
     }
-    return fetch(rgRoi.restUrl + 'robots')
-      .then(function(r) { return r.json(); })
-      .then(function(robots) {
-        robotsData = robots || [];
-        renderRobotCards(container, robots);
-        return robots;
-      })
-      .catch(function(err) {
-        console.error('Failed to load robots:', err);
-        container.innerHTML = '<div class="rg-robot-loading">Fehler beim Laden der Roboter</div>';
-        return [];
+
+    var cache = readRobotCache();
+
+    // If cache is fresh: render immediately, revalidate in background
+    if (cache && cache._isFresh) {
+      robotsData = cache.data;
+      renderRobotCards(container, cache.data);
+      renderRefreshLink(container);
+      // Background revalidation (fire and forget)
+      fetchRobotsFromAPI().then(function(freshData) {
+        // Only re-render if data actually changed
+        if (JSON.stringify(freshData) !== JSON.stringify(cache.data)) {
+          robotCacheDebug('Background revalidation: data changed → re-render');
+          robotsData = freshData;
+          renderRobotCards(container, freshData);
+          renderRefreshLink(container);
+        }
+      }).catch(function() { /* background revalidation failed – cache is still valid */ });
+      return Promise.resolve(cache.data);
+    }
+
+    // If cache is stale: render from cache immediately, then try to update
+    if (cache && !cache._isFresh) {
+      robotsData = cache.data;
+      renderRobotCards(container, cache.data);
+      renderRefreshLink(container);
+      return fetchRobotsFromAPI().then(function(freshData) {
+        robotsData = freshData;
+        renderRobotCards(container, freshData);
+        renderRefreshLink(container);
+        // Remove any stale hints
+        var hints = container.parentNode.querySelectorAll('.rg-robot-stale-hint');
+        hints.forEach(function(h) { h.remove(); });
+        return freshData;
+      }).catch(function(err) {
+        robotCacheDebug('Fetch failed, using stale cache: ' + err.message);
+        renderStaleHint(container);
+        return cache.data;
       });
+    }
+
+    // No cache: fetch live (show loading state)
+    robotCacheDebug('Cache MISS → fetching live');
+    return fetchRobotsFromAPI().then(function(robots) {
+      robotsData = robots;
+      renderRobotCards(container, robots);
+      renderRefreshLink(container);
+      return robots;
+    }).catch(function(err) {
+      console.error('Failed to load robots:', err);
+      container.innerHTML =
+        '<div class="rg-robot-loading">' +
+          '<div>Fehler beim Laden der Roboter</div>' +
+          '<div style="font-size:12px;color:#6b7280;margin-top:4px;">' + (err.message || '') + '</div>' +
+          '<button class="rg-robot-retry-btn" style="margin-top:8px;padding:6px 16px;border:1px solid #16c6e5;' +
+            'background:#fff;color:#16c6e5;border-radius:4px;cursor:pointer;font-size:13px;">Erneut versuchen</button>' +
+        '</div>';
+      var retryBtn = container.querySelector('.rg-robot-retry-btn');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', function() {
+          clearRobotCache();
+          container.innerHTML = '<div class="rg-robot-loading">Roboter werden geladen...</div>';
+          loadRobots(container);
+        });
+      }
+      return [];
+    });
   }
 
   function renderRobotCards(container, robots) {
-    if (!robots || robots.length === 0) {
+    if (!Array.isArray(robots) || robots.length === 0) {
       container.innerHTML = '<div class="rg-robot-loading">Keine Roboter vorhanden.</div>';
       return;
     }
     container.innerHTML = robots.map(function(robot) {
-      var isSelected = selectedRobots.some(function(r) { return r.id === robot.id; });
+      if (!robot) return '';
+      var isSelected = selectedRobots.some(function(r) { return r && r.id === robot.id; });
       var thumbHtml = robot.thumbnail
-        ? '<img class="rg-robot-card__img" src="' + robot.thumbnail + '" alt="' + robot.name + '">'
+        ? '<img class="rg-robot-card__img" src="' + robot.thumbnail + '" alt="' + (robot.name || '') + '">'
         : '<div class="rg-robot-card__placeholder">🤖</div>';
       var priceText = robot.list_price > 0 ? fmtEUR(robot.list_price) : '–';
       var specsText = robot.m2h > 0 ? fmtNum(robot.m2h) + ' m²/h' : '';
       return '<div class="rg-robot-card' + (isSelected ? ' is-selected' : '') + '" data-robot-id="' + robot.id + '">' +
         thumbHtml +
-        '<div class="rg-robot-card__name">' + robot.name + '</div>' +
+        '<div class="rg-robot-card__name">' + (robot.name || '') + '</div>' +
         '<div class="rg-robot-card__manufacturer">' + (robot.manufacturer || '') + '</div>' +
         '<div class="rg-robot-card__price">' + priceText + '</div>' +
         (specsText ? '<div class="rg-robot-card__specs">' + specsText + '</div>' : '') +
@@ -1351,26 +1538,26 @@ function generatePdf(calc){
       // Close on outside click when expanded (optional)
     }
 
-    // Robot selection setup (single select only - no multi-compare)
+    // Robot selection setup (event delegation for cache/re-render resilience)
     var robotGrid = q('[data-rg-robots]', root);
     if (robotGrid) {
-      loadRobots(robotGrid).then(function() {
-        qa('.rg-robot-card', robotGrid).forEach(function(card) {
-          card.addEventListener('click', function() {
-            var robotId = parseInt(card.getAttribute('data-robot-id'), 10);
-            var robot = robotsData.find(function(r) { return r.id === robotId; });
-            qa('.rg-robot-card', robotGrid).forEach(function(c) { c.classList.remove('is-selected'); });
-            card.classList.add('is-selected');
-            selectedRobots = [robot];
-            applyRobotValues(root, robot);
-            updateHoursFromArea(root);
-            lastCalc = toCalc(root);
-            render(root, lastCalc);
-            updateComparison(root, lastCalc);
-            renderBreakEvenChart(root, lastCalc);
-          });
-        });
+      robotGrid.addEventListener('click', function(e) {
+        var card = e.target.closest('.rg-robot-card');
+        if (!card) return;
+        var robotId = parseInt(card.getAttribute('data-robot-id'), 10);
+        var robot = robotsData.find(function(r) { return r && r.id === robotId; });
+        if (!robot) return;
+        qa('.rg-robot-card', robotGrid).forEach(function(c) { c.classList.remove('is-selected'); });
+        card.classList.add('is-selected');
+        selectedRobots = [robot];
+        applyRobotValues(root, robot);
+        updateHoursFromArea(root);
+        lastCalc = toCalc(root);
+        render(root, lastCalc);
+        updateComparison(root, lastCalc);
+        renderBreakEvenChart(root, lastCalc);
       });
+      loadRobots(robotGrid);
     }
 
     var areaChangeHandler = function() {
