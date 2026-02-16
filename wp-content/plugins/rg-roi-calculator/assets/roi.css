@@ -265,7 +265,7 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 /* === Mobile: Summary below inputs (no bottom-sheet) === */
 .rg-summary-handle{display:none}
 
-@media(max-width:900px){
+@media(max-width:1100px){
   .rg-roi-layout{grid-template-columns:1fr;gap:24px}
 
   /* Summary flows naturally below inputs */
