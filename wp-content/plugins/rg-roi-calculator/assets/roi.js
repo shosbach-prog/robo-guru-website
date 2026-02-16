@@ -420,14 +420,18 @@ function generatePdf(calc){
     doc.setTextColor(...ratingColor);
     doc.text(calc.rating ? calc.rating.label : '-', 14 + 2*(metricW + metricGap) + metricW/2, metricsY + 16, { align: 'center' });
 
-    // Summary table
-    const tableY = metricsY + metricH + 10;
+    // Page 2 - Summary table + Break-even chart
+    doc.addPage();
+
     doc.setTextColor(...RG_BRAND.dark);
-    doc.setFontSize(11);
-    doc.text('Detaillierte Zusammenfassung', 14, tableY);
+    doc.setFontSize(14);
+    doc.text('Detaillierte Zusammenfassung', 14, 26);
+    doc.setFontSize(9);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('Kennzahlen im Ueberblick', 14, 32);
 
     doc.autoTable({
-      startY: tableY + 4,
+      startY: 38,
       theme: 'striped',
       head: [['Kennzahl', 'Wert']],
       body: [
@@ -438,11 +442,11 @@ function generatePdf(calc){
         ['Amortisation (Monate)', fmtNum(calc.paybackMonths) + ' Monate'],
         ['Break-even', beText],
       ],
-      styles: { 
+      styles: {
         fontSize: 9,
         cellPadding: 4,
       },
-      headStyles: { 
+      headStyles: {
         fillColor: RG_BRAND.dark,
         textColor: [255, 255, 255],
         fontStyle: 'bold',
@@ -456,8 +460,8 @@ function generatePdf(calc){
       },
     });
 
-    // Chart section
-    const chartY = doc.lastAutoTable.finalY + 8;
+    // Chart section (plenty of room on page 2)
+    const chartY = doc.lastAutoTable.finalY + 12;
     doc.setFontSize(11);
     doc.setTextColor(...RG_BRAND.dark);
     doc.text('Break-even Analyse', 14, chartY);
@@ -465,9 +469,9 @@ function generatePdf(calc){
     doc.setTextColor(...RG_BRAND.grey);
     doc.text('Entwicklung der kumulierten Netto-Ersparnis', 14, chartY + 5);
 
-    drawRoiChart(doc, 14, chartY + 8, 182, 55, monthlyNet, calc.invest, 36);
+    drawRoiChart(doc, 14, chartY + 8, 182, 80, monthlyNet, calc.invest, 36);
 
-    // Page 2 - Parameters
+    // Page 3 - Parameters
     doc.addPage();
 
     doc.setTextColor(...RG_BRAND.dark);
