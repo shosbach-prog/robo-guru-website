@@ -477,7 +477,7 @@ final class RG_ROI_Calculator {
                                     </div>
                                 </div>
                                 <input type="number" class="rg-in" data-rg="dockingStation" value="0" min="0" step="100" disabled aria-label="Docking-/Ladestation Kosten">
-                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+
                             </div>
                             <div class="rg-am-field" data-rg-am="accessoriesCost">
                                 <div class="rg-am-field__head">
@@ -488,7 +488,7 @@ final class RG_ROI_Calculator {
                                     </div>
                                 </div>
                                 <input type="number" class="rg-in" data-rg="accessoriesCost" value="0" min="0" step="100" disabled aria-label="Zubehör Kosten">
-                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+
                             </div>
                             <div class="rg-am-field" data-rg-am="implementationCost">
                                 <div class="rg-am-field__head">
@@ -499,7 +499,7 @@ final class RG_ROI_Calculator {
                                     </div>
                                 </div>
                                 <input type="number" class="rg-in" data-rg="implementationCost" value="0" min="0" step="100" disabled aria-label="Implementierung Kosten">
-                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+
                             </div>
                         </fieldset>
 
@@ -515,7 +515,7 @@ final class RG_ROI_Calculator {
                                     </div>
                                 </div>
                                 <input type="number" class="rg-in" data-rg="m2h" value="1200" min="0" step="50" disabled>
-                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+
                             </div>
                             <label>Effizienzfaktor (%) <span class="rg-tooltip" data-tip="Effektive Reinigungsquote (70% = konservativer Standard, berücksichtigt Fahrzeiten/Hindernisse)." tabindex="0" role="img" aria-label="Hilfe">?</span>
                                 <div class="rg-slider-wrap">
@@ -532,7 +532,7 @@ final class RG_ROI_Calculator {
                                     </div>
                                 </div>
                                 <input type="number" class="rg-in" data-rg="roboterLebensdauer" value="3000" min="500" step="100" disabled aria-label="Lebensdauer Betriebsstunden">
-                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+
                             </div>
                         </fieldset>
 
@@ -548,7 +548,7 @@ final class RG_ROI_Calculator {
                                     </div>
                                 </div>
                                 <input type="number" class="rg-in" data-rg="wartungsfaktor" value="0.5" min="0" step="0.1" disabled aria-label="Wartungsstunden pro Woche">
-                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+
                             </div>
                             <label>Servicepaket <span class="rg-tooltip" data-tip="Monatliche Servicekosten. Basic/Standard/Premium werden aus der Roboterdatenbank geladen. 'Eigener Wert' erlaubt manuelle Eingabe." tabindex="0" role="img" aria-label="Hilfe">?</span>
                                 <select class="rg-in rg-select" data-rg="servicePreset" aria-label="Servicepaket wählen">
@@ -579,7 +579,7 @@ final class RG_ROI_Calculator {
                                     </div>
                                 </div>
                                 <input type="number" class="rg-in" data-rg="powerPerYear" value="350" min="0" step="10" disabled>
-                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+
                             </div>
                             <div class="rg-am-field" data-rg-am="consumablesPerYear">
                                 <div class="rg-am-field__head">
@@ -590,7 +590,7 @@ final class RG_ROI_Calculator {
                                     </div>
                                 </div>
                                 <input type="number" class="rg-in" data-rg="consumablesPerYear" value="100" min="0" step="10" disabled>
-                                <span class="rg-am-field__source">Quelle: Roboterdatenbank</span>
+
                             </div>
                             <div class="rg-am-field" data-rg-am="hubLizenzMonat">
                                 <div class="rg-am-field__head">
@@ -601,7 +601,6 @@ final class RG_ROI_Calculator {
                                     </div>
                                 </div>
                                 <input type="number" class="rg-in" data-rg="hubLizenzMonat" value="17" min="0" step="1" disabled aria-label="HUB-Lizenz pro Monat">
-                                <span class="rg-am-field__source">Quelle: Roboterdatenbank (ab Jahr 4)</span>
                             </div>
                         </fieldset>
                         <div class="rg-note" data-rg-out="investHint">–</div>
