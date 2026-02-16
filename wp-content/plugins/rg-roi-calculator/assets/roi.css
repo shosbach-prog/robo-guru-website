@@ -1,4 +1,4 @@
-/* === Robo-Guru ROI Calculator v3.2.0 === */
+/* === Robo-Guru ROI Calculator v4.0.0 === */
 :root{
   --rg-primary:#16C6E5;
   --rg-primary-dark:#0EA5C2;
@@ -440,3 +440,38 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-login-hint{display:flex;align-items:center;gap:12px;padding:14px 18px;margin-bottom:16px;background:linear-gradient(135deg,#f0fdff 0%,#e0f2fe 100%);border:1px solid var(--rg-primary);border-radius:var(--rg-radius-sm);font-size:14px;color:var(--rg-dark);line-height:1.5}
 .rg-login-hint svg{color:var(--rg-primary)}
 .rg-login-hint a{color:var(--rg-primary);font-weight:700;text-decoration:underline}
+
+/* === Computed (readonly) Input === */
+.rg-roi .rg-in--computed{background:#f0fdff;border-color:var(--rg-primary);color:var(--rg-dark);cursor:default;font-weight:600}
+
+/* === Slider (Effizienzfaktor) === */
+.rg-slider-wrap{display:flex;align-items:center;gap:12px}
+.rg-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;background:#e2e8f0;outline:none;padding:0;border:none}
+.rg-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--rg-primary);cursor:pointer;box-shadow:0 2px 6px rgba(22,198,229,.3)}
+.rg-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--rg-primary);cursor:pointer;border:none;box-shadow:0 2px 6px rgba(22,198,229,.3)}
+.rg-slider-value{font-size:15px;font-weight:700;color:var(--rg-primary);min-width:48px;text-align:right}
+
+/* === 5-Jahres Projektionstabelle === */
+.rg-projection{margin-top:4px}
+.rg-projection__title{margin:0 0 8px;font-size:14px;font-weight:700;color:var(--rg-dark)}
+.rg-projection-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.rg-projection-table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
+.rg-projection-table th{background:var(--rg-dark);color:#fff;padding:8px 10px;text-align:right;font-weight:600;font-size:11px}
+.rg-projection-table th:first-child{text-align:left;min-width:130px}
+.rg-projection-table td{padding:6px 10px;border-bottom:1px solid rgba(15,37,55,.06);text-align:right;font-variant-numeric:tabular-nums}
+.rg-projection-table td:first-child{text-align:left;font-weight:600;color:var(--rg-dark)}
+.rg-projection-table tr:nth-child(even) td{background:#f8fafc}
+.rg-projection-table .rg-row-total td{font-weight:700;border-top:2px solid var(--rg-dark)}
+.rg-projection-table .rg-row-savings td{font-weight:700}
+.rg-projection-table .rg-val-pos{color:var(--rg-success)}
+.rg-projection-table .rg-val-neg{color:var(--rg-danger)}
+.rg-projection-table .rg-row-cumulative td{font-weight:700;background:rgba(22,198,229,.06)}
+
+/* === Lebensdauer-Indikator === */
+.rg-lifetime{margin-top:8px;padding:10px 0}
+.rg-lifetime__label{font-size:12px;font-weight:600;color:var(--rg-dark);margin-bottom:6px}
+.rg-lifetime__bar{height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden;position:relative}
+.rg-lifetime__fill{height:100%;border-radius:5px;transition:width .4s ease,background .3s ease}
+.rg-lifetime__fill[data-level="green"]{background:var(--rg-success)}
+.rg-lifetime__fill[data-level="orange"]{background:var(--rg-warning)}
+.rg-lifetime__fill[data-level="red"]{background:var(--rg-danger)}

@@ -283,9 +283,8 @@ function generatePdf(calc){
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
-    const monthlyNet = calc.net / 12;
-    const beMonth = Math.max(1, Math.ceil(calc.invest / monthlyNet));
-    const beText = 'ab Monat ' + beMonth + ' ist die Investition rechnerisch wieder drin.';
+    const monthlyNet = calc.monthlyNet || calc.net / 12;
+    const beText = calc.beText || '–';
 
     // Page 1 - Results
     var textStartX = 14;
@@ -420,54 +419,75 @@ function generatePdf(calc){
     doc.setTextColor(...ratingColor);
     doc.text(calc.rating ? calc.rating.label : '-', 14 + 2*(metricW + metricGap) + metricW/2, metricsY + 16, { align: 'center' });
 
-    // Summary table
-    const tableY = metricsY + metricH + 10;
+    // Page 2 - 5-Jahres-Projektion
+    doc.addPage();
+
     doc.setTextColor(...RG_BRAND.dark);
-    doc.setFontSize(11);
-    doc.text('Detaillierte Zusammenfassung', 14, tableY);
+    doc.setFontSize(14);
+    doc.text('5-Jahres-Projektion', 14, 26);
+    doc.setFontSize(9);
+    doc.setTextColor(...RG_BRAND.grey);
+    doc.text('Detaillierte Kostenanalyse und Ersparnisberechnung', 14, 32);
+
+    // Build projection table
+    var projHead = [['Position', 'Jahr 1', 'Jahr 2', 'Jahr 3', 'Jahr 4', 'Jahr 5']];
+    var projBody = [];
+    if (calc.projection && calc.projection.length === 5) {
+      var projRows = [
+        { label: 'Manuelle Kosten', key: 'manuelleKosten' },
+        { label: 'Wartung/Restmanual', key: 'wartungRestmanual' },
+        { label: 'Verbrauchsmaterial', key: 'verbrauchsmaterial' },
+        { label: 'Strom', key: 'strom' },
+        { label: 'Service', key: 'service' },
+        { label: 'HUB-Lizenz', key: 'hubLizenz' },
+        { label: (calc.mode === 'lease' ? 'Leasing' : 'Investition'), key: (calc.mode === 'lease' ? 'leaseYearCost' : 'investYear') },
+        { label: 'Gesamt Roboter', key: 'robotGesamt', bold: true },
+        { label: 'Ersparnis/Jahr', key: 'ersparnisJahr', bold: true },
+        { label: 'Kumuliert', key: 'cumulSavings', bold: true },
+        { label: 'Betriebsstd. (kum.)', key: 'cumulHours', isHours: true }
+      ];
+      projRows.forEach(function(row) {
+        var cells = [row.label];
+        calc.projection.forEach(function(p) {
+          if (row.isHours) {
+            cells.push(new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(p[row.key]) + ' h');
+          } else {
+            cells.push(fmtEUR(p[row.key]));
+          }
+        });
+        projBody.push(cells);
+      });
+    }
 
     doc.autoTable({
-      startY: tableY + 4,
+      startY: 38,
       theme: 'striped',
-      head: [['Kennzahl', 'Wert']],
-      body: [
-        ['Investition gesamt', fmtEUR(calc.invest)],
-        ['Geschaetzte Netto-Ersparnis/Jahr', fmtEUR(calc.net)],
-        ['Geschaetzte Netto-Ersparnis/Monat', fmtEUR(monthlyNet)],
-        ['ROI (vereinfachte Jahresbetrachtung)', fmtNum(calc.roi) + ' %'],
-        ['Amortisation (Monate)', fmtNum(calc.paybackMonths) + ' Monate'],
-        ['Break-even', beText],
-      ],
-      styles: { 
-        fontSize: 9,
-        cellPadding: 4,
-      },
-      headStyles: { 
-        fillColor: RG_BRAND.dark,
-        textColor: [255, 255, 255],
-        fontStyle: 'bold',
-      },
-      alternateRowStyles: {
-        fillColor: [248, 250, 252],
-      },
-      columnStyles: {
-        0: { cellWidth: 80 },
-        1: { cellWidth: 'auto', halign: 'right', fontStyle: 'bold' },
-      },
+      head: projHead,
+      body: projBody,
+      styles: { fontSize: 8, cellPadding: 3 },
+      headStyles: { fillColor: RG_BRAND.dark, textColor: [255,255,255], fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [248,250,252] },
+      columnStyles: { 0: { cellWidth: 38 } },
+      didParseCell: function(data) {
+        // Bold total rows
+        if (data.section === 'body' && data.row.index >= 7 && data.row.index <= 9) {
+          data.cell.styles.fontStyle = 'bold';
+        }
+      }
     });
 
-    // Chart section
-    const chartY = doc.lastAutoTable.finalY + 8;
+    // Break-even Chart (60 Monate)
+    var chartY = doc.lastAutoTable.finalY + 10;
     doc.setFontSize(11);
     doc.setTextColor(...RG_BRAND.dark);
-    doc.text('Break-even Analyse', 14, chartY);
+    doc.text('Break-even Analyse (60 Monate)', 14, chartY);
     doc.setFontSize(8);
     doc.setTextColor(...RG_BRAND.grey);
-    doc.text('Entwicklung der kumulierten Netto-Ersparnis', 14, chartY + 5);
+    doc.text('Kumulierte Netto-Ersparnis ueber 5 Jahre', 14, chartY + 5);
 
-    drawRoiChart(doc, 14, chartY + 8, 182, 55, monthlyNet, calc.invest, 36);
+    drawRoiChart(doc, 14, chartY + 8, 182, 65, monthlyNet, calc.investUpfront || calc.invest, 60);
 
-    // Page 2 - Parameters
+    // Page 3 - Parameters
     doc.addPage();
 
     doc.setTextColor(...RG_BRAND.dark);
@@ -502,12 +522,19 @@ function generatePdf(calc){
       );
     }
     paramTableBody.push(
-      ['Eingesparte Stunden/Tag (pro Roboter)', String(calc.hoursPerDay) + ' Std.'],
+      ['Flaeche pro Tag', (calc.areaSqmPerDay > 0 ? (new Intl.NumberFormat('de-DE').format(calc.areaSqmPerDay) + ' m2') : 'nicht angegeben')],
+      ['Manuelle Produktivitaet', calc.manuelleProduktivitaet + ' m2/h'],
+      ['Reinigungszyklen/Woche', String(calc.reinigungszyklenWoche)],
       ['Lohnkosten pro Stunde', fmtEUR(calc.hourlyRate)],
-      ['Arbeitstage pro Jahr', String(calc.daysPerYear) + ' Tage'],
+      ['Berechnete Std./Tag pro Roboter', fmtNum(calc.hoursPerDay) + ' Std.'],
+      ['Effizienzfaktor', Math.round(calc.effizienzfaktor * 100) + ' %'],
+      ['Roboter m2/h', String(calc.m2h)],
+      ['Lebensdauer', new Intl.NumberFormat('de-DE').format(calc.roboterLebensdauer) + ' h'],
+      ['Wartung/Restmanual', calc.wartungsfaktor + ' Std./Woche'],
       ['Servicekosten pro Roboter/Monat', fmtEUR(calc.serviceMonthly)],
       ['Stromkosten pro Roboter/Jahr', fmtEUR(calc.powerPerYear)],
-      ['Flaeche pro Tag', (calc.areaSqmPerDay > 0 ? (new Intl.NumberFormat('de-DE').format(calc.areaSqmPerDay) + ' m2') : 'nicht angegeben')]
+      ['Verbrauchsmaterial pro Roboter/Jahr', fmtEUR(calc.consumablesPerYear)],
+      ['HUB-Lizenz pro Roboter/Monat', fmtEUR(calc.hubLizenzMonat) + ' (ab Jahr ' + (calc.hubStartYear || 4) + ')']
     );
 
     doc.autoTable({
@@ -538,7 +565,7 @@ function generatePdf(calc){
     doc.setFillColor(248, 250, 252);
     doc.setDrawColor(230, 235, 240);
     doc.setLineWidth(0.3);
-    doc.roundedRect(14, afterY, 182, 38, 2, 2, 'FD');
+    doc.roundedRect(14, afterY, 182, 48, 2, 2, 'FD');
 
     doc.setFontSize(10);
     doc.setTextColor(...RG_BRAND.dark);
@@ -547,9 +574,10 @@ function generatePdf(calc){
     doc.setFontSize(8);
     doc.setTextColor(...RG_BRAND.grey);
     const assumptions = [
-      'Konstanter Betrieb ueber das Jahr (Arbeitstage laut Eingabe)',
-      'Personalkosten basieren auf dem eingegebenen Stundensatz',
-      'Service- und Stromkosten basieren auf Ihren Angaben',
+      '5-Jahres-Projektion mit ' + (calc.reinigungszyklenWoche || 5) + ' Reinigungszyklen/Woche',
+      'Personalkosten basieren auf ' + fmtEUR(calc.hourlyRate) + '/h' + (calc.wageGrowthActive ? ' (+3% p.a. Lohnsteigerung)' : ''),
+      'Effizienzfaktor: ' + Math.round((calc.effizienzfaktor || 0.7) * 100) + '% (beruecksichtigt Fahrzeiten/Hindernisse)',
+      'HUB-Lizenz ab Jahr ' + (calc.hubStartYear || 4) + ' (' + fmtEUR(calc.hubLizenzMonat || 0) + '/Monat pro Roboter)',
       'Keine Foerderungen, Steuern oder Restwerte beruecksichtigt',
     ];
     let yy = afterY + 14;
@@ -610,7 +638,7 @@ function generatePdf(calc){
       return String(el.value || '');
     };
 
-    const mode = (getStr('mode') || 'purchase').toLowerCase(); // purchase | lease
+    const mode = (getStr('mode') || 'purchase').toLowerCase();
 
     const price = getNum('price');
     const leaseRateMonthly = getNum('leaseRateMonthly');
@@ -618,11 +646,28 @@ function generatePdf(calc){
 
     const qty = Math.max(1, getNum('qty'));
 
-    const hoursPerDay = getNum('hoursPerDay');
     const hourlyRate = getNum('hourlyRate');
-    const daysPerYear = getNum('daysPerYear');
-
     const areaSqmPerDay = getNum('areaSqmPerDay');
+
+    // New v4 fields
+    const manuelleProduktivitaet = getNum('manuelleProduktivitaet') || 300;
+    const reinigungszyklenWoche = getNum('reinigungszyklenWoche') || 5;
+    const effizienzfaktor = (getNum('effizienzfaktor') || 70) / 100;
+    const roboterLebensdauer = getNum('roboterLebensdauer') || 3000;
+    const wartungsfaktor = getNum('wartungsfaktor');
+    const hubLizenzMonat = getNum('hubLizenzMonat');
+
+    // Backward compat: calculate daysPerYear from cycles
+    const daysPerYear = reinigungszyklenWoche * 52;
+    var daysEl = q('[data-rg="daysPerYear"]', root);
+    if (daysEl) daysEl.value = daysPerYear;
+
+    // Compute hoursPerDay (readonly display)
+    const hoursPerDay = (areaSqmPerDay > 0 && manuelleProduktivitaet > 0 && qty > 0)
+      ? (areaSqmPerDay / manuelleProduktivitaet * reinigungszyklenWoche) / 5 / qty
+      : 0;
+    var hpdEl = q('[data-rg="hoursPerDay"]', root);
+    if (hpdEl) hpdEl.value = Math.round(hoursPerDay * 10) / 10;
 
     const servicePreset = getStr('servicePreset');
     const serviceMonthly = getNum('serviceMonthly');
@@ -631,100 +676,170 @@ function generatePdf(calc){
     const dockingStation = getNum('dockingStation');
     const accessoriesCost = getNum('accessoriesCost');
     const implementationCost = getNum('implementationCost');
-    const setupMode = getStr('setupMode') || 'once'; // 'once' | 'per_robot'
+    const setupMode = getStr('setupMode') || 'once';
 
-    // Toggle-Optionen für Einwandbehandlung
+    // Toggle-Optionen
     const toggleAbsence = q('[data-rg="toggleAbsence"]', root);
     const toggleWageGrowth = q('[data-rg="toggleWageGrowth"]', root);
     const absenceActive = toggleAbsence && toggleAbsence.checked;
     const wageGrowthActive = toggleWageGrowth && toggleWageGrowth.checked;
 
-    // Effektiver Stundensatz (mit Krankheit/Urlaub +15%)
     const effectiveHourlyRate = absenceActive ? (hourlyRate * 1.15) : hourlyRate;
 
     // Metadaten
     const companyName = getStr('companyName').trim();
-    // Wenn eingeloggt, verwende den Benutzernamen aus dem Profil
     let creatorName = getStr('creatorName').trim();
     if (typeof rgRoi !== 'undefined' && rgRoi.isLoggedIn === '1' && rgRoi.userName) {
       creatorName = rgRoi.userName;
     }
 
-    // Kostenblöcke (robot_count-aware)
+    // === NEUE BERECHNUNGSLOGIK (5-Jahres Excel-Methodik) ===
+
+    // 1. MANUELLE REINIGUNGSKOSTEN (Baseline)
+    const wochenStundenManuell = areaSqmPerDay / manuelleProduktivitaet * reinigungszyklenWoche;
+    const manuelleKostenJahr = wochenStundenManuell * effectiveHourlyRate * 52;
+
+    // 2. ROBOTER-BETRIEBSSTUNDEN pro Jahr (pro Roboter)
+    const m2h = getNum('m2h') || 1200;
+    const betriebsStundenProRoboterJahr = (areaSqmPerDay > 0 && m2h > 0 && qty > 0)
+      ? (effizienzfaktor * areaSqmPerDay / m2h * reinigungszyklenWoche * 52) / qty
+      : 0;
+
+    // 3. Einmalkosten
     const dockTotal = dockingStation * qty;
     const accessoriesTotal = accessoriesCost * qty;
     const setupTotal = (setupMode === 'per_robot') ? (implementationCost * qty) : implementationCost;
     const oneTimeCosts = dockTotal + accessoriesTotal + setupTotal;
     const investUpfront = (mode === 'purchase') ? (price * qty + oneTimeCosts) : oneTimeCosts;
-    const contractVolume = (mode === 'purchase')
-      ? investUpfront
-      : (leaseRateMonthly * leaseTermMonths * qty);
 
-    const laborSavingsYear = hoursPerDay * effectiveHourlyRate * daysPerYear * qty;
+    // 4. HUB-Lizenz Start-Jahr (default 4)
+    const hubStartYear = (typeof selectedRobots !== 'undefined' && selectedRobots.length > 0 && selectedRobots[0].hub_license_start_year)
+      ? selectedRobots[0].hub_license_start_year : 4;
 
-    // FTE-Äquivalent (2080 = 40h × 52 Wochen)
-    const savedHoursYear = hoursPerDay * daysPerYear * qty;
-    const fteEquivalent = savedHoursYear / 2080;
+    // 5. 5-JAHRES-PROJEKTION
+    const projection = [];
+    let cumulSavings = 0;
+    let cumulHours = 0;
 
-    // Lohnsteigerung 3% p.a. über 3 Jahre
-    const wageYear1 = effectiveHourlyRate;
-    const wageYear2 = wageGrowthActive ? effectiveHourlyRate * 1.03 : effectiveHourlyRate;
-    const wageYear3 = wageGrowthActive ? effectiveHourlyRate * 1.06 : effectiveHourlyRate;
-    const savingsYear1 = hoursPerDay * wageYear1 * daysPerYear * qty;
-    const savingsYear2 = hoursPerDay * wageYear2 * daysPerYear * qty;
-    const savingsYear3 = hoursPerDay * wageYear3 * daysPerYear * qty;
+    for (let year = 1; year <= 5; year++) {
+      // Lohnsteigerung
+      const wageFactor = wageGrowthActive ? Math.pow(1.03, year - 1) : 1;
+      const yearHourlyRate = effectiveHourlyRate * wageFactor;
+      const yearManuelleKosten = wochenStundenManuell * yearHourlyRate * 52;
 
+      // Roboterkosten
+      const wartungRestmanual = wartungsfaktor * qty * yearHourlyRate * 52;
+      const verbrauchsmaterial = consumablesPerYear * qty;
+      const strom = powerPerYear * qty;
+      const service = serviceMonthly * qty * 12;
+      const hubLizenz = (year >= hubStartYear) ? hubLizenzMonat * qty * 12 : 0;
+
+      let investYear = 0;
+      let leaseYearCost = 0;
+      if (mode === 'purchase') {
+        investYear = (year === 1) ? investUpfront : 0;
+      } else {
+        // Leasing nur innerhalb der Laufzeit
+        const leaseYears = leaseTermMonths / 12;
+        leaseYearCost = (year <= leaseYears) ? leaseRateMonthly * qty * 12 : 0;
+        // Einmalkosten (nicht im Leasing) nur Jahr 1
+        if (year === 1) investYear = oneTimeCosts;
+      }
+
+      const robotGesamt = wartungRestmanual + verbrauchsmaterial + strom + service + hubLizenz + investYear + leaseYearCost;
+      const ersparnisJahr = yearManuelleKosten - robotGesamt;
+      cumulSavings += ersparnisJahr;
+      cumulHours += betriebsStundenProRoboterJahr;
+
+      projection.push({
+        year,
+        manuelleKosten: yearManuelleKosten,
+        wartungRestmanual,
+        verbrauchsmaterial,
+        strom,
+        service,
+        hubLizenz,
+        investYear,
+        leaseYearCost,
+        robotGesamt,
+        ersparnisJahr,
+        cumulSavings,
+        cumulHours
+      });
+    }
+
+    // Kumulierte Ersparnis 5 Jahre und ROI
+    const totalSavings5Y = projection[4].cumulSavings;
+    const totalInvest = (mode === 'purchase') ? investUpfront : (leaseRateMonthly * leaseTermMonths * qty + oneTimeCosts);
+    let roi = null;
+    if (totalInvest > 0) {
+      roi = (totalSavings5Y / totalInvest) * 100;
+    }
+
+    // Netto-Ersparnis Jahr 1 (für Anzeige)
+    const netYear = projection[0].ersparnisJahr;
+    // Laufende Netto-Ersparnis (ohne Investition) für monatliche Anzeige
+    const netYearRecurring = projection.length > 1 ? projection[1].ersparnisJahr : netYear;
+    const monthlyNet = netYearRecurring / 12;
+
+    // Break-even: Monat in dem kumulierte Ersparnis > 0
+    let breakEvenMonth = null;
+    let beText = '–';
+    let cumulCheck = 0;
+    for (let m = 1; m <= 60; m++) {
+      const yearIdx = Math.min(Math.floor((m - 1) / 12), 4);
+      const p = projection[yearIdx];
+      // Monatliche manuelle Ersparnis
+      const monthManual = p.manuelleKosten / 12;
+      // Monatliche Roboterkosten (ohne Investition - die kommt nur im 1. Monat)
+      const monthRobotOps = (p.robotGesamt - p.investYear - p.leaseYearCost) / 12;
+      const monthLease = p.leaseYearCost / 12;
+      let monthCost = monthRobotOps + monthLease;
+      if (m === 1) {
+        // Investition fällt im 1. Monat an
+        monthCost += (mode === 'purchase') ? investUpfront : oneTimeCosts;
+      }
+      cumulCheck += monthManual - monthCost;
+      if (cumulCheck > 0 && breakEvenMonth === null) {
+        breakEvenMonth = m;
+      }
+    }
+    if (breakEvenMonth) {
+      beText = 'ab Monat ' + breakEvenMonth + ' ist die Investition rechnerisch wieder drin.';
+    } else if (mode === 'lease' && netYearRecurring > 0) {
+      breakEvenMonth = 1;
+      beText = 'ab Monat 1 ist die monatliche Belastung rechnerisch gedeckt (positiver Cashflow).';
+    }
+
+    const paybackMonths = breakEvenMonth || null;
+
+    // Lebensdauer
+    const cumulHours5Y = projection[4].cumulHours;
+    const lifetimePercent = roboterLebensdauer > 0 ? (cumulHours5Y / roboterLebensdauer * 100) : 0;
+
+    // Legacy fields for compatibility
+    const laborSavingsYear = manuelleKostenJahr;
+    const grossSavings = laborSavingsYear;
     const serviceYear = serviceMonthly * 12 * qty;
     const powerYear = powerPerYear * qty;
     const consumablesYear = consumablesPerYear * qty;
-    const opsYear = serviceYear + powerYear + consumablesYear;
-
+    const opsYear = serviceYear + powerYear + consumablesYear + (wartungsfaktor * qty * effectiveHourlyRate * 52);
     const leaseYear = (mode === 'lease') ? (leaseRateMonthly * 12 * qty) : 0;
-
     const totalCostYear = opsYear + leaseYear;
-    const netYear = laborSavingsYear - totalCostYear;
-    const monthlyNet = netYear / 12;
+    const contractVolume = (mode === 'purchase') ? investUpfront : (leaseRateMonthly * leaseTermMonths * qty);
 
-    // ROI (vereinfachte Jahresbetrachtung)
-    let roi = null;
-    if (netYear > 0) {
-      if (mode === 'purchase' && investUpfront > 0) {
-        roi = (netYear / investUpfront) * 100;
-      } else if (mode === 'lease' && totalCostYear > 0) {
-        roi = (netYear / totalCostYear) * 100;
-      }
-    }
-
-    // Amortisation / Break-even
-    let paybackMonths = null;
-    let breakEvenMonth = null;
-    let beText = '–';
-
-    if (netYear > 0) {
-      if (mode === 'purchase' && investUpfront > 0) {
-        paybackMonths = (investUpfront / netYear) * 12;
-        breakEvenMonth = Math.max(1, Math.ceil(investUpfront / monthlyNet));
-        beText = `ab Monat ${breakEvenMonth} ist die Investition rechnerisch wieder drin.`;
-      } else if (mode === 'lease') {
-        // Bei Leasing ist das i.d.R. ein Cashflow-Thema (monatlich)
-        paybackMonths = 1;
-        breakEvenMonth = 1;
-        beText = 'ab Monat 1 ist die monatliche Belastung rechnerisch gedeckt (positiver Cashflow).';
-      }
-    }
-
-    // m² Plausibilität (optional)
     const sqmPerHour = (hoursPerDay > 0 && areaSqmPerDay > 0) ? (areaSqmPerDay / hoursPerDay) : null;
+    const savedHoursYear = hoursPerDay * daysPerYear * qty;
+    const fteEquivalent = savedHoursYear / 2080;
 
-    // Export-Logik
     const canExport =
-      (netYear > 0) &&
+      (netYearRecurring > 0) &&
       (
         (mode === 'purchase' && investUpfront > 0) ||
         (mode === 'lease' && leaseRateMonthly > 0 && leaseTermMonths > 0)
       );
 
-        const rating = computeRating({ mode, net: netYear, paybackMonths, roi });
+    const rating = computeRating({ mode, net: netYearRecurring, paybackMonths, roi });
 
     return {
       mode,
@@ -736,16 +851,25 @@ function generatePdf(calc){
       hourlyRate,
       daysPerYear,
       areaSqmPerDay,
+      manuelleProduktivitaet,
+      reinigungszyklenWoche,
+      effizienzfaktor,
+      roboterLebensdauer,
+      wartungsfaktor,
+      hubLizenzMonat,
+      hubStartYear,
+      m2h,
       servicePreset,
       serviceMonthly,
       powerPerYear,
       investUpfront,
       invest: contractVolume,
-      grossSavings: laborSavingsYear,
+      grossSavings,
       opsCosts: opsYear,
       leaseYear,
       totalCostYear,
-      net: netYear,
+      net: netYearRecurring,
+      netYear1: netYear,
       monthlyNet,
       roi,
       paybackMonths,
@@ -758,9 +882,12 @@ function generatePdf(calc){
       effectiveHourlyRate,
       absenceActive,
       wageGrowthActive,
-      savingsYear1,
-      savingsYear2,
-      savingsYear3,
+      manuelleKostenJahr,
+      projection,
+      betriebsStundenProRoboterJahr,
+      cumulHours5Y,
+      lifetimePercent,
+      totalSavings5Y,
       canExport,
       companyName,
       creatorName,
@@ -773,10 +900,75 @@ function generatePdf(calc){
       robotName: (typeof selectedRobots !== 'undefined' && selectedRobots.length > 0) ? selectedRobots[0].name : ''
     };
   }
+  // Render 5-year projection table
+  function renderProjectionTable(root, calc) {
+    var tbl = q('[data-rg-projection-table]', root);
+    if (!tbl || !calc.projection || calc.projection.length === 0) return;
+    var thead = q('thead', tbl);
+    var tbody = q('tbody', tbl);
+    if (!thead || !tbody) return;
+
+    thead.innerHTML = '<tr><th>Position</th>' + calc.projection.map(function(p) { return '<th>Jahr ' + p.year + '</th>'; }).join('') + '</tr>';
+
+    var rows = [
+      { label: 'Manuelle Kosten', key: 'manuelleKosten' },
+      { label: 'Wartung/Restmanual', key: 'wartungRestmanual' },
+      { label: 'Verbrauchsmaterial', key: 'verbrauchsmaterial' },
+      { label: 'Strom', key: 'strom' },
+      { label: 'Service', key: 'service' },
+      { label: 'HUB-Lizenz', key: 'hubLizenz' },
+      { label: (calc.mode === 'lease' ? 'Leasing' : 'Investition'), key: (calc.mode === 'lease' ? 'leaseYearCost' : 'investYear') },
+      { label: 'Gesamt Roboter', key: 'robotGesamt', cls: 'rg-row-total' },
+      { label: 'Ersparnis/Jahr', key: 'ersparnisJahr', cls: 'rg-row-savings' },
+      { label: 'Kumuliert', key: 'cumulSavings', cls: 'rg-row-cumulative' },
+      { label: 'Betriebsstd. (kum.)', key: 'cumulHours', isHours: true }
+    ];
+
+    tbody.innerHTML = rows.map(function(row) {
+      var cls = row.cls ? ' class="' + row.cls + '"' : '';
+      var cells = calc.projection.map(function(p) {
+        var val = p[row.key];
+        if (row.isHours) {
+          return '<td>' + new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(val) + ' h</td>';
+        }
+        var valCls = '';
+        if (row.key === 'ersparnisJahr' || row.key === 'cumulSavings') {
+          valCls = val >= 0 ? ' class="rg-val-pos"' : ' class="rg-val-neg"';
+        }
+        return '<td' + valCls + '>' + fmtEUR(val) + '</td>';
+      }).join('');
+      return '<tr' + cls + '><td>' + row.label + '</td>' + cells + '</tr>';
+    }).join('');
+  }
+
+  // Render lifetime indicator
+  function renderLifetime(root, calc) {
+    var label = q('[data-rg-out="lifetimeLabel"]', root);
+    var fill = q('[data-rg-out="lifetimeFill"]', root);
+    if (!label || !fill) return;
+
+    var hours = calc.cumulHours5Y || 0;
+    var max = calc.roboterLebensdauer || 3000;
+    var pct = max > 0 ? (hours / max * 100) : 0;
+    var level = pct < 80 ? 'green' : pct <= 100 ? 'orange' : 'red';
+
+    label.textContent = 'Betriebsstunden: ' + new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(hours) + ' / ' + new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(max) + ' h (' + Math.round(pct) + '%)';
+    fill.style.width = Math.min(pct, 100) + '%';
+    fill.setAttribute('data-level', level);
+  }
+
   function render(root, calc){
     const out = (name) => q(`[data-rg-out="${name}"]`, root);
 
-    
+    // Effizienzfaktor-Slider Display
+    var effDisplay = out('effizienzfaktorDisplay');
+    if (effDisplay) effDisplay.textContent = Math.round(calc.effizienzfaktor * 100) + ' %';
+
+    // 5-Jahres-Tabelle
+    renderProjectionTable(root, calc);
+    // Lebensdauer-Indikator
+    renderLifetime(root, calc);
+
     // Rating (Ampel)
     const ratingWrap = out('ratingWrap');
     if (ratingWrap && calc.rating){
@@ -953,19 +1145,19 @@ function generatePdf(calc){
     if (robot.docking_station >= 0) setField('dockingStation', robot.docking_station);
     if (robot.accessories_cost >= 0) setField('accessoriesCost', robot.accessories_cost);
     if (robot.implementation_cost >= 0) setField('implementationCost', robot.implementation_cost);
+    // v4 fields
+    if (robot.service_life_hours > 0) setField('roboterLebensdauer', robot.service_life_hours);
+    if (robot.efficiency_factor > 0) {
+      var effSlider = q('[data-rg="effizienzfaktor"]', root);
+      if (effSlider) effSlider.value = Math.round(robot.efficiency_factor * 100);
+    }
+    if (robot.maintenance_hours_week >= 0) setField('wartungsfaktor', robot.maintenance_hours_week);
+    if (robot.hub_license_month >= 0) setField('hubLizenzMonat', robot.hub_license_month);
+    if (robot.consumables_year >= 0) setField('consumablesPerYear', robot.consumables_year);
   }
 
   function updateHoursFromArea(root) {
-    var areaInp = q('[data-rg="areaSqmPerDay"]', root);
-    var m2hInp = q('[data-rg="m2h"]', root);
-    var hoursInp = q('[data-rg="hoursPerDay"]', root);
-    if (areaInp && m2hInp && hoursInp) {
-      var area = parseFloat(areaInp.value || 0);
-      var m2h = parseFloat(m2hInp.value || 0);
-      if (area > 0 && m2h > 0) {
-        hoursInp.value = Math.round((area / m2h) * 10) / 10;
-      }
-    }
+    // hoursPerDay is now computed inside toCalc() - this is a no-op for backward compat
   }
 
   // Keep consumables in sync when area changes (Auto mode only)
@@ -988,25 +1180,23 @@ function generatePdf(calc){
     var tbody = q('[data-rg-comparison-body]', compEl);
     if (!tbody) return;
 
-    // Use current calc values for consistent 2-column comparison
     var c = calc || toCalc(root);
     var qty = c.qty || 1;
 
-    // Manual side: labor savings represents what manual cleaning costs
-    var manualLaborYear = c.grossSavings; // This IS the manual labor cost being saved
-    var manualConsumables = 500; // fixed estimate for manual consumables
-    var manualTotal = manualLaborYear + manualConsumables;
+    // Use 5-year projection data (year 2 = recurring costs without investment)
+    var p2 = (c.projection && c.projection.length > 1) ? c.projection[1] : null;
+    var manualLaborYear = c.manuelleKostenJahr || c.grossSavings;
+    var manualTotal = manualLaborYear;
 
-    // Robot side: use calc totals (already scaled by qty)
+    // Robot side from projection (year 2 = without investment)
+    var robotWartung = p2 ? p2.wartungRestmanual : 0;
     var robotServiceYear = (c.serviceMonthly || 0) * 12 * qty;
     var robotPowerYear = (c.powerPerYear || 0) * qty;
     var robotConsumablesYear = (c.consumablesPerYear || 0) * qty;
     var robotLeaseYear = c.leaseYear || 0;
-    // For purchase mode, amortize the investment over 3 years for comparison
-    var robotInvestYear = (c.mode === 'purchase' && c.investUpfront > 0) ? Math.round(c.investUpfront / 3) : 0;
-    var robotTotal = robotServiceYear + robotPowerYear + robotConsumablesYear + robotLeaseYear + robotInvestYear;
+    var robotInvestYear = (c.mode === 'purchase' && c.investUpfront > 0) ? Math.round(c.investUpfront / 5) : 0;
+    var robotTotal = robotWartung + robotServiceYear + robotPowerYear + robotConsumablesYear + robotLeaseYear + robotInvestYear;
 
-    // Header: always 2 columns
     var headerRow = q('thead tr', compEl);
     var qtyLabel = qty > 1 ? ' (' + qty + ' Roboter)' : '';
     if (headerRow) {
@@ -1015,15 +1205,16 @@ function generatePdf(calc){
 
     var rows = [
       { label: 'Personalkosten/Jahr', human: manualLaborYear, robot: 0 },
+      { label: 'Wartung/Restmanual/Jahr', human: 0, robot: robotWartung },
       { label: 'Service/Jahr', human: 0, robot: robotServiceYear },
       { label: 'Strom/Jahr', human: 0, robot: robotPowerYear },
-      { label: 'Verbrauchsmaterial/Jahr', human: manualConsumables, robot: robotConsumablesYear },
+      { label: 'Verbrauchsmaterial/Jahr', human: 0, robot: robotConsumablesYear },
     ];
     if (c.mode === 'lease') {
       rows.push({ label: 'Leasing/Jahr', human: 0, robot: robotLeaseYear });
     }
     if (c.mode === 'purchase' && robotInvestYear > 0) {
-      rows.push({ label: 'Investition/Jahr (auf 3 J.)', human: 0, robot: robotInvestYear });
+      rows.push({ label: 'Investition/Jahr (auf 5 J.)', human: 0, robot: robotInvestYear });
     }
     var savings = manualTotal - robotTotal;
     rows.push({ label: '<strong>Gesamt/Jahr</strong>', human: manualTotal, robot: robotTotal, isTotal: true });
@@ -1117,6 +1308,19 @@ function generatePdf(calc){
         });
       });
     });
+
+    // === Effizienzfaktor Slider ===
+    var effSlider = q('[data-rg="effizienzfaktor"]', root);
+    if (effSlider) {
+      effSlider.addEventListener('input', function() {
+        var display = q('[data-rg-out="effizienzfaktorDisplay"]', root);
+        if (display) display.textContent = effSlider.value + ' %';
+        lastCalc = toCalc(root);
+        render(root, lastCalc);
+        updateComparison(root, lastCalc);
+        renderBreakEvenChart(root, lastCalc);
+      });
+    }
 
     // === Advisor Mode Toggle ===
     var advisorToggle = q('[data-rg="advisorMode"]', root);
@@ -1289,17 +1493,60 @@ function generatePdf(calc){
       });
     });
 
-    // Break-even Chart
+    // Break-even Chart (60 Monate mit Jahresmarkierungen)
     let breakEvenChartInstance = null;
     const renderBreakEvenChart = (rootEl, calc) => {
       const canvas = q('[data-rg-chart="breakeven"]', rootEl);
       if (!canvas || typeof Chart === 'undefined') return;
       if (breakEvenChartInstance) { breakEvenChartInstance.destroy(); breakEvenChartInstance = null; }
-      if (!calc.canExport) return;
-      const months = Array.from({length: 36}, (_, i) => i + 1);
-      const personalCosts = months.map(m => m * (calc.grossSavings / 12));
-      const robotCosts = months.map(m => calc.mode === 'purchase' ? calc.investUpfront + (m * calc.opsCosts / 12) : m * (calc.opsCosts / 12 + calc.leaseYear / 12));
-      breakEvenChartInstance = new Chart(canvas, { type: 'line', data: { labels: months.map(m => 'M' + m), datasets: [{ label: 'Personalkosten (kumuliert)', data: personalCosts, borderColor: '#d9534f', backgroundColor: 'rgba(217, 83, 79, 0.1)', fill: true, tension: 0.1 }, { label: 'Roboterkosten (kumuliert)', data: robotCosts, borderColor: '#00B4A6', backgroundColor: 'rgba(0, 180, 166, 0.1)', fill: true, tension: 0.1 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true, ticks: { callback: function(v) { return fmtEUR(v); } } } } } });
+      if (!calc.canExport || !calc.projection) return;
+
+      const months = Array.from({length: 60}, (_, i) => i + 1);
+      // Build cumulative manual costs and robot costs from projection
+      const cumulManual = [];
+      const cumulRobot = [];
+      let runManual = 0;
+      let runRobot = 0;
+      for (let m = 1; m <= 60; m++) {
+        const yi = Math.min(Math.floor((m - 1) / 12), 4);
+        const p = calc.projection[yi];
+        runManual += p.manuelleKosten / 12;
+        runRobot += p.robotGesamt / 12;
+        cumulManual.push(runManual);
+        cumulRobot.push(runRobot);
+      }
+
+      // Year markers as vertical annotations
+      const yearAnnotations = {};
+      for (let y = 1; y <= 5; y++) {
+        yearAnnotations['year' + y] = {
+          type: 'line', xMin: y * 12 - 0.5, xMax: y * 12 - 0.5,
+          borderColor: 'rgba(15,37,55,0.15)', borderWidth: 1, borderDash: [4, 3],
+          label: { display: true, content: 'J' + y, position: 'start', font: { size: 10 }, color: '#94a3b8' }
+        };
+      }
+
+      breakEvenChartInstance = new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: months.map(m => 'M' + m),
+          datasets: [
+            { label: 'Personalkosten (kumuliert)', data: cumulManual, borderColor: '#d9534f', backgroundColor: 'rgba(217,83,79,0.1)', fill: true, tension: 0.1, pointRadius: 0 },
+            { label: 'Roboterkosten (kumuliert)', data: cumulRobot, borderColor: '#00B4A6', backgroundColor: 'rgba(0,180,166,0.1)', fill: true, tension: 0.1, pointRadius: 0 }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom' },
+            annotation: { annotations: yearAnnotations }
+          },
+          scales: {
+            x: { ticks: { maxTicksLimit: 12, callback: function(v, i) { return (i + 1) % 12 === 0 ? 'J' + ((i + 1) / 12) : ''; } } },
+            y: { beginAtZero: true, ticks: { callback: function(v) { return fmtEUR(v); } } }
+          }
+        }
+      });
     };
     setTimeout(() => renderBreakEvenChart(root, lastCalc), 100);
 
