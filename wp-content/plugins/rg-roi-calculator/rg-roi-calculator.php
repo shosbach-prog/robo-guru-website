@@ -747,9 +747,15 @@ final class RG_ROI_Calculator {
                     <div class="rg-comparison-v2" data-rg-comparison>
                         <h5 class="rg-comparison-v2__title">Mensch vs. Roboter</h5>
                         <table class="rg-comparison-v2__table" data-rg-comparison-table>
+                            <colgroup>
+                                <col style="width:50px">
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
                             <thead>
                                 <tr>
-                                    <th>Zeitraum</th>
+                                    <th></th>
                                     <th>Manuell</th>
                                     <th>Roboter</th>
                                     <th>Differenz</th>

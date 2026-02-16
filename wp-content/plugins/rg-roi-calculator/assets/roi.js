@@ -6,6 +6,9 @@
   function fmtEUR(x){
     return new Intl.NumberFormat('de-DE', { style:'currency', currency:'EUR' }).format(x);
   }
+  function fmtEURShort(x){
+    return new Intl.NumberFormat('de-DE', { style:'currency', currency:'EUR', maximumFractionDigits:0 }).format(x);
+  }
   function fmtNum(x){
     return new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1 }).format(x);
   }
@@ -1416,7 +1419,7 @@ function generatePdf(calc){
       var diff = manualTotal - robotTotal;
       var diffCls = diff > 0 ? 'rg-diff-pos' : (diff < 0 ? 'rg-diff-neg' : '');
       var diffPrefix = diff > 0 ? '+' : '';
-      return '<tr><td>' + period.label + '</td><td>' + fmtEUR(manualTotal) + '</td><td>' + fmtEUR(robotTotal) + '</td><td class="' + diffCls + '">' + diffPrefix + fmtEUR(diff) + '</td></tr>';
+      return '<tr><td>' + period.label + '</td><td>' + fmtEURShort(manualTotal) + '</td><td>' + fmtEURShort(robotTotal) + '</td><td class="' + diffCls + '">' + diffPrefix + fmtEURShort(diff) + '</td></tr>';
     }).join('');
   }
   // === End Robot Selection System ===
