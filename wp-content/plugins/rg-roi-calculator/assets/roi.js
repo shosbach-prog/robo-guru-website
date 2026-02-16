@@ -976,12 +976,11 @@ function generatePdf(calc){
       q('[data-rg-kpi-hero]', root),
       q('[data-rg-out="ratingWrap"]', root),
       q('[data-rg-out="warn"]', root),
-      q('[data-rg-actions]', root),
-      q('[data-rg-out="hint"]', root),
       q('[data-rg-comparison]', root),
       q('[data-rg-timeline]', root),
       q('[data-rg-lifetime]', root),
-      q('[data-rg-details]', root)
+      q('[data-rg-details]', root),
+      q('[data-rg-actions]', root)
     ];
     if (noRobotEl) noRobotEl.classList.toggle('rg-hide', hasRobot);
     sections.forEach(function(el) {
@@ -1718,12 +1717,16 @@ function generatePdf(calc){
       var fillEl = q('[data-rg-timeline-fill]', timelineEl);
       var bePoint = q('[data-rg-timeline-be]', timelineEl);
       var beLabel = q('[data-rg-timeline-be-label]', timelineEl);
+      var noBeEl = q('[data-rg-timeline-nobe]', timelineEl);
 
       if (!calc.canExport || !calc.breakEvenMonth) {
         if (fillEl) fillEl.style.width = '0%';
         if (bePoint) bePoint.style.display = 'none';
+        if (noBeEl) noBeEl.classList.remove('rg-hide');
         return;
       }
+
+      if (noBeEl) noBeEl.classList.add('rg-hide');
 
       var beMonth = calc.breakEvenMonth;
       var pct = Math.min((beMonth / 60) * 100, 100);
