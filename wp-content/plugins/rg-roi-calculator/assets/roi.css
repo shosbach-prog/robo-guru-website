@@ -1,4 +1,4 @@
-/* === Robo-Guru ROI Calculator v3.0.0 === */
+/* === Robo-Guru ROI Calculator v3.2.0 === */
 :root{
   --rg-primary:#16C6E5;
   --rg-primary-dark:#0EA5C2;
@@ -38,11 +38,7 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 /* === 2-Column Layout === */
 .rg-roi-layout{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start}
 .rg-roi-inputs{min-width:0}
-.rg-roi-summary{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(15,37,55,.12) transparent}
-.rg-roi-summary::-webkit-scrollbar{width:4px}
-.rg-roi-summary::-webkit-scrollbar-track{background:transparent}
-.rg-roi-summary::-webkit-scrollbar-thumb{background:rgba(15,37,55,.12);border-radius:4px}
-.rg-roi-summary::-webkit-scrollbar-thumb:hover{background:rgba(15,37,55,.25)}
+.rg-roi-summary{position:sticky;top:24px}
 
 /* Summary card styling */
 .rg-summary-inner{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow-lg);padding:24px;display:flex;flex-direction:column;gap:16px}
@@ -163,6 +159,12 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 
 /* Warning */
 .rg-warn{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);color:var(--rg-danger);padding:10px 14px;border-radius:var(--rg-radius-sm);font-size:13px;font-weight:600}
+.rg-warn__detail{font-weight:400;margin-top:6px;font-size:12px;color:#64748b}
+
+/* Input validation warning */
+.rg-field-warn{font-size:11px;color:var(--rg-warning);font-weight:600;margin-top:2px;display:none}
+.rg-field-warn.is-visible{display:block}
+.rg-roi .rg-in.rg-in--warn{border-color:var(--rg-warning);box-shadow:0 0 0 2px rgba(245,158,11,.15)}
 
 /* CTA Buttons */
 .rg-actions{display:flex;flex-wrap:wrap;gap:8px}
@@ -262,44 +264,87 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-lightbox__btn{padding:10px 24px;background:var(--rg-primary);color:#fff;border:none;border-radius:var(--rg-radius-sm);cursor:pointer;font-size:14px;font-weight:600;font-family:inherit}
 @keyframes rgFadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 
-/* === Mobile: Bottom-Sheet Summary === */
+/* === Mobile: Summary below inputs (no bottom-sheet) === */
 .rg-summary-handle{display:none}
 
-@media(max-width:900px){
-  .rg-roi-layout{grid-template-columns:1fr;gap:0}
+@media(max-width:1100px){
+  .rg-roi-layout{grid-template-columns:1fr;gap:24px}
 
-  /* Summary becomes bottom-sheet on mobile */
-  .rg-roi-summary{position:fixed;bottom:0;left:0;right:0;z-index:9999;max-height:85vh;top:auto;background:var(--rg-card-bg);border-radius:20px 20px 0 0;box-shadow:0 -4px 24px rgba(15,37,55,.15);transform:translateY(calc(100% - 72px));transition:transform .35s cubic-bezier(.4,0,.2,1);overflow:hidden}
-  .rg-roi-summary.is-expanded{transform:translateY(0);overflow-y:auto}
-  .rg-summary-inner{padding:16px 20px 100px}
+  /* Summary flows naturally below inputs */
+  .rg-roi-summary{
+    position:static!important;
+    max-height:none!important;
+    overflow-y:visible!important;
+    transform:none!important;
+    background:transparent;
+    border-radius:0;
+    box-shadow:none;
+    z-index:auto
+  }
+  .rg-roi-summary.is-expanded{transform:none!important;overflow-y:visible!important}
+  .rg-summary-handle{display:none!important}
+  .rg-summary-inner{padding:20px 16px}
+  .rg-roi-inputs{padding-bottom:0}
 
-  /* Bottom-sheet handle */
-  .rg-summary-handle{display:flex;flex-direction:column;align-items:center;padding:12px 20px 8px;cursor:pointer;position:absolute;top:0;left:0;right:0;background:var(--rg-card-bg);border-radius:20px 20px 0 0;z-index:1}
-  .rg-summary-handle__bar{width:40px;height:4px;background:#cbd5e1;border-radius:2px;margin-bottom:8px}
-  .rg-summary-handle__peek{font-size:16px;font-weight:800;color:var(--rg-success)}
-  .rg-roi-summary.is-expanded .rg-summary-handle__peek{display:none}
+  /* Section titles on mobile */
+  .rg-section--open>.rg-section__title{padding:16px 16px 6px}
+  .rg-section--open>.rg-section__body{padding:0 16px 16px}
+  .rg-section__body{padding:0 16px 16px}
+  .rg-section__body--expanded{padding:0 16px 16px}
+  .rg-section--accordion>.rg-section__toggle{padding:14px 16px}
 
-  /* Add padding to inputs for bottom-sheet overlap */
-  .rg-roi-inputs{padding-bottom:90px}
+  /* Comparison table responsive */
+  .rg-comparison{padding:16px}
+  .rg-comparison-table{font-size:12px}
+  .rg-comparison-table th,.rg-comparison-table td{padding:7px 8px}
+  .rg-col-human,.rg-col-robot{min-width:100px}
 
   /* Robot grid smaller */
   .rg-robot-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
   .rg-robot-card{padding:8px 6px;min-height:80px}
   .rg-robot-card img{width:48px;height:48px}
 
-  /* Keyfacts stack */
+  /* Keyfacts */
   .rg-roi-keyfacts{grid-template-columns:repeat(3,1fr);gap:6px}
   .rg-keyfact__value{font-size:18px}
 
+  /* Dashboard */
+  .rg-roi-highlight h2{font-size:28px}
+
+  /* CTA Buttons wrap nicely */
+  .rg-actions{gap:6px}
+  .rg-btn{padding:9px 12px;font-size:12px}
+
+  /* Chart */
+  .rg-chart-container{height:180px}
+
   /* Details grid single column */
   .rg-details__grid{grid-template-columns:1fr}
+
+  /* Fieldsets */
+  .rg-fieldset{padding:12px}
+  .rg-scenario-row{padding:12px 16px}
+
+  /* Meta row */
+  .rg-meta-card{padding:12px 16px}
+  .rg-meta-field{flex:1 1 100%;min-width:0;max-width:none}
 }
 
 @media(max-width:480px){
   .rg-roi{padding:0 8px}
   .rg-scenario-row{flex-direction:column}
-  .rg-roi-highlight h2{font-size:26px}
+  .rg-roi-highlight h2{font-size:24px}
   .rg-roi-keyfacts{grid-template-columns:1fr 1fr 1fr}
+  .rg-keyfact__value{font-size:16px}
+
+  /* Comparison table: tighter on small phones */
+  .rg-comparison-table{font-size:11px}
+  .rg-comparison-table th,.rg-comparison-table td{padding:6px 6px}
+  .rg-col-human,.rg-col-robot{min-width:85px}
+
+  /* Actions full width */
+  .rg-actions{flex-direction:column}
+  .rg-btn{width:100%;justify-content:center}
 }
 
 /* === Print === */
