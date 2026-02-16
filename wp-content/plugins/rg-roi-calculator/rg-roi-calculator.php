@@ -737,31 +737,19 @@ final class RG_ROI_Calculator {
                         <div class="rg-warn__detail" data-rg-out="warnDetail">M&ouml;gliche Ursachen: Die Betriebskosten (Service, Strom, Leasing) &uuml;bersteigen die eingesparten Personalkosten. Pr&uuml;fen Sie Stundenlohn, Einsatzstunden oder Roboterkosten.</div>
                     </div>
 
-                    <!-- CTA Buttons -->
-                    <div class="rg-actions rg-hide" data-rg-actions>
-                        <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">&#128196;</span><span>PDF</span></button>
-                        <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">&#128424;</span><span>Drucken</span></button>
-                        <?php if (is_user_logged_in() && function_exists('bp_document_add')) : ?>
-                        <button class="rg-btn rg-btn--save" data-rg-btn="save" disabled><span class="rg-ico">&#128190;</span><span>Im Profil speichern</span></button>
-                        <?php endif; ?>
-                    </div>
-                    <div class="rg-hint rg-hide" data-rg-out="hint">
-                        Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
-                    </div>
-
                     <!-- 2. Zusammengeführte Vergleichstabelle (Mensch vs Roboter, 1/3/5 Jahre) -->
                     <div class="rg-comparison-v2 rg-hide" data-rg-comparison>
                         <h5 class="rg-comparison-v2__title">Mensch vs. Roboter</h5>
                         <table class="rg-comparison-v2__table" data-rg-comparison-table>
                             <colgroup>
-                                <col style="width:50px">
-                                <col>
-                                <col>
-                                <col>
+                                <col style="width:28%">
+                                <col style="width:24%">
+                                <col style="width:24%">
+                                <col style="width:24%">
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>Zeitraum</th>
                                     <th>Manuell</th>
                                     <th>Roboter</th>
                                     <th>Differenz</th>
@@ -783,13 +771,14 @@ final class RG_ROI_Calculator {
                             </div>
                             <div class="rg-timeline__point rg-timeline__point--breakeven" data-rg-timeline-be style="display:none;">
                                 <span class="rg-timeline__dot rg-timeline__dot--be"></span>
-                                <span class="rg-timeline__label" data-rg-timeline-be-label>Monat –</span>
+                                <span class="rg-timeline__label" data-rg-timeline-be-label>Monat &ndash;</span>
                             </div>
                             <div class="rg-timeline__point rg-timeline__point--end" data-rg-timeline-end>
                                 <span class="rg-timeline__dot"></span>
-                                <span class="rg-timeline__label">60 Monate</span>
+                                <span class="rg-timeline__label">5 Jahre</span>
                             </div>
                         </div>
+                        <div class="rg-timeline__no-be rg-hide" data-rg-timeline-nobe>Kein Break-Even im 5-Jahres-Zeitraum berechenbar.</div>
                         <div class="rg-timeline__text" data-rg-out="beText">&ndash;</div>
                     </div>
 
@@ -829,6 +818,20 @@ final class RG_ROI_Calculator {
 
                     <div class="rg-disclaimer">
                         Dieser Kalkulator dient zur &uuml;berschl&auml;gigen Bewertung und ersetzt keine individuelle Projektpr&uuml;fung.
+                    </div>
+
+                    <!-- 5. PDF Export + CTA (am Ende) -->
+                    <div class="rg-export-section rg-hide" data-rg-actions>
+                        <div class="rg-actions">
+                            <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">&#128196;</span><span>PDF</span></button>
+                            <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">&#128424;</span><span>Drucken</span></button>
+                            <?php if (is_user_logged_in() && function_exists('bp_document_add')) : ?>
+                            <button class="rg-btn rg-btn--save" data-rg-btn="save" disabled><span class="rg-ico">&#128190;</span><span>Im Profil speichern</span></button>
+                            <?php endif; ?>
+                        </div>
+                        <div class="rg-hint" data-rg-out="hint">
+                            Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
+                        </div>
                     </div>
 
                 </div><!-- /.rg-summary-inner -->
