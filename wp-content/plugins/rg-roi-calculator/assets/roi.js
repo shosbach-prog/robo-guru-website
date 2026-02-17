@@ -1855,10 +1855,9 @@ function generatePdf(calc){
 
       var beMonth = calc.breakEvenMonth;
       var pct = Math.min((beMonth / 60) * 100, 100);
-      // Enforce minimum 12% so the BE dot/label doesn't overlap "Investition"
-      var displayPct = Math.max(pct, 12);
-      // If close to 100%, cap at 88% so it doesn't overlap "5 Jahre"
-      if (displayPct > 88) displayPct = 88;
+      // Enforce minimum so dots don't visually merge, max so BE doesn't touch end
+      var displayPct = Math.max(pct, 8);
+      if (displayPct > 90) displayPct = 90;
 
       if (fillEl) fillEl.style.width = displayPct + '%';
       if (bePoint) {
