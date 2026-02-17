@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 if (!defined('RG_ROI_CALCULATOR_VERSION')) {
-    define('RG_ROI_CALCULATOR_VERSION', '4.0.0');
+    define('RG_ROI_CALCULATOR_VERSION', '4.1.0');
 }
 
 final class RG_ROI_Calculator {
@@ -24,6 +24,12 @@ final class RG_ROI_Calculator {
     const LEASING_RESIDUAL_PERCENT = 5;   // 5% Restwert
     const LEASING_INTEREST_RATE = 6;      // 6% p.a. Verzinsung
 
+    // User meta keys for ROI profile storage
+    const META_LAST_INPUTS       = 'roi_last_inputs';
+    const META_LAST_RESULTS      = 'roi_last_results';
+    const META_LAST_CALCULATED   = 'roi_last_calculated_at';
+    const META_PDF_GENERATED     = 'roi_pdf_generated_at';
+
     // Avoid strict return types for broader PHP compatibility on WordPress hosts
     public static function init() {
         add_shortcode('rg_roi_calculator', [__CLASS__, 'shortcode']);
@@ -33,6 +39,12 @@ final class RG_ROI_Calculator {
         add_action('wp_ajax_nopriv_rg_send_roi_report', [__CLASS__, 'ajax_send_report']);
 
         add_action('wp_ajax_rg_save_roi_to_profile', [__CLASS__, 'ajax_save_to_profile']);
+
+        // Secure PDF download endpoint (logged-in users only)
+        add_action('wp_ajax_rg_download_roi_pdf', [__CLASS__, 'ajax_download_pdf']);
+
+        // Save ROI inputs/results to user profile
+        add_action('wp_ajax_rg_save_roi_profile', [__CLASS__, 'ajax_save_roi_profile']);
 
         // Logo upload for customers (allow SVG MIME type)
         add_filter('upload_mimes', [__CLASS__, 'allow_svg_upload']);
@@ -294,19 +306,42 @@ final class RG_ROI_Calculator {
             }
         }
 
+        // Determine register/login URLs (BuddyBoss fallback)
+        $current_url = get_permalink();
+        $register_url = function_exists('bp_get_signup_page')
+            ? bp_get_signup_page()
+            : site_url('/register/');
+        $login_url = wp_login_url($current_url);
+
+        // Allow filtering of auth URLs
+        $register_url = apply_filters('rg_roi_register_url', $register_url);
+        $login_url    = apply_filters('rg_roi_login_url', $login_url);
+
+        // Last analysis timestamp for logged-in users
+        $last_calculated = '';
+        if (is_user_logged_in()) {
+            $ts = get_user_meta(get_current_user_id(), self::META_LAST_CALCULATED, true);
+            if ($ts) {
+                $last_calculated = date_i18n('d.m.Y H:i', strtotime($ts));
+            }
+        }
+
         wp_localize_script('rg-roi', 'rgRoi', [
-            'ajaxUrl'       => admin_url('admin-ajax.php'),
-            'restUrl'       => rest_url('rg-roi/v1/'),
-            'nonce'         => wp_create_nonce(self::NONCE_ACTION),
-            'restNonce'     => wp_create_nonce('wp_rest'),
-            'ccEmail'       => get_option(self::OPTION_CC_EMAIL, ''),
-            'siteName'      => get_bloginfo('name'),
-            'isLoggedIn'    => is_user_logged_in() ? '1' : '0',
-            'hasBbDocs'     => function_exists('bp_document_add') ? '1' : '0',
-            'userName'      => $user_name,
-            'userLogoUrl'   => $user_logo_url,
-            'pluginVersion' => self::VERSION,
-            'debug'         => defined('WP_DEBUG') && WP_DEBUG,
+            'ajaxUrl'        => admin_url('admin-ajax.php'),
+            'restUrl'        => rest_url('rg-roi/v1/'),
+            'nonce'          => wp_create_nonce(self::NONCE_ACTION),
+            'restNonce'      => wp_create_nonce('wp_rest'),
+            'ccEmail'        => get_option(self::OPTION_CC_EMAIL, ''),
+            'siteName'       => get_bloginfo('name'),
+            'isLoggedIn'     => is_user_logged_in() ? '1' : '0',
+            'hasBbDocs'      => function_exists('bp_document_add') ? '1' : '0',
+            'userName'       => $user_name,
+            'userLogoUrl'    => $user_logo_url,
+            'pluginVersion'  => self::VERSION,
+            'debug'          => defined('WP_DEBUG') && WP_DEBUG,
+            'registerUrl'    => esc_url($register_url),
+            'loginUrl'       => esc_url($login_url),
+            'lastCalculated' => $last_calculated,
         ]);
     }
 
@@ -320,15 +355,33 @@ final class RG_ROI_Calculator {
         ?>
         <div class="rg-roi rg-roi-page" data-rg-roi>
 
-            <!-- Beratermodus Toggle (top bar) -->
+            <!-- Beratermodus Toggle (top bar) – soft-locked for guests -->
             <div class="rg-advisor-bar">
                 <label class="rg-advisor-toggle">
-                    <input type="checkbox" data-rg="advisorMode">
+                    <input type="checkbox" data-rg="advisorMode"<?php if (!is_user_logged_in()) echo ' data-rg-gated="1"'; ?>>
                     <span class="rg-advisor-toggle__slider"></span>
                     <span class="rg-advisor-toggle__label">Beratermodus</span>
                     <span class="rg-tooltip" data-tip="Aktiviert Branchenprofile und Schnell-Szenarien im Ergebnis-Panel, um verschiedene Szenarien schnell durchzuspielen." tabindex="0" role="img" aria-label="Hilfe">?</span>
                 </label>
             </div>
+
+            <!-- Soft-Lock Overlay Modal (für nicht-eingeloggte Nutzer) -->
+            <?php if (!is_user_logged_in()) : ?>
+            <div class="rg-gate-overlay rg-gate-overlay--hidden" data-rg-gate-overlay role="dialog" aria-modal="true" aria-labelledby="rg-gate-title">
+                <div class="rg-gate-overlay__backdrop" data-rg-gate-close></div>
+                <div class="rg-gate-overlay__content">
+                    <button type="button" class="rg-gate-overlay__close" data-rg-gate-close aria-label="Schlie&szlig;en">&times;</button>
+                    <div class="rg-gate-overlay__icon" aria-hidden="true">&#128274;</div>
+                    <h3 class="rg-gate-overlay__title" id="rg-gate-title">Premium-Funktion</h3>
+                    <p class="rg-gate-overlay__text">Die detaillierte ROI-PDF ist nur f&uuml;r registrierte Mitglieder verf&uuml;gbar. Jetzt kostenlos registrieren und Analyse sichern.</p>
+                    <p class="rg-gate-overlay__subtext">&#128202; Executive ROI Analyse als Gesch&auml;ftsf&uuml;hrungs-PDF &ndash; mit Investitionsvergleich, Break-Even Timeline &amp; Einsparpotenzial.</p>
+                    <div class="rg-gate-overlay__actions">
+                        <a href="<?php echo esc_url(apply_filters('rg_roi_register_url', function_exists('bp_get_signup_page') ? bp_get_signup_page() : site_url('/register/'))); ?>" class="rg-btn rg-btn--primary rg-gate-overlay__btn">Jetzt registrieren</a>
+                        <a href="<?php echo esc_url(apply_filters('rg_roi_login_url', wp_login_url(get_permalink()))); ?>" class="rg-btn rg-gate-overlay__btn">Einloggen</a>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
 
             <div class="rg-roi-layout">
 
@@ -711,23 +764,40 @@ final class RG_ROI_Calculator {
 
                     <!-- 1. KPI Hero Section: 4 Cards -->
                     <div class="rg-kpi-hero rg-hide" data-rg-kpi-hero>
+                        <!-- Gäste sehen: Monatliche Ersparnis + Break-Even -->
                         <div class="rg-kpi-card">
                             <span class="rg-kpi-card__value" data-rg-out="netHighlight">&ndash; &euro;</span>
                             <span class="rg-kpi-card__label">Netto-Ersparnis / Jahr</span>
                             <span class="rg-kpi-card__sub">&#8776; <span data-rg-out="monthlyHighlight">&ndash;</span> / Monat</span>
                         </div>
+                        <?php if (is_user_logged_in()) : ?>
                         <div class="rg-kpi-card">
                             <span class="rg-kpi-card__value" data-rg-out="roi">&ndash;</span>
                             <span class="rg-kpi-card__label">ROI (5 Jahre)</span>
                         </div>
+                        <?php else : ?>
+                        <div class="rg-kpi-card rg-kpi-card--locked" data-rg-gated="1">
+                            <span class="rg-kpi-card__value">&#128274;</span>
+                            <span class="rg-kpi-card__label">ROI (5 Jahre)</span>
+                            <span class="rg-kpi-card__sub rg-locked-hint">Nur f&uuml;r Mitglieder</span>
+                        </div>
+                        <?php endif; ?>
                         <div class="rg-kpi-card">
                             <span class="rg-kpi-card__value" data-rg-out="breakEvenMonths">&ndash;</span>
                             <span class="rg-kpi-card__label">Amortisation (Monate)</span>
                         </div>
+                        <?php if (is_user_logged_in()) : ?>
                         <div class="rg-kpi-card">
                             <span class="rg-kpi-card__value" data-rg-out="totalSavings5Y">&ndash; &euro;</span>
                             <span class="rg-kpi-card__label">5-Jahres Gesamtersparnis</span>
                         </div>
+                        <?php else : ?>
+                        <div class="rg-kpi-card rg-kpi-card--locked" data-rg-gated="1">
+                            <span class="rg-kpi-card__value">&#128274;</span>
+                            <span class="rg-kpi-card__label">5-Jahres Gesamtersparnis</span>
+                            <span class="rg-kpi-card__sub rg-locked-hint">Nur f&uuml;r Mitglieder</span>
+                        </div>
+                        <?php endif; ?>
                     </div>
 
                     <!-- Status Ampel -->
@@ -745,7 +815,11 @@ final class RG_ROI_Calculator {
                     </div>
 
                     <!-- 2. Zusammengeführte Vergleichstabelle (Mensch vs Roboter, 1/3/5 Jahre) -->
-                    <div class="rg-comparison-v2 rg-hide" data-rg-comparison>
+                    <?php if (!is_user_logged_in()) : ?>
+                    <div class="rg-member-locked-section" data-rg-gated="1">
+                        <div class="rg-locked-badge">&#128274; Nur f&uuml;r Mitglieder</div>
+                    <?php endif; ?>
+                    <div class="rg-comparison-v2 rg-hide<?php if (!is_user_logged_in()) echo ' rg-blurred'; ?>" data-rg-comparison>
                         <h5 class="rg-comparison-v2__title">Mensch vs. Roboter</h5>
                         <table class="rg-comparison-v2__table" data-rg-comparison-table>
                             <colgroup>
@@ -765,6 +839,10 @@ final class RG_ROI_Calculator {
                             <tbody data-rg-comparison-body></tbody>
                         </table>
                     </div>
+
+                    <?php if (!is_user_logged_in()) : ?>
+                    </div><!-- /.rg-member-locked-section (comparison) -->
+                    <?php endif; ?>
 
                     <!-- 3. Break-Even Timeline -->
                     <div class="rg-timeline rg-hide" data-rg-timeline>
@@ -797,8 +875,12 @@ final class RG_ROI_Calculator {
                         </div>
                     </div>
 
-                    <!-- 4. Details Accordion -->
-                    <details class="rg-details rg-hide" data-rg-details>
+                    <!-- 4. Details Accordion (gated für Gäste) -->
+                    <?php if (!is_user_logged_in()) : ?>
+                    <div class="rg-member-locked-section" data-rg-gated="1">
+                        <div class="rg-locked-badge">&#128274; Nur f&uuml;r Mitglieder</div>
+                    <?php endif; ?>
+                    <details class="rg-details rg-hide<?php if (!is_user_logged_in()) echo ' rg-blurred'; ?>" data-rg-details>
                         <summary>Details der Berechnung</summary>
                         <div class="rg-details__grid">
                             <div class="rg-kpi"><div class="rg-k">Finanzierung</div><div class="rg-v" data-rg-out="finModel">&ndash;</div></div>
@@ -823,6 +905,18 @@ final class RG_ROI_Calculator {
                         </div>
                     </details>
 
+                    <?php if (!is_user_logged_in()) : ?>
+                    </div><!-- /.rg-member-locked-section (details) -->
+                    <?php endif; ?>
+
+                    <?php if (is_user_logged_in()) : ?>
+                    <!-- Letzte Analyse Anzeige -->
+                    <div class="rg-last-analysis rg-hide" data-rg-last-analysis>
+                        <span class="rg-last-analysis__icon">&#128197;</span>
+                        <span class="rg-last-analysis__text" data-rg-last-analysis-text></span>
+                    </div>
+                    <?php endif; ?>
+
                     <div class="rg-disclaimer">
                         Dieser Kalkulator dient zur &uuml;berschl&auml;gigen Bewertung und ersetzt keine individuelle Projektpr&uuml;fung.
                     </div>
@@ -830,14 +924,24 @@ final class RG_ROI_Calculator {
                     <!-- 5. PDF Export + CTA (am Ende) -->
                     <div class="rg-export-section rg-hide" data-rg-actions>
                         <div class="rg-actions">
+                            <?php if (is_user_logged_in()) : ?>
                             <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">&#128196;</span><span>PDF</span></button>
                             <button class="rg-btn" data-rg-btn="print" disabled><span class="rg-ico">&#128424;</span><span>Drucken</span></button>
-                            <?php if (is_user_logged_in() && function_exists('bp_document_add')) : ?>
+                            <?php if (function_exists('bp_document_add')) : ?>
                             <button class="rg-btn rg-btn--save" data-rg-btn="save" disabled><span class="rg-ico">&#128190;</span><span>Im Profil speichern</span></button>
+                            <?php endif; ?>
+                            <?php else : ?>
+                            <!-- Soft-Lock: Buttons sichtbar, aber gated -->
+                            <a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>" class="rg-btn rg-btn--primary" data-rg-btn="pdf" data-rg-gated="1"><span class="rg-ico">&#128196;</span><span>PDF</span></a>
+                            <a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>" class="rg-btn" data-rg-btn="print" data-rg-gated="1"><span class="rg-ico">&#128424;</span><span>Drucken</span></a>
                             <?php endif; ?>
                         </div>
                         <div class="rg-hint" data-rg-out="hint">
+                            <?php if (is_user_logged_in()) : ?>
                             Export ist aktiv, sobald eine positive Netto-Ersparnis berechnet wurde.
+                            <?php else : ?>
+                            &#128274; PDF-Export und Drucken sind nur f&uuml;r registrierte Mitglieder verf&uuml;gbar.
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -1578,6 +1682,113 @@ final class RG_ROI_Calculator {
             'docs_url' => $docs_url,
             'filename' => $filename,
             'debug' => $debug_log, // Temporary for debugging
+        ]);
+    }
+
+    /**
+     * AJAX: Secure PDF download – generates PDF server-side and streams it.
+     * Requires login + nonce. No public file storage.
+     */
+    public static function ajax_download_pdf() {
+        // Server-side login check (critical security gate)
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Bitte zuerst einloggen.'], 401);
+        }
+
+        $payload = json_decode(file_get_contents('php://input'), true);
+        $nonce = isset($payload['nonce']) ? sanitize_text_field($payload['nonce']) : '';
+        if (!$nonce || !wp_verify_nonce($nonce, self::NONCE_ACTION)) {
+            wp_send_json_error(['message' => 'Sicherheitsprüfung fehlgeschlagen.'], 403);
+        }
+
+        $pdf_base64 = isset($payload['pdfBase64']) ? (string)$payload['pdfBase64'] : '';
+        // Strip data URI prefix
+        if (preg_match('/^data:application\/pdf[^,]*,/', $pdf_base64, $matches)) {
+            $pdf_base64 = substr($pdf_base64, strlen($matches[0]));
+        }
+        if (!$pdf_base64) {
+            wp_send_json_error(['message' => 'PDF-Daten fehlen.'], 400);
+        }
+
+        $pdf_base64 = preg_replace('/\s+/', '', $pdf_base64);
+        $bytes = base64_decode($pdf_base64, false);
+        if (!$bytes || strlen($bytes) < 100 || substr($bytes, 0, 4) !== '%PDF') {
+            wp_send_json_error(['message' => 'Ungültige PDF-Daten.'], 400);
+        }
+
+        // Save PDF generation timestamp in user_meta
+        $user_id = get_current_user_id();
+        update_user_meta($user_id, self::META_PDF_GENERATED, current_time('mysql'));
+
+        // Stream PDF directly to browser (no file on disk)
+        $filename = 'ROI-Berechnung-Robo-Guru-' . date('Y-m-d') . '.pdf';
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Length: ' . strlen($bytes));
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Pragma: no-cache');
+        echo $bytes;
+        exit;
+    }
+
+    /**
+     * AJAX: Save ROI calculation inputs + results to user_meta.
+     * Called automatically after each calculation for logged-in users.
+     */
+    public static function ajax_save_roi_profile() {
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Nicht eingeloggt.'], 401);
+        }
+
+        $payload = json_decode(file_get_contents('php://input'), true);
+        $nonce = isset($payload['nonce']) ? sanitize_text_field($payload['nonce']) : '';
+        if (!$nonce || !wp_verify_nonce($nonce, self::NONCE_ACTION)) {
+            wp_send_json_error(['message' => 'Sicherheitsprüfung fehlgeschlagen.'], 403);
+        }
+
+        $user_id = get_current_user_id();
+        $inputs  = isset($payload['inputs']) && is_array($payload['inputs']) ? $payload['inputs'] : [];
+        $results = isset($payload['results']) && is_array($payload['results']) ? $payload['results'] : [];
+
+        if (empty($inputs)) {
+            wp_send_json_error(['message' => 'Keine Eingabedaten.'], 400);
+        }
+
+        // Sanitize inputs: only allow known numeric/string keys
+        $allowed_input_keys = [
+            'areaSqmPerDay', 'manuelleProduktivitaet', 'reinigungszyklenWoche',
+            'hourlyRate', 'hoursPerDay', 'qty', 'mode', 'price',
+            'leaseRateMonthly', 'leaseTermMonths', 'm2h', 'effizienzfaktor',
+            'roboterLebensdauer', 'servicePreset', 'serviceMonthly',
+            'powerPerYear', 'consumablesPerYear', 'hubLizenzMonat',
+            'companyName', 'robotName',
+        ];
+        $safe_inputs = [];
+        foreach ($allowed_input_keys as $key) {
+            if (isset($inputs[$key])) {
+                $safe_inputs[$key] = sanitize_text_field((string)$inputs[$key]);
+            }
+        }
+
+        // Sanitize results: only allow known keys
+        $allowed_result_keys = [
+            'net', 'monthlyNet', 'breakEvenMonth', 'roi', 'invest',
+            'grossSavings', 'opsCosts', 'totalSavings5Y',
+        ];
+        $safe_results = [];
+        foreach ($allowed_result_keys as $key) {
+            if (isset($results[$key])) {
+                $safe_results[$key] = sanitize_text_field((string)$results[$key]);
+            }
+        }
+
+        update_user_meta($user_id, self::META_LAST_INPUTS, wp_json_encode($safe_inputs));
+        update_user_meta($user_id, self::META_LAST_RESULTS, wp_json_encode($safe_results));
+        update_user_meta($user_id, self::META_LAST_CALCULATED, current_time('mysql'));
+
+        wp_send_json_success([
+            'message' => 'Profil aktualisiert.',
+            'timestamp' => date_i18n('d.m.Y H:i', current_time('timestamp')),
         ]);
     }
 
