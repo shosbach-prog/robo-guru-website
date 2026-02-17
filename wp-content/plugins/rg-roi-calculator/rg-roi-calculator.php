@@ -816,7 +816,7 @@ final class RG_ROI_Calculator {
 
                     <!-- 2. Zusammengeführte Vergleichstabelle (Mensch vs Roboter, 1/3/5 Jahre) -->
                     <?php if (!is_user_logged_in()) : ?>
-                    <div class="rg-member-locked-section" data-rg-gated="1">
+                    <div class="rg-member-locked-section rg-hide" data-rg-gated="1" data-rg-locked="comparison">
                         <div class="rg-locked-badge">&#128274; Nur f&uuml;r Mitglieder</div>
                     <?php endif; ?>
                     <div class="rg-comparison-v2 rg-hide<?php if (!is_user_logged_in()) echo ' rg-blurred'; ?>" data-rg-comparison>
@@ -877,7 +877,7 @@ final class RG_ROI_Calculator {
 
                     <!-- 4. Details Accordion (gated für Gäste) -->
                     <?php if (!is_user_logged_in()) : ?>
-                    <div class="rg-member-locked-section" data-rg-gated="1">
+                    <div class="rg-member-locked-section rg-hide" data-rg-gated="1" data-rg-locked="details">
                         <div class="rg-locked-badge">&#128274; Nur f&uuml;r Mitglieder</div>
                     <?php endif; ?>
                     <details class="rg-details rg-hide<?php if (!is_user_logged_in()) echo ' rg-blurred'; ?>" data-rg-details>

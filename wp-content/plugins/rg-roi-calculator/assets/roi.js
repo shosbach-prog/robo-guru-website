@@ -1065,7 +1065,9 @@ function generatePdf(calc){
       q('[data-rg-timeline]', root),
       q('[data-rg-lifetime]', root),
       q('[data-rg-details]', root),
-      q('[data-rg-actions]', root)
+      q('[data-rg-actions]', root),
+      q('[data-rg-locked="comparison"]', root),
+      q('[data-rg-locked="details"]', root)
     ];
     if (noRobotEl) noRobotEl.classList.toggle('rg-hide', hasRobot);
     sections.forEach(function(el) {
