@@ -421,6 +421,11 @@ final class RG_ROI_Calculator {
             </div>
             <?php endif; ?>
 
+            <!-- Reset Button -->
+            <div class="rg-reset-bar">
+                <button type="button" class="rg-reset-btn" data-rg-reset title="Alle Eingaben auf Standardwerte zurücksetzen">&#x21A9;&#xFE0E; Auf Ursprung zurücksetzen</button>
+            </div>
+
             <!-- Firmenname -->
             <div class="rg-meta-row" style="margin-bottom:12px;">
                 <div class="rg-meta-card">

@@ -28,6 +28,10 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 
 /* === Advisor Bar (top) === */
 .rg-advisor-bar{display:flex;justify-content:flex-end;align-items:center;padding:8px 0;margin-bottom:8px}
+/* Reset bar */
+.rg-reset-bar{display:flex;justify-content:flex-end;margin-bottom:8px}
+.rg-reset-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border:1px solid rgba(15,37,55,.12);border-radius:var(--rg-radius-sm);background:transparent;color:#64748b;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s;line-height:1.4}
+.rg-reset-btn:hover{color:var(--rg-danger);border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04)}
 .rg-advisor-toggle{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;font-weight:600;color:var(--rg-dark);user-select:none}
 .rg-advisor-toggle input{display:none}
 .rg-advisor-toggle__slider{width:40px;height:22px;background:#cbd5e1;border-radius:11px;position:relative;transition:background .2s}
@@ -401,7 +405,7 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 
 /* === Print === */
 @media print{
-  .rg-advisor-bar,.rg-scenario-buttons,.rg-summary-handle,.rg-export-section,.rg-quickprofiles{display:none!important}
+  .rg-advisor-bar,.rg-reset-bar,.rg-scenario-buttons,.rg-summary-handle,.rg-export-section,.rg-quickprofiles{display:none!important}
   .rg-roi-layout{display:block!important}
   .rg-roi-summary{position:static!important;transform:none!important;max-height:none!important;box-shadow:none!important;border:1px solid #ccc!important}
   .rg-section__body--collapsed{max-height:none!important;overflow:visible!important}

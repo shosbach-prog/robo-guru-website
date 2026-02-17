@@ -1995,6 +1995,324 @@ function generatePdf(calc){
     // Initial comparison table render
     updateComparison(root, lastCalc);
 
+    // ===== localStorage Persistence (Auto-Save / Restore) =====
+    var LS_KEY = 'rg_roi_state_v1';
+    var _saveDebounce = null;
+
+    /** Collect the full UI state into a serialisable object */
+    function collectState() {
+      var state = { fields: {}, toggles: {}, selects: {}, setupMode: '', amFields: {}, selectedRobotId: null, accordions: {} };
+
+      // 1. All [data-rg] inputs (text, number, range, textarea, hidden)
+      qa('[data-rg]', root).forEach(function(el) {
+        var key = el.getAttribute('data-rg');
+        if (!key || el.type === 'checkbox') return; // checkboxes handled separately
+        state.fields[key] = el.value;
+      });
+
+      // 2. Checkboxes / toggles
+      qa('input[type="checkbox"][data-rg]', root).forEach(function(el) {
+        state.toggles[el.getAttribute('data-rg')] = el.checked;
+      });
+
+      // 3. Select elements
+      qa('select[data-rg]', root).forEach(function(el) {
+        state.selects[el.getAttribute('data-rg')] = el.value;
+      });
+
+      // 4. Setup mode toggle (once / per_robot)
+      var setupHidden = q('[data-rg="setupMode"]', root);
+      if (setupHidden) state.setupMode = setupHidden.value;
+
+      // 5. Auto/Manual field modes
+      qa('[data-rg-am]', root).forEach(function(field) {
+        var key = field.getAttribute('data-rg-am');
+        state.amFields[key] = field.getAttribute('data-mode') || 'auto';
+      });
+
+      // 6. Selected robot
+      if (selectedRobots.length > 0 && selectedRobots[0]) {
+        state.selectedRobotId = selectedRobots[0].id;
+      }
+
+      // 7. Accordion open/closed states
+      qa('.rg-section__toggle', root).forEach(function(btn) {
+        var section = btn.closest('[data-rg-section]');
+        if (section) {
+          state.accordions[section.getAttribute('data-rg-section')] = btn.getAttribute('aria-expanded') === 'true';
+        }
+      });
+
+      return state;
+    }
+
+    /** Persist state to localStorage (debounced) */
+    function saveState() {
+      clearTimeout(_saveDebounce);
+      _saveDebounce = setTimeout(function() {
+        try {
+          localStorage.setItem(LS_KEY, JSON.stringify(collectState()));
+        } catch (e) { /* quota exceeded – silently ignore */ }
+      }, 300);
+    }
+
+    /** Restore state from localStorage. Returns true if state was restored. */
+    function restoreState() {
+      var raw;
+      try { raw = localStorage.getItem(LS_KEY); } catch (e) { return false; }
+      if (!raw) return false;
+      var state;
+      try { state = JSON.parse(raw); } catch (e) { localStorage.removeItem(LS_KEY); return false; }
+
+      // 1. Restore text/number/range/textarea/hidden fields
+      if (state.fields) {
+        Object.keys(state.fields).forEach(function(key) {
+          var el = q('[data-rg="' + key + '"]', root);
+          if (el && el.type !== 'checkbox') el.value = state.fields[key];
+        });
+      }
+
+      // 2. Restore checkboxes
+      if (state.toggles) {
+        Object.keys(state.toggles).forEach(function(key) {
+          var el = q('[data-rg="' + key + '"]', root);
+          if (el && el.type === 'checkbox') {
+            el.checked = state.toggles[key];
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+      }
+
+      // 3. Restore selects (mode, servicePreset, leaseTermMonths, etc.)
+      if (state.selects) {
+        Object.keys(state.selects).forEach(function(key) {
+          var el = q('[data-rg="' + key + '"]', root);
+          if (el && el.tagName === 'SELECT') {
+            el.value = state.selects[key];
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+      }
+
+      // 4. Restore setup mode toggle UI
+      if (state.setupMode && setupModeWrap) {
+        var hiddenSetup = q('[data-rg="setupMode"]', root);
+        if (hiddenSetup) hiddenSetup.value = state.setupMode;
+        qa('.rg-toggle-switch__opt', setupModeWrap).forEach(function(btn) {
+          var isMatch = btn.getAttribute('data-val') === state.setupMode;
+          btn.classList.toggle('is-active', isMatch);
+          btn.setAttribute('aria-pressed', String(isMatch));
+        });
+      }
+
+      // 5. Restore auto/manual field modes
+      if (state.amFields) {
+        Object.keys(state.amFields).forEach(function(key) {
+          var field = q('[data-rg-am="' + key + '"]', root);
+          if (!field) return;
+          var mode = state.amFields[key];
+          field.setAttribute('data-mode', mode);
+          var inp = q('.rg-in', field);
+          if (inp) inp.disabled = (mode !== 'manual');
+          qa('.rg-am-switch__btn', field).forEach(function(btn) {
+            var isMatch = btn.getAttribute('data-am') === mode;
+            btn.classList.toggle('is-active', isMatch);
+            btn.setAttribute('aria-pressed', String(isMatch));
+          });
+        });
+      }
+
+      // 6. Restore robot selection (after robotsData is available)
+      if (state.selectedRobotId && robotsData.length > 0) {
+        var robot = robotsData.find(function(r) { return r && r.id === state.selectedRobotId; });
+        if (robot) {
+          selectedRobots = [robot];
+          var grid = q('[data-rg-robots]', root);
+          if (grid) {
+            qa('.rg-robot-card', grid).forEach(function(c) { c.classList.remove('is-selected'); });
+            var card = q('.rg-robot-card[data-robot-id="' + robot.id + '"]', grid);
+            if (card) card.classList.add('is-selected');
+          }
+        }
+      }
+
+      // 7. Restore accordion states
+      if (state.accordions) {
+        Object.keys(state.accordions).forEach(function(sectionKey) {
+          var section = q('[data-rg-section="' + sectionKey + '"]', root);
+          if (!section) return;
+          var btn = q('.rg-section__toggle', section);
+          var body = btn ? btn.nextElementSibling : null;
+          if (!btn || !body) return;
+          var shouldBeOpen = state.accordions[sectionKey];
+          btn.setAttribute('aria-expanded', String(shouldBeOpen));
+          body.setAttribute('aria-hidden', String(!shouldBeOpen));
+          if (shouldBeOpen) {
+            body.classList.remove('rg-section__body--collapsed');
+            body.classList.add('rg-section__body--expanded');
+          } else {
+            body.classList.remove('rg-section__body--expanded');
+            body.classList.add('rg-section__body--collapsed');
+          }
+        });
+      }
+
+      return true;
+    }
+
+    /** Full reset: clear localStorage, reset all form fields, clear selections */
+    function resetAll() {
+      // 1. Remove persisted state
+      try { localStorage.removeItem(LS_KEY); } catch (e) { /* ignore */ }
+
+      // 2. Reset all [data-rg] inputs to HTML defaults
+      qa('[data-rg]', root).forEach(function(el) {
+        if (el.type === 'checkbox') {
+          el.checked = el.defaultChecked;
+          el.dispatchEvent(new Event('change', { bubbles: true }));
+        } else if (el.tagName === 'SELECT') {
+          el.selectedIndex = 0;
+          el.dispatchEvent(new Event('change', { bubbles: true }));
+        } else {
+          el.value = el.defaultValue;
+        }
+      });
+
+      // 3. Clear robot selection
+      selectedRobots = [];
+      var grid = q('[data-rg-robots]', root);
+      if (grid) qa('.rg-robot-card', grid).forEach(function(c) { c.classList.remove('is-selected'); });
+
+      // 4. Reset setup mode to 'once'
+      if (setupModeWrap) {
+        qa('.rg-toggle-switch__opt', setupModeWrap).forEach(function(btn) {
+          var isOnce = btn.getAttribute('data-val') === 'once';
+          btn.classList.toggle('is-active', isOnce);
+          btn.setAttribute('aria-pressed', String(isOnce));
+        });
+        var hiddenSetup = q('[data-rg="setupMode"]', root);
+        if (hiddenSetup) hiddenSetup.value = 'once';
+      }
+
+      // 5. Reset auto/manual fields to auto
+      qa('[data-rg-am]', root).forEach(function(field) {
+        field.setAttribute('data-mode', 'auto');
+        var inp = q('.rg-in', field);
+        if (inp) inp.disabled = true;
+        qa('.rg-am-switch__btn', field).forEach(function(btn) {
+          var isAuto = btn.getAttribute('data-am') === 'auto';
+          btn.classList.toggle('is-active', isAuto);
+          btn.setAttribute('aria-pressed', String(isAuto));
+        });
+      });
+
+      // 6. Reset accordions: open first two, close rest
+      qa('.rg-section__toggle', root).forEach(function(btn) {
+        var section = btn.closest('[data-rg-section]');
+        var body = btn.nextElementSibling;
+        if (!section || !body) return;
+        var key = section.getAttribute('data-rg-section');
+        var shouldOpen = (key === 'scenario' || key === 'core');
+        btn.setAttribute('aria-expanded', String(shouldOpen));
+        body.setAttribute('aria-hidden', String(!shouldOpen));
+        if (shouldOpen) {
+          body.classList.remove('rg-section__body--collapsed');
+          body.classList.add('rg-section__body--expanded');
+        } else {
+          body.classList.remove('rg-section__body--expanded');
+          body.classList.add('rg-section__body--collapsed');
+        }
+      });
+
+      // 7. Re-apply mode UI and recalculate
+      if (modeSel) applyModeUi();
+      storeOriginalValues();
+      lastCalc = toCalc(root);
+      render(root, lastCalc);
+      updateComparison(root, lastCalc);
+      renderBreakEvenChart(root, lastCalc);
+    }
+
+    // --- Wire up auto-save on every relevant change ---
+    // Forms: input & change events (already existing recalc handlers also fire)
+    root.addEventListener('input', saveState);
+    root.addEventListener('change', saveState);
+    // Clicks on tiles / toggle-switches / robot cards / accordions
+    root.addEventListener('click', function(e) {
+      if (e.target.closest('.rg-robot-card, .rg-toggle-switch__opt, .rg-am-switch__btn, .rg-scenario-btn, .rg-section__toggle')) {
+        saveState();
+      }
+    });
+
+    // --- Wire up reset button ---
+    var resetBtn = q('[data-rg-reset]', root);
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function() {
+        if (!confirm('Wirklich alle Eingaben zurücksetzen?')) return;
+        resetAll();
+      });
+    }
+
+    // --- Restore state on load ---
+    // Robots load asynchronously, so we restore twice:
+    // 1) Immediately for all form fields
+    // 2) After robots are rendered, for robot selection
+    var hadState = restoreState();
+
+    if (hadState) {
+      // Re-apply mode UI after restore
+      if (modeSel) applyModeUi();
+      // Recalculate with restored values
+      lastCalc = toCalc(root);
+      render(root, lastCalc);
+      updateComparison(root, lastCalc);
+      renderBreakEvenChart(root, lastCalc);
+
+      // Deferred: re-select robot once cards are rendered
+      var savedRaw;
+      try { savedRaw = localStorage.getItem(LS_KEY); } catch (e) { /* ignore */ }
+      if (savedRaw) {
+        var savedState;
+        try { savedState = JSON.parse(savedRaw); } catch (e) { savedState = null; }
+        if (savedState && savedState.selectedRobotId) {
+          var _tryRestoreRobot = function() {
+            if (robotsData.length === 0) return;
+            var robot = robotsData.find(function(r) { return r && r.id === savedState.selectedRobotId; });
+            if (!robot) return;
+            selectedRobots = [robot];
+            var _grid = q('[data-rg-robots]', root);
+            if (_grid) {
+              qa('.rg-robot-card', _grid).forEach(function(c) { c.classList.remove('is-selected'); });
+              var _card = q('.rg-robot-card[data-robot-id="' + robot.id + '"]', _grid);
+              if (_card) _card.classList.add('is-selected');
+            }
+            applyRobotValues(root, robot);
+            // Re-restore field values that robot selection may have overwritten
+            if (savedState.fields) {
+              Object.keys(savedState.fields).forEach(function(key) {
+                var el = q('[data-rg="' + key + '"]', root);
+                // Only restore fields that are in manual mode or not auto-controlled
+                var amField = el ? el.closest('[data-rg-am]') : null;
+                if (amField && amField.getAttribute('data-mode') === 'manual') {
+                  el.value = savedState.fields[key];
+                } else if (!amField && el && el.type !== 'checkbox') {
+                  el.value = savedState.fields[key];
+                }
+              });
+            }
+            updateHoursFromArea(root);
+            lastCalc = toCalc(root);
+            render(root, lastCalc);
+            updateComparison(root, lastCalc);
+            renderBreakEvenChart(root, lastCalc);
+          };
+          // Try immediately (robots might already be cached), then retry after delay
+          setTimeout(_tryRestoreRobot, 200);
+          setTimeout(_tryRestoreRobot, 1000);
+        }
+      }
+    }
+
     var printBtnEl = q('[data-rg-btn="print"]', root);
     if (printBtnEl) printBtnEl.addEventListener('click', function(e) {
       // Soft-lock: guests see overlay
