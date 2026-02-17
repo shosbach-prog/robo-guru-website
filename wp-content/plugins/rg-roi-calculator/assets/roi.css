@@ -206,19 +206,19 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 
 /* === Break-Even Timeline === */
 .rg-timeline__title{margin:0 0 16px;font-size:14px;font-weight:700;color:var(--rg-dark)}
-.rg-timeline__track{position:relative;height:48px;margin:0 24px}
-.rg-timeline__line{position:absolute;top:12px;left:0;right:0;height:3px;background:#e2e8f0;border-radius:2px}
-.rg-timeline__fill{position:absolute;top:12px;left:0;height:3px;background:var(--rg-primary);border-radius:2px;transition:width .5s ease}
-.rg-timeline__point{position:absolute;top:0;display:flex;flex-direction:column;align-items:center;transform:translateX(-50%)}
-.rg-timeline__point--start{left:0;transform:translateX(0)}
-.rg-timeline__point--end{left:100%;transform:translateX(-100%)}
+.rg-timeline__track{position:relative;height:60px;margin:0 32px}
+.rg-timeline__line{position:absolute;top:16px;left:0;right:0;height:3px;background:#e2e8f0;border-radius:2px}
+.rg-timeline__fill{position:absolute;top:16px;left:0;height:3px;background:var(--rg-primary);border-radius:2px;transition:width .5s ease}
+.rg-timeline__point{position:absolute;top:4px;display:flex;flex-direction:column;align-items:center;transform:translateX(-50%)}
+.rg-timeline__point--start{left:0;transform:translateX(0);align-items:flex-start}
+.rg-timeline__point--end{left:100%;transform:translateX(-100%);align-items:flex-end}
 .rg-timeline__point--breakeven{z-index:2}
 .rg-timeline__dot{width:12px;height:12px;border-radius:50%;background:#cbd5e1;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.15);flex-shrink:0}
 .rg-timeline__dot--be{width:18px;height:18px;background:var(--rg-success);border:3px solid #fff;box-shadow:0 2px 8px rgba(47,191,113,.4);margin-top:-3px}
-.rg-timeline__label{font-size:10px;font-weight:600;color:#64748b;margin-top:4px;white-space:nowrap}
+.rg-timeline__label{font-size:10px;font-weight:600;color:#64748b;margin-top:6px;white-space:nowrap}
 .rg-timeline__point--breakeven .rg-timeline__label{color:var(--rg-success);font-weight:700;font-size:11px}
-.rg-timeline__text{font-size:13px;color:var(--rg-dark);margin-top:8px;text-align:center}
-.rg-timeline__no-be{font-size:12px;color:#94a3b8;text-align:center;margin-top:8px;font-style:italic}
+.rg-timeline__text{font-size:13px;color:var(--rg-dark);margin-top:12px;text-align:center}
+.rg-timeline__no-be{font-size:12px;color:#94a3b8;text-align:center;margin-top:12px;font-style:italic}
 
 /* Legacy chart (hidden, kept for potential PDF use) */
 .rg-chart-container{display:none;position:relative;height:220px;margin:0 -4px}

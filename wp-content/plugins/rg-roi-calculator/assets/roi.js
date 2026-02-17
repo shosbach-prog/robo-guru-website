@@ -1855,11 +1855,15 @@ function generatePdf(calc){
 
       var beMonth = calc.breakEvenMonth;
       var pct = Math.min((beMonth / 60) * 100, 100);
+      // Enforce minimum 12% so the BE dot/label doesn't overlap "Investition"
+      var displayPct = Math.max(pct, 12);
+      // If close to 100%, cap at 88% so it doesn't overlap "5 Jahre"
+      if (displayPct > 88) displayPct = 88;
 
-      if (fillEl) fillEl.style.width = pct + '%';
+      if (fillEl) fillEl.style.width = displayPct + '%';
       if (bePoint) {
         bePoint.style.display = '';
-        bePoint.style.left = pct + '%';
+        bePoint.style.left = displayPct + '%';
         bePoint.style.transform = 'translateX(-50%)';
       }
       if (beLabel) beLabel.textContent = 'Monat ' + beMonth;
