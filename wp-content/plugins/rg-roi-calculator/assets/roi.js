@@ -1854,10 +1854,16 @@ function generatePdf(calc){
       if (noBeEl) noBeEl.classList.add('rg-hide');
 
       var beMonth = calc.breakEvenMonth;
-      var pct = Math.min((beMonth / 60) * 100, 100);
-      // Enforce minimum so dots don't visually merge, max so BE doesn't touch end
-      var displayPct = Math.max(pct, 8);
-      if (displayPct > 90) displayPct = 90;
+      // Non-linear scale: first year (0-12) gets 40%, years 2-5 (12-60) get 60%
+      var displayPct;
+      if (beMonth <= 12) {
+        displayPct = (beMonth / 12) * 40;
+      } else {
+        displayPct = 40 + ((beMonth - 12) / 48) * 60;
+      }
+      // Minimum 8% so dots don't merge, max 92% so BE doesn't touch end
+      displayPct = Math.max(displayPct, 8);
+      if (displayPct > 92) displayPct = 92;
 
       if (fillEl) fillEl.style.width = displayPct + '%';
       if (bePoint) {

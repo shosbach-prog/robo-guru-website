@@ -217,7 +217,11 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-timeline__dot--be{width:18px;height:18px;background:var(--rg-success);border:3px solid #fff;box-shadow:0 2px 8px rgba(47,191,113,.4);margin-top:-3px}
 .rg-timeline__label{font-size:10px;font-weight:600;color:#64748b;margin-top:6px;white-space:nowrap}
 /* Break-even label floats ABOVE the line so it never collides with start/end */
-.rg-timeline__point--breakeven .rg-timeline__label{position:absolute;bottom:100%;margin:0 0 4px;color:var(--rg-success);font-weight:700;font-size:11px}
+.rg-timeline__point--breakeven .rg-timeline__label{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin:0 0 4px;color:var(--rg-success);font-weight:700;font-size:11px}
+/* Subtle year-1 tick mark at 40% (non-linear scale boundary) */
+.rg-timeline__tick{position:absolute;top:38px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.rg-timeline__tick::before{content:'';width:1px;height:10px;background:#cbd5e1}
+.rg-timeline__tick span{font-size:9px;color:#94a3b8;margin-top:2px;white-space:nowrap}
 .rg-timeline__text{font-size:13px;color:var(--rg-dark);margin-top:14px;text-align:center}
 .rg-timeline__no-be{font-size:12px;color:#94a3b8;text-align:center;margin-top:14px;font-style:italic}
 

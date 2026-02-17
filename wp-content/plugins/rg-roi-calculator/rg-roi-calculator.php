@@ -850,6 +850,7 @@ final class RG_ROI_Calculator {
                         <div class="rg-timeline__track">
                             <div class="rg-timeline__line"></div>
                             <div class="rg-timeline__fill" data-rg-timeline-fill></div>
+                            <div class="rg-timeline__tick" style="left:40%"><span>1 Jahr</span></div>
                             <div class="rg-timeline__point rg-timeline__point--start" data-rg-timeline-start>
                                 <span class="rg-timeline__dot"></span>
                                 <span class="rg-timeline__label">Investition</span>
