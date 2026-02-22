@@ -423,12 +423,13 @@ function generatePdf(calc){
 
     // Page 1 - Results
     var textStartX = 14;
+    var contentTopY = 24; // Top margin below header bar (16mm header + 8mm gap)
 
     // Add robot image if available (left side, below header)
     if (calc.robotImageData) {
       try {
         var rFit = fitImageBox(calc.robotImageData.w, calc.robotImageData.h, 15, 15);
-        doc.addImage(calc.robotImageData.dataUrl, 'PNG', 14, 19, rFit.w, rFit.h);
+        doc.addImage(calc.robotImageData.dataUrl, 'PNG', 14, contentTopY, rFit.w, rFit.h);
         textStartX = 14 + rFit.w + 3;
       } catch(e) { /* Robot image could not be added */ }
     }
@@ -437,7 +438,7 @@ function generatePdf(calc){
     if (calc.companyLogoData) {
       try {
         var lFit = fitImageBox(calc.companyLogoData.w, calc.companyLogoData.h, 35, 14);
-        doc.addImage(calc.companyLogoData.dataUrl, 'PNG', 196 - lFit.w, 19, lFit.w, lFit.h);
+        doc.addImage(calc.companyLogoData.dataUrl, 'PNG', 196 - lFit.w, contentTopY, lFit.w, lFit.h);
       } catch(e) { /* Logo could not be added */ }
     }
 
@@ -454,13 +455,13 @@ function generatePdf(calc){
       titleFontSize -= 0.5;
       doc.setFontSize(titleFontSize);
     }
-    doc.text(pdfTitle, textStartX, 28, { maxWidth: maxTitleW });
+    doc.text(pdfTitle, textStartX, contentTopY + 9, { maxWidth: maxTitleW });
     doc.setFontSize(12);
     doc.setTextColor(...pal.grey);
-    doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', textStartX, 35);
+    doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', textStartX, contentTopY + 16);
 
     // Metadata section (company and creator) - prominent box
-    let metaY = 35;
+    let metaY = contentTopY + 16;
     const hasMetadata = calc.companyName || calc.creatorName;
     if (hasMetadata) {
       metaY += 5;
@@ -498,7 +499,7 @@ function generatePdf(calc){
     }
 
     // Hero section - Main result (adjust Y position based on metadata)
-    const heroY = hasMetadata ? metaY + 6 : 42;
+    const heroY = hasMetadata ? metaY + 6 : contentTopY + 23;
     doc.setFillColor(...(hideBranding ? [245, 245, 245] : [240, 253, 255]));
     doc.setDrawColor(...(hideBranding ? [180, 180, 180] : [22, 198, 229]));
     doc.setLineWidth(0.5);
