@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite760f672ea4606e549b371e109ad253e
+class ComposerStaticInitea6e8a07fa70c084c6708f3fcb2eca1d
 {
     public static $prefixLengthsPsr4 = array (
         'B' => 
@@ -52,6 +52,7 @@ class ComposerStaticInite760f672ea4606e549b371e109ad253e
         'BuddyBossTheme\\GroundLevel\\Container\\Exception' => __DIR__ . '/..' . '/caseproof/ground-level-container/Exception.php',
         'BuddyBossTheme\\GroundLevel\\Container\\NotFoundException' => __DIR__ . '/..' . '/caseproof/ground-level-container/NotFoundException.php',
         'BuddyBossTheme\\GroundLevel\\Container\\Service' => __DIR__ . '/..' . '/caseproof/ground-level-container/Service.php',
+        'BuddyBossTheme\\GroundLevel\\InProductNotifications\\Models\\Button' => __DIR__ . '/..' . '/caseproof/ground-level-in-product-notifications/Models/Button.php',
         'BuddyBossTheme\\GroundLevel\\InProductNotifications\\Models\\Notification' => __DIR__ . '/..' . '/caseproof/ground-level-in-product-notifications/Models/Notification.php',
         'BuddyBossTheme\\GroundLevel\\InProductNotifications\\Service' => __DIR__ . '/..' . '/caseproof/ground-level-in-product-notifications/Service.php',
         'BuddyBossTheme\\GroundLevel\\InProductNotifications\\Services\\Ajax' => __DIR__ . '/..' . '/caseproof/ground-level-in-product-notifications/Services/Ajax.php',
@@ -66,6 +67,7 @@ class ComposerStaticInite760f672ea4606e549b371e109ad253e
         'BuddyBossTheme\\GroundLevel\\Mothership\\Api\\RequestFactory' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Api/RequestFactory.php',
         'BuddyBossTheme\\GroundLevel\\Mothership\\Api\\Request\\LicenseActivations' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Api/Request/LicenseActivations.php',
         'BuddyBossTheme\\GroundLevel\\Mothership\\Api\\Request\\Licenses' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Api/Request/Licenses.php',
+        'BuddyBossTheme\\GroundLevel\\Mothership\\Api\\Request\\ProductInsights' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Api/Request/ProductInsights.php',
         'BuddyBossTheme\\GroundLevel\\Mothership\\Api\\Request\\Products' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Api/Request/Products.php',
         'BuddyBossTheme\\GroundLevel\\Mothership\\Api\\Request\\UserAddons' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Api/Request/UserAddons.php',
         'BuddyBossTheme\\GroundLevel\\Mothership\\Api\\Request\\Users' => __DIR__ . '/..' . '/caseproof/ground-level-mothership/Api/Request/Users.php',
@@ -97,6 +99,7 @@ class ComposerStaticInite760f672ea4606e549b371e109ad253e
         'BuddyBossTheme\\GroundLevel\\Support\\Models\\Model' => __DIR__ . '/..' . '/caseproof/ground-level-support/Models/Model.php',
         'BuddyBossTheme\\GroundLevel\\Support\\Models\\User' => __DIR__ . '/..' . '/caseproof/ground-level-support/Models/User.php',
         'BuddyBossTheme\\GroundLevel\\Support\\Str' => __DIR__ . '/..' . '/caseproof/ground-level-support/Str.php',
+        'BuddyBossTheme\\GroundLevel\\Support\\StyleUtil' => __DIR__ . '/..' . '/caseproof/ground-level-support/StyleUtil.php',
         'BuddyBossTheme\\GroundLevel\\Support\\Time' => __DIR__ . '/..' . '/caseproof/ground-level-support/Time.php',
         'BuddyBossTheme\\GroundLevel\\Support\\Util' => __DIR__ . '/..' . '/caseproof/ground-level-support/Util.php',
         'BuddyBossTheme\\Psr\\Container\\ContainerExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerExceptionInterface.php',
@@ -108,9 +111,9 @@ class ComposerStaticInite760f672ea4606e549b371e109ad253e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite760f672ea4606e549b371e109ad253e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite760f672ea4606e549b371e109ad253e::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInite760f672ea4606e549b371e109ad253e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitea6e8a07fa70c084c6708f3fcb2eca1d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitea6e8a07fa70c084c6708f3fcb2eca1d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitea6e8a07fa70c084c6708f3fcb2eca1d::$classMap;
 
         }, null, ClassLoader::class);
     }
