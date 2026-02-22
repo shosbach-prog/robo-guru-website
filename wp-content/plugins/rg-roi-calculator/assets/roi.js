@@ -22,6 +22,27 @@
     grey: [107, 114, 128]
   };
 
+  // White-Label: neutral palette (no brand colors)
+  const RG_NEUTRAL = {
+    primary: [60, 60, 60],
+    dark: [30, 30, 30],
+    success: [47, 191, 113],
+    lightBg: [248, 248, 248],
+    grey: [120, 120, 120]
+  };
+
+  /**
+   * Central White-Label decision (client-side mirror of PHP logic).
+   * hide_branding = advisor_mode && white_label && user logged in && permission ok
+   */
+  function rgShouldHideBranding(calc) {
+    if (!calc || !calc.advisorMode || !calc.whiteLabel) return false;
+    if (typeof rgRoi === 'undefined') return false;
+    if (rgRoi.isLoggedIn !== '1') return false;
+    if (rgRoi.canWhiteLabel !== '1') return false;
+    return true;
+  }
+
   // Lightbox for success messages
   function showSuccessLightbox(opts) {
     const { title, message, linkUrl, linkText } = opts;
@@ -168,7 +189,8 @@
   }
 
 
-function drawRoiChart(doc, x, y, w, h, monthlyNet, invest, monthsToShow) {
+function drawRoiChart(doc, x, y, w, h, monthlyNet, invest, monthsToShow, chartPal) {
+    var cp = chartPal || RG_BRAND;
     // Background with subtle styling
     doc.setFillColor(250, 252, 254);
     doc.roundedRect(x, y, w, h, 2, 2, 'F');
@@ -184,7 +206,7 @@ function drawRoiChart(doc, x, y, w, h, monthlyNet, invest, monthsToShow) {
 
     if (!monthlyNet || monthlyNet <= 0 || invest < 0) {
       doc.setFontSize(10);
-      doc.setTextColor(...RG_BRAND.grey);
+      doc.setTextColor(...cp.grey);
       doc.text('Keine positive Netto-Ersparnis - Break-even nicht erreichbar.', x + w/2, y + h/2, { align: 'center' });
       return { breakEvenMonth: null, monthsShown: monthsToShow || 36 };
     }
@@ -231,8 +253,8 @@ function drawRoiChart(doc, x, y, w, h, monthlyNet, invest, monthsToShow) {
       points.push([xForM(m), yFor(cum), cum]);
     }
 
-    // Main line (brand color)
-    doc.setDrawColor(...RG_BRAND.primary);
+    // Main line (brand color or neutral)
+    doc.setDrawColor(...cp.primary);
     doc.setLineWidth(1.0);
     for (let i = 1; i < points.length; i++) {
       doc.line(points[i-1][0], points[i-1][1], points[i][0], points[i][1]);
@@ -244,7 +266,7 @@ function drawRoiChart(doc, x, y, w, h, monthlyNet, invest, monthsToShow) {
     const beY = yFor(monthlyNet * be);
 
     // Break-even vertical line
-    doc.setDrawColor(...RG_BRAND.success);
+    doc.setDrawColor(...cp.success);
     doc.setLineWidth(0.6);
     doc.setLineDashPattern([2, 1], 0);
     doc.line(beX, chartTop, beX, chartTop + ch);
@@ -252,61 +274,73 @@ function drawRoiChart(doc, x, y, w, h, monthlyNet, invest, monthsToShow) {
 
     // Break-even point circle
     doc.setFillColor(255, 255, 255);
-    doc.setDrawColor(...RG_BRAND.success);
+    doc.setDrawColor(...cp.success);
     doc.setLineWidth(0.8);
     doc.circle(beX, beY, 2, 'FD');
-    doc.setFillColor(...RG_BRAND.success);
+    doc.setFillColor(...cp.success);
     doc.circle(beX, beY, 1, 'F');
 
     // Break-even label
     const beLabelX = Math.min(beX + 3, cx + cw - 45);
     doc.setFillColor(235, 250, 242);
-    doc.setDrawColor(...RG_BRAND.success);
+    doc.setDrawColor(...cp.success);
     doc.setLineWidth(0.2);
     doc.roundedRect(beLabelX - 1, chartTop + 1, 42, 6, 1, 1, 'FD');
-    doc.setTextColor(...RG_BRAND.success);
+    doc.setTextColor(...cp.success);
     doc.setFontSize(7);
     doc.text('Break-even: Monat ' + breakEvenMonth, beLabelX, chartTop + 5);
 
     // Reset colors
     doc.setDrawColor(0, 0, 0);
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...cp.dark);
 
     // Chart title
     doc.setFontSize(8);
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...cp.dark);
     doc.text('Kumulierte Netto-Ersparnis', cx, y + pad + 1);
 
     // X-axis labels
     doc.setFontSize(7);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...cp.grey);
     doc.text('Monat 1', cx, chartTop + ch + 4);
     doc.text('Monat ' + mShow, cx + cw, chartTop + ch + 4, { align: 'right' });
 
     return { breakEvenMonth, monthsShown: mShow };
   }
 
-function addHeaderFooter(doc){
+function addHeaderFooter(doc, hideBranding){
     const pageCount = doc.getNumberOfPages();
     const dateStr = new Date().toLocaleDateString('de-DE');
+    const pal = hideBranding ? RG_NEUTRAL : RG_BRAND;
 
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
 
-      // Header bar background
-      doc.setFillColor(15, 37, 55);
-      doc.rect(0, 0, 210, 16, 'F');
+      if (hideBranding) {
+        // White-Label: neutral header bar (dark grey, no logo, no brand name)
+        doc.setFillColor(50, 50, 50);
+        doc.rect(0, 0, 210, 16, 'F');
 
-      // Logo in header
-      try { doc.addImage(RG_LOGO_DATA, 'PNG', 8, 2, 12, 12); } catch(e) {}
-      
-      // Header text
-      doc.setFontSize(11);
-      doc.setTextColor(255, 255, 255);
-      doc.text('Robo-Guru', 22, 9);
-      doc.setFontSize(9);
-      doc.setTextColor(200, 210, 220);
-      doc.text('ROI-Berechnung Reinigungsrobotik', 22, 13);
+        doc.setFontSize(11);
+        doc.setTextColor(255, 255, 255);
+        doc.text('ROI-Berechnung', 14, 9);
+        doc.setFontSize(9);
+        doc.setTextColor(200, 200, 200);
+        doc.text('Reinigungsrobotik \u2013 Wirtschaftlichkeitsanalyse', 14, 13);
+      } else {
+        // Standard: branded header with logo
+        doc.setFillColor(15, 37, 55);
+        doc.rect(0, 0, 210, 16, 'F');
+
+        try { doc.addImage(RG_LOGO_DATA, 'PNG', 8, 2, 12, 12); } catch(e) {}
+
+        doc.setFontSize(11);
+        doc.setTextColor(255, 255, 255);
+        doc.text('Robo-Guru', 22, 9);
+        doc.setFontSize(9);
+        doc.setTextColor(200, 210, 220);
+        doc.text('ROI-Berechnung Reinigungsrobotik', 22, 13);
+      }
 
       // Date on right
       doc.setFontSize(8);
@@ -320,18 +354,20 @@ function addHeaderFooter(doc){
 
       // Footer disclaimer
       doc.setFontSize(7);
-      doc.setTextColor(...RG_BRAND.grey);
+      doc.setTextColor(...pal.grey);
       const disclaimer = 'Hinweis: Vereinfachte Modellrechnung auf Basis Ihrer Angaben. Abweichungen durch Einsatzzeiten, Lohnkosten, Wartung, Energiepreise oder Foerderungen moeglich.';
       doc.text(disclaimer, 14, 286, { maxWidth: 155 });
 
       // Page number
       doc.setFontSize(8);
-      doc.setTextColor(...RG_BRAND.grey);
+      doc.setTextColor(...pal.grey);
       doc.text('Seite ' + i + ' / ' + pageCount, 196, 286, { align: 'right' });
 
-      // Website
-      doc.setTextColor(...RG_BRAND.primary);
-      doc.text('robo-guru.de', 14, 292);
+      // Website – only in standard mode
+      if (!hideBranding) {
+        doc.setTextColor(...RG_BRAND.primary);
+        doc.text('robo-guru.de', 14, 292);
+      }
     }
   }
 
@@ -371,6 +407,17 @@ function generatePdf(calc){
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
+    // White-Label: determine if branding should be hidden
+    const hideBranding = rgShouldHideBranding(calc);
+    const pal = hideBranding ? RG_NEUTRAL : RG_BRAND;
+
+    // PDF metadata – neutral creator when white-label
+    if (hideBranding) {
+      doc.setProperties({ creator: 'ROI Engine', author: 'ROI Engine' });
+    } else {
+      doc.setProperties({ creator: 'Robo-Guru ROI Engine', author: 'Robo-Guru' });
+    }
+
     const monthlyNet = calc.monthlyNet || calc.net / 12;
     const beText = calc.beText || '–';
 
@@ -396,14 +443,14 @@ function generatePdf(calc){
 
     // Title section (starts after header bar)
     var maxTitleW = 180 - (textStartX - 14) - (calc.companyLogoData ? 40 : 0);
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...pal.dark);
     doc.setFontSize(20);
     var pdfTitle = 'ROI-Berechnung';
-    if (calc.robotName) pdfTitle += ' – ' + calc.robotName;
-    if (calc.qty > 1) pdfTitle += ' – ' + calc.qty + ' Roboter';
+    if (calc.robotName) pdfTitle += ' \u2013 ' + calc.robotName;
+    if (calc.qty > 1) pdfTitle += ' \u2013 ' + calc.qty + ' Roboter';
     doc.text(pdfTitle, textStartX, 28, { maxWidth: maxTitleW });
     doc.setFontSize(12);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', textStartX, 35);
 
     // Metadata section (company and creator) - prominent box
@@ -411,26 +458,26 @@ function generatePdf(calc){
     const hasMetadata = calc.companyName || calc.creatorName;
     if (hasMetadata) {
       metaY += 5;
-      // Draw metadata box
+      // Draw metadata box – neutral border when white-label
       const metaBoxHeight = (calc.companyName && calc.creatorName) ? 28 : 20;
       doc.setFillColor(248, 250, 252);
-      doc.setDrawColor(22, 198, 229);
+      doc.setDrawColor(...(hideBranding ? [180, 180, 180] : [22, 198, 229]));
       doc.setLineWidth(0.8);
       doc.roundedRect(14, metaY, 182, metaBoxHeight, 3, 3, 'FD');
 
       let textY = metaY + 8;
       if (calc.companyName) {
         doc.setFontSize(13);
-        doc.setTextColor(...RG_BRAND.dark);
+        doc.setTextColor(...pal.dark);
         doc.text('Die Berechnung ist fuer Firma: ', 18, textY);
         doc.setFontSize(13);
-        doc.setTextColor(...RG_BRAND.primary);
+        doc.setTextColor(...pal.primary);
         doc.text(calc.companyName, 18 + doc.getTextWidth('Die Berechnung ist fuer Firma: '), textY);
         textY += 8;
       }
       if (calc.creatorName) {
         doc.setFontSize(11);
-        doc.setTextColor(...RG_BRAND.grey);
+        doc.setTextColor(...pal.grey);
         doc.text('Erstellt von: ' + calc.creatorName, 18, textY);
         textY += 6;
       }
@@ -438,7 +485,7 @@ function generatePdf(calc){
       const today = new Date();
       const dateStr = today.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
       doc.setFontSize(9);
-      doc.setTextColor(...RG_BRAND.grey);
+      doc.setTextColor(...pal.grey);
       doc.text('Datum: ' + dateStr, 196 - 14, metaY + 8, { align: 'right' });
 
       metaY += metaBoxHeight;
@@ -446,21 +493,21 @@ function generatePdf(calc){
 
     // Hero section - Main result (adjust Y position based on metadata)
     const heroY = hasMetadata ? metaY + 6 : 42;
-    doc.setFillColor(240, 253, 255);
-    doc.setDrawColor(22, 198, 229);
+    doc.setFillColor(...(hideBranding ? [245, 245, 245] : [240, 253, 255]));
+    doc.setDrawColor(...(hideBranding ? [180, 180, 180] : [22, 198, 229]));
     doc.setLineWidth(0.5);
     doc.roundedRect(14, heroY, 182, 32, 3, 3, 'FD');
 
     doc.setFontSize(10);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     doc.text('Geschaetzte Netto-Ersparnis pro Jahr', 105, heroY + 8, { align: 'center' });
 
     doc.setFontSize(28);
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...pal.dark);
     doc.text(fmtEUR(calc.net), 105, heroY + 22, { align: 'center' });
 
     doc.setFontSize(9);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     doc.text('entspricht ca. ' + fmtEUR(monthlyNet) + ' pro Monat', 105, heroY + 29, { align: 'center' });
 
     // Key metrics in boxes
@@ -475,10 +522,10 @@ function generatePdf(calc){
     doc.setLineWidth(0.3);
     doc.roundedRect(14, metricsY, metricW, metricH, 2, 2, 'FD');
     doc.setFontSize(8);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     doc.text('ROI', 14 + metricW/2, metricsY + 6, { align: 'center' });
     doc.setFontSize(16);
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...pal.dark);
     doc.text(fmtNum(calc.roi) + ' %', 14 + metricW/2, metricsY + 16, { align: 'center' });
 
     // Metric 2 - Amortisation
@@ -487,21 +534,21 @@ function generatePdf(calc){
     doc.setLineWidth(0.3);
     doc.roundedRect(14 + metricW + metricGap, metricsY, metricW, metricH, 2, 2, 'FD');
     doc.setFontSize(8);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     doc.text('Amortisation', 14 + metricW + metricGap + metricW/2, metricsY + 6, { align: 'center' });
     doc.setFontSize(16);
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...pal.dark);
     doc.text(fmtNum(calc.paybackMonths) + ' Mon.', 14 + metricW + metricGap + metricW/2, metricsY + 16, { align: 'center' });
 
     // Metric 3 - Einordnung
-    const ratingColor = calc.rating && calc.rating.level === 'good' ? RG_BRAND.success :
+    const ratingColor = calc.rating && calc.rating.level === 'good' ? pal.success :
                         calc.rating && calc.rating.level === 'ok' ? [245, 158, 11] : [239, 68, 68];
     doc.setFillColor(255, 255, 255);
     doc.setDrawColor(...ratingColor);
     doc.setLineWidth(0.5);
     doc.roundedRect(14 + 2*(metricW + metricGap), metricsY, metricW, metricH, 2, 2, 'FD');
     doc.setFontSize(8);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     doc.text('Einordnung', 14 + 2*(metricW + metricGap) + metricW/2, metricsY + 6, { align: 'center' });
     doc.setFontSize(11);
     doc.setTextColor(...ratingColor);
@@ -510,11 +557,11 @@ function generatePdf(calc){
     // Page 2 - 5-Jahres-Projektion
     doc.addPage();
 
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...pal.dark);
     doc.setFontSize(14);
     doc.text('5-Jahres-Projektion', 14, 26);
     doc.setFontSize(9);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     doc.text('Detaillierte Kostenanalyse und Ersparnisberechnung', 14, 32);
 
     // Build projection table
@@ -553,7 +600,7 @@ function generatePdf(calc){
       head: projHead,
       body: projBody,
       styles: { fontSize: 8, cellPadding: 3 },
-      headStyles: { fillColor: RG_BRAND.dark, textColor: [255,255,255], fontStyle: 'bold' },
+      headStyles: { fillColor: pal.dark, textColor: [255,255,255], fontStyle: 'bold' },
       alternateRowStyles: { fillColor: [248,250,252] },
       columnStyles: { 0: { cellWidth: 38 } },
       didParseCell: function(data) {
@@ -567,22 +614,22 @@ function generatePdf(calc){
     // Break-even Chart (60 Monate)
     var chartY = doc.lastAutoTable.finalY + 10;
     doc.setFontSize(11);
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...pal.dark);
     doc.text('Break-even Analyse (60 Monate)', 14, chartY);
     doc.setFontSize(8);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     doc.text('Kumulierte Netto-Ersparnis ueber 5 Jahre', 14, chartY + 5);
 
-    drawRoiChart(doc, 14, chartY + 8, 182, 65, monthlyNet, calc.investUpfront || calc.invest, 60);
+    drawRoiChart(doc, 14, chartY + 8, 182, 65, monthlyNet, calc.investUpfront || calc.invest, 60, pal);
 
     // Page 3 - Parameters
     doc.addPage();
 
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...pal.dark);
     doc.setFontSize(14);
     doc.text('Berechnungsgrundlage', 14, 26);
     doc.setFontSize(9);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     doc.text('Ihre eingegebenen Parameter', 14, 32);
 
     // Build parameter table body with optional metadata
@@ -636,7 +683,7 @@ function generatePdf(calc){
         cellPadding: 3,
       },
       headStyles: {
-        fillColor: RG_BRAND.dark,
+        fillColor: pal.dark,
         textColor: [255, 255, 255],
         fontStyle: 'bold',
       },
@@ -650,7 +697,8 @@ function generatePdf(calc){
     });
 
     // Assumptions section - page break if not enough space for boxes + footer
-    const assumptionsNeeded = 90; // Annahmen box (48) + gap + QR box (36)
+    // White-Label: no QR section, so we need less space
+    const assumptionsNeeded = hideBranding ? 54 : 90;
     let afterY = doc.lastAutoTable.finalY + 12;
     if (afterY + assumptionsNeeded > 270) {
       doc.addPage();
@@ -662,11 +710,11 @@ function generatePdf(calc){
     doc.roundedRect(14, afterY, 182, 48, 2, 2, 'FD');
 
     doc.setFontSize(10);
-    doc.setTextColor(...RG_BRAND.dark);
+    doc.setTextColor(...pal.dark);
     doc.text('Annahmen der Berechnung', 18, afterY + 7);
 
     doc.setFontSize(8);
-    doc.setTextColor(...RG_BRAND.grey);
+    doc.setTextColor(...pal.grey);
     const assumptions = [
       '5-Jahres-Projektion mit ' + (calc.reinigungszyklenWoche || 5) + ' Reinigungszyklen/Woche',
       'Personalkosten basieren auf ' + fmtEUR(calc.hourlyRate) + '/h' + (calc.wageGrowthActive ? ' (+3% p.a. Lohnsteigerung)' : ''),
@@ -680,33 +728,35 @@ function generatePdf(calc){
       yy += 5.5; 
     });
 
-    // QR-Code section - page break if QR box would overflow into footer
-    try {
-      const qrSize = 25;
-      const qrX = 196 - qrSize;
-      let qrY = afterY + 50;
-      if (qrY + 32 > 270) {
-        doc.addPage();
-        qrY = 22;
-      }
+    // QR-Code section – skip entirely in White-Label mode (no branding, no QR, no URL)
+    if (!hideBranding) {
+      try {
+        const qrSize = 25;
+        const qrX = 196 - qrSize;
+        let qrY = afterY + 50;
+        if (qrY + 32 > 270) {
+          doc.addPage();
+          qrY = 22;
+        }
 
-      doc.setFillColor(248, 250, 252);
-      doc.setDrawColor(230, 235, 240);
-      doc.roundedRect(14, qrY - 4, 182, 36, 2, 2, 'FD');
+        doc.setFillColor(248, 250, 252);
+        doc.setDrawColor(230, 235, 240);
+        doc.roundedRect(14, qrY - 4, 182, 36, 2, 2, 'FD');
 
-      doc.setFontSize(10);
-      doc.setTextColor(...RG_BRAND.dark);
-      doc.text('Online neu berechnen', 18, qrY + 5);
-      doc.setFontSize(8);
-      doc.setTextColor(...RG_BRAND.grey);
-      doc.text('Scannen Sie den QR-Code oder besuchen Sie:', 18, qrY + 12);
-      doc.setTextColor(...RG_BRAND.primary);
-      doc.text('robo-guru.de/roi-rechner', 18, qrY + 18);
+        doc.setFontSize(10);
+        doc.setTextColor(...RG_BRAND.dark);
+        doc.text('Online neu berechnen', 18, qrY + 5);
+        doc.setFontSize(8);
+        doc.setTextColor(...RG_BRAND.grey);
+        doc.text('Scannen Sie den QR-Code oder besuchen Sie:', 18, qrY + 12);
+        doc.setTextColor(...RG_BRAND.primary);
+        doc.text('robo-guru.de/roi-rechner', 18, qrY + 18);
 
-      doc.addImage(RG_QR_DATA, 'PNG', qrX - 4, qrY - 1, qrSize, qrSize);
-    } catch(e) {}
+        doc.addImage(RG_QR_DATA, 'PNG', qrX - 4, qrY - 1, qrSize, qrSize);
+      } catch(e) {}
+    }
 
-    addHeaderFooter(doc);
+    addHeaderFooter(doc, hideBranding);
     return doc;
   }
 
@@ -995,7 +1045,10 @@ function generatePdf(calc){
       accessoriesTotal,
       setupTotal,
       consumablesPerYear,
-      robotName: (typeof selectedRobots !== 'undefined' && selectedRobots.length > 0) ? selectedRobots[0].name : ''
+      robotName: (typeof selectedRobots !== 'undefined' && selectedRobots.length > 0) ? selectedRobots[0].name : '',
+      // White-Label flags (read from UI toggles)
+      advisorMode: !!(q('[data-rg="advisorMode"]', root) && q('[data-rg="advisorMode"]', root).checked),
+      whiteLabel: !!(q('[data-rg="whiteLabel"]', root) && q('[data-rg="whiteLabel"]', root).checked)
     };
   }
   // Render 5-year projection table
@@ -1660,6 +1713,8 @@ function generatePdf(calc){
     // === Advisor Mode Toggle (soft-locked for guests) ===
     var advisorToggle = q('[data-rg="advisorMode"]', root);
     var advisorPanel = q('[data-rg-advisor-panel]', root);
+    var wlWrap = q('[data-rg-wl-wrap]', root);
+    var wlCheckbox = q('[data-rg="whiteLabel"]', root);
     if (advisorToggle && advisorPanel) {
       advisorToggle.addEventListener('change', function() {
         if (isGuest() && advisorToggle.checked) {
@@ -1668,6 +1723,14 @@ function generatePdf(calc){
           return;
         }
         advisorPanel.classList.toggle('rg-hide', !advisorToggle.checked);
+        // Show/hide White-Label toggle based on advisor mode
+        if (wlWrap) {
+          wlWrap.classList.toggle('rg-hide', !advisorToggle.checked);
+          // Reset white-label when advisor mode is turned off
+          if (!advisorToggle.checked && wlCheckbox) {
+            wlCheckbox.checked = false;
+          }
+        }
       });
     }
 
@@ -2331,7 +2394,8 @@ function generatePdf(calc){
             printWindow.print();
           });
         } else {
-          doc.save(`ROI-Berechnung-Robo-Guru-${new Date().toISOString().slice(0,10)}.pdf`);
+          var printFname = rgShouldHideBranding(lastCalc) ? 'ROI-Berechnung' : 'ROI-Berechnung-Robo-Guru';
+          doc.save(printFname + '-' + new Date().toISOString().slice(0,10) + '.pdf');
           alert('Popup blockiert. PDF wurde heruntergeladen - bitte manuell drucken.');
         }
       });
@@ -2343,7 +2407,9 @@ function generatePdf(calc){
       if (isGuest()) { e.preventDefault(); openGateOverlay(); return; }
       lastCalc = toCalc(root);
       if (!lastCalc.canExport) return;
-      var fname = 'ROI-Berechnung';
+      // White-Label: omit "Robo-Guru" from filename
+      var wl = rgShouldHideBranding(lastCalc);
+      var fname = wl ? 'ROI-Berechnung' : 'ROI-Berechnung-Robo-Guru';
       if (lastCalc.robotName) fname += '-' + lastCalc.robotName.replace(/[^a-zA-Z0-9]/g, '-');
       if (lastCalc.qty > 1) fname += '-' + lastCalc.qty + 'x';
       fname += '-' + new Date().toISOString().slice(0,10) + '.pdf';
@@ -2372,6 +2438,8 @@ function generatePdf(calc){
             body: JSON.stringify({
               nonce: rgRoi.nonce,
               pdfBase64: pdfBase64,
+              advisorMode: lastCalc.advisorMode || false,
+              whiteLabel: lastCalc.whiteLabel || false,
             }),
           })
           .then(r => r.json())

@@ -560,6 +560,17 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-last-analysis__icon{font-size:16px;flex-shrink:0}
 .rg-last-analysis__text{flex:1}
 
+/* ===== White-Label Toggle (Beratermodus only) ===== */
+.rg-white-label-toggle{margin-bottom:12px;padding:10px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px}
+.rg-wl-label{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;font-weight:600;color:var(--rg-dark,#0f2537);user-select:none}
+.rg-wl-label input{display:none}
+.rg-wl-label__slider{width:40px;height:22px;background:#cbd5e1;border-radius:11px;position:relative;transition:background .2s;flex-shrink:0}
+.rg-wl-label__slider::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.rg-wl-label input:checked+.rg-wl-label__slider{background:#22c55e}
+.rg-wl-label input:checked+.rg-wl-label__slider::after{transform:translateX(18px)}
+.rg-wl-label__text{flex:1;line-height:1.4}
+.rg-wl-label__hint{font-weight:400;font-size:11px;color:#64748b;display:block}
+
 /* ===== Mobile: Gate overlay responsive ===== */
 @media(max-width:480px){
   .rg-gate-overlay__content{padding:28px 20px;width:96%}
