@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Robo-Guru ROI Kalkulator
  * Description: Einfacher ROI-Kalkulator für Reinigungsrobotik inkl. PDF-Download, Druckansicht und Versand per E-Mail (PDF-Anhang). Shortcode: [rg_roi_calculator]
- * Version: 4.0.0
+ * Version: 4.2.0
  * Author: Robo-Guru
  * Text Domain: rg-roi
  */
@@ -10,7 +10,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 if (!defined('RG_ROI_CALCULATOR_VERSION')) {
-    define('RG_ROI_CALCULATOR_VERSION', '4.1.0');
+    define('RG_ROI_CALCULATOR_VERSION', '4.2.0');
 }
 
 final class RG_ROI_Calculator {
@@ -29,6 +29,8 @@ final class RG_ROI_Calculator {
     const META_LAST_RESULTS      = 'roi_last_results';
     const META_LAST_CALCULATED   = 'roi_last_calculated_at';
     const META_PDF_GENERATED     = 'roi_pdf_generated_at';
+    const META_WL_PDF_COUNT      = 'roi_white_label_pdf_count';
+    const META_WL_PDF_LAST       = 'roi_white_label_pdf_last';
 
     // Avoid strict return types for broader PHP compatibility on WordPress hosts
     public static function init() {
@@ -67,6 +69,61 @@ final class RG_ROI_Calculator {
         add_action('save_post_robo_robot', [__CLASS__, 'invalidate_robot_cache']);
         add_action('deleted_post', [__CLASS__, 'invalidate_robot_cache']);
         add_action('trashed_post', [__CLASS__, 'invalidate_robot_cache']);
+    }
+
+    /**
+     * Central White-Label decision: hide branding only if advisor_mode + white_label + user logged in.
+     *
+     * @param array $context {
+     *   @type bool $advisor_mode Whether advisor mode was active.
+     *   @type bool $white_label  Whether the white-label toggle was checked.
+     * }
+     * @return bool True if branding should be hidden.
+     */
+    public static function rg_roi_pdf_should_hide_branding( $context = [] ) {
+        $advisor_mode = ! empty( $context['advisor_mode'] );
+        $white_label  = ! empty( $context['white_label'] );
+
+        if ( ! $advisor_mode || ! $white_label ) {
+            return false;
+        }
+        if ( ! is_user_logged_in() ) {
+            return false;
+        }
+
+        // Optional role check – allow any logged-in user for now.
+        // Extend here with role/capability check if needed:
+        // if ( ! current_user_can( 'rg_advisor_pro' ) ) { return false; }
+
+        return true;
+    }
+
+    /**
+     * Check if the current user is allowed to use white-label PDFs.
+     *
+     * @return bool
+     */
+    public static function current_user_can_white_label() {
+        if ( ! is_user_logged_in() ) {
+            return false;
+        }
+        // All logged-in users with advisor mode access can use white-label.
+        // Extend with role check if needed (e.g. current_user_can('rg_advisor_pro')).
+        return true;
+    }
+
+    /**
+     * Log white-label PDF usage to user meta.
+     *
+     * @param int $user_id
+     */
+    public static function log_white_label_usage( $user_id ) {
+        if ( ! $user_id ) {
+            return;
+        }
+        $count = (int) get_user_meta( $user_id, self::META_WL_PDF_COUNT, true );
+        update_user_meta( $user_id, self::META_WL_PDF_COUNT, $count + 1 );
+        update_user_meta( $user_id, self::META_WL_PDF_LAST, current_time( 'mysql' ) );
     }
 
     /**
@@ -342,6 +399,7 @@ final class RG_ROI_Calculator {
             'registerUrl'    => esc_url($register_url),
             'loginUrl'       => esc_url($login_url),
             'lastCalculated' => $last_calculated,
+            'canWhiteLabel'  => self::current_user_can_white_label() ? '1' : '0',
         ]);
     }
 
@@ -929,6 +987,16 @@ final class RG_ROI_Calculator {
 
                     <!-- 5. PDF Export + CTA (am Ende) -->
                     <div class="rg-export-section rg-hide" data-rg-actions>
+                        <?php if (is_user_logged_in()) : ?>
+                        <!-- White-Label Toggle – only visible when Beratermodus is active -->
+                        <div class="rg-white-label-toggle rg-hide" data-rg-wl-wrap>
+                            <label class="rg-wl-label">
+                                <input type="checkbox" data-rg="whiteLabel">
+                                <span class="rg-wl-label__slider"></span>
+                                <span class="rg-wl-label__text">White-Label PDF <span class="rg-wl-label__hint">(ohne Logo, ohne QR-Code, komplett neutral)</span></span>
+                            </label>
+                        </div>
+                        <?php endif; ?>
                         <div class="rg-actions">
                             <?php if (is_user_logged_in()) : ?>
                             <button class="rg-btn rg-btn--primary" data-rg-btn="pdf" disabled><span class="rg-ico">&#128196;</span><span>PDF</span></button>
@@ -1353,13 +1421,25 @@ final class RG_ROI_Calculator {
             wp_send_json_error(['message' => 'PDF konnte nicht gelesen werden.'], 400);
         }
 
+        // White-Label tracking for email reports
+        $advisor_mode_flag = ! empty( $payload['advisorMode'] ) || ( isset( $calc['advisorMode'] ) && $calc['advisorMode'] );
+        $white_label_flag  = ! empty( $payload['whiteLabel'] ) || ( isset( $calc['whiteLabel'] ) && $calc['whiteLabel'] );
+        $hide_branding_email = self::rg_roi_pdf_should_hide_branding([
+            'advisor_mode' => $advisor_mode_flag,
+            'white_label'  => $white_label_flag,
+        ]);
+        if ( $hide_branding_email && is_user_logged_in() ) {
+            self::log_white_label_usage( get_current_user_id() );
+        }
+
         $upload_dir = wp_upload_dir();
         $tmp_dir = trailingslashit($upload_dir['basedir']) . 'rg-roi';
         if (!wp_mkdir_p($tmp_dir)) {
             wp_send_json_error(['message' => 'Server kann temporären Ordner nicht erstellen.'], 500);
         }
 
-        $filename = 'ROI-Berechnung-Robo-Guru-' . date('Y-m-d') . '-' . wp_generate_password(6, false, false) . '.pdf';
+        $filename_prefix = $hide_branding_email ? 'ROI-Berechnung' : 'ROI-Berechnung-Robo-Guru';
+        $filename = $filename_prefix . '-' . date('Y-m-d') . '-' . wp_generate_password(6, false, false) . '.pdf';
         $path = trailingslashit($tmp_dir) . $filename;
         $written = file_put_contents($path, $bytes);
 
@@ -1461,7 +1541,19 @@ final class RG_ROI_Calculator {
             wp_send_json_error(['message' => 'Dokumenten-Ordner konnte nicht erstellt werden.'], 500);
         }
 
-        $filename = 'ROI-Berechnung-Robo-Guru-' . date('Y-m-d') . '.pdf';
+        // White-Label tracking for profile saves
+        $wl_advisor = ! empty( $payload['advisorMode'] );
+        $wl_flag    = ! empty( $payload['whiteLabel'] );
+        $wl_hide    = self::rg_roi_pdf_should_hide_branding([
+            'advisor_mode' => $wl_advisor,
+            'white_label'  => $wl_flag,
+        ]);
+        if ( $wl_hide ) {
+            self::log_white_label_usage( get_current_user_id() );
+        }
+
+        $filename_base = $wl_hide ? 'ROI-Berechnung' : 'ROI-Berechnung-Robo-Guru';
+        $filename = $filename_base . '-' . date('Y-m-d') . '.pdf';
         // Use unique filename to avoid overwriting
         $unique_filename = wp_unique_filename($bb_docs_dir, $filename);
         $dest_path = trailingslashit($bb_docs_dir) . $unique_filename;
@@ -1726,8 +1818,21 @@ final class RG_ROI_Calculator {
         $user_id = get_current_user_id();
         update_user_meta($user_id, self::META_PDF_GENERATED, current_time('mysql'));
 
+        // White-Label tracking (server-side validation)
+        $advisor_mode = ! empty( $payload['advisorMode'] );
+        $white_label  = ! empty( $payload['whiteLabel'] );
+        $hide_branding = self::rg_roi_pdf_should_hide_branding([
+            'advisor_mode' => $advisor_mode,
+            'white_label'  => $white_label,
+        ]);
+        if ( $hide_branding ) {
+            self::log_white_label_usage( $user_id );
+        }
+
         // Stream PDF directly to browser (no file on disk)
-        $filename = 'ROI-Berechnung-Robo-Guru-' . date('Y-m-d') . '.pdf';
+        $filename = $hide_branding
+            ? 'ROI-Berechnung-' . date('Y-m-d') . '.pdf'
+            : 'ROI-Berechnung-Robo-Guru-' . date('Y-m-d') . '.pdf';
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Content-Length: ' . strlen($bytes));
