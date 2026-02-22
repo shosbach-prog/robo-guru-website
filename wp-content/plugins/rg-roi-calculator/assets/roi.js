@@ -444,10 +444,16 @@ function generatePdf(calc){
     // Title section (starts after header bar)
     var maxTitleW = 180 - (textStartX - 14) - (calc.companyLogoData ? 40 : 0);
     doc.setTextColor(...pal.dark);
-    doc.setFontSize(20);
     var pdfTitle = 'ROI-Berechnung';
     if (calc.robotName) pdfTitle += ' \u2013 ' + calc.robotName;
     if (calc.qty > 1) pdfTitle += ' \u2013 ' + calc.qty + ' Roboter';
+    // Auto-shrink title font to fit on a single line (min 14pt)
+    var titleFontSize = 20;
+    doc.setFontSize(titleFontSize);
+    while (titleFontSize > 14 && doc.getTextWidth(pdfTitle) > maxTitleW) {
+      titleFontSize -= 0.5;
+      doc.setFontSize(titleFontSize);
+    }
     doc.text(pdfTitle, textStartX, 28, { maxWidth: maxTitleW });
     doc.setFontSize(12);
     doc.setTextColor(...pal.grey);
