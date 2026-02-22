@@ -448,20 +448,25 @@ function generatePdf(calc){
     var pdfTitle = 'ROI-Berechnung';
     if (calc.robotName) pdfTitle += ' \u2013 ' + calc.robotName;
     if (calc.qty > 1) pdfTitle += ' \u2013 ' + calc.qty + ' Roboter';
-    // Auto-shrink title font to fit on a single line (min 14pt)
+    // Auto-shrink title font to fit on a single line (min 11pt)
     var titleFontSize = 20;
     doc.setFontSize(titleFontSize);
-    while (titleFontSize > 14 && doc.getTextWidth(pdfTitle) > maxTitleW) {
+    while (titleFontSize > 11 && doc.getTextWidth(pdfTitle) > maxTitleW) {
       titleFontSize -= 0.5;
       doc.setFontSize(titleFontSize);
     }
-    doc.text(pdfTitle, textStartX, contentTopY + 9, { maxWidth: maxTitleW });
+    var titleY = contentTopY + 9;
+    doc.text(pdfTitle, textStartX, titleY, { maxWidth: maxTitleW });
+    // Calculate how many lines the title actually takes and push subtitle down
+    var titleLines = doc.splitTextToSize(pdfTitle, maxTitleW);
+    var titleLineHeight = titleFontSize * 0.45; // approx mm per line
+    var subtitleY = titleY + (titleLines.length > 1 ? titleLines.length * titleLineHeight + 2 : 7);
     doc.setFontSize(12);
     doc.setTextColor(...pal.grey);
-    doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', textStartX, contentTopY + 16);
+    doc.text('Reinigungsrobotik - Wirtschaftlichkeitsanalyse', textStartX, subtitleY);
 
     // Metadata section (company and creator) - prominent box
-    let metaY = contentTopY + 16;
+    let metaY = subtitleY;
     const hasMetadata = calc.companyName || calc.creatorName;
     if (hasMetadata) {
       metaY += 5;
