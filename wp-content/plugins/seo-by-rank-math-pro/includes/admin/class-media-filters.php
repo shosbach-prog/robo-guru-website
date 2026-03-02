@@ -84,7 +84,7 @@ class Media_Filters {
 	 */
 	public function posts_by_seo_filters( $query ) {
 		$filter = Param::get( 'seo-filter' );
-		if ( ! $filter ) {
+		if ( ! $filter || ! Param::get( 'filter_action' ) ) {
 			return $query;
 		}
 

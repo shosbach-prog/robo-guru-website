@@ -10,6 +10,7 @@ use BuddyBossPlatform\GroundLevel\Container\Service as BaseService;
 use BuddyBossPlatform\GroundLevel\Mothership\Manager\AddonsManager;
 use BuddyBossPlatform\GroundLevel\Mothership\Manager\LicenseManager;
 use BuddyBossPlatform\GroundLevel\Mothership\AbstractPluginConnection;
+use BuddyBossPlatform\GroundLevel\Mothership\Util as MothershipUtil;
 use BuddyBossPlatform\GroundLevel\Container\Contracts\ContainerAwareness;
 use BuddyBossPlatform\GroundLevel\Container\Contracts\LoadableDependency;
 use BuddyBossPlatform\GroundLevel\Container\Contracts\ConfiguresParameters;
@@ -25,6 +26,10 @@ class Service extends BaseService implements ContainerAwareness, ConfiguresParam
      * The Service ID.
      */
     public const ID = 'GRDLVL.MOTHERSHIP';
+    /**
+     * The parameter key for the Mothership API base URL.
+     */
+    public const API_BASE_URL = 'GRDLVL.MOTHERSHIP.API_BASE_URL';
     /**
      * The parameter key for the Mothership prefix.
      */
@@ -90,6 +95,7 @@ class Service extends BaseService implements ContainerAwareness, ConfiguresParam
      */
     public function __construct(Container $container, AbstractPluginConnection $plugin)
     {
+        parent::__construct($container);
         $this->plugin = $plugin;
     }
     /**
@@ -99,7 +105,7 @@ class Service extends BaseService implements ContainerAwareness, ConfiguresParam
      */
     public function getDefaultParameters() : array
     {
-        return [self::CACHE_TTL => 60];
+        return [self::CACHE_TTL => 60, self::API_BASE_URL => null];
     }
     /**
      * Loads the dependencies for the Mothership Component.
@@ -134,21 +140,32 @@ class Service extends BaseService implements ContainerAwareness, ConfiguresParam
         AddonsManager::setContainer($container);
         LicenseManager::setContainer($container);
         Request::setContainer($container);
+        MothershipUtil::setContainer($container);
         // Schedule the license manager events.
         LicenseManager::scheduleEvents($this->plugin->pluginId);
     }
     /**
-     * Get the API base URL.
-     * User can also set the API base URL by defining the constant in the plugin.
+     * Retrieves the API base URL.
+     *
+     * The API base URL is retrieved from the following sources in order of precedence:
+     * 1. The constant defined in the wp-config.php file.
+     * 2. The parameter set in the container.
+     * 3. The default API base URL, defined as the $apiBaseUrl static property.
      *
      * @return string
      */
     public function getApiBaseUrl() : string
     {
-        if (\defined(\strtoupper($this->plugin->pluginId) . '_MOTHERSHIP_API_BASE_URL')) {
-            return \constant(\strtoupper($this->plugin->pluginId) . '_MOTHERSHIP_API_BASE_URL');
+        $apiBaseUrlConstant = MothershipUtil::composeConstantName('MOTHERSHIP_API_BASE_URL');
+        if (\defined($apiBaseUrlConstant)) {
+            return \constant($apiBaseUrlConstant);
         }
-        return self::$apiBaseUrl;
+        $default = self::$apiBaseUrl;
+        $hasParameter = $this->getContainer()->has(self::API_BASE_URL);
+        if ($hasParameter) {
+            return $this->getContainer()->get(self::API_BASE_URL) ?? $default;
+        }
+        return $default;
     }
     /**
      * Gets the proxy license key.

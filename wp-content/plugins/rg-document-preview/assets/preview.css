@@ -1,0 +1,363 @@
+/* RG Document Preview - Enhanced BuddyBoss Documents */
+
+/* ===== PDF Thumbnail in Document List ===== */
+.media-folder_items.ac-document-list,
+.media-folder_items.rg-pdf-item {
+    position: relative;
+}
+
+.media-folder_items .rg-pdf-thumb {
+    position: relative;
+    width: 56px;
+    height: 72px;
+    min-width: 56px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    border: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.media-folder_items .rg-pdf-thumb canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.media-folder_items .rg-pdf-thumb .rg-thumb-loading {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e2e8f0;
+    border-top-color: #16C6E5;
+    border-radius: 50%;
+    animation: rg-spin 0.8s linear infinite;
+}
+
+.media-folder_items .rg-pdf-thumb .rg-pdf-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+}
+
+.media-folder_items.has-pdf-thumb {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.media-folder_items.has-pdf-thumb .media-folder_icon {
+    display: none !important;
+}
+
+/* ===== PDF Lightbox ===== */
+.rg-pdf-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: rg-fade-in 0.2s ease;
+}
+
+.rg-pdf-lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(8px);
+}
+
+.rg-pdf-lightbox__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 95vw;
+    max-width: 1200px;
+    height: 90vh;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+    animation: rg-scale-in 0.25s ease;
+}
+
+.rg-pdf-lightbox__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #0F2537 0%, #1a3a4f 100%);
+    color: #fff;
+}
+
+.rg-pdf-lightbox__title {
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50%;
+}
+
+.rg-pdf-lightbox__controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rg-pdf-lightbox__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.rg-pdf-lightbox__btn:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+}
+
+.rg-pdf-lightbox__close {
+    background: rgba(239, 68, 68, 0.2);
+    margin-left: 8px;
+}
+
+.rg-pdf-lightbox__close:hover {
+    background: rgba(239, 68, 68, 0.4);
+}
+
+.rg-pdf-lightbox__zoom {
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 50px;
+    text-align: center;
+    color: rgba(255,255,255,0.8);
+}
+
+.rg-pdf-lightbox__body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: #1e293b;
+    overflow: hidden;
+}
+
+.rg-pdf-lightbox__canvas-wrap {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    padding: 20px;
+}
+
+.rg-pdf-lightbox__canvas-wrap canvas {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    background: #fff;
+}
+
+.rg-pdf-lightbox__loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: #1e293b;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.rg-pdf-lightbox__loading.hidden {
+    display: none;
+}
+
+.rg-pdf-lightbox__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #334155;
+    border-top-color: #16C6E5;
+    border-radius: 50%;
+    animation: rg-spin 0.8s linear infinite;
+}
+
+.rg-pdf-lightbox__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    z-index: 10;
+}
+
+.rg-pdf-lightbox__nav:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.rg-pdf-lightbox__nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.rg-pdf-lightbox__prev {
+    left: 0;
+    border-radius: 0 12px 12px 0;
+}
+
+.rg-pdf-lightbox__next {
+    right: 0;
+    border-radius: 12px 0 0 12px;
+}
+
+.rg-pdf-lightbox__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
+}
+
+.rg-pdf-lightbox__page-info {
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.rg-pdf-lightbox__page-info span {
+    color: #0F2537;
+}
+
+/* ===== Enhanced Document List Styles ===== */
+.media-folder_items {
+    transition: all 0.2s ease;
+    border-radius: 8px !important;
+}
+
+.media-folder_items:hover {
+    background: #f8fafc !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.media-folder_items .media-folder_name {
+    font-weight: 500 !important;
+    color: #1e293b !important;
+}
+
+.media-folder_items .media-folder_name:hover {
+    color: #16C6E5 !important;
+}
+
+/* PDF documents get special styling */
+.media-folder_items[data-extension="pdf"] {
+    cursor: pointer;
+}
+
+.media-folder_items[data-extension="pdf"] .media-folder_icon i {
+    color: #ef4444 !important;
+}
+
+/* Folder icon enhancement */
+.media-folder_items.ac-folder-list .media-folder_icon i {
+    color: #f59e0b !important;
+    font-size: 28px !important;
+}
+
+/* ===== Document Grid View (Optional Enhancement) ===== */
+.rg-doc-grid-view .document-data-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.rg-doc-grid-view .media-folder_items {
+    flex-direction: column;
+    padding: 16px !important;
+    text-align: center;
+}
+
+.rg-doc-grid-view .media-folder_items .rg-pdf-thumb {
+    position: relative;
+    transform: none;
+    width: 100%;
+    height: 160px;
+    margin-bottom: 12px;
+}
+
+/* ===== Animations ===== */
+@keyframes rg-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes rg-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes rg-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .rg-pdf-lightbox__container {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .rg-pdf-lightbox__title {
+        max-width: 40%;
+        font-size: 13px;
+    }
+
+    .rg-pdf-lightbox__nav {
+        width: 40px;
+        height: 60px;
+    }
+
+    .rg-pdf-lightbox__controls {
+        gap: 4px;
+    }
+
+    .rg-pdf-lightbox__btn {
+        width: 32px;
+        height: 32px;
+    }
+}

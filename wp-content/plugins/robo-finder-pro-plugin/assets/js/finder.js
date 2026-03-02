@@ -721,21 +721,286 @@ function syncHiddenFields($wrap){
         $fehl.prop('hidden', !isSpecial);
       }
 
-      // Result teaser (conversion booster) – no specific model names
+      // Result teaser with relevance-ranked robots
       var $teaser = $s6.find('[data-rf-teaser]').first();
       if($teaser.length){
         var envTxt = st.einsatzgebiet && st.einsatzgebiet.length ? st.einsatzgebiet.join(', ') : 'deinem Umfeld';
         var specialPart = isSpecial ? ' (Sonderfall – wir prüfen Übergänge & Navigation)' : '';
         var teaserHtml =
           '<div class="rf-teaser-card">' +
-            '<div class="rf-teaser-title">Zwischenergebnis</div>' +
-            '<div class="rf-teaser-text">Basierend auf deinen Angaben prüfen wir Lösungen für <strong>' + esc(envTxt) + '</strong>' + specialPart + '.</div>' +
-            '<div class="rf-teaser-sub">Im nächsten Schritt erhältst du eine konkrete Empfehlung – keine Werbung.</div>' +
+            '<div class="rf-teaser-title">Passende Roboter für dich</div>' +
+            '<div class="rf-teaser-text">Basierend auf deinen Angaben für <strong>' + esc(envTxt) + '</strong>' + specialPart + '</div>' +
+            '<div class="rf-relevance-results" data-rf-relevance-container><div class="rf-relevance-loading">Lade passende Roboter...</div></div>' +
           '</div>';
         $teaser.html(teaserHtml).prop('hidden', false);
+        // Load relevance-ranked results
+        loadRelevanceResults($wrap, st);
       }
     }
   }
+
+  // Match labels (German translations)
+  var matchLabels = {
+    env: 'Einsatzgebiet',
+    task: 'Aufgabe',
+    floor: 'Bodenart',
+    budget: 'Budget',
+    m2h: 'Flächenleistung',
+    docking: 'Ladestation'
+  };
+
+  // Load relevance-ranked robots via AJAX
+  function loadRelevanceResults($wrap, st){
+    if(typeof RoboFinderPro === 'undefined') return;
+    var $container = $wrap.find('[data-rf-relevance-container]').first();
+    if(!$container.length) return;
+
+    $.ajax({
+      url: RoboFinderPro.ajax_url,
+      type: 'POST',
+      data: {
+        action: 'robo_finder_recommend',
+        nonce: RoboFinderPro.nonce,
+        env: st.einsatzgebiet || [],
+        task: st.aufgabe ? [st.aufgabe] : []
+      },
+      success: function(res){
+        if(res && res.success && res.data && res.data.items && res.data.items.length){
+          renderRelevanceResults($container, res.data.items, res.data.is_fallback);
+        } else {
+          $container.html('<div class="rf-relevance-empty">Keine passenden Roboter gefunden.</div>');
+        }
+      },
+      error: function(){
+        $container.html('<div class="rf-relevance-empty">Fehler beim Laden.</div>');
+      }
+    });
+  }
+
+  // Render a single robot card (reusable)
+  function renderRobotCard(item, idx, isHidden){
+    var rel = item.relevance || 0;
+    var relClass = rel >= 80 ? 'rf-rel-high' : (rel >= 50 ? 'rf-rel-medium' : 'rf-rel-low');
+
+    // Build match tags
+    var matchTags = '';
+    if(item.matches){
+      var matchKeys = Object.keys(item.matches);
+      for(var j = 0; j < matchKeys.length && j < 3; j++){
+        var key = matchKeys[j];
+        var label = matchLabels[key] || key;
+        matchTags += '<span class="rf-match-tag">' + esc(label) + '</span>';
+      }
+    }
+
+    var hiddenClass = isHidden ? ' rf-relevance-card--hidden' : '';
+    var html = '<div class="rf-relevance-card' + hiddenClass + '" data-rf-robot-id="' + esc(String(item.id)) + '">';
+    // Compare checkbox
+    html += '<label class="rf-compare-check" title="Zum Vergleich hinzufügen" onclick="event.stopPropagation();">';
+    html += '<input type="checkbox" class="rf-compare-cb" value="' + esc(String(item.id)) + '" />';
+    html += '<span class="rf-compare-icon"></span>';
+    html += '</label>';
+    if(item.thumb){
+      html += '<div class="rf-rel-thumb"><img src="' + esc(item.thumb) + '" alt="' + esc(item.title) + '" loading="lazy"></div>';
+    }
+    html += '<div class="rf-rel-content">';
+    html += '<div class="rf-rel-header">';
+    html += '<a href="' + esc(item.permalink) + '" class="rf-rel-title">' + esc(item.title) + '</a>';
+    if(rel > 0){
+      html += '<span class="rf-rel-badge ' + relClass + '">' + rel + '%</span>';
+    }
+    html += '</div>';
+    if(item.manufacturer){
+      html += '<div class="rf-rel-manufacturer">' + esc(item.manufacturer) + '</div>';
+    }
+    if(matchTags){
+      html += '<div class="rf-rel-matches">' + matchTags + '</div>';
+    }
+    if(item.highlight_1){
+      html += '<div class="rf-rel-highlight">' + esc(item.highlight_1) + '</div>';
+    }
+    html += '</div></div>';
+    return html;
+  }
+
+  // Render relevance-ranked robot cards (3 visible + expand)
+  function renderRelevanceResults($container, items, isFallback){
+    var html = '';
+    if(isFallback){
+      html += '<div class="rf-relevance-fallback-note">Allgemeine Empfehlungen (kein exakter Match):</div>';
+    }
+
+    // Compare bar (hidden until checkboxes are checked)
+    html += '<div class="rf-compare-bar" data-rf-compare-bar style="display:none;">';
+    html += '<span class="rf-compare-bar-text"><span data-rf-compare-count>0</span> ausgewählt</span>';
+    html += '<button type="button" class="rf-compare-btn" data-rf-compare-trigger>Vergleichen</button>';
+    html += '</div>';
+
+    html += '<div class="rf-relevance-grid">';
+    var INITIAL_SHOW = 3;
+    for(var i = 0; i < items.length; i++){
+      html += renderRobotCard(items[i], i, i >= INITIAL_SHOW);
+    }
+    html += '</div>';
+
+    // Expand button for remaining robots
+    if(items.length > INITIAL_SHOW){
+      html += '<button type="button" class="rf-relevance-more" data-rf-expand-results>';
+      html += '+' + (items.length - INITIAL_SHOW) + ' weitere passende Modelle anzeigen';
+      html += '</button>';
+    }
+
+    // Compare result container (populated via AJAX)
+    html += '<div class="rf-compare-result" data-rf-compare-result style="display:none;"></div>';
+
+    $container.html(html);
+  }
+
+  // Expand hidden robot cards with smooth scroll
+  $(document).on('click', '[data-rf-expand-results]', function(e){
+    e.preventDefault();
+    var $btn = $(this);
+    var $grid = $btn.siblings('.rf-relevance-grid').first();
+    if(!$grid.length) $grid = $btn.parent().find('.rf-relevance-grid').first();
+
+    var $hidden = $grid.find('.rf-relevance-card--hidden');
+    if(!$hidden.length) return;
+
+    // Reveal cards with animation
+    $hidden.each(function(idx){
+      var $card = $(this);
+      $card.removeClass('rf-relevance-card--hidden');
+      $card.css({ opacity: 0, transform: 'translateY(12px)' });
+      setTimeout(function(){
+        $card.css({ opacity: 1, transform: 'translateY(0)', transition: 'opacity .3s ease, transform .3s ease' });
+      }, idx * 60);
+    });
+
+    // Smooth scroll to first newly visible card
+    var firstNew = $hidden.first();
+    if(firstNew.length){
+      setTimeout(function(){
+        firstNew[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    }
+
+    $btn.remove();
+  });
+
+  // Compare checkbox handler
+  $(document).on('change', '.rf-compare-cb', function(){
+    var $container = $(this).closest('[data-rf-relevance-container]');
+    var $bar = $container.find('[data-rf-compare-bar]');
+    var checked = $container.find('.rf-compare-cb:checked');
+    var count = checked.length;
+
+    if(count > 0){
+      $bar.slideDown(200);
+      $bar.find('[data-rf-compare-count]').text(count);
+    } else {
+      $bar.slideUp(200);
+    }
+  });
+
+  // Compare trigger: load comparison table via AJAX
+  $(document).on('click', '[data-rf-compare-trigger]', function(e){
+    e.preventDefault();
+    var $container = $(this).closest('[data-rf-relevance-container]');
+    var ids = [];
+    $container.find('.rf-compare-cb:checked').each(function(){
+      ids.push(parseInt($(this).val(), 10));
+    });
+
+    if(ids.length < 2){
+      alert('Bitte mindestens 2 Roboter zum Vergleich auswählen.');
+      return;
+    }
+
+    var $result = $container.find('[data-rf-compare-result]');
+    $result.html('<div class="rf-relevance-loading">Lade Vergleich...</div>').slideDown(200);
+
+    $.ajax({
+      url: RoboFinderPro.ajax_url,
+      type: 'POST',
+      data: {
+        action: 'robo_finder_compare',
+        nonce: RoboFinderPro.nonce,
+        ids: ids
+      },
+      success: function(res){
+        if(res && res.success && res.data && res.data.robots){
+          renderCompareTable($result, res.data.robots);
+          setTimeout(function(){
+            $result[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        } else {
+          $result.html('<div class="rf-relevance-empty">Vergleich nicht möglich.</div>');
+        }
+      },
+      error: function(){
+        $result.html('<div class="rf-relevance-empty">Fehler beim Laden des Vergleichs.</div>');
+      }
+    });
+  });
+
+  // Render compare table from robot data
+  function renderCompareTable($container, robots){
+    var rows = [
+      { key: 'manufacturer',  label: 'Hersteller' },
+      { key: 'm2h',           label: 'Fläche (m²/h)' },
+      { key: 'battery',       label: 'Akkulaufzeit (h)' },
+      { key: 'tank',          label: 'Tank gesamt (L)' },
+      { key: 'clean_water',   label: 'Reinwasser (L)' },
+      { key: 'dirty_water',   label: 'Abwasser (L)' },
+      { key: 'working_width', label: 'Arbeitsbreite' },
+      { key: 'dimensions',    label: 'Abmessungen' },
+      { key: 'noise',         label: 'Geräuschpegel' },
+      { key: 'nav',           label: 'Navigation' },
+      { key: 'has_docking',   label: 'Dockingstation' }
+    ];
+
+    var html = '<div class="rf-compare-wrap"><div class="rf-compare-scroll">';
+    html += '<table class="rf-compare">';
+
+    // Header with robot names + thumbnails
+    html += '<thead><tr><th>Merkmal</th>';
+    for(var r = 0; r < robots.length; r++){
+      var robot = robots[r];
+      html += '<th>';
+      if(robot.thumb){
+        html += '<img src="' + esc(robot.thumb) + '" alt="' + esc(robot.title) + '" class="rf-compare-thumb" />';
+      }
+      html += '<a href="' + esc(robot.permalink) + '">' + esc(robot.title) + '</a>';
+      html += '</th>';
+    }
+    html += '</tr></thead><tbody>';
+
+    // Data rows
+    for(var i = 0; i < rows.length; i++){
+      var row = rows[i];
+      html += '<tr><td><strong>' + esc(row.label) + '</strong></td>';
+      for(var r = 0; r < robots.length; r++){
+        var val = robots[r][row.key];
+        if(row.key === 'has_docking'){
+          val = val ? '✔' : '—';
+        }
+        html += '<td>' + esc(val !== undefined && val !== '' && val !== null ? String(val) : '—') + '</td>';
+      }
+      html += '</tr>';
+    }
+
+    html += '</tbody></table></div>';
+    html += '<button type="button" class="rf-compare-close" data-rf-compare-close>Vergleich schließen</button>';
+    html += '</div>';
+
+    $container.html(html);
+  }
+
+  // Close compare table
+  $(document).on('click', '[data-rf-compare-close]', function(e){
+    e.preventDefault();
+    $(this).closest('[data-rf-compare-result]').slideUp(200).empty();
+  });
 
   // Barrier cards selection
   function toggleBarrier($wrap, $card){

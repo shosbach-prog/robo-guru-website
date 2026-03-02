@@ -46,6 +46,9 @@ add_action('admin_init', function () {
 	register_setting('babylovegrowth_integration', 'babylovegrowth_category', [
 		'sanitize_callback' => function ($val) { return absint($val); }
 	]);
+	register_setting('babylovegrowth_integration', 'babylovegrowth_author', [
+		'sanitize_callback' => function ($val) { return absint($val); }
+	]);
 	register_setting('babylovegrowth_integration', 'babylovegrowth_tags', [
 		'sanitize_callback' => function ($val) {
 			if (!is_array($val)) return [];
@@ -72,10 +75,12 @@ function babylovegrowth_integration_settings_page() {
 
 	$key = get_option('babylovegrowth_api_key', '');
 	$selected_category = get_option('babylovegrowth_category', '');
+	$selected_author = get_option('babylovegrowth_author', '');
 	$selected_tags = get_option('babylovegrowth_tags', []);
 	$feature_image_enabled = get_option('babylovegrowth_feature_image_enabled', true);
 	$post_status = get_option('babylovegrowth_post_status', 'publish');
 	$categories = get_categories(['hide_empty' => false]);
+	$authors = get_users(['role__in' => ['administrator', 'editor', 'author'], 'orderby' => 'display_name', 'order' => 'ASC']);
 	$tags = get_tags(['hide_empty' => false]);
 	?>
 	<div class="wrap blg-wrap">
@@ -182,6 +187,19 @@ function babylovegrowth_integration_settings_page() {
 						<?php endforeach; ?>
 					</select>
 					<p class="blg-desc"><?php echo esc_html__('All articles from BLG will be assigned to this category.', 'babylovegrowth-integration'); ?></p>
+				</div>
+
+				<div class="blg-field">
+					<label for="babylovegrowth_author" class="blg-label"><?php echo esc_html__('Default Author', 'babylovegrowth-integration'); ?></label>
+					<select id="babylovegrowth_author" name="babylovegrowth_author" class="blg-input" style="max-width:25em">
+						<option value=""><?php echo esc_html__('— Select Author —', 'babylovegrowth-integration'); ?></option>
+						<?php foreach ($authors as $author) : ?>
+							<option value="<?php echo esc_attr($author->ID); ?>" <?php selected($selected_author, $author->ID); ?>>
+								<?php echo esc_html($author->display_name); ?>
+							</option>
+						<?php endforeach; ?>
+					</select>
+					<p class="blg-desc"><?php echo esc_html__('All articles from BLG will be assigned to this author.', 'babylovegrowth-integration'); ?></p>
 				</div>
 
 				<div class="blg-field">

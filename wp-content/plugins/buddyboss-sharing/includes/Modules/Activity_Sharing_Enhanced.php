@@ -136,6 +136,7 @@ class Activity_Sharing_Enhanced {
             add_action( 'wp_ajax_buddyboss_load_shared_activity_modal', array( $this, 'ajax_load_shared_activity_modal' ) );
             add_action( 'wp_ajax_nopriv_buddyboss_load_shared_activity_modal', array( $this, 'ajax_load_shared_activity_modal' ) );
             add_action( 'wp_ajax_buddyboss_get_activity_post_form', array( $this, 'ajax_get_activity_post_form' ) );
+            add_action( 'wp_ajax_buddyboss_get_shared_activity_id', array( $this, 'ajax_get_shared_activity_id' ) );
 			add_filter( 'bp_activity_allowed_tags', array( $this, 'allow_shared_activity_html' ) );
 			add_action( 'wp_footer', array( $this, 'render_share_templates' ) );
 
@@ -771,6 +772,40 @@ class Activity_Sharing_Enhanced {
 		$html = $this->get_html_generator()->generate_shared_activity_html( $activity );
 
 		wp_send_json_success( array( 'content' => $html, 'original_activity_id' => $original_activity_id ) );
+	}
+
+	/**
+	 * AJAX handler to get shared activity ID for an activity.
+	 * Used when editing a shared activity to get the original activity ID.
+	 *
+	 * @since 1.0.0
+	 */
+	public function ajax_get_shared_activity_id() {
+		check_ajax_referer( 'buddyboss_seo_share', 'nonce' );
+
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'You must be logged in.', 'buddyboss-sharing' ) ) );
+		}
+
+		// Check if activity component is active
+		if ( ! bp_is_active( 'activity' ) ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Activity component is not available.', 'buddyboss-sharing' ) ) );
+		}
+
+		$activity_id = isset( $_POST['activity_id'] ) ? intval( $_POST['activity_id'] ) : 0;
+
+		if ( ! $activity_id ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Invalid activity.', 'buddyboss-sharing' ) ) );
+		}
+
+		// Get the shared activity ID from meta
+		$shared_activity_id = bp_activity_get_meta( $activity_id, 'shared_activity_id', true );
+
+		if ( ! $shared_activity_id ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'This is not a shared activity.', 'buddyboss-sharing' ) ) );
+		}
+
+		wp_send_json_success( array( 'shared_activity_id' => intval( $shared_activity_id ) ) );
 	}
 
 	/**
@@ -2013,9 +2048,11 @@ class Activity_Sharing_Enhanced {
 			wp_send_json_error( array( 'message' => esc_html__( 'Groups component is not active.', 'buddyboss-sharing' ) ) );
 		}
 
-		$activity_id    = isset( $_POST['activity_id'] ) ? intval( $_POST['activity_id'] ) : 0;
-		$group_id       = isset( $_POST['group_id'] ) ? intval( $_POST['group_id'] ) : 0;
-		$custom_message = isset( $_POST['custom_message'] ) ? $_POST['custom_message'] : '';
+		$activity_id     = isset( $_POST['activity_id'] ) ? intval( $_POST['activity_id'] ) : 0;
+		$group_id        = isset( $_POST['group_id'] ) ? intval( $_POST['group_id'] ) : 0;
+		$custom_message  = isset( $_POST['custom_message'] ) ? $_POST['custom_message'] : '';
+		$topic_id        = isset( $_POST['topic_id'] ) ? intval( $_POST['topic_id'] ) : 0;
+		$has_topic_selector = isset( $_POST['has_topic_selector'] ) ? (bool) $_POST['has_topic_selector'] : false;
 
 		if ( ! $activity_id ) {
 			wp_send_json_error( array( 'message' => esc_html__( 'Invalid activity.', 'buddyboss-sharing' ) ) );
@@ -2056,20 +2093,57 @@ class Activity_Sharing_Enhanced {
 			'item_id'   => $group_id,
 		);
 
+		// Add topic_id if provided (same as BuddyBoss Platform activity post form)
+		if ( $topic_id > 0 ) {
+			$args['topic_id'] = $topic_id;
+		}
+
 		$new_activity_id = bp_activity_add( $args );
 
 		if ( $new_activity_id ) {
 			// Store shared activity ID.
 			bp_activity_update_meta( $new_activity_id, 'shared_activity_id', $original_activity_id );
 
+			// Save topic relationship if topic_id is provided (same as BuddyBoss Platform)
+			if ( $topic_id > 0 && function_exists( 'bb_activity_topics_manager_instance' ) ) {
+				bb_activity_topics_manager_instance()->bb_add_activity_topic_relationship(
+					array(
+						'topic_id'    => $topic_id,
+						'activity_id' => $new_activity_id,
+						'component'   => 'groups',
+						'item_id'     => $group_id,
+					)
+				);
+			}
+
 			// Update share count.
 			$share_count = (int) bp_activity_get_meta( $original_activity_id, 'share_count', true );
 			bp_activity_update_meta( $original_activity_id, 'share_count', $share_count + 1 );
 
+			// Generate activity HTML (same way BuddyBoss does it)
+			ob_start();
+			if ( bp_has_activities(
+				array(
+					'include'     => $new_activity_id,
+					'show_hidden' => false,
+				)
+			) ) {
+				while ( bp_activities() ) {
+					bp_the_activity();
+					bp_get_template_part( 'activity/entry' );
+				}
+			}
+			$activity_html = ob_get_contents();
+			ob_end_clean();
+
 			wp_send_json_success(
 				array(
+					'id'          => $new_activity_id,
 					'message'     => esc_html__( 'Shared to group successfully!', 'buddyboss-sharing' ),
+					'activity'    => $activity_html,
 					'share_count' => $share_count + 1,
+					'is_directory' => bp_is_activity_directory(),
+					'is_user_activity' => bp_is_user_activity(),
 				)
 			);
 		} else {
@@ -2428,6 +2502,22 @@ class Activity_Sharing_Enhanced {
 			}
 		}
 
+		// Fix for media visibility in shared activities
+		// When an activity from activity feed (component='activity') is viewed in a group context,
+		// the media privacy check might filter out media. We need to include both activity feed
+		// privacy settings AND group privacy so media is visible.
+		$is_activity_feed_activity = ( buddypress()->activity->id === $activity->component );
+		$is_in_group_context = bp_is_group();
+		
+		if ( $is_activity_feed_activity && $is_in_group_context ) {
+			// Add filter to include both activity feed privacy and group privacy
+			add_filter( 'bp_media_query_privacy', array( $this, 'filter_shared_activity_media_privacy' ), 10, 4 );
+			// Also add filter for documents
+			add_filter( 'bp_document_query_privacy', array( $this, 'filter_shared_activity_document_privacy' ), 10, 4 );
+			// Also add filter for videos
+			add_filter( 'bp_video_query_privacy', array( $this, 'filter_shared_activity_video_privacy' ), 10, 4 );
+		}
+
 		// Capture the activity output with UL wrapper
 		ob_start();
 
@@ -2454,6 +2544,13 @@ class Activity_Sharing_Enhanced {
 
 		$activity_html = ob_get_clean();
 
+		// Remove the filters we added
+		if ( $is_activity_feed_activity && $is_in_group_context ) {
+			remove_filter( 'bp_media_query_privacy', array( $this, 'filter_shared_activity_media_privacy' ), 10, 4 );
+			remove_filter( 'bp_document_query_privacy', array( $this, 'filter_shared_activity_document_privacy' ), 10, 4 );
+			remove_filter( 'bp_video_query_privacy', array( $this, 'filter_shared_activity_video_privacy' ), 10, 4 );
+		}
+
 		// Get activity author name for modal title
 		$author_name = bp_core_get_user_displayname( $activity->user_id );
 
@@ -2464,6 +2561,153 @@ class Activity_Sharing_Enhanced {
 				'activity_id'   => $activity_id,
 			)
 		);
+	}
+
+	/**
+	 * Filter media privacy for shared activities viewed in group context.
+	 *
+	 * When an activity from activity feed is viewed in a group context,
+	 * include both activity feed privacy settings AND group privacy so media is visible.
+	 *
+	 * @since 1.0.0
+	 * @param array  $privacy  Privacy array.
+	 * @param int    $user_id  User ID.
+	 * @param int    $group_id Group ID.
+	 * @param string $scope    Scope.
+	 * @return array Modified privacy array.
+	 */
+	public function filter_shared_activity_media_privacy( $privacy, $user_id = 0, $group_id = 0, $scope = '' ) {
+		// If we're in a group context and the scope is 'activity' (activity feed),
+		// we need to include both activity feed privacy settings AND group privacy
+		// This happens when an activity from activity feed is shared to a group
+		if ( bp_is_group() && 'activity' === $scope && is_array( $privacy ) ) {
+			// Get activity feed privacy settings (similar to bp_media_query_privacy logic)
+			$activity_privacy = array( 'public' );
+			
+			if ( is_user_logged_in() ) {
+				$activity_privacy[] = 'loggedin';
+				
+				// Check if viewing own profile or if friends
+				if ( bp_is_my_profile() || $user_id === bp_loggedin_user_id() ) {
+					$activity_privacy[] = 'onlyme';
+					if ( bp_is_active( 'friends' ) ) {
+						$activity_privacy[] = 'friends';
+					}
+				} elseif ( ! in_array( 'friends', $activity_privacy ) && bp_is_active( 'friends' ) ) {
+					$current_user_id = bp_loggedin_user_id();
+					if ( $user_id && function_exists( 'friends_check_friendship' ) ) {
+						$is_friend = friends_check_friendship( $current_user_id, $user_id );
+						if ( $is_friend ) {
+							$activity_privacy[] = 'friends';
+						}
+					}
+				}
+			}
+			
+			// Combine both privacy arrays - include both grouponly AND activity feed privacy
+			// This ensures media from activity feed is visible when shared in groups
+			$privacy = array_unique( array_merge( array( 'grouponly' ), $activity_privacy ) );
+		}
+		
+		return $privacy;
+	}
+
+	/**
+	 * Filter document privacy for shared activities viewed in group context.
+	 *
+	 * When an activity from activity feed is viewed in a group context,
+	 * include both activity feed privacy settings AND group privacy so documents are visible.
+	 *
+	 * @since 1.0.0
+	 * @param array  $privacy  Privacy array.
+	 * @param int    $user_id  User ID.
+	 * @param int    $group_id Group ID.
+	 * @param string $scope    Scope.
+	 * @return array Modified privacy array.
+	 */
+	public function filter_shared_activity_document_privacy( $privacy, $user_id = 0, $group_id = 0, $scope = '' ) {
+		// If we're in a group context and the scope is 'activity' (activity feed),
+		// we need to include both activity feed privacy settings AND group privacy
+		// This happens when an activity from activity feed is shared to a group
+		if ( bp_is_group() && 'activity' === $scope && is_array( $privacy ) ) {
+			// Get activity feed privacy settings (similar to bp_document_query_privacy logic)
+			$activity_privacy = array( 'public' );
+			
+			if ( is_user_logged_in() ) {
+				$activity_privacy[] = 'loggedin';
+				
+				// Check if viewing own profile or if friends
+				if ( bp_is_my_profile() || $user_id === bp_loggedin_user_id() ) {
+					$activity_privacy[] = 'onlyme';
+					if ( bp_is_active( 'friends' ) ) {
+						$activity_privacy[] = 'friends';
+					}
+				} elseif ( ! in_array( 'friends', $activity_privacy ) && bp_is_active( 'friends' ) ) {
+					$current_user_id = bp_loggedin_user_id();
+					if ( $user_id && function_exists( 'friends_check_friendship' ) ) {
+						$is_friend = friends_check_friendship( $current_user_id, $user_id );
+						if ( $is_friend ) {
+							$activity_privacy[] = 'friends';
+						}
+					}
+				}
+			}
+			
+			// Combine both privacy arrays - include both grouponly AND activity feed privacy
+			// This ensures documents from activity feed are visible when shared in groups
+			$privacy = array_unique( array_merge( array( 'grouponly' ), $activity_privacy ) );
+		}
+		
+		return $privacy;
+	}
+
+	/**
+	 * Filter video privacy for shared activities viewed in group context.
+	 *
+	 * When an activity from activity feed is viewed in a group context,
+	 * include both activity feed privacy settings AND group privacy so videos are visible.
+	 *
+	 * @since 1.0.0
+	 * @param array  $privacy  Privacy array.
+	 * @param int    $user_id  User ID.
+	 * @param int    $group_id Group ID.
+	 * @param string $scope    Scope.
+	 * @return array Modified privacy array.
+	 */
+	public function filter_shared_activity_video_privacy( $privacy, $user_id = 0, $group_id = 0, $scope = '' ) {
+		// If we're in a group context and the scope is 'activity' (activity feed),
+		// we need to include both activity feed privacy settings AND group privacy
+		// This happens when an activity from activity feed is shared to a group
+		if ( bp_is_group() && 'activity' === $scope && is_array( $privacy ) ) {
+			// Get activity feed privacy settings (similar to bp_video_query_privacy logic)
+			$activity_privacy = array( 'public' );
+			
+			if ( is_user_logged_in() ) {
+				$activity_privacy[] = 'loggedin';
+				
+				// Check if viewing own profile or if friends
+				if ( bp_is_my_profile() || $user_id === bp_loggedin_user_id() ) {
+					$activity_privacy[] = 'onlyme';
+					if ( bp_is_active( 'friends' ) ) {
+						$activity_privacy[] = 'friends';
+					}
+				} elseif ( ! in_array( 'friends', $activity_privacy ) && bp_is_active( 'friends' ) ) {
+					$current_user_id = bp_loggedin_user_id();
+					if ( $user_id && function_exists( 'friends_check_friendship' ) ) {
+						$is_friend = friends_check_friendship( $current_user_id, $user_id );
+						if ( $is_friend ) {
+							$activity_privacy[] = 'friends';
+						}
+					}
+				}
+			}
+			
+			// Combine both privacy arrays - include both grouponly AND activity feed privacy
+			// This ensures videos from activity feed are visible when shared in groups
+			$privacy = array_unique( array_merge( array( 'grouponly' ), $activity_privacy ) );
+		}
+		
+		return $privacy;
 	}
 
 	/**
