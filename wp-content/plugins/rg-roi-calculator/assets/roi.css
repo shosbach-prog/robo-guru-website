@@ -24,19 +24,27 @@
 /* Hide BuddyBoss side panel on ROI page */
 .page-template-default .bb-side-panel,
 body.rg-roi-page .bb-side-panel,
-body.rg-roi-page .bb-mobile-panel-wrapper{display:none!important}
+body:has(.rg-roi) .bb-side-panel,
+body.rg-roi-page .bb-mobile-panel-wrapper,
+body:has(.rg-roi) .bb-mobile-panel-wrapper{display:none!important}
 
 /* Center the entire page content */
 body.rg-roi-page #content,
+body:has(.rg-roi) #content,
 body.rg-roi-page .site-content,
-body.rg-roi-page .bb-content{
+body:has(.rg-roi) .site-content,
+body.rg-roi-page .bb-content,
+body:has(.rg-roi) .bb-content{
   max-width:100%!important;
   margin:0 auto!important;
   padding:0!important;
 }
 body.rg-roi-page #primary,
+body:has(.rg-roi) #primary,
 body.rg-roi-page .entry-content,
-body.rg-roi-page .bb-grid{
+body:has(.rg-roi) .entry-content,
+body.rg-roi-page .bb-grid,
+body:has(.rg-roi) .bb-grid{
   max-width:1400px!important;
   margin:0 auto!important;
   padding:0 16px!important;
@@ -46,28 +54,33 @@ body.rg-roi-page .bb-grid{
 
 /* SEO Intro Text (before calculator) */
 body.rg-roi-page .entry-content > h1:first-of-type,
-body.rg-roi-page .entry-content > p{
+body:has(.rg-roi) .entry-content > h1:first-of-type,
+body.rg-roi-page .entry-content > p,
+body:has(.rg-roi) .entry-content > p{
   max-width:1400px;
   margin-left:auto!important;
   margin-right:auto!important;
   padding:0 16px;
   box-sizing:border-box;
 }
-body.rg-roi-page .entry-content > h1:first-of-type{
+body.rg-roi-page .entry-content > h1:first-of-type,
+body:has(.rg-roi) .entry-content > h1:first-of-type{
   font-size:1.8rem!important;
   font-weight:700!important;
   color:#1E2132!important;
   margin-bottom:1rem!important;
   line-height:1.3!important;
 }
-body.rg-roi-page .entry-content > p{
+body.rg-roi-page .entry-content > p,
+body:has(.rg-roi) .entry-content > p{
   color:#5A5A5A!important;
   line-height:1.7!important;
   margin-bottom:0.8rem!important;
 }
 
 /* FAQ Section styling */
-body.rg-roi-page .entry-content details{
+body.rg-roi-page .entry-content details,
+body:has(.rg-roi) .entry-content details{
   max-width:1400px;
   margin:0 auto 1rem auto;
   padding:0 16px;
@@ -75,10 +88,12 @@ body.rg-roi-page .entry-content details{
   border-bottom:1px solid rgba(15,37,55,.1);
   padding-bottom:1rem;
 }
-body.rg-roi-page .entry-content details:last-of-type{
+body.rg-roi-page .entry-content details:last-of-type,
+body:has(.rg-roi) .entry-content details:last-of-type{
   border-bottom:none;
 }
-body.rg-roi-page .entry-content summary{
+body.rg-roi-page .entry-content summary,
+body:has(.rg-roi) .entry-content summary{
   cursor:pointer;
   font-weight:600;
   font-size:1rem;
@@ -89,15 +104,18 @@ body.rg-roi-page .entry-content summary{
   align-items:center;
   gap:8px;
 }
-body.rg-roi-page .entry-content summary::-webkit-details-marker{display:none}
-body.rg-roi-page .entry-content summary::before{
+body.rg-roi-page .entry-content summary::-webkit-details-marker,
+body:has(.rg-roi) .entry-content summary::-webkit-details-marker{display:none}
+body.rg-roi-page .entry-content summary::before,
+body:has(.rg-roi) .entry-content summary::before{
   content:'▸';
   display:inline-block;
   transition:transform .2s ease;
   font-size:.85em;
   flex-shrink:0;
 }
-body.rg-roi-page .entry-content details[open] summary::before{
+body.rg-roi-page .entry-content details[open] summary::before,
+body:has(.rg-roi) .entry-content details[open] summary::before{
   transform:rotate(90deg);
 }
 body.rg-roi-page .entry-content details p{
