@@ -21,30 +21,41 @@
 .rg-hide{display:none!important}
 
 /* === ROI Page Layout Fixes === */
-/* Hide BuddyBoss side panel on ROI page */
-.page-template-default .bb-side-panel,
-body.rg-roi-page .bb-side-panel,
+/* Force full-width layout on ROI page - override BuddyBoss grid/sidebar */
 body:has(.rg-roi) .bb-side-panel,
-body.rg-roi-page .bb-mobile-panel-wrapper,
-body:has(.rg-roi) .bb-mobile-panel-wrapper{display:none!important}
+body:has(.rg-roi) .bb-mobile-panel-wrapper,
+body:has(.rg-roi) #secondary,
+body:has(.rg-roi) aside,
+body:has(.rg-roi) .widget-area,
+body:has(.rg-roi) .sidebar{display:none!important}
 
-/* Center the entire page content */
-body.rg-roi-page #content,
-body:has(.rg-roi) #content,
-body.rg-roi-page .site-content,
+/* Reset BuddyBoss grid layout to single column */
+body:has(.rg-roi) .bb-grid,
+body:has(.rg-roi) .bb-content,
 body:has(.rg-roi) .site-content,
-body.rg-roi-page .bb-content,
-body:has(.rg-roi) .bb-content{
+body:has(.rg-roi) #content{
+  display:block!important;
+  grid-template-columns:1fr!important;
   max-width:100%!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  float:none!important;
+}
+
+/* Center the main content area */
+body:has(.rg-roi) #primary,
+body:has(.rg-roi) .content-area,
+body:has(.rg-roi) main,
+body:has(.rg-roi) article{
+  max-width:100%!important;
+  width:100%!important;
   margin:0 auto!important;
   padding:0!important;
+  float:none!important;
 }
-body.rg-roi-page #primary,
-body:has(.rg-roi) #primary,
-body.rg-roi-page .entry-content,
-body:has(.rg-roi) .entry-content,
-body.rg-roi-page .bb-grid,
-body:has(.rg-roi) .bb-grid{
+
+body:has(.rg-roi) .entry-content{
   max-width:1400px!important;
   margin:0 auto!important;
   padding:0 16px!important;
