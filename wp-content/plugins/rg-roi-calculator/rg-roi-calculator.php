@@ -36,6 +36,7 @@ final class RG_ROI_Calculator {
     public static function init() {
         add_shortcode('rg_roi_calculator', [__CLASS__, 'shortcode']);
         add_action('wp_enqueue_scripts', [__CLASS__, 'enqueue_assets']);
+        add_filter('body_class', [__CLASS__, 'add_body_class']);
 
         add_action('wp_ajax_rg_send_roi_report', [__CLASS__, 'ajax_send_report']);
         add_action('wp_ajax_nopriv_rg_send_roi_report', [__CLASS__, 'ajax_send_report']);
@@ -312,6 +313,19 @@ final class RG_ROI_Calculator {
             'leasingResidual' => self::LEASING_RESIDUAL_PERCENT,
             'leasingInterest' => self::LEASING_INTEREST_RATE,
         ]);
+    }
+
+    /**
+     * Add body class when shortcode is present on the page
+     */
+    public static function add_body_class($classes) {
+        if (!is_singular() && !is_page()) return $classes;
+
+        $post = get_post();
+        if ($post && strpos((string)$post->post_content, '[rg_roi_calculator') !== false) {
+            $classes[] = 'rg-roi-page';
+        }
+        return $classes;
     }
 
     public static function enqueue_assets() {
