@@ -1,0 +1,32 @@
+parameters:
+    level: 0
+    paths:
+        - mc4wp-premium.php
+        - autoload.php
+        - includes/
+        - activity-dashboard-widget/
+        - ajax-forms/
+        - append-form-to-post/
+        - autocomplete/
+        - custom-color-theme/
+        - ecommerce3/
+        - email-notifications/
+        - licensing/
+        - logging/
+        - multiple-forms/
+        - post-campaign/
+        - styles-builder/
+        - user-sync/
+    excludePaths:
+        - user-sync/src/class-cli-command.php
+        - ecommerce3/includes/class-command.php
+    scanDirectories:
+      - ../mailchimp-for-wp/includes
+      - ../mailchimp-for-wp/integrations
+      - ../woocommerce
+    scanFiles:
+      - ../mailchimp-for-wp/mailchimp-for-wp.php
+      - ../mailchimp-for-wp/autoload.php
+    ignoreErrors:
+      - '#Action callback returns int but should not return anything.#'
+      - '#Class MC4WP\\User_Sync\\CLI_Command not found.#'
