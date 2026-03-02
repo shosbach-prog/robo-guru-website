@@ -62,6 +62,9 @@ class Frontend {
 		// Allow social media crawlers to access activity pages for OG tags.
 		// Priority 1 to ensure this runs before BuddyPress blocks access.
 		add_filter( 'bp_private_network_pre_check', array( $this, 'allow_social_crawlers_for_activity' ), 1, 1 );
+		
+		// Remove edit button for shared posts when custom message is disabled.
+		add_filter( 'bb_nouveau_get_activity_entry_bubble_buttons', array( $this, 'remove_edit_button_for_shared_posts' ), 10, 2 );
 	}
 
 	/**
@@ -160,16 +163,48 @@ class Frontend {
 				'shareAsLink'       => (bool) $share_as_link,
 				'linkPlatforms'     => $link_platforms,
 				'i18n'              => array(
-					'share'                => esc_html__( 'Share', 'buddyboss-sharing' ),
-					'shareActivity'        => esc_html__( 'Share Activity', 'buddyboss-sharing' ),
-					'sharedSuccess'        => esc_html__( 'Activity shared successfully!', 'buddyboss-sharing' ),
-					'error'                => esc_html__( 'An error occurred. Please try again.', 'buddyboss-sharing' ),
-					'loading'              => esc_html__( 'Loading...', 'buddyboss-sharing' ),
-					'failedLoadModal'      => esc_html__( 'Failed to load message modal.', 'buddyboss-sharing' ),
-					'failedLoadActivity'   => esc_html__( 'Failed to load activity content.', 'buddyboss-sharing' ),
-					'selectTarget'         => esc_html__( 'Please select a target.', 'buddyboss-sharing' ),
-					'selectRecipient'      => esc_html__( 'Please select at least one recipient.', 'buddyboss-sharing' ),
-					'failedSendMessage'    => esc_html__( 'Failed to send message.', 'buddyboss-sharing' ),
+					'share'                        => esc_html__( 'Share', 'buddyboss-sharing' ),
+					'shares'                       => esc_html__( 'Shares', 'buddyboss-sharing' ),
+					'shareActivity'                => esc_html__( 'Share Activity', 'buddyboss-sharing' ),
+					'sharedSuccess'                => esc_html__( 'Activity shared successfully!', 'buddyboss-sharing' ),
+					'sharedToGroupSuccess'        => esc_html__( 'Shared to group successfully!', 'buddyboss-sharing' ),
+					'failedToShareToGroup'        => esc_html__( 'Failed to share to group.', 'buddyboss-sharing' ),
+					'error'                        => esc_html__( 'An error occurred. Please try again.', 'buddyboss-sharing' ),
+					'loading'                      => esc_html__( 'Loading...', 'buddyboss-sharing' ),
+					'posting'                      => esc_html__( 'Posting...', 'buddyboss-sharing' ),
+					'post'                         => esc_html__( 'Post', 'buddyboss-sharing' ),
+					'sharing'                      => esc_html__( 'Sharing...', 'buddyboss-sharing' ),
+					'copied'                       => esc_html__( 'Copied!', 'buddyboss-sharing' ),
+					'sending'                      => esc_html__( 'Sending...', 'buddyboss-sharing' ),
+					'send'                         => esc_html__( 'Send', 'buddyboss-sharing' ),
+					'messageSentSuccess'          => esc_html__( 'Message sent successfully!', 'buddyboss-sharing' ),
+					'failedLoadModal'             => esc_html__( 'Failed to load message modal.', 'buddyboss-sharing' ),
+					'failedLoadActivity'          => esc_html__( 'Failed to load activity content.', 'buddyboss-sharing' ),
+					'failedLoadActivityAlert'     => esc_html__( 'Failed to load activity', 'buddyboss-sharing' ),
+					'failedLoadActivityRetry'     => esc_html__( 'Failed to load activity. Please try again.', 'buddyboss-sharing' ),
+					'activityModalNotAvailable'   => esc_html__( 'Activity modal system not available', 'buddyboss-sharing' ),
+					'selectTarget'                => esc_html__( 'Please select a target.', 'buddyboss-sharing' ),
+					'selectRecipient'             => esc_html__( 'Please select at least one recipient.', 'buddyboss-sharing' ),
+					'selectRecipientOrThread'    => esc_html__( 'Please select at least one recipient or thread.', 'buddyboss-sharing' ),
+					'activityIdNotFound'          => esc_html__( 'Activity ID not found.', 'buddyboss-sharing' ),
+					'failedSendMessage'           => esc_html__( 'Failed to send message.', 'buddyboss-sharing' ),
+					'noRecentConversations'       => esc_html__( 'No recent conversations found.', 'buddyboss-sharing' ),
+					'errorLoadingConversations'   => esc_html__( 'Error loading recent conversations.', 'buddyboss-sharing' ),
+					'noMembersFound'              => esc_html__( 'No members found.', 'buddyboss-sharing' ),
+					'errorSearchingMembers'       => esc_html__( 'Error searching members. Please try again.', 'buddyboss-sharing' ),
+					'errorLoadingGroups'          => esc_html__( 'Error loading groups. Please try again.', 'buddyboss-sharing' ),
+					'createPost'                  => esc_html__( 'Create a post', 'buddyboss-sharing' ),
+					'shareToGroup'                => esc_html__( 'Share to a group', 'buddyboss-sharing' ),
+					'shareToFriendProfile'        => esc_html__( "Share to friend's profile", 'buddyboss-sharing' ),
+					'shareToMessage'              => esc_html__( 'Share to message', 'buddyboss-sharing' ),
+					'searchForGroups'             => esc_html__( 'Search for groups', 'buddyboss-sharing' ),
+					'searchForMembers'            => esc_html__( 'Search for members', 'buddyboss-sharing' ),
+					'allGroups'                    => esc_html__( 'All Groups', 'buddyboss-sharing' ),
+					'allFriends'                   => esc_html__( 'All Friends', 'buddyboss-sharing' ),
+					'sorryNoMembersFound'          => esc_html__( 'Sorry, no members were found.', 'buddyboss-sharing' ),
+					'noFriendsFound'               => esc_html__( 'No friends found.', 'buddyboss-sharing' ),
+					'noGroupsMatchSearch'           => esc_html__( 'No groups match your search.', 'buddyboss-sharing' ),
+					'noGroupsFound'                => esc_html__( 'No groups found.', 'buddyboss-sharing' ),
 				),
 			)
 		);
@@ -374,5 +409,40 @@ class Frontend {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Remove edit button for shared posts when custom message is disabled.
+	 *
+	 * When the "Custom message" setting is disabled in BB Sharing settings,
+	 * shared posts should not be editable since there's no custom message to edit.
+	 *
+	 * @since 1.0.0
+	 * @param array $buttons     The list of buttons.
+	 * @param int   $activity_id The current activity ID.
+	 * @return array Filtered buttons array.
+	 */
+	public function remove_edit_button_for_shared_posts( $buttons, $activity_id ) {
+		// Check if custom message setting is enabled.
+		$enable_custom_msg = bp_get_option( 'buddyboss_activity_sharing_custom_message', 1 );
+		
+		// If custom message is enabled, allow editing.
+		if ( $enable_custom_msg ) {
+			return $buttons;
+		}
+		
+		// Check if this is a shared post.
+		if ( ! function_exists( 'bp_get_activity_type' ) ) {
+			return $buttons;
+		}
+		
+		$activity_type = bp_get_activity_type();
+		
+		// If this is a shared post and custom message is disabled, remove the edit button.
+		if ( 'activity_share' === $activity_type && isset( $buttons['activity_edit'] ) ) {
+			unset( $buttons['activity_edit'] );
+		}
+		
+		return $buttons;
 	}
 }

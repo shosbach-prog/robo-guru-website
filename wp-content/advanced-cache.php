@@ -8,9 +8,10 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'WP_ROCKET_ADVANCED_CACHE', true );
 
-$rocket_path        = '/var/www/vhosts/robo-guru.de/httpdocs/wp-content/plugins/wp-rocket/';
-$rocket_config_path = '/var/www/vhosts/robo-guru.de/httpdocs/wp-content/wp-rocket-config/';
-$rocket_cache_path  = '/var/www/vhosts/robo-guru.de/httpdocs/wp-content/cache/wp-rocket/';
+$wp_content_dir     = dirname( __FILE__ );
+$rocket_path        = $wp_content_dir . '/plugins/wp-rocket/';
+$rocket_config_path = $wp_content_dir . '/wp-rocket-config/';
+$rocket_cache_path  = $wp_content_dir . '/cache/wp-rocket/';
 
 if (
 	version_compare( phpversion(), '7.3', '<' )
@@ -23,8 +24,9 @@ if (
 }
 
 
-if ( file_exists( '/var/www/vhosts/robo-guru.de/httpdocs/wp-content/plugins/wp-rocket/inc/classes/dependencies/mobiledetect/mobiledetectlib/Mobile_Detect.php' ) && ! class_exists( 'WP_Rocket_Mobile_Detect' ) ) {
-	include_once '/var/www/vhosts/robo-guru.de/httpdocs/wp-content/plugins/wp-rocket/inc/classes/dependencies/mobiledetect/mobiledetectlib/Mobile_Detect.php';
+$mobile_detect_path = $rocket_path . 'inc/classes/dependencies/mobiledetect/mobiledetectlib/Mobile_Detect.php';
+if ( file_exists( $mobile_detect_path ) && ! class_exists( 'WP_Rocket_Mobile_Detect' ) ) {
+	include_once $mobile_detect_path;
 }
 
 

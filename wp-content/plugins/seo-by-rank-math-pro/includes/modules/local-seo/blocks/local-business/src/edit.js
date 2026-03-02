@@ -21,6 +21,8 @@ const getFieldsData = ( hash, props ) => {
 					label={ value.label }
 					checked={ props.attributes[ key ] }
 					onChange={ ( newValue ) => props.setAttributes( { [ key ]: newValue } ) }
+					__next40pxDefaultSize={ true }
+					__nextHasNoMarginBottom={ true }
 				/>
 			)
 		}
@@ -30,6 +32,8 @@ const getFieldsData = ( hash, props ) => {
 					label={ value.label }
 					value={ props.attributes[ key ] }
 					onChange={ ( newValue ) => props.setAttributes( { [ key ]: newValue } ) }
+					__next40pxDefaultSize={ true }
+					__nextHasNoMarginBottom={ true }
 				/>
 			)
 		}
@@ -40,6 +44,8 @@ const getFieldsData = ( hash, props ) => {
 					value={ props.attributes[ key ] }
 					options={ value.options }
 					onChange={ ( newValue ) => props.setAttributes( { [ key ]: newValue } ) }
+					__next40pxDefaultSize={ true }
+					__nextHasNoMarginBottom={ true }
 				/>
 			)
 		}
@@ -51,6 +57,8 @@ const getFieldsData = ( hash, props ) => {
 					onChange={ ( newValue ) => props.setAttributes( { [ key ]: newValue } ) }
 					min={ value.min }
 					max={ value.max }
+					__next40pxDefaultSize={ true }
+					__nextHasNoMarginBottom={ true }
 				/>
 			)
 		}
@@ -140,6 +148,7 @@ const getHoursSettings = ( props ) => {
 				label={ __( 'Show Opening Hours', 'rank-math-pro' ) }
 				checked={ props.attributes.show_opening_hours }
 				onChange={ ( newValue ) => props.setAttributes( { show_opening_hours: newValue } ) }
+				__nextHasNoMarginBottom={ true }
 			/>
 		)
 	}
@@ -162,6 +171,7 @@ const getHoursSettings = ( props ) => {
 
 						props.setAttributes( { show_days: enabledDays.toString() } )
 					} }
+					__nextHasNoMarginBottom={ true }
 				/>
 			)
 		} )
@@ -171,6 +181,7 @@ const getHoursSettings = ( props ) => {
 				label={ __( 'Hide Closed Days', 'rank-math-pro' ) }
 				checked={ props.attributes.hide_closed_days }
 				onChange={ ( newValue ) => props.setAttributes( { hide_closed_days: newValue } ) }
+				__nextHasNoMarginBottom={ true }
 			/>
 		)
 		settings.push(
@@ -178,6 +189,7 @@ const getHoursSettings = ( props ) => {
 				label={ __( 'Show open now label after opening hour for current day', 'rank-math-pro' ) }
 				checked={ props.attributes.show_opening_now_label }
 				onChange={ ( newValue ) => props.setAttributes( { show_opening_now_label: newValue } ) }
+				__nextHasNoMarginBottom={ true }
 			/>
 		)
 
@@ -187,6 +199,8 @@ const getHoursSettings = ( props ) => {
 					label={ __( 'Show open now label after opening hour for current day', 'rank-math-pro' ) }
 					value={ props.attributes.opening_hours_note }
 					onChange={ ( newValue ) => props.setAttributes( { opening_hours_note: newValue } ) }
+					__next40pxDefaultSize={ true }
+					__nextHasNoMarginBottom={ true }
 				/>
 			)
 		}
@@ -204,6 +218,7 @@ const getMapSettings = ( props ) => {
 			label={ __( 'Show Map', 'rank-math-pro' ) }
 			checked={ props.attributes.show_map }
 			onChange={ ( showMap ) => props.setAttributes( { show_map: showMap } ) }
+			__nextHasNoMarginBottom={ true }
 		/> )
 	}
 
@@ -406,6 +421,8 @@ const Edit = ( props ) => {
 								},
 							] }
 							onChange={ ( type ) => setAttributes( { type } ) }
+							__next40pxDefaultSize={ true }
+							__nextHasNoMarginBottom={ true }
 						/>
 
 						{ 'store-locator' !== attributes.type && <SelectControl
@@ -413,6 +430,8 @@ const Edit = ( props ) => {
 							value={ attributes.locations }
 							options={ locationsData }
 							onChange={ ( locations ) => setAttributes( { locations } ) }
+							__next40pxDefaultSize={ true }
+							__nextHasNoMarginBottom={ true }
 						/> }
 
 						{ 'store-locator' !== attributes.type && <SelectControl
@@ -421,6 +440,8 @@ const Edit = ( props ) => {
 							value={ attributes.terms }
 							options={ termsData }
 							onChange={ ( terms ) => setAttributes( { terms } ) }
+							__next40pxDefaultSize={ true }
+							__nextHasNoMarginBottom={ true }
 						/> }
 
 						<TextControl
@@ -428,6 +449,8 @@ const Edit = ( props ) => {
 							label={ __( 'Maximum number of locations to show', 'rank-math-pro' ) }
 							value={ attributes.limit }
 							onChange={ ( limit ) => props.setAttributes( { limit } ) }
+							__next40pxDefaultSize={ true }
+							__nextHasNoMarginBottom={ true }
 						/>
 
 						{ 'address' === attributes.type && getAddressSettings( props ) }

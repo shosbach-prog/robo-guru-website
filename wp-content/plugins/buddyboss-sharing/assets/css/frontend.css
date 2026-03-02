@@ -161,9 +161,10 @@
 .shared-activity-preview .shared-activity-media img {
   width: 100%;
   height: auto;
-  max-height: 400px;
+  max-height: 295px;
   object-fit: cover;
   display: block;
+  border-radius: var(--bb-sharing-radius-md);
 }
 .shared-activity-preview .shared-activity-media video {
   width: 100%;
@@ -226,6 +227,9 @@
 .shared-activity-preview .bb-activity-media-wrap.bb-media-length-1:has(.bb-activity-media-elem.document-activity) {
   margin: 0;
   max-width: 100%;
+}
+.shared-activity-preview .bb-activity-media-wrap {
+  margin: 0;
 }
 
 .activity-list .activity-content .shared-activity-preview .fluid-width-video-wrapper,
@@ -1099,6 +1103,10 @@
   margin-bottom: 0;
 }
 
+.activity-update-form:not(.modal-popup) .buddyboss-shared-activity-preview {
+  display: none;
+}
+
 .activity-share-label {
   display: inline-flex;
   align-items: center;
@@ -1673,22 +1681,25 @@
 .shared-activity-wrapper.shared-activity-message .shared-activity-preview {
   background: var(--bb-sharing-background-white-color);
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: var(--bb-sharing-radius-md);
   overflow: hidden;
+}
+.shared-activity-wrapper.shared-activity-message .shared-activity-preview .bb-activity-media-wrap {
+  width: 100%;
 }
 .shared-activity-wrapper.shared-activity-message .shared-activity-preview .shared-activity-media {
   width: 100%;
   margin: 0;
   background: #f3f4f6;
-  border-radius: 12px 12px 0 0;
+  border-radius: var(--bb-sharing-radius-md) var(--bb-sharing-radius-md) 0 0;
 }
 .shared-activity-wrapper.shared-activity-message .shared-activity-preview .shared-activity-media img {
   width: 100%;
   height: auto;
-  max-height: 280px;
+  max-height: 200px;
   object-fit: cover;
   display: block;
-  border-radius: 12px 12px 0 0;
+  border-radius: var(--bb-sharing-radius-md) var(--bb-sharing-radius-md) 0 0;
 }
 .shared-activity-wrapper.shared-activity-message .shared-activity-preview .shared-activity-media video {
   width: 100%;
@@ -1696,7 +1707,7 @@
   max-height: 280px;
   display: block;
   background: #000;
-  border-radius: 12px 12px 0 0;
+  border-radius: var(--bb-sharing-radius-md) var(--bb-sharing-radius-md) 0 0;
 }
 .shared-activity-wrapper.shared-activity-message .shared-activity-preview .shared-activity-footer {
   padding: 12px 14px;

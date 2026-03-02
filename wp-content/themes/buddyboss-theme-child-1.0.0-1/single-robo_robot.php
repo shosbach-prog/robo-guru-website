@@ -275,6 +275,28 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
       </section>
     <?php endif; ?>
 
+    <?php if (!empty($faqs)) : ?>
+      <?php
+        $faq_schema = [
+          '@context' => 'https://schema.org',
+          '@type' => 'FAQPage',
+          'mainEntity' => array_map(function($row) {
+            return [
+              '@type' => 'Question',
+              'name' => wp_strip_all_tags($row['q']),
+              'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text' => wp_strip_all_tags($row['a']),
+              ],
+            ];
+          }, $faqs),
+        ];
+      ?>
+      <script type="application/ld+json">
+        <?php echo wp_json_encode($faq_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>
+      </script>
+    <?php endif; ?>
+
   </main>
 </div>
 

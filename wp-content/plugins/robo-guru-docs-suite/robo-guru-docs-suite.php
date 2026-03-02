@@ -474,7 +474,7 @@ function robot_frontend_assets(){
     .rg-docs-modal__close{cursor:pointer;border:1px solid rgba(0,0,0,.15);border-radius:10px;background:#fff!important;color:#111!important;padding:8px 10px!important;line-height:1!important;min-height:36px!important;position:relative;z-index:2;pointer-events:auto;flex:0 0 auto;white-space:nowrap}
     /* Modal content: sidebar (doc list) + viewer */
     .rg-docs-modal__content{flex:1 1 auto;min-height:0;display:flex;overflow:hidden}
-    .rg-docs-modal__sidebar{flex:0 0 280px;max-width:34vw;border-right:1px solid rgba(0,0,0,.08);background:rgba(0,0,0,.02);overflow:auto}
+    .rg-docs-modal__sidebar{display:none}
     .rg-docs-modal__sidehead{padding:10px 12px;font-weight:750;border-bottom:1px solid rgba(0,0,0,.08)}
     .rg-docs-modal__sidelist{list-style:none;margin:0;padding:8px;display:flex;flex-direction:column;gap:6px}
     .rg-docs-modal__sidebtn{display:block;width:100%;text-align:left;padding:10px 10px;border-radius:12px;border:1px solid rgba(0,0,0,.12);background:#fff;cursor:pointer;font-weight:650;line-height:1.2}
@@ -482,9 +482,6 @@ function robot_frontend_assets(){
     .rg-docs-modal__viewer{flex:1 1 auto;min-width:0;min-height:0;overflow:hidden;display:flex}
     /* iOS Safari flex bug: min-height:0 is required to avoid partial/white PDF view */
     .rg-docs-modal__viewer iframe,.rg-docs-modal__viewer object{width:100%;height:100%;min-height:100%;border:0;display:block;flex:1 1 auto;background:#fff}
-    @media (max-width: 860px){
-      .rg-docs-modal__sidebar{display:none}
-    }
     ';
     wp_register_style('rg-docs-suite-frontend', false, array(), self::VERSION);
     wp_enqueue_style('rg-docs-suite-frontend');

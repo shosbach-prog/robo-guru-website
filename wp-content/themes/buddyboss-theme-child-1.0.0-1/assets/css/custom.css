@@ -187,21 +187,71 @@ body.page .rg-wrap{
 .rg-ctaCard__txt p{ margin: 0 0 12px; color: var(--rg-muted); }
 
 /* FAQ */
-.rg-faq h2{ margin-top: 0; }
-.rg-faq__item{
-  border: 1px solid rgba(17,17,17,.10);
-  border-radius: 14px;
-  padding: 8px 12px;
-  background: #fff;
+.rg-faq h2{ margin-top: 0; margin-bottom: 16px; }
+.rg-faq__list{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
 }
-.rg-faq__item + .rg-faq__item{ margin-top: 10px; }
+@media (max-width: 768px){
+  .rg-faq__list{ grid-template-columns: 1fr; }
+}
+.rg-faq__item{
+  border: 1px solid rgba(0, 180, 170, .25);
+  border-radius: 14px;
+  padding: 0;
+  background: linear-gradient(135deg, rgba(0, 180, 170, .06) 0%, rgba(255,255,255,1) 100%);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease;
+  scroll-margin-top: 100px;
+}
+.rg-faq__item:hover{
+  border-color: rgba(0, 180, 170, .45);
+  box-shadow: 0 4px 16px rgba(0, 180, 170, .12);
+}
+.rg-faq__item[open]{
+  border-color: rgba(0, 180, 170, .5);
+  background: linear-gradient(135deg, rgba(0, 180, 170, .10) 0%, rgba(255,255,255,1) 60%);
+  box-shadow: 0 6px 20px rgba(0, 180, 170, .15);
+}
 .rg-faq__item summary{
-  cursor:pointer;
+  cursor: pointer;
   font-weight: 700;
   list-style: none;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #111;
+  border-radius: 14px;
+  transition: background .15s ease;
 }
-.rg-faq__item summary::-webkit-details-marker{ display:none; }
-.rg-faq__answer{ color: var(--rg-muted); padding: 10px 2px 4px; }
+.rg-faq__item summary::after{
+  content: '+';
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(0, 180, 170, .8);
+  transition: transform .2s ease;
+  flex-shrink: 0;
+}
+.rg-faq__item[open] summary::after{
+  content: '−';
+  transform: rotate(180deg);
+}
+.rg-faq__item summary:hover{
+  background: rgba(0, 180, 170, .05);
+}
+.rg-faq__item summary::-webkit-details-marker{ display: none; }
+.rg-faq__answer{
+  color: var(--rg-muted);
+  padding: 0 16px 14px;
+  animation: faqFadeIn .25s ease;
+}
+@keyframes faqFadeIn{
+  from{ opacity: 0; transform: translateY(-6px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
 
 /* Archive helpers (works with our archive template classes) */
 .rg-filters input,
@@ -210,11 +260,115 @@ body.page .rg-wrap{
   border: 1px solid rgba(17,17,17,.12) !important;
   background:#fff !important;
 }
+.rg-filter{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rg-filter__label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rg-muted);
+}
 .rg-grid .rg-card{ box-shadow: var(--rg-shadow); }
 
 /* Compare bar (if present) */
 #rg-compare-link{ font-weight: 700; }
+.rg-compare-bar{
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: rgba(255,255,255,.96);
+  border-top: 1px solid rgba(17,17,17,.1);
+  box-shadow: 0 -6px 20px rgba(0,0,0,.08);
+  padding: 10px var(--rg-gutter);
+  transform: translateY(110%);
+  transition: transform .2s ease;
+}
+.rg-compare-bar.is-active{
+  transform: translateY(0);
+}
+.rg-compare-bar__inner{
+  max-width: var(--rg-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rg-compare-bar__text{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rg-compare-bar__count{
+  font-size: 13px;
+  color: var(--rg-muted);
+}
 
 /* Make WP default content nicer inside rg-card */
 .rg-content :where(p,ul,ol){ color: var(--rg-muted); }
 .rg-content h3{ margin-top: 16px; }
+
+/* FAQ (Plugin: rg-robot-profile) */
+.rg-faq-section .rg-h2{ margin-bottom: 16px; }
+.rg-faq-wrap{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+@media (max-width: 768px){
+  .rg-faq-wrap{ grid-template-columns: 1fr; }
+}
+.rg-faq-item{
+  border: 1px solid rgba(0, 180, 170, .25);
+  border-radius: 14px;
+  padding: 0;
+  background: linear-gradient(135deg, rgba(0, 180, 170, .06) 0%, rgba(255,255,255,1) 100%);
+  transition: border-color .2s ease, box-shadow .2s ease;
+  scroll-margin-top: 100px;
+  overflow: hidden;
+}
+.rg-faq-item:hover{
+  border-color: rgba(0, 180, 170, .45);
+  box-shadow: 0 4px 16px rgba(0, 180, 170, .12);
+}
+.rg-faq-item.open{
+  border-color: rgba(0, 180, 170, .5);
+  background: linear-gradient(135deg, rgba(0, 180, 170, .10) 0%, rgba(255,255,255,1) 60%);
+  box-shadow: 0 6px 20px rgba(0, 180, 170, .15);
+}
+.rg-faq-q{
+  cursor: pointer;
+  font-weight: 700;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #111;
+  transition: background .15s ease;
+}
+.rg-faq-q:hover{
+  background: rgba(0, 180, 170, .05);
+}
+.rg-faq-q .icon{
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(0, 180, 170, .8);
+  transition: transform .2s ease;
+  flex-shrink: 0;
+}
+.rg-faq-item.open .rg-faq-q .icon{
+  transform: rotate(45deg);
+}
+.rg-faq-a{
+  color: var(--rg-muted);
+  padding: 0 16px 14px;
+  display: none;
+  animation: faqFadeIn .25s ease;
+}
+.rg-faq-item.open .rg-faq-a{
+  display: block;
+}

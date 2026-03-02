@@ -3,7 +3,7 @@
  * Plugin Name: BuddyBoss Sharing
  * Plugin URI: https://buddyboss.com
  * Description: Adds share buttons across your site to let members easily share content to social media platforms.
- * Version: 1.1.1
+ * Version: 1.2.0
  * Author: BuddyBoss
  * Author URI: https://buddyboss.com
  * Text Domain: buddyboss-sharing
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define('SHARE_EDITION', 'all');
 
 // Define plugin constants.
-define( 'BUDDYBOSS_SHARING_VERSION', '1.1.1' );
+define( 'BUDDYBOSS_SHARING_VERSION', '1.2.0' );
 define( 'BUDDYBOSS_SHARING_PLUGIN_FILE', __FILE__ );
 define( 'BUDDYBOSS_SHARING_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BUDDYBOSS_SHARING_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

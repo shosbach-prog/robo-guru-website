@@ -300,8 +300,11 @@ class Loader {
 		$links[] = $settings_link;
 		
 		// Add Get OttoKit Pro link for free and pro users.
-		if ( $this->should_show_upgrade_button() ) {
-			$upgrade_link = '<a href="https://ottokit.com/pricing/?utm_source=wpplugin&utm_medium=plugin+list&utm_campaign=plugin+list" target="_blank" style="color: #28a745; font-weight: bold;">' . __( 'Get OttoKit Pro', 'suretriggers' ) . '</a>';
+		$verification_data = get_option( 'suretriggers_lifetime_user_plan_data' );
+		$plan_id           = is_array( $verification_data ) && isset( $verification_data['plan_id'] ) ? $verification_data['plan_id'] : '';
+		if ( in_array( $plan_id, [ 'free', 'pro' ], true ) ) {
+			$button_text  = ( 'free' === $plan_id ) ? __( 'Get OttoKit Pro', 'suretriggers' ) : __( 'Upgrade', 'suretriggers' );
+			$upgrade_link = '<a href="https://ottokit.com/pricing/?utm_source=wpplugin&utm_medium=plugin+list&utm_campaign=plugin+list" target="_blank" style="color: #28a745; font-weight: bold;">' . $button_text . '</a>';
 			$links[]      = $upgrade_link;
 		}
 		
@@ -322,8 +325,8 @@ class Loader {
 		define( 'SURE_TRIGGERS_BASE', plugin_basename( SURE_TRIGGERS_FILE ) );
 		define( 'SURE_TRIGGERS_DIR', plugin_dir_path( SURE_TRIGGERS_FILE ) );
 		define( 'SURE_TRIGGERS_URL', plugins_url( '/', SURE_TRIGGERS_FILE ) );
-		define( 'SURE_TRIGGERS_VER', '1.1.18' );
-		define( 'SURE_TRIGGERS_DB_VER', '1.1.18' );
+		define( 'SURE_TRIGGERS_VER', '1.1.20' );
+		define( 'SURE_TRIGGERS_DB_VER', '1.1.20' );
 		define( 'SURE_TRIGGERS_REST_NAMESPACE', 'sure-triggers/v1' );
 		define( 'SURE_TRIGGERS_SASS_URL', $sass_url . '/wp-json/wp-plugs/v1/' );
 		define( 'SURE_TRIGGERS_SITE_URL', $sass_url );
@@ -406,11 +409,14 @@ class Loader {
 			);
 
 			// Add Get OttoKit Pro menu for free and pro users.
-			if ( $this->should_show_upgrade_button() ) {
+			$verification_data = get_option( 'suretriggers_lifetime_user_plan_data' );
+			$plan_id           = is_array( $verification_data ) && isset( $verification_data['plan_id'] ) ? $verification_data['plan_id'] : '';
+			if ( in_array( $plan_id, [ 'free', 'pro' ], true ) ) {
+				$button_text = ( 'free' === $plan_id ) ? __( 'Get OttoKit Pro', 'suretriggers' ) : __( 'Upgrade', 'suretriggers' );
 				add_submenu_page(
 					'suretriggers',
-					__( 'Get OttoKit Pro', 'suretriggers' ),
-					'<span class="ottokit-upgrade-btn">' . __( 'Get OttoKit Pro', 'suretriggers' ) . '</span>',
+					$button_text,
+					'<span class="ottokit-upgrade-btn">' . $button_text . '</span>',
 					'read',
 					'suretriggers-upgrade-plan',
 					[ $this, 'suretriggers_upgrade_plan_callback' ]

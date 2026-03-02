@@ -1,41 +1,6 @@
 {
     "packages": [
         {
-            "name": "berlindb/core",
-            "version": "dev-master",
-            "version_normalized": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/berlindb/core.git",
-                "reference": "cff87fafedda560dd4ad768d4dd1afb68a36b8c0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/berlindb/core/zipball/cff87fafedda560dd4ad768d4dd1afb68a36b8c0",
-                "reference": "cff87fafedda560dd4ad768d4dd1afb68a36b8c0",
-                "shasum": ""
-            },
-            "time": "2025-10-31T03:22:40+00:00",
-            "default-branch": true,
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "BerlinDB\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A collection of PHP classes and functions that aims to provide an ORM-like experience and interface to WordPress database tables.",
-            "support": {
-                "issues": "https://github.com/berlindb/core/issues",
-                "source": "https://github.com/berlindb/core/tree/master"
-            },
-            "install-path": "../berlindb/core"
-        },
-        {
             "name": "cloudflare/cf-ip-rewrite",
             "version": "1.0.4",
             "version_normalized": "1.0.4.0",

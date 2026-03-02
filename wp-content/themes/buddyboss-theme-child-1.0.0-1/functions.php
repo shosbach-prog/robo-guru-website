@@ -26,11 +26,17 @@ function buddyboss_theme_child_languages()
  */
 function buddyboss_theme_child_scripts_styles()
 {
+  // Cache-busting version based on file modification time
+  $css_file = get_stylesheet_directory() . '/assets/css/custom.css';
+  $js_file  = get_stylesheet_directory() . '/assets/js/custom.js';
+  $css_ver  = file_exists($css_file) ? filemtime($css_file) : '1.0.0';
+  $js_ver   = file_exists($js_file)  ? filemtime($js_file)  : '1.0.0';
+
   // Styles
-  wp_enqueue_style( 'buddyboss-child-css', get_stylesheet_directory_uri().'/assets/css/custom.css' );
+  wp_enqueue_style( 'buddyboss-child-css', get_stylesheet_directory_uri().'/assets/css/custom.css', array(), $css_ver );
 
   // Javascript
-  wp_enqueue_script( 'buddyboss-child-js', get_stylesheet_directory_uri().'/assets/js/custom.js' );
+  wp_enqueue_script( 'buddyboss-child-js', get_stylesheet_directory_uri().'/assets/js/custom.js', array(), $js_ver, true );
 }
 add_action( 'wp_enqueue_scripts', 'buddyboss_theme_child_scripts_styles', 9999 );
 
@@ -145,5 +151,211 @@ function rg_searchwp_form() {
         echo do_shortcode('[searchwp_form id="3"]');
     }
 }
+
+
+/****************************** ROI-RECHNER SEO CONTENT ******************************/
+
+/**
+ * Helper: Check if we are on the ROI-Rechner page.
+ */
+function bb_child_is_roi_rechner_page(): bool {
+    return is_page('roi-rechner');
+}
+
+/**
+ * 1) Title Tag – Override via document_title_parts + RankMath filter.
+ */
+add_filter('document_title_parts', function ( $title_parts ) {
+    if ( ! bb_child_is_roi_rechner_page() ) {
+        return $title_parts;
+    }
+    $title_parts['title'] = 'ROI-Rechner Reinigungsroboter – kostenlos & unabhängig';
+    return $title_parts;
+});
+
+add_filter('rank_math/frontend/title', function ( $title ) {
+    if ( ! bb_child_is_roi_rechner_page() ) {
+        return $title;
+    }
+    return 'ROI-Rechner Reinigungsroboter – kostenlos & unabhängig';
+});
+
+/**
+ * 2) Meta Description – via wp_head + RankMath filter.
+ */
+add_filter('rank_math/frontend/description', function ( $description ) {
+    if ( ! bb_child_is_roi_rechner_page() ) {
+        return $description;
+    }
+    return 'Herstellerunabhängiger ROI-Rechner für Reinigungsroboter ✓ Amortisation ✓ Break-Even ✓ 5-Jahres-Projektion ✓ Kauf vs. Leasing – jetzt kostenlos berechnen.';
+});
+
+add_action('wp_head', function () {
+    if ( ! bb_child_is_roi_rechner_page() ) {
+        return;
+    }
+    // Fallback meta description in case RankMath does not output one
+    if ( ! class_exists('RankMath') ) {
+        echo '<meta name="description" content="Herstellerunabhängiger ROI-Rechner für Reinigungsroboter ✓ Amortisation ✓ Break-Even ✓ 5-Jahres-Projektion ✓ Kauf vs. Leasing – jetzt kostenlos berechnen." />' . "\n";
+    }
+}, 1);
+
+/**
+ * 3) SEO Intro (above calculator) + FAQ (below calculator) via the_content filter.
+ */
+add_filter('the_content', function ( $content ) {
+    if ( ! bb_child_is_roi_rechner_page() || ! is_main_query() || ! in_the_loop() ) {
+        return $content;
+    }
+
+    // --- Intro Section ---
+    $intro = '<section class="rg-seo-intro" style="max-width: 960px; margin: 0 auto 2rem; padding: 0 1rem;">
+  <h1 style="font-size: 1.8rem; margin-bottom: 1rem;">Reinigungsroboter ROI berechnen – unabhängig und kostenlos</h1>
+  <p>Lohnt sich ein Reinigungsroboter für Ihr Objekt? Die Antwort hängt von vielen Faktoren ab: Flächengröße, Lohnkosten, Reinigungszyklen, Finanzierungsmodell und Betriebskosten. Unser ROI-Rechner macht diese Bewertung transparent und nachvollziehbar – herstellerunabhängig und ohne versteckte Absicht.</p>
+  <p>Anders als bei Hersteller-Kalkulatoren verfolgt dieser Rechner kein Verkaufsziel. Sie wählen Ihren Roboter, passen alle Parameter an Ihre reale Situation an und erhalten eine ehrliche Wirtschaftlichkeitsanalyse. Das Ergebnis zeigt Ihnen die jährliche Netto-Ersparnis, den Break-Even-Zeitpunkt und eine vollständige 5-Jahres-Projektion – inklusive Kauf- und Leasing-Vergleich.</p>
+  <p>Der Rechner eignet sich für Entscheider im Facility Management, in der Gebäudereinigung, Logistik und Industrie, die vor einer Investitionsentscheidung belastbare Zahlen brauchen. Ob Gausium Scrubber 50, Pudu CC1 oder Nexaro NR 1500 – wählen Sie aus realen Robotermodellen und sehen Sie sofort, wie sich Anschaffung oder Robot-as-a-Service in Ihrem konkreten Einsatzszenario rechnet.</p>
+  <p>Für registrierte Mitglieder stehen zusätzlich eine Executive-PDF mit Investitionsvergleich, gespeicherte Berechnungen und das eigene Firmenlogo im Report zur Verfügung. Die Nutzung des Rechners selbst ist vollständig kostenlos.</p>
+  <p><strong>Tipp:</strong> Nutzen Sie die Branchenprofile (Industrie, Logistik, Krankenhaus, Einzelhandel, Bürogebäude), um mit branchentypischen Werten zu starten – und passen Sie anschließend die Werte an Ihr Objekt an.</p>
+</section>';
+
+    // --- FAQ Section ---
+    $faq = '<section class="rg-seo-faq" style="max-width: 960px; margin: 2rem auto; padding: 0 1rem;">
+  <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Häufige Fragen zum ROI von Reinigungsrobotern</h2>
+
+  <details style="margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+    <summary style="cursor: pointer; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">Was bedeutet ROI bei Reinigungsrobotern?</summary>
+    <p style="margin-top: 0.5rem; line-height: 1.6;">ROI steht für Return on Investment – also das Verhältnis zwischen Ihrer Investition in einen Reinigungsroboter und dem finanziellen Nutzen, den Sie daraus ziehen. Der ROI berücksichtigt Anschaffungskosten, laufende Betriebskosten (Wartung, Strom, Verbrauchsmaterial) und die eingesparten Personalkosten. Ein positiver ROI bedeutet, dass der Roboter mehr einspart, als er kostet.</p>
+  </details>
+
+  <details style="margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+    <summary style="cursor: pointer; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">Wie schnell amortisiert sich ein Reinigungsroboter?</summary>
+    <p style="margin-top: 0.5rem; line-height: 1.6;">Die Amortisationszeit hängt stark vom Einsatzszenario ab. Bei gewerblichen Flächen ab 1.000 m² und täglichem Einsatz liegt die typische Amortisation zwischen 12 und 24 Monaten. Entscheidende Faktoren sind die eingesparten Personalstunden, der Stundenlohn Ihrer Reinigungskräfte und das gewählte Finanzierungsmodell. Unser Rechner zeigt Ihnen den exakten Break-Even-Punkt für Ihre Konfiguration.</p>
+  </details>
+
+  <details style="margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+    <summary style="cursor: pointer; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">Kauf oder Leasing – was lohnt sich mehr?</summary>
+    <p style="margin-top: 0.5rem; line-height: 1.6;">Das hängt von Ihrer Liquiditätssituation und dem Planungshorizont ab. Beim Kauf ist die Gesamtinvestition über die Lebensdauer in der Regel günstiger, dafür binden Sie Kapital. Leasing verteilt die Kosten gleichmäßig und schont das Budget, führt aber über die Laufzeit zu höheren Gesamtkosten. Im Rechner können Sie beide Varianten direkt gegenüberstellen und die Auswirkung auf den ROI vergleichen.</p>
+  </details>
+
+  <details style="margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+    <summary style="cursor: pointer; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">Welche Kosten werden im ROI-Rechner berücksichtigt?</summary>
+    <p style="margin-top: 0.5rem; line-height: 1.6;">Der Rechner erfasst alle relevanten Kostenpositionen: Anschaffungspreis oder Leasingrate, Docking-/Ladestation, Zubehör, Implementierung, Servicepakete, Stromkosten, Verbrauchsmaterial und HUB-Lizenzen. Auf der Einsparungsseite werden die eingesparten Personalstunden auf Basis Ihres Stundenlohns kalkuliert. Optional können Sie Krankheits- und Urlaubszuschläge sowie jährliche Lohnsteigerungen einbeziehen.</p>
+  </details>
+
+  <details style="margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+    <summary style="cursor: pointer; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">Ist der ROI-Rechner wirklich herstellerunabhängig?</summary>
+    <p style="margin-top: 0.5rem; line-height: 1.6;">Ja. Robo-Guru ist eine unabhängige Beratungsplattform und kein Händler oder Hersteller. Die hinterlegten Roboterdaten basieren auf öffentlich verfügbaren Herstellerangaben. Sie können alle Werte manuell überschreiben und an Ihre tatsächlichen Konditionen anpassen. Es werden keine Produkte bevorzugt oder benachteiligt.</p>
+  </details>
+
+  <details style="margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+    <summary style="cursor: pointer; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">Für welche Branchen eignet sich der Rechner?</summary>
+    <p style="margin-top: 0.5rem; line-height: 1.6;">Der ROI-Rechner ist branchenübergreifend einsetzbar. Vorkonfigurierte Branchenprofile gibt es für Industrie, Logistik, Krankenhäuser, Einzelhandel und Bürogebäude. Die Berechnung funktioniert überall dort, wo autonome Bodenreinigung manuelle Arbeit ersetzen oder ergänzen kann – von der Produktionshalle über das Einkaufszentrum bis zum Hotel.</p>
+  </details>
+
+  <details style="margin-bottom: 1rem;">
+    <summary style="cursor: pointer; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem;">Kann ich die Ergebnisse als PDF exportieren?</summary>
+    <p style="margin-top: 0.5rem; line-height: 1.6;">Registrierte Mitglieder können eine Executive-PDF mit Investitionsvergleich, Break-Even-Timeline und Einsparpotenzial herunterladen. Die PDF eignet sich als Entscheidungsvorlage für die Geschäftsführung oder als Anlage für interne Business Cases. Die Registrierung ist kostenlos.</p>
+  </details>
+</section>';
+
+    return $intro . $content . $faq;
+});
+
+/**
+ * 4) JSON-LD Structured Data: FAQPage + WebApplication schemas.
+ */
+add_action('wp_head', function () {
+    if ( ! bb_child_is_roi_rechner_page() ) {
+        return;
+    }
+
+    // FAQPage Schema
+    $faq_schema = [
+        '@context'   => 'https://schema.org',
+        '@type'      => 'FAQPage',
+        'mainEntity' => [
+            [
+                '@type'          => 'Question',
+                'name'           => 'Was bedeutet ROI bei Reinigungsrobotern?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text'  => 'ROI steht für Return on Investment – also das Verhältnis zwischen Ihrer Investition in einen Reinigungsroboter und dem finanziellen Nutzen, den Sie daraus ziehen. Der ROI berücksichtigt Anschaffungskosten, laufende Betriebskosten (Wartung, Strom, Verbrauchsmaterial) und die eingesparten Personalkosten. Ein positiver ROI bedeutet, dass der Roboter mehr einspart, als er kostet.',
+                ],
+            ],
+            [
+                '@type'          => 'Question',
+                'name'           => 'Wie schnell amortisiert sich ein Reinigungsroboter?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text'  => 'Die Amortisationszeit hängt stark vom Einsatzszenario ab. Bei gewerblichen Flächen ab 1.000 m² und täglichem Einsatz liegt die typische Amortisation zwischen 12 und 24 Monaten. Entscheidende Faktoren sind die eingesparten Personalstunden, der Stundenlohn Ihrer Reinigungskräfte und das gewählte Finanzierungsmodell.',
+                ],
+            ],
+            [
+                '@type'          => 'Question',
+                'name'           => 'Kauf oder Leasing – was lohnt sich mehr?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text'  => 'Das hängt von Ihrer Liquiditätssituation und dem Planungshorizont ab. Beim Kauf ist die Gesamtinvestition über die Lebensdauer in der Regel günstiger, dafür binden Sie Kapital. Leasing verteilt die Kosten gleichmäßig und schont das Budget, führt aber über die Laufzeit zu höheren Gesamtkosten.',
+                ],
+            ],
+            [
+                '@type'          => 'Question',
+                'name'           => 'Welche Kosten werden im ROI-Rechner berücksichtigt?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text'  => 'Der Rechner erfasst alle relevanten Kostenpositionen: Anschaffungspreis oder Leasingrate, Docking-/Ladestation, Zubehör, Implementierung, Servicepakete, Stromkosten, Verbrauchsmaterial und HUB-Lizenzen. Auf der Einsparungsseite werden die eingesparten Personalstunden auf Basis Ihres Stundenlohns kalkuliert.',
+                ],
+            ],
+            [
+                '@type'          => 'Question',
+                'name'           => 'Ist der ROI-Rechner wirklich herstellerunabhängig?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text'  => 'Ja. Robo-Guru ist eine unabhängige Beratungsplattform und kein Händler oder Hersteller. Die hinterlegten Roboterdaten basieren auf öffentlich verfügbaren Herstellerangaben. Sie können alle Werte manuell überschreiben und an Ihre tatsächlichen Konditionen anpassen.',
+                ],
+            ],
+            [
+                '@type'          => 'Question',
+                'name'           => 'Für welche Branchen eignet sich der Rechner?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text'  => 'Der ROI-Rechner ist branchenübergreifend einsetzbar. Vorkonfigurierte Branchenprofile gibt es für Industrie, Logistik, Krankenhäuser, Einzelhandel und Bürogebäude. Die Berechnung funktioniert überall dort, wo autonome Bodenreinigung manuelle Arbeit ersetzen oder ergänzen kann.',
+                ],
+            ],
+            [
+                '@type'          => 'Question',
+                'name'           => 'Kann ich die Ergebnisse als PDF exportieren?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text'  => 'Registrierte Mitglieder können eine Executive-PDF mit Investitionsvergleich, Break-Even-Timeline und Einsparpotenzial herunterladen. Die PDF eignet sich als Entscheidungsvorlage für die Geschäftsführung oder als Anlage für interne Business Cases. Die Registrierung ist kostenlos.',
+                ],
+            ],
+        ],
+    ];
+
+    // WebApplication Schema
+    $webapp_schema = [
+        '@context'            => 'https://schema.org',
+        '@type'               => 'WebApplication',
+        'name'                => 'ROI-Rechner für Reinigungsroboter',
+        'url'                 => 'https://robo-guru.de/roi-rechner/',
+        'applicationCategory' => 'BusinessApplication',
+        'operatingSystem'     => 'Web',
+        'offers'              => [
+            '@type'         => 'Offer',
+            'price'         => '0',
+            'priceCurrency' => 'EUR',
+        ],
+        'description'         => 'Herstellerunabhängiger ROI-Rechner für Reinigungsroboter mit Amortisation, Break-Even-Analyse, 5-Jahres-Projektion und Kauf-vs-Leasing-Vergleich.',
+        'provider'            => [
+            '@type' => 'Organization',
+            'name'  => 'Robo-Guru',
+            'url'   => 'https://robo-guru.de',
+        ],
+    ];
+
+    echo '<script type="application/ld+json">' . wp_json_encode( $faq_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ) . '</script>' . "\n";
+    echo '<script type="application/ld+json">' . wp_json_encode( $webapp_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ) . '</script>' . "\n";
+}, 5);
 
 ?>

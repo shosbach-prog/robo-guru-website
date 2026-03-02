@@ -89,6 +89,16 @@
       $(document).on('reset', '#whats-new-form', this.handleFormReset.bind(this));
       $(document).on('click', '.bp-activity-privacy__close', this.handleFormReset.bind(this));
 
+      // Hook into edit activity form to show shared activity preview
+      $(document).on('bb_activity_event', this.handleEditActivityLoaded.bind(this));
+
+      // Clean up preview when edit modal closes
+      $(document).on('click', '.activity-update-form.modal-popup.bp-activity-edit #aw-whats-new-reset', this.cleanupEditActivityPreview.bind(this));
+
+      // Also clean up when modal-popup class is removed (modal closes)
+      // Use MutationObserver to watch for class changes on the form wrapper
+      this.setupEditModalCleanupObserver();
+
       // Shared activity modal - click on shared activity preview to open modal
       $(document).on('click', '.activity-content  .shared-activity-preview, .shared-activity-message .shared-activity-preview', this.handleSharedActivityClick.bind(this));
 
@@ -279,7 +289,7 @@
      */
     openLinkModal: function openLinkModal() {
       // Show modal with loading state
-      $('.share-link-url-input').val('Loading...');
+      $('.share-link-url-input').val(buddybossSharingFrontend.i18n.loading || 'Loading...');
       // Remove active class while link is being generated
       $('.share-link-platforms').removeClass('active');
       this.linkModal.fadeIn(300);
@@ -359,7 +369,7 @@
           }
         },
         error: function error(xhr, status, _error) {
-          _this.showNotification('An error occurred. Please try again.', 'error');
+          _this.showNotification(buddybossSharingFrontend.i18n.error || 'An error occurred. Please try again.', 'error');
           $container.remove();
         }
       });
@@ -865,7 +875,7 @@
       var originalBtnText = $submitBtn.text();
 
       // Disable submit button
-      $submitBtn.prop('disabled', true).text('Posting...');
+      $submitBtn.prop('disabled', true).text(buddybossSharingFrontend.i18n.posting || 'Posting...');
 
       // Extract topic_id and has_topic_selector if topic selector exists (same as BuddyBoss Platform)
       var topicId = 0;
@@ -1351,7 +1361,7 @@
       var privacy = $('#share-activity-privacy').val() || 'public';
 
       // Disable button and show loading
-      $btn.prop('disabled', true).text('Posting...');
+      $btn.prop('disabled', true).text(buddybossSharingFrontend.i18n.posting || 'Posting...');
 
       // Submit via AJAX
       // Extract topic_id and has_topic_selector if topic selector exists (same as BuddyBoss Platform)
@@ -1395,12 +1405,12 @@
             }, 1000);
           } else {
             _this7.showNotification(response.data.message || buddybossSharingFrontend.i18n.error, 'error');
-            $btn.prop('disabled', false).text('Post');
+            $btn.prop('disabled', false).text(buddybossSharingFrontend.i18n.post || 'Post');
           }
         },
         error: function error() {
           _this7.showNotification(buddybossSharingFrontend.i18n.error, 'error');
-          $btn.prop('disabled', false).text('Post');
+          $btn.prop('disabled', false).text(buddybossSharingFrontend.i18n.post || 'Post');
         }
       });
     },
@@ -1445,16 +1455,16 @@
      */
     updateModalTitle: function updateModalTitle() {
       var $title = $('.buddyboss-modal-title');
-      var titleText = 'Create a post';
+      var titleText = buddybossSharingFrontend.i18n.createPost || 'Create a post';
       switch (this.currentShareType) {
         case 'group':
-          titleText = 'Share to a group';
+          titleText = buddybossSharingFrontend.i18n.shareToGroup || 'Share to a group';
           break;
         case 'profile':
-          titleText = "Share to friend's profile";
+          titleText = buddybossSharingFrontend.i18n.shareToFriendProfile || "Share to friend's profile";
           break;
         case 'message':
-          titleText = 'Share to message';
+          titleText = buddybossSharingFrontend.i18n.shareToMessage || 'Share to message';
           break;
       }
       $title.text(titleText);
@@ -1576,7 +1586,7 @@
         success: function success(response) {
           if (response.success) {
             // Show success notification
-            _this0.showNotification(response.data.message || 'Shared to group successfully!', 'success');
+            _this0.showNotification(response.data.message || buddybossSharingFrontend.i18n.sharedToGroupSuccess || 'Shared to group successfully!', 'success');
 
             // Update share count
             if (response.data.share_count) {
@@ -1586,11 +1596,11 @@
             // Reset selection
             _this0.selectedGroup = null;
           } else {
-            _this0.showNotification(response.data.message || 'Failed to share to group.', 'error');
+            _this0.showNotification(response.data.message || buddybossSharingFrontend.i18n.failedToShareToGroup || 'Failed to share to group.', 'error');
           }
         },
         error: function error() {
-          _this0.showNotification('An error occurred. Please try again.', 'error');
+          _this0.showNotification(buddybossSharingFrontend.i18n.error || 'An error occurred. Please try again.', 'error');
         }
       });
     },
@@ -1685,7 +1695,7 @@
       document.execCommand('copy');
 
       // Show copied feedback
-      $btn.find('span').text('Copied!');
+      $btn.find('span').text(buddybossSharingFrontend.i18n.copied || 'Copied!');
       $btn.addClass('copied');
 
       // Reset button text after 2 seconds
@@ -1736,7 +1746,7 @@
       }
 
       // Disable button and show loading
-      $btn.prop('disabled', true).html('<span class="spinner is-active"></span> Sharing...');
+      $btn.prop('disabled', true).html('<span class="spinner is-active"></span> ' + (buddybossSharingFrontend.i18n.sharing || 'Sharing...'));
 
       // Submit via AJAX
       $.ajax({
@@ -1767,7 +1777,7 @@
             }, 1500);
           } else {
             _this11.showError(response.data.message || buddybossSharingFrontend.i18n.error);
-            $btn.prop('disabled', false).html('<i class="bb-icon-clock"></i> Post');
+            $btn.prop('disabled', false).html('<i class="bb-icon-clock"></i> ' + (buddybossSharingFrontend.i18n.post || 'Post'));
           }
         },
         error: function error() {
@@ -1840,7 +1850,7 @@
      * Handle form reset
      */
     handleFormReset: function handleFormReset(e) {
-      // Check if we're in an activity sharing context
+      // Check if we're in an activity sharing context (creating new shared post)
       if (this.currentActivityId && (this.currentShareType === 'feed' || this.currentShareType === 'group' || this.currentShareType === 'profile')) {
         // Check if the shared activity preview exists in the form
         if ($('#whats-new-form').find('.buddyboss-shared-activity-preview').length > 0) {
@@ -1853,6 +1863,12 @@
             this.cleanupSharedActivityFormForFriend();
           }
         }
+      }
+
+      // Also check if we're in edit mode and clean up preview
+      var $form = $('#whats-new-form');
+      if ($form.hasClass('bp-activity-edit') || $form.closest('.activity-update-form').hasClass('bp-activity-edit')) {
+        this.cleanupEditActivityPreview();
       }
     },
     /**
@@ -1883,9 +1899,9 @@
 
         // Update singular/plural label if needed
         if (count === 1) {
-          $sharesCount.html('<span class="shares-count-number">' + count + '</span> Share');
+          $sharesCount.html('<span class="shares-count-number">' + count + '</span> ' + (buddybossSharingFrontend.i18n.share || 'Share'));
         } else {
-          $sharesCount.html('<span class="shares-count-number">' + count + '</span> Shares');
+          $sharesCount.html('<span class="shares-count-number">' + count + '</span> ' + (buddybossSharingFrontend.i18n.shares || 'Shares'));
         }
 
         // Show/hide based on count
@@ -1956,7 +1972,7 @@
       var $btn = $(e.currentTarget);
       // Check if we have any selected recipients
       if (!this.selectedRecipients || this.selectedRecipients.length === 0) {
-        this.showNotification('Please select at least one recipient or thread.', 'error');
+        this.showNotification(buddybossSharingFrontend.i18n.selectRecipientOrThread || 'Please select at least one recipient or thread.', 'error');
         return;
       }
 
@@ -1973,14 +1989,14 @@
       // Get activity ID from hidden field
       var activityId = $('#share-message-activity-id').val();
       if (!activityId) {
-        this.showNotification('Activity ID not found.', 'error');
+        this.showNotification(buddybossSharingFrontend.i18n.activityIdNotFound || 'Activity ID not found.', 'error');
         return;
       }
 
       // Get additional message if textarea exists
       var additionalMessage = $('.share-message-textarea').val() || '';
       // Disable button and show loading
-      $btn.prop('disabled', true).text('Sending...');
+      $btn.prop('disabled', true).text(buddybossSharingFrontend.i18n.sending || 'Sending...');
       // Submit via AJAX
       $.ajax({
         url: buddybossSharingFrontend.ajaxUrl,
@@ -1995,7 +2011,7 @@
         },
         success: function success(response) {
           if (response.success) {
-            _this12.showNotification(response.data.message || 'Message sent successfully!', 'success');
+            _this12.showNotification(response.data.message || buddybossSharingFrontend.i18n.messageSentSuccess || 'Message sent successfully!', 'success');
 
             // Update share count
             if (response.data.share_count) {
@@ -2015,12 +2031,12 @@
             }, 1000);
           } else {
             _this12.showNotification(response.data.message || buddybossSharingFrontend.i18n.failedSendMessage, 'error');
-            $btn.prop('disabled', false).text('Send');
+            $btn.prop('disabled', false).text(buddybossSharingFrontend.i18n.send || 'Send');
           }
         },
         error: function error() {
-          _this12.showNotification('An error occurred. Please try again.', 'error');
-          $btn.prop('disabled', false).text('Send');
+          _this12.showNotification(buddybossSharingFrontend.i18n.error || 'An error occurred. Please try again.', 'error');
+          $btn.prop('disabled', false).text(buddybossSharingFrontend.i18n.send || 'Send');
         }
       });
     },
@@ -2123,17 +2139,17 @@
                 _this13.setupInfiniteScroll();
               }
             } else if (!append) {
-              $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">No recent conversations found.</p>');
+              $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">' + (buddybossSharingFrontend.i18n.noRecentConversations || 'No recent conversations found.') + '</p>');
             }
           } else if (!append) {
-            $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">No recent conversations found.</p>');
+            $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">' + (buddybossSharingFrontend.i18n.noRecentConversations || 'No recent conversations found.') + '</p>');
           }
         },
         error: function error() {
           $loading.hide();
           _this13.isLoadingThreads = false;
           if (!append) {
-            $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">Error loading recent conversations.</p>');
+            $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">' + (buddybossSharingFrontend.i18n.errorLoadingConversations || 'Error loading recent conversations.') + '</p>');
           }
         }
       });
@@ -2210,12 +2226,12 @@
               });
               $results.html(html);
             } else {
-              $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">No members found.</p>');
+              $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">' + (buddybossSharingFrontend.i18n.noMembersFound || 'No members found.') + '</p>');
             }
           },
           error: function error() {
             $loading.hide();
-            $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">Error searching members. Please try again.</p>');
+            $results.html('<p class="no-members-found" style="text-align: center; padding: 24px; color: #8c8f94;">' + (buddybossSharingFrontend.i18n.errorSearchingMembers || 'Error searching members. Please try again.') + '</p>');
           }
         });
       }, 300); // 300ms debounce
@@ -2326,7 +2342,7 @@
       $('.buddyboss-share-group-modal-container').remove();
 
       // Create modal container with the group modal HTML structure
-      var modalHtml = "\n\t\t\t\t<div class=\"buddyboss-share-group-modal-container bb-share-modal-container\" style=\"display: none;\">\n\t\t\t\t\t<div class=\"buddyboss-share-modal-overlay\"></div>\n\t\t\t\t\t<div class=\"buddyboss-share-group-modal bb-share-modal\">\n\t\t\t\t\t\t<div class=\"bb-share-modal-header\">\n\t\t\t\t\t\t\t<h3>Share to a group</h3>\n\t\t\t\t\t\t\t<button type=\"button\" class=\"share-group-close bb-share-modal-close\">\n\t\t\t\t\t\t\t\t<i class=\"bb-icon-l bb-icon-times\"></i>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"share-group-search bb-share-modal-search\">\n\t\t\t\t\t\t\t<i class=\"bb-icon-l bb-icon-search\"></i>\n\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\tclass=\"share-group-search-input\"\n\t\t\t\t\t\t\t\tplaceholder=\"Search for groups\"\n\t\t\t\t\t\t\t\tautocomplete=\"off\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"share-group-content bb-share-modal-content\">\n\t\t\t\t\t\t\t<div class=\"share-group-label bb-share-modal-label\">\n\t\t\t\t\t\t\t\tAll Groups\n\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t<div class=\"share-group-list\">\n\t\t\t\t\t\t\t\t<div class=\"share-group-loading\" style=\"display: none;\">\n\t\t\t\t\t\t\t\t\t<span class=\"spinner is-active\"></span>\n\t\t\t\t\t\t\t\t\t<p>Loading...</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"share-group-results\">\n\t\t\t\t\t\t\t\t\t<!-- Groups will be loaded via AJAX -->\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<!-- Hidden field to store activity ID -->\n\t\t\t\t\t\t<input type=\"hidden\" id=\"share-group-activity-id\" value=\"".concat(this.currentActivityId, "\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t");
+      var modalHtml = "\n\t\t\t\t<div class=\"buddyboss-share-group-modal-container bb-share-modal-container\" style=\"display: none;\">\n\t\t\t\t\t<div class=\"buddyboss-share-modal-overlay\"></div>\n\t\t\t\t\t<div class=\"buddyboss-share-group-modal bb-share-modal\">\n\t\t\t\t\t\t<div class=\"bb-share-modal-header\">\n\t\t\t\t\t\t\t<h3>".concat(buddybossSharingFrontend.i18n.shareToGroup || 'Share to a group', "</h3>\n\t\t\t\t\t\t\t<button type=\"button\" class=\"share-group-close bb-share-modal-close\">\n\t\t\t\t\t\t\t\t<i class=\"bb-icon-l bb-icon-times\"></i>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"share-group-search bb-share-modal-search\">\n\t\t\t\t\t\t\t<i class=\"bb-icon-l bb-icon-search\"></i>\n\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\tclass=\"share-group-search-input\"\n\t\t\t\t\t\t\t\tplaceholder=\"").concat(buddybossSharingFrontend.i18n.searchForGroups || 'Search for groups', "\"\n\t\t\t\t\t\t\t\tautocomplete=\"off\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"share-group-content bb-share-modal-content\">\n\t\t\t\t\t\t\t<div class=\"share-group-label bb-share-modal-label\">\n\t\t\t\t\t\t\t\t").concat(buddybossSharingFrontend.i18n.allGroups || 'All Groups', "\n\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t<div class=\"share-group-list\">\n\t\t\t\t\t\t\t\t<div class=\"share-group-loading\" style=\"display: none;\">\n\t\t\t\t\t\t\t\t\t<span class=\"spinner is-active\"></span>\n\t\t\t\t\t\t\t\t\t<p>").concat(buddybossSharingFrontend.i18n.loading || 'Loading...', "</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"share-group-results\">\n\t\t\t\t\t\t\t\t\t<!-- Groups will be loaded via AJAX -->\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<!-- Hidden field to store activity ID -->\n\t\t\t\t\t\t<input type=\"hidden\" id=\"share-group-activity-id\" value=\"").concat(this.currentActivityId, "\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t");
       $('body').append(modalHtml);
       var $container = $('.buddyboss-share-group-modal-container');
 
@@ -2405,14 +2421,14 @@
               _this19.handleGroupSelection(groupId, groupName, groupAvatar);
             });
           } else if (page === 1) {
-            var message = searchTerm ? 'No groups match your search.' : 'No groups found.';
+            var message = searchTerm ? buddybossSharingFrontend.i18n.noGroupsMatchSearch || 'No groups match your search.' : buddybossSharingFrontend.i18n.noGroupsFound || 'No groups found.';
             $results.html("\n\t\t\t\t\t\t\t<div class=\"no-groups-found\">\n\t\t\t\t\t\t\t\t<div class=\"no-groups-icon\">\n\t\t\t\t\t\t\t\t\t<i class=\"bb-icon-rf bb-icon-info-circle\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"no-groups-message\">".concat(message, "</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t"));
           }
         },
         error: function error() {
           $loading.hide();
           if (page === 1) {
-            $results.html('<p class="no-groups-found" style="text-align: center; padding: 24px; color: #8c8f94;">Error loading groups. Please try again.</p>');
+            $results.html('<p class="no-groups-found" style="text-align: center; padding: 24px; color: #8c8f94;">' + (buddybossSharingFrontend.i18n.errorLoadingGroups || 'Error loading groups. Please try again.') + '</p>');
           }
         }
       });
@@ -2591,6 +2607,105 @@
       if (typeof Backbone !== 'undefined') {
         Backbone.trigger('privacy:updatestatus');
       }
+
+      // Fetch and update group topics
+      this.loadGroupTopics(group.id);
+    },
+    /**
+     * Load group topics and update topic dropdown
+     */
+    loadGroupTopics: function loadGroupTopics(groupId) {
+      // Check if topics are enabled
+      if (typeof BP_Nouveau === 'undefined' || !BP_Nouveau.activity || !BP_Nouveau.activity.params || !BP_Nouveau.activity.params.topics || !BP_Nouveau.activity.params.topics.bb_is_enabled_activity_topics || !BP_Nouveau.activity.params.topics.bb_is_enabled_group_activity_topics) {
+        // Hide topic selector if group topics are not enabled
+        var $topicSelector = $('.whats-new-topic-selector');
+        $topicSelector.addClass('bp-hide');
+        return;
+      }
+
+      // Get REST API URL
+      var restUrl = typeof BP_Nouveau !== 'undefined' && BP_Nouveau.rest_url ? BP_Nouveau.rest_url : '/wp-json/buddyboss/v1';
+
+      // Fetch group topics via REST API
+      // Note: We need to fetch all pages since REST API might paginate
+      var _fetchAllTopics = function fetchAllTopics() {
+        var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+        var allTopics = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+        return $.ajax({
+          url: restUrl + '/bb-topics',
+          type: 'GET',
+          data: {
+            item_id: groupId,
+            item_type: 'groups',
+            per_page: 100,
+            // Use a large number instead of -1
+            page: page,
+            orderby: 'menu_order',
+            order: 'ASC'
+          },
+          success: function success(response, textStatus, xhr) {
+            // Check if response has a data property
+            var responseData = response;
+            if (response && response.data && Array.isArray(response.data)) {
+              responseData = response.data;
+            }
+
+            // WordPress REST API returns the data array directly via jQuery
+            var topics = Array.isArray(responseData) ? responseData : [];
+            allTopics = allTopics.concat(topics);
+            var totalPages = parseInt(xhr.getResponseHeader('X-WP-TotalPages') || '1', 10);
+
+            // If there are more pages, fetch them
+            if (page < totalPages) {
+              return _fetchAllTopics(page + 1, allTopics);
+            } else {
+              // All pages fetched, process the complete list
+              if (allTopics.length >= 0) {
+                // Format topics for the model
+                var topicLists = allTopics.map(function (topic) {
+                  return {
+                    topic_id: topic.topic_id || topic.id || 0,
+                    name: topic.name || '',
+                    slug: topic.slug || ''
+                  };
+                });
+
+                // Update the model with group topics
+                var model = bp.Nouveau.Activity.postForm.model;
+                if (model) {
+                  model.set('topics', {
+                    topic_lists: topicLists
+                  });
+
+                  // Trigger topic update event to refresh the UI
+                  if (typeof Backbone !== 'undefined') {
+                    Backbone.trigger('topic:update', model.get('topics'));
+                  }
+
+                  // Show or hide topic selector based on whether topics exist
+                  var _$topicSelector = $('.whats-new-topic-selector');
+                  if (topicLists.length > 0) {
+                    _$topicSelector.removeClass('bp-hide');
+                  } else {
+                    _$topicSelector.addClass('bp-hide');
+                  }
+                }
+              }
+            }
+          },
+          error: function error(xhr, status, _error4) {
+            console.warn('Failed to load group topics:', _error4);
+            // If error on first page, hide the topic selector
+            if (page === 1) {
+              var _$topicSelector2 = $('.whats-new-topic-selector');
+              _$topicSelector2.addClass('bp-hide');
+            }
+          }
+        });
+      };
+
+      // Start fetching from page 1
+      _fetchAllTopics(1, []);
     },
     /**
      * Load and inject shared activity into BuddyBoss form (for group share)
@@ -2720,7 +2835,17 @@
       var originalBtnText = $submitBtn.text();
 
       // Disable submit button
-      $submitBtn.prop('disabled', true).text('Posting...');
+      $submitBtn.prop('disabled', true).text(buddybossSharingFrontend.i18n.posting || 'Posting...');
+
+      // Extract topic_id and has_topic_selector if topic selector exists (same as BuddyBoss Platform)
+      var topicId = 0;
+      var hasTopicSelector = false;
+      var topicSelector = $('#buddypress .whats-new-topic-selector .bb-topic-selector-list li');
+      if (topicSelector.length) {
+        hasTopicSelector = true;
+        var selectedTopic = topicSelector.find('a.selected');
+        topicId = selectedTopic.data('topic-id') || 0;
+      }
       $.ajax({
         url: buddybossSharingFrontend.ajaxUrl,
         type: 'POST',
@@ -2729,15 +2854,52 @@
           nonce: buddybossSharingFrontend.nonce,
           activity_id: activityId,
           group_id: groupId,
-          custom_message: customMessage
+          custom_message: customMessage,
+          has_topic_selector: hasTopicSelector,
+          topic_id: topicId
         },
         success: function success(response) {
           if (response.success) {
-            _this23.showNotification(response.data.message || 'Shared to group successfully!', 'success');
+            _this23.showNotification(response.data.message || buddybossSharingFrontend.i18n.sharedToGroupSuccess || 'Shared to group successfully!', 'success');
 
             // Update share count
             if (response.data.share_count) {
               _this23.updateShareCount(response.data.share_count);
+            }
+
+            // Prepend activity to group feed if activity HTML is provided
+            if (response.data.activity && response.data.id) {
+              var _activityId = response.data.id;
+              var activityElemSel = $('#activity-' + _activityId);
+
+              // Only prepend if activity doesn't already exist in the feed
+              if (!activityElemSel.length) {
+                // Make sure the activity list container exists
+                if (!$('#activity-stream ul.activity-list').length) {
+                  $('#activity-stream').html($('<ul></ul>').addClass('activity-list item-list bp-list'));
+                }
+
+                // Check if there is a pinned activity with .bb-pinned class
+                var pinnedActivity = $('#activity-stream ul.activity-list li:first.bb-pinned');
+                if (pinnedActivity.length > 0) {
+                  // If a pinned activity is found, insert after it
+                  if (typeof bp !== 'undefined' && bp.Nouveau && bp.Nouveau.inject) {
+                    bp.Nouveau.inject('#activity-stream ul.activity-list li:first.bb-pinned', response.data.activity, 'after');
+                  } else {
+                    pinnedActivity.after(response.data.activity);
+                  }
+                } else {
+                  // Prepend the activity
+                  if (typeof bp !== 'undefined' && bp.Nouveau && bp.Nouveau.inject) {
+                    bp.Nouveau.inject('#activity-stream ul.activity-list', response.data.activity, 'prepend');
+                  } else {
+                    $('#activity-stream ul.activity-list').prepend(response.data.activity);
+                  }
+                }
+
+                // Trigger scroll event to load images
+                jQuery(window).scroll();
+              }
             }
 
             // Clear draft activity
@@ -2747,17 +2909,17 @@
             _this23.cleanupSharedActivityFormForGroup();
             $('#whats-new-form').trigger('reset');
           } else {
-            _this23.showNotification(response.data.message || 'Failed to share to group.', 'error');
+            _this23.showNotification(response.data.message || buddybossSharingFrontend.i18n.failedToShareToGroup || 'Failed to share to group.', 'error');
             $submitBtn.prop('disabled', false).text(originalBtnText);
           }
         },
-        error: function error(xhr, status, _error4) {
+        error: function error(xhr, status, _error5) {
           console.error('AJAX error:', {
             xhr: xhr,
             status: status,
-            error: _error4
+            error: _error5
           });
-          _this23.showNotification('An error occurred. Please try again.', 'error');
+          _this23.showNotification(buddybossSharingFrontend.i18n.error || 'An error occurred. Please try again.', 'error');
           $submitBtn.prop('disabled', false).text(originalBtnText);
         }
       });
@@ -2805,7 +2967,7 @@
       $('.buddyboss-share-friends-modal-container').remove();
 
       // Create modal HTML
-      var modalHTML = "\n\t\t\t\t<div class=\"buddyboss-share-friends-modal-container bb-share-modal-container\" style=\"display: none;\">\n\t\t\t\t\t<div class=\"buddyboss-share-modal-overlay\"></div>\n\t\t\t\t\t<div class=\"buddyboss-share-friends-modal bb-share-modal\">\n\t\t\t\t\t\t<div class=\"share-friends-header bb-share-modal-header\">\n\t\t\t\t\t\t\t<h3>Share to friend's profile</h3>\n\t\t\t\t\t\t\t<button type=\"button\" class=\"share-friends-close bb-share-modal-close\">\n\t\t\t\t\t\t\t\t<i class=\"bb-icon-l bb-icon-times\"></i>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"share-friends-search bb-share-modal-search\">\n\t\t\t\t\t\t\t<i class=\"bb-icon-l bb-icon-search\"></i>\n\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\tclass=\"share-friends-search-input\"\n\t\t\t\t\t\t\t\tplaceholder=\"Search for members\"\n\t\t\t\t\t\t\t\tautocomplete=\"off\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"share-friends-content bb-share-modal-content\">\n\t\t\t\t\t\t\t<div class=\"share-friends-label bb-share-modal-label\">\n\t\t\t\t\t\t\t\tAll Friends\n\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t<div class=\"share-friends-list\">\n\t\t\t\t\t\t\t\t<div class=\"share-friends-loading\" style=\"display: none;\">\n\t\t\t\t\t\t\t\t\t<span class=\"spinner is-active\"></span>\n\t\t\t\t\t\t\t\t\t<p>Loading...</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"share-friends-results\">\n\t\t\t\t\t\t\t\t\t<!-- Friends will be loaded via AJAX -->\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<!-- Hidden field to store activity ID -->\n\t\t\t\t\t\t<input type=\"hidden\" id=\"share-friends-activity-id\" value=\"".concat(this.currentActivityId, "\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t");
+      var modalHTML = "\n\t\t\t\t<div class=\"buddyboss-share-friends-modal-container bb-share-modal-container\" style=\"display: none;\">\n\t\t\t\t\t<div class=\"buddyboss-share-modal-overlay\"></div>\n\t\t\t\t\t<div class=\"buddyboss-share-friends-modal bb-share-modal\">\n\t\t\t\t\t\t<div class=\"share-friends-header bb-share-modal-header\">\n\t\t\t\t\t\t\t<h3>".concat(buddybossSharingFrontend.i18n.shareToFriendProfile || "Share to friend's profile", "</h3>\n\t\t\t\t\t\t\t<button type=\"button\" class=\"share-friends-close bb-share-modal-close\">\n\t\t\t\t\t\t\t\t<i class=\"bb-icon-l bb-icon-times\"></i>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"share-friends-search bb-share-modal-search\">\n\t\t\t\t\t\t\t<i class=\"bb-icon-l bb-icon-search\"></i>\n\t\t\t\t\t\t\t<input\n\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\tclass=\"share-friends-search-input\"\n\t\t\t\t\t\t\t\tplaceholder=\"").concat(buddybossSharingFrontend.i18n.searchForMembers || 'Search for members', "\"\n\t\t\t\t\t\t\t\tautocomplete=\"off\"\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"share-friends-content bb-share-modal-content\">\n\t\t\t\t\t\t\t<div class=\"share-friends-label bb-share-modal-label\">\n\t\t\t\t\t\t\t\t").concat(buddybossSharingFrontend.i18n.allFriends || 'All Friends', "\n\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t<div class=\"share-friends-list\">\n\t\t\t\t\t\t\t\t<div class=\"share-friends-loading\" style=\"display: none;\">\n\t\t\t\t\t\t\t\t\t<span class=\"spinner is-active\"></span>\n\t\t\t\t\t\t\t\t\t<p>").concat(buddybossSharingFrontend.i18n.loading || 'Loading...', "</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"share-friends-results\">\n\t\t\t\t\t\t\t\t\t<!-- Friends will be loaded via AJAX -->\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<!-- Hidden field to store activity ID -->\n\t\t\t\t\t\t<input type=\"hidden\" id=\"share-friends-activity-id\" value=\"").concat(this.currentActivityId, "\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t");
       $('body').append(modalHTML);
       var $modal = $('.buddyboss-share-friends-modal-container');
       $modal.fadeIn(300);
@@ -2877,7 +3039,7 @@
               _this25.handleFriendSelection(userId, userName, userAvatar);
             });
           } else if (page === 1) {
-            var message = searchTerm ? 'Sorry, no members were found.' : 'No friends found.';
+            var message = searchTerm ? buddybossSharingFrontend.i18n.sorryNoMembersFound || 'Sorry, no members were found.' : buddybossSharingFrontend.i18n.noFriendsFound || 'No friends found.';
             $results.html("\n\t\t\t\t\t\t\t<div class=\"no-friends-found\">\n\t\t\t\t\t\t\t\t<div class=\"no-friends-icon\">\n\t\t\t\t\t\t\t\t\t<i class=\"bb-icon-rf bb-icon-info-circle\"></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"no-friends-message\">".concat(message, "</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t"));
           }
         },
@@ -3152,7 +3314,7 @@
       var _this30 = this;
       var $submitBtn = $('#aw-whats-new-submit');
       var originalText = $submitBtn.text();
-      $submitBtn.prop('disabled', true).text('Posting...');
+      $submitBtn.prop('disabled', true).text(buddybossSharingFrontend.i18n.posting || 'Posting...');
       $.ajax({
         url: buddybossSharingFrontend.ajaxUrl,
         type: 'POST',
@@ -3185,11 +3347,11 @@
             $submitBtn.prop('disabled', false).text(originalText);
           }
         },
-        error: function error(xhr, status, _error5) {
+        error: function error(xhr, status, _error6) {
           console.error('AJAX error:', {
             xhr: xhr,
             status: status,
-            error: _error5
+            error: _error6
           });
           _this30.showNotification(buddybossSharingFrontend.i18n.error, 'error');
           $submitBtn.prop('disabled', false).text(originalText);
@@ -3287,8 +3449,28 @@
         success: function success(response) {
           if (response.success && response.data) {
             // Create a temporary activity element with the correct ID format
-            var tempActivity = $(response.data.activity_html);
+            // Extract the <li> element from the returned HTML (which includes <ul> wrapper)
+            var $htmlWrapper = $(response.data.activity_html);
+            var tempActivity = $htmlWrapper.find('li.activity-item');
+
+            // If we couldn't find the li, try to use the first child or the wrapper itself
+            if (tempActivity.length === 0) {
+              tempActivity = $htmlWrapper.find('li').first();
+            }
+            if (tempActivity.length === 0) {
+              // Fallback: use the wrapper but ensure we have the activity item
+              tempActivity = $htmlWrapper;
+            }
+
+            // Ensure the activity item has the correct ID
             tempActivity.attr('id', 'activity-' + activityId);
+
+            // Ensure the activity item has the activity-popup-title data attribute if missing
+            // Use attr() to check if the attribute exists (data() might return undefined even if attr exists)
+            if (!tempActivity.attr('data-activity-popup-title') && response.data.author_name) {
+              var activityTitle = response.data.author_name + "'s post";
+              tempActivity.attr('data-activity-popup-title', activityTitle);
+            }
 
             // Append to a hidden container
             var tempContainer = $('#bb-shared-activity-temp-container');
@@ -3356,23 +3538,23 @@
               console.error('Platform activity modal system not available');
               tempActivity.remove();
               _this31.playVideoInModal = false;
-              alert('Activity modal system not available');
+              alert(buddybossSharingFrontend.i18n.activityModalNotAvailable || 'Activity modal system not available');
             }
           } else {
             var _response$data2;
             console.error('Failed to load activity data:', response);
             _this31.playVideoInModal = false;
-            alert(((_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.message) || 'Failed to load activity');
+            alert(((_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.message) || buddybossSharingFrontend.i18n.failedLoadActivityAlert || 'Failed to load activity');
           }
         },
-        error: function error(xhr, status, _error6) {
+        error: function error(xhr, status, _error7) {
           console.error('AJAX error loading shared activity:', {
             xhr: xhr,
             status: status,
-            error: _error6
+            error: _error7
           });
           _this31.playVideoInModal = false;
-          alert('Failed to load activity. Please try again.');
+          alert(buddybossSharingFrontend.i18n.failedLoadActivityRetry || 'Failed to load activity. Please try again.');
         }
       });
     },
@@ -3394,6 +3576,265 @@
 
       // Close the dropdown if it's open when modal is closed
       this.closeDropdown();
+    },
+    /**
+     * Handle edit activity form loaded event
+     * Check if the activity being edited is a shared activity and load preview
+     */
+    handleEditActivityLoaded: function handleEditActivityLoaded(event, data) {
+      // Only handle edit activity loaded events
+      if (!data || data.type !== 'bb_activity_edit_loaded_at_start') {
+        return;
+      }
+      var activity_data = data.activity_data;
+      if (!activity_data || !activity_data.id) {
+        return;
+      }
+
+      // Check if this is a shared activity by checking the activity item's class
+      // We need to find the activity item in the DOM
+      var activityId = activity_data.id;
+      var $activityItem = $("li.activity-item[data-bp-activity-id=\"".concat(activityId, "\"], li.activity[data-bp-activity-id=\"").concat(activityId, "\"]"));
+
+      // Check if the activity item has the activity_share class
+      if (!$activityItem.hasClass('activity_share')) {
+        return;
+      }
+
+      // This is a shared activity, get the shared_activity_id and load preview
+      this.loadSharedActivityPreviewForEdit(activityId);
+    },
+    /**
+     * Load and inject shared activity preview into edit form
+     */
+    loadSharedActivityPreviewForEdit: function loadSharedActivityPreviewForEdit(activityId) {
+      var _this32 = this;
+      // First, get the shared_activity_id via AJAX
+      $.ajax({
+        url: buddybossSharingFrontend.ajaxUrl,
+        type: 'POST',
+        data: {
+          action: 'buddyboss_get_shared_activity_id',
+          nonce: buddybossSharingFrontend.nonce,
+          activity_id: activityId
+        },
+        success: function success(response) {
+          if (response.success && response.data.shared_activity_id) {
+            var sharedActivityId = response.data.shared_activity_id;
+
+            // Now load the preview content
+            $.ajax({
+              url: buddybossSharingFrontend.ajaxUrl,
+              type: 'POST',
+              data: {
+                action: 'buddyboss_get_activity_content',
+                nonce: buddybossSharingFrontend.nonce,
+                activity_id: sharedActivityId
+              },
+              success: function success(previewResponse) {
+                if (previewResponse.success) {
+                  // Inject the preview into the edit form
+                  _this32.injectSharedActivityToEditForm(previewResponse.data.content, sharedActivityId);
+                }
+              },
+              error: function error() {
+                console.error(buddybossSharingFrontend.i18n.failedLoadActivity);
+              }
+            });
+          }
+        },
+        error: function error() {
+          console.error('Failed to get shared activity ID');
+        }
+      });
+    },
+    /**
+     * Inject shared activity preview into edit form
+     */
+    injectSharedActivityToEditForm: function injectSharedActivityToEditForm(content, sharedActivityId) {
+      var $form = $('#whats-new-form');
+
+      // Add custom class for activity sharing form
+      $form.addClass('activity-share-form');
+
+      // Store the shared activity ID in the form
+      if (!$form.find('#buddyboss-shared-activity-id').length) {
+        $form.append("<input type=\"hidden\" id=\"buddyboss-shared-activity-id\" value=\"".concat(sharedActivityId, "\">"));
+      } else {
+        $form.find('#buddyboss-shared-activity-id').val(sharedActivityId);
+      }
+
+      // Inject the shared activity preview below the textarea
+      var $textarea = $('#whats-new');
+      var $previewContainer = $form.find('.buddyboss-shared-activity-preview');
+      if ($previewContainer.length === 0) {
+        $previewContainer = $('<div class="buddyboss-shared-activity-preview"></div>');
+        $textarea.parent().after($previewContainer);
+      }
+      $previewContainer.html(content);
+
+      // Add loading indicator for preview content
+      this.addLoadingIndicatorToPreview($previewContainer);
+
+      // Initialize lazy loading for images
+      this.initializeLazyLoading($previewContainer);
+
+      // Initialize Video.js for any videos in preview
+      this.initializeVideoJS($previewContainer);
+
+      // Disable media/video/document/poll upload buttons
+      this.disableUploadButtons();
+
+      // Remove featured image button from modal header
+      this.removeFeaturedImageButton();
+
+      // Hook into form submission (for edit, we need to handle update differently)
+      this.hookEditFormSubmission();
+
+      // Trigger validation to enable submit button when preview is added
+      if (typeof bp !== 'undefined' && bp.Nouveau && bp.Nouveau.Activity && bp.Nouveau.Activity.postForm && bp.Nouveau.Activity.postForm.postForm) {
+        bp.Nouveau.Activity.postForm.postForm.postValidate();
+      }
+    },
+    /**
+     * Hook into edit form submission to preserve shared activity
+     */
+    hookEditFormSubmission: function hookEditFormSubmission() {
+      var self = this;
+      var $form = $('#whats-new-form');
+
+      // Remove previous handler if exists
+      $form.off('submit.buddyboss-share-edit');
+
+      // Add handler for edit form submission
+      var form = document.getElementById('whats-new-form');
+      if (form) {
+        // Remove any existing listener
+        if (form._buddybossShareEditHandler) {
+          form.removeEventListener('submit', form._buddybossShareEditHandler, true);
+        }
+
+        // Create and store handler
+        form._buddybossShareEditHandler = function (e) {
+          var sharedActivityId = document.getElementById('buddyboss-shared-activity-id');
+          var activityId = document.getElementById('bp-activity-id');
+          if (sharedActivityId && sharedActivityId.value && activityId && activityId.value) {
+            // This is an edit of a shared activity
+            // The form will be submitted normally, but we need to ensure
+            // the shared_activity_id meta is preserved
+            // The backend should handle this, but we can add a hidden field to be sure
+            if (!$form.find('#buddyboss-preserve-shared-activity').length) {
+              $form.append("<input type=\"hidden\" id=\"buddyboss-preserve-shared-activity\" name=\"buddyboss_preserve_shared_activity\" value=\"1\">");
+              $form.append("<input type=\"hidden\" name=\"buddyboss_shared_activity_id\" value=\"".concat(sharedActivityId.value, "\">"));
+            }
+          }
+        };
+
+        // Add listener at capture phase
+        form.addEventListener('submit', form._buddybossShareEditHandler, true);
+      }
+    },
+    /**
+     * Clean up shared activity preview from edit form
+     */
+    cleanupEditActivityPreview: function cleanupEditActivityPreview() {
+      var $form = $('#whats-new-form');
+      var $formWrapper = $form.closest('.activity-update-form');
+
+      // Check if preview exists
+      if ($form.find('.buddyboss-shared-activity-preview').length === 0) {
+        return;
+      }
+
+      // Only clean up if we're not in modal-popup mode (modal is closed)
+      // Or if the form doesn't have bp-activity-edit class (edit mode ended)
+      if ($formWrapper.length && (!$formWrapper.hasClass('modal-popup') || !$form.hasClass('bp-activity-edit'))) {
+        // Remove preview container
+        $form.find('.buddyboss-shared-activity-preview').remove();
+
+        // Remove hidden input for shared activity ID
+        $form.find('#buddyboss-shared-activity-id').remove();
+        $form.find('#buddyboss-preserve-shared-activity').remove();
+        $form.find('input[name="buddyboss_shared_activity_id"]').remove();
+
+        // Remove activity-share-form class
+        $form.removeClass('activity-share-form');
+
+        // Remove edit form submission handler
+        var form = document.getElementById('whats-new-form');
+        if (form && form._buddybossShareEditHandler) {
+          form.removeEventListener('submit', form._buddybossShareEditHandler, true);
+          delete form._buddybossShareEditHandler;
+        }
+
+        // Re-enable toolbar
+        var $toolbar = $('#whats-new-toolbar[data-share-disabled="true"]');
+        if ($toolbar.length) {
+          $toolbar.show().removeAttr('data-share-disabled');
+        }
+      }
+    },
+    /**
+     * Setup MutationObserver to watch for modal-popup class removal
+     */
+    setupEditModalCleanupObserver: function setupEditModalCleanupObserver() {
+      // Only setup once
+      if (this.editModalObserver) {
+        return;
+      }
+      var self = this;
+
+      // Watch for changes to activity-update-form elements
+      this.editModalObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            var $target = $(mutation.target);
+
+            // Check if this is the activity-update-form and it lost the modal-popup class
+            if ($target.hasClass('activity-update-form') && !$target.hasClass('modal-popup')) {
+              // Check if there's a preview in the form
+              var $form = $target.find('#whats-new-form');
+              if ($form.length && $form.find('.buddyboss-shared-activity-preview').length > 0) {
+                // Clean up the preview
+                self.cleanupEditActivityPreview();
+              }
+            }
+          }
+        });
+      });
+
+      // Start observing when document is ready
+      $(document).ready(function () {
+        // Function to observe a form element
+        function observeForm(element) {
+          if (!element._buddybossObserved) {
+            element._buddybossObserved = true;
+            self.editModalObserver.observe(element, {
+              attributes: true,
+              attributeFilter: ['class']
+            });
+          }
+        }
+
+        // Observe all existing activity-update-form elements
+        $('.activity-update-form').each(function () {
+          observeForm(this);
+        });
+
+        // Also observe dynamically added forms using a more modern approach
+        // Watch the document body for new activity-update-form elements
+        var bodyObserver = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            $(mutation.addedNodes).find('.activity-update-form').addBack('.activity-update-form').each(function () {
+              observeForm(this);
+            });
+          });
+        });
+        bodyObserver.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      });
     }
   };
 

@@ -1646,8 +1646,18 @@ class Helper {
 		$logo_uae               = file_get_contents( plugin_dir_path( SRFM_FILE ) . 'images/uae.svg' );
 		$logo_starter_templates = file_get_contents( plugin_dir_path( SRFM_FILE ) . 'images/starterTemplates.svg' );
 		$logo_sure_rank         = file_get_contents( plugin_dir_path( SRFM_FILE ) . 'images/surerank.svg' );
+		$logo_sure_contact      = file_get_contents( plugin_dir_path( SRFM_FILE ) . 'images/surecontact.svg' );
 
 		$integrations = [
+			'sure_contact'      => [
+				'title'                 => __( 'SureContact', 'sureforms' ),
+				'singleLineDescription' => __( 'Turn Emails Into Revenue with a CRM Built for Your Website!', 'sureforms' ),
+				'subtitle'              => __( 'Send newsletters, run campaigns, set up automations, manage contacts, and see exactly how much revenue your emails generate, all in one place.', 'sureforms' ),
+				'status'                => self::get_plugin_status( 'surecontact/surecontact.php' ),
+				'slug'                  => 'surecontact',
+				'path'                  => 'surecontact/surecontact.php',
+				'logo'                  => self::encode_svg( is_string( $logo_sure_contact ) ? $logo_sure_contact : '' ),
+			],
 			'sure_mails'        => [
 				'title'                 => __( 'SureMail', 'sureforms' ),
 				'singleLineDescription' => __( 'Boost Your Email Deliverability Instantly!', 'sureforms' ),
@@ -2211,5 +2221,37 @@ class Helper {
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		return base64_encode( $json );
+	}
+
+	/**
+	 * Get the nonces for the form submission.
+	 *
+	 * @since 2.5.1
+	 * @return array<string> The nonces for the form submission.
+	 */
+	public static function get_frontend_nonces() {
+		$nonces = [
+			'unique_validation' => wp_create_nonce( 'unique_validation_nonce' ),
+			'form_submit'       => wp_create_nonce( 'srfm_form_submit' ),
+			'payment_nonce'     => wp_create_nonce( 'srfm_payment_nonce' ),
+		];
+
+		/**
+		 * Filter to allow Pro and third-party plugins to add additional nonces.
+		 *
+		 * @since 2.5.1
+		 * @param array<string> $nonces The nonces for the form submission.
+		 */
+		return apply_filters( 'srfm_frontend_nonces', $nonces );
+	}
+
+	/**
+	 * Check if the form markup nonce should be updated.
+	 *
+	 * @since 2.5.1
+	 * @return bool True if the form markup nonce should be updated, false otherwise.
+	 */
+	public static function should_update_form_markup_nonce() {
+		return apply_filters( 'srfm_should_update_form_markup_nonce', true );
 	}
 }
