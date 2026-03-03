@@ -34,6 +34,26 @@
 .rg-roi *, .rg-roi *::before, .rg-roi *::after{box-sizing:border-box}
 .rg-hide{display:none!important}
 
+/* === ROI Header (Überschrift) === */
+.rg-roi-header{
+  text-align:center;
+  margin-bottom:24px;
+  padding:16px 0;
+}
+.rg-roi-title{
+  font-size:clamp(1.5rem, 4vw, 2.25rem);
+  font-weight:700;
+  color:var(--rg-dark);
+  margin:0 0 8px 0;
+  line-height:1.2;
+}
+.rg-roi-subtitle{
+  font-size:1rem;
+  color:var(--rg-subtext);
+  margin:0;
+  font-weight:400;
+}
+
 /* === ROI Page Layout Fixes === */
 /* Force full-width layout on ROI page - override BuddyBoss grid/sidebar */
 body:has(.rg-roi),
