@@ -201,22 +201,12 @@ add_action('wp_head', function () {
 }, 1);
 
 /**
- * 3) SEO Intro (above calculator) + FAQ (below calculator) via the_content filter.
+ * 3) FAQ (below calculator) via the_content filter.
  */
 add_filter('the_content', function ( $content ) {
     if ( ! bb_child_is_roi_rechner_page() || ! is_main_query() || ! in_the_loop() ) {
         return $content;
     }
-
-    // --- Intro Section ---
-    $intro = '<section class="rg-seo-intro" style="max-width: 960px; margin: 0 auto 2rem; padding: 0 1rem;">
-  <h1 style="font-size: 1.8rem; margin-bottom: 1rem;">Reinigungsroboter ROI berechnen – unabhängig und kostenlos</h1>
-  <p>Lohnt sich ein Reinigungsroboter für Ihr Objekt? Die Antwort hängt von vielen Faktoren ab: Flächengröße, Lohnkosten, Reinigungszyklen, Finanzierungsmodell und Betriebskosten. Unser ROI-Rechner macht diese Bewertung transparent und nachvollziehbar – herstellerunabhängig und ohne versteckte Absicht.</p>
-  <p>Anders als bei Hersteller-Kalkulatoren verfolgt dieser Rechner kein Verkaufsziel. Sie wählen Ihren Roboter, passen alle Parameter an Ihre reale Situation an und erhalten eine ehrliche Wirtschaftlichkeitsanalyse. Das Ergebnis zeigt Ihnen die jährliche Netto-Ersparnis, den Break-Even-Zeitpunkt und eine vollständige 5-Jahres-Projektion – inklusive Kauf- und Leasing-Vergleich.</p>
-  <p>Der Rechner eignet sich für Entscheider im Facility Management, in der Gebäudereinigung, Logistik und Industrie, die vor einer Investitionsentscheidung belastbare Zahlen brauchen. Ob Gausium Scrubber 50, Pudu CC1 oder Nexaro NR 1500 – wählen Sie aus realen Robotermodellen und sehen Sie sofort, wie sich Anschaffung oder Robot-as-a-Service in Ihrem konkreten Einsatzszenario rechnet.</p>
-  <p>Für registrierte Mitglieder stehen zusätzlich eine Executive-PDF mit Investitionsvergleich, gespeicherte Berechnungen und das eigene Firmenlogo im Report zur Verfügung. Die Nutzung des Rechners selbst ist vollständig kostenlos.</p>
-  <p><strong>Tipp:</strong> Nutzen Sie die Branchenprofile (Industrie, Logistik, Krankenhaus, Einzelhandel, Bürogebäude), um mit branchentypischen Werten zu starten – und passen Sie anschließend die Werte an Ihr Objekt an.</p>
-</section>';
 
     // --- FAQ Section ---
     $faq = '<section class="rg-seo-faq" style="max-width: 960px; margin: 2rem auto; padding: 0 1rem;">
@@ -258,7 +248,7 @@ add_filter('the_content', function ( $content ) {
   </details>
 </section>';
 
-    return $intro . $content . $faq;
+    return $content . $faq;
 });
 
 /**
