@@ -427,12 +427,6 @@ final class RG_ROI_Calculator {
         ?>
         <div class="rg-roi rg-roi-page" data-rg-roi>
 
-            <!-- Hauptüberschrift -->
-            <header class="rg-roi-header">
-                <h1 class="rg-roi-title"><?php echo esc_html($atts['title']); ?></h1>
-                <p class="rg-roi-subtitle"><?php echo esc_html($atts['subtitle']); ?></p>
-            </header>
-
             <!-- Beratermodus Toggle (top bar) – soft-locked for guests -->
             <div class="rg-advisor-bar">
                 <label class="rg-advisor-toggle">
