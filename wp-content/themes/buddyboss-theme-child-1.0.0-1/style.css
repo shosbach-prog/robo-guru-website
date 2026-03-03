@@ -354,7 +354,16 @@ body.buddyboss-theme p {
 
 
 /* ============================================================
-   16. RESPONSIVE – Mobile Anpassungen
+   16. ROBO-FINDER – kein Scrollen
+   ============================================================ */
+body.page-template-page-robo-finder {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+
+/* ============================================================
+   17. RESPONSIVE – Mobile Anpassungen
    ============================================================ */
 @media (max-width: 768px) {
   :root {
