@@ -39,6 +39,7 @@
   position:relative;
   z-index:1;
   overflow:visible!important;
+  margin-top:32px!important;
 }
 body:has(.rg-roi) .entry-content,
 body:has(.rg-roi) .bb-custom-post-content,
