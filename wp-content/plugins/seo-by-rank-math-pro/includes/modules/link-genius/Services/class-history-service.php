@@ -239,7 +239,7 @@ class History_Service {
 				if ( $from && $to ) {
 					return sprintf(
 						/* translators: 1: from value, 2: to value, 3: number of links */
-						__( 'Changed "%1$s" to "%2$s" in %3$d links', 'rank-math-pro' ),
+						__( 'Changed <span class="rank-math-history-from">"%1$s"</span> to <span class="rank-math-history-to">"%2$s"</span> in <span class="rank-math-history-count">%3$d</span> links', 'rank-math-pro' ),
 						$from,
 						$to,
 						(int) $item->affected_links_count
@@ -257,7 +257,7 @@ class History_Service {
 				if ( $keyword ) {
 					return sprintf(
 						/* translators: 1: keyword, 2: number of links */
-						__( 'Added %2$d links for keyword "%1$s"', 'rank-math-pro' ),
+						__( 'Added %2$d links for keyword <span class="rank-math-history-to">"%1$s"</span>', 'rank-math-pro' ),
 						$keyword,
 						(int) $item->affected_links_count
 					);

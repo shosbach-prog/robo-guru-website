@@ -131,11 +131,11 @@ class Rest extends WP_REST_Controller {
 			);
 		}
 		$file_import = CSV_Import_Export::import( $import_file, $request->get_param( 'no_overwrite' ) );
-		if ( ! $file_import ) {
+		if ( isset( $file_import['error'] ) ) {
 			return new WP_REST_Response(
 				[
 					'success' => false,
-					'message' => esc_html__( 'Something went wrong! Please try again later.', 'rank-math-pro' ),
+					'message' => $file_import['error'] ?? esc_html__( 'Something went wrong! Please try again later.', 'rank-math-pro' ),
 				]
 			);
 		}

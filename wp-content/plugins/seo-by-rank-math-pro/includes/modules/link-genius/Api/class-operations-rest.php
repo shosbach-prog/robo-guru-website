@@ -421,6 +421,10 @@ class Operations_Rest extends Base_Controller {
 			$normalized['errors'] = $raw['errors'];
 		}
 
+		if ( isset( $raw['total_instances'] ) ) {
+			$normalized['total_instances'] = $raw['total_instances'];
+		}
+
 		// Include full details for advanced use.
 		$normalized['details'] = $raw;
 

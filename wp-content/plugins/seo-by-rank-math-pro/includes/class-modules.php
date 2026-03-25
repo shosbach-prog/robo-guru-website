@@ -34,6 +34,9 @@ class Modules {
 		$this->filter( 'rank_math/modules', 'setup_core', 1 );
 		$this->action( 'admin_enqueue_scripts', 'enqueue' );
 		$this->action( 'rank_math/module_changed', 'flush_rewrite_rules', 10 );
+
+		// Hook for Link Genius module enablement and table recreation.
+		$this->action( 'rank_math/admin/after_create_tables', 'setup_link_genius_schema', 10, 2 );
 	}
 
 	/**
@@ -86,6 +89,12 @@ class Modules {
 		// Replace Schema Loader.
 		$modules['rich-snippet']['class'] = '\RankMathPro\Schema\Schema';
 
+		if ( isset( $modules['link-genius'] ) ) {
+			$modules['link-counter']['title'] = $modules['link-genius']['title'];
+			$modules['link-counter']['desc']  = $modules['link-genius']['desc'];
+			unset( $modules['link-genius'] );
+		}
+
 		return $modules;
 	}
 
@@ -108,5 +117,23 @@ class Modules {
 		if ( 'podcast' === $module ) {
 			Helper::schedule_flush_rewrite();
 		}
+	}
+
+	/**
+	 * Set up Link Genius PRO schema when tables are created.
+	 *
+	 * This method is called when FREE plugin creates tables for link-counter module.
+	 * It handles both module enablement and table recreation scenarios.
+	 *
+	 * @param array $tables Tables that were created.
+	 */
+	public function setup_link_genius_schema( $tables ) {
+		// Only proceed if link-counter module tables were created.
+		if ( ! isset( $tables['link-counter'] ) || ! isset( $tables['link-counter']['rank_math_internal_links'] ) ) {
+			return;
+		}
+
+		// Initialize Link Genius PRO schema (columns, indexes, tables).
+		\RankMathPro\Link_Genius\Data\Table_Extension::initialize_schema();
 	}
 }

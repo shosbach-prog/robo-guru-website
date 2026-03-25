@@ -3416,6 +3416,12 @@
       if (isReadMoreLink) {
         return; // Allow the link to work normally
       }
+      if ($target.closest('.shared-activity-message').length > 0) {
+        e.preventDefault();
+        var activityUrl = $target.closest('.shared-activity-message').data('activity-url');
+        window.location.href = activityUrl;
+        return;
+      }
       e.preventDefault();
       e.stopPropagation();
       var $preview = $(e.currentTarget);

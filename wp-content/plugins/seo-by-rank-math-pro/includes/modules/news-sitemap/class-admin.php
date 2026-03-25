@@ -17,6 +17,7 @@ use RankMath\Traits\Hooker;
 use RankMath\Admin\Admin_Helper;
 use RankMath\Sitemap\Router;
 use RankMath\Sitemap\Cache_Watcher;
+use RankMathPro\Admin\Admin_Helper as Pro_Admin_Helper;
 use RankMathPro\Sitemap\News_Sitemap_Helper;
 
 defined( 'ABSPATH' ) || exit;
@@ -237,46 +238,16 @@ class Admin {
 	 * @return array
 	 */
 	private function get_exclude_terms() {
-		$post_types = Helper::get_settings( 'sitemap.news_sitemap_post_type', [] );
-		if ( empty( $post_types ) ) {
+		$selected_post_types = Helper::get_settings( 'sitemap.news_sitemap_post_type', [] );
+		if ( empty( $selected_post_types ) ) {
 			return [];
 		}
 
-		$exclude_terms = [];
-		foreach ( $post_types as $post_type ) {
-			$taxonomies = Helper::get_object_taxonomies( $post_type, 'objects' );
-			if ( empty( $taxonomies ) ) {
-				continue;
-			}
+		// Get all post types except the selected ones for News Sitemap.
+		$all_post_types      = get_post_types( [ 'public' => true ], 'names' );
+		$all_post_types      = array_diff( $all_post_types, [ 'attachment' ] );
+		$excluded_post_types = array_diff( $all_post_types, $selected_post_types );
 
-			$terms = Helper::get_settings( "sitemap.news_sitemap_exclude_{$post_type}_terms", [] );
-
-			$post_type_obj   = get_post_type_object( $post_type );
-			$post_type_label = $post_type_obj->labels->singular_name;
-
-			foreach ( $taxonomies as $taxonomy => $data ) {
-				if ( empty( $data->show_ui ) ) {
-					continue;
-				}
-
-				$selected = [];
-				if ( isset( $terms[ $taxonomy ] ) ) {
-					$selected = $terms[ $taxonomy ];
-				}
-
-				if ( isset( $terms[0] ) && isset( $terms[0][ $taxonomy ] ) ) {
-					$selected = $terms[0][ $taxonomy ];
-				}
-
-				$terms = News_Sitemap_Helper::get_taxonomy_terms( $taxonomy, $selected );
-				if ( empty( $terms ) ) {
-					continue;
-				}
-
-				$exclude_terms[ $post_type ][ $taxonomy ] = $terms;
-			}
-		}
-
-		return $exclude_terms;
+		return Pro_Admin_Helper::get_exclude_terms_for_settings( 'news_sitemap', $excluded_post_types, 'sitemap' );
 	}
 }

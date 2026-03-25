@@ -85,10 +85,6 @@ if (!class_exists("cmplz_import_settings")) {
 						    unset($banner['ID']);
 						    $cookiebanner = new CMPLZ_COOKIEBANNER();
 						    foreach($banner as $property => $value) {
-							    if ( is_serialized($value)) {
-								    $value = unserialize($value);
-							    }
-
 								//check if property exists
                                 if (!property_exists($cookiebanner, $property)) continue;
 							    $cookiebanner->{$property} = $value;

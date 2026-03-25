@@ -41,6 +41,13 @@ class Content_Processor {
 	protected $free_processor;
 
 	/**
+	 * Used to track and cache WordPress site settings.
+	 *
+	 * @var array
+	 */
+	private $site_settings = [];
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -491,10 +498,27 @@ class Content_Processor {
 		foreach ( $urls as $url ) {
 			$normalized_url = untrailingslashit( $url );
 			if ( ! isset( $results[ $normalized_url ] ) ) {
-				$results[ $normalized_url ] = 0;
+				$atts                       = $this->get_site_settings();
+				$results[ $normalized_url ] = $normalized_url === $atts['home_url'] && $atts['homepage_static'] ? (int) get_option( 'page_on_front' ) : 0;
 			}
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Get WordPress site options needed.
+	 *
+	 * @return array The atts.
+	 */
+	private function get_site_settings() {
+		if ( empty( $this->site_settings ) ) {
+			$this->site_settings = [
+				'home_url'        => untrailingslashit( home_url() ),
+				'homepage_static' => get_option( 'show_on_front' ) === 'page',
+			];
+		}
+
+		return $this->site_settings;
 	}
 }

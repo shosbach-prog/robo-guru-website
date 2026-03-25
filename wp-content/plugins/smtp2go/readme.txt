@@ -4,7 +4,7 @@ Tags: email, smtp, inbox, delivery, wp_mail
 Requires at least: 6.2
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.13.1
+Stable tag: 1.14.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -139,6 +139,8 @@ Our data centers are located around the world, meaning lightning-fast connection
 
 == Changelog ==
 
+= v1.14.1 =
+* use WordPress's replacement PHPMailer verify email address function
 = v1.14.0 =
 * check WordPress 6.9 compatibility
 = v1.13.1 =

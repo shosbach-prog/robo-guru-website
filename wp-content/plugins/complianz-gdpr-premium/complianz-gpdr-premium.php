@@ -1,9 +1,9 @@
 <?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Plugin Name: Complianz Privacy Suite (GDPR/CCPA) premium
- * Plugin URI: https://complianz.io/pricing
+ * Plugin URI: https://complianz.io/pricing/
  * Description: Plugin to help you make your website GDPR/CCPa compliant
- * Version: 7.5.6.1
+ * Version: 7.5.7.1
  * Requires at least: 5.9
  * Requires PHP: 7.4
  * Text Domain: complianz-gdpr
@@ -324,7 +324,7 @@ if ( ! class_exists( 'COMPLIANZ' ) ) {
 		private function define_constants(): void {
 			define( 'CMPLZ_PRODUCT_NAME', 'Complianz GDPR/CCPA Premium' );
 			$debug = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '#' . time() : '';
-			define( 'CMPLZ_VERSION', '7.5.6.1' . $debug );
+			define( 'CMPLZ_VERSION', '7.5.7.1' . $debug );
 			define( 'CMPLZ_ITEM_ID', 994 );
 			define( 'CMPLZ_URL', plugin_dir_url( __FILE__ ) );
 			define( 'CMPLZ_PATH', plugin_dir_path( __FILE__ ) );

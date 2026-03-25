@@ -248,6 +248,12 @@
   margin-bottom: 0;
 }
 
+.bp-single-message-content .shared-activity-message {
+  cursor: pointer;
+}
+.bp-single-message-content .shared-activity-message .bb-activity-media-wrap .entry-img {
+  border-radius: var(--bb-block-radius-inner) var(--bb-block-radius-inner) 0 0;
+}
 .bp-single-message-content .shared-activity-message .fluid-width-video-wrapper {
   margin-top: 0;
 }

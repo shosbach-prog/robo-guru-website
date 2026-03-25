@@ -15,6 +15,7 @@ use WP_REST_Server;
 use WP_REST_Request;
 use WP_REST_Controller;
 use RankMath\Helper;
+use RankMathPro\Admin\Admin_Helper;
 use RankMathPro\Sitemap\News_Sitemap_Helper;
 
 defined( 'ABSPATH' ) || exit;
@@ -64,7 +65,7 @@ class Rest extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_terms( WP_REST_Request $request ) {
-		return News_Sitemap_Helper::get_taxonomy_terms( $request->get_param( 'taxonomy' ), [], $request->get_param( 'search' ) );
+		return Admin_Helper::get_taxonomy_terms( $request->get_param( 'taxonomy' ), [], $request->get_param( 'search' ) );
 	}
 
 	/**

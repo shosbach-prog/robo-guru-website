@@ -42,6 +42,7 @@ function cmplz_tcf_init() {
  */
 function cmplz_banner_after_categories( )
 {
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Template handles escaping internally
 	echo cmplz_get_template( "tcf-categories.php", array(), trailingslashit( CMPLZ_PATH ) . 'pro/templates/');
 }
 
@@ -154,8 +155,11 @@ function cmplz_tcf_enqueue_assets( $hook ) {
 		'cmplz_tcf',
 		array(
 			'cmp_url' => $cmp_url,
-			'retention_string' => __('Retention in days', 'complianz-gdpr'),
+			'retention_string' => __('Data Retention', 'complianz-gdpr'),
 			'undeclared_string' => __('Not declared', 'complianz-gdpr'),
+			'days_string' => __('days', 'complianz-gdpr'),
+			'purpose_retention_string' => __('Purpose-specific retention', 'complianz-gdpr'),
+			'ac_vendor_retention_string' => __('See vendor privacy policy', 'complianz-gdpr'),
 			'isServiceSpecific' => true,
 			'excludedVendors' => cmplz_tcf_get_excluded_vendors(),
 			'purposes' => $purposes,
@@ -166,7 +170,7 @@ function cmplz_tcf_enqueue_assets( $hook ) {
 			'lspact' => cmplz_get_option('tcf_lspact') === 'yes' ? 'Y' : 'N',
 			'ccpa_applies' => cmplz_has_state('cal'),
 			'ac_mode' => cmplz_get_option('uses_ad_cookies_personalized') === 'tcf',
-			'debug' => defined('SCRIPT_DEBUG') && SCRIPT_DEBUG,
+			'debug' => cmplz_tcf_get_effective_debug_state(),
 			'prefix'=> COMPLIANZ::$banner_loader->get_cookie_prefix(),
 		)
 	);
@@ -177,6 +181,22 @@ function cmplz_tcf_get_publisher_country_code() {
 	$country_code = substr(strtoupper($country_code),0,2);
 	if ( empty($country_code) )  $country_code = 'EN';
 	return $country_code;
+}
+
+/**
+ * Get the effective debug state for TCF
+ * SCRIPT_DEBUG takes precedence over the admin setting
+ * 
+ * @return bool
+ */
+function cmplz_tcf_get_effective_debug_state() {
+	// SCRIPT_DEBUG takes precedence
+	if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) {
+		return true;
+	}
+	
+	// Fall back to admin setting (checkbox values are stored as 1/0)
+	return cmplz_get_option('tcf_debug_mode') == 1;
 }
 
 function cmplz_tcf_us_vendors($atts = array(), $content = null, $tag = ''){
@@ -196,7 +216,12 @@ function cmplz_tcf_get_excluded_vendors(): array {
 		return [];
 	}
 
-	$json = json_decode( file_get_contents( $path ), true );
+	global $wp_filesystem;
+	if ( ! $wp_filesystem ) {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		WP_Filesystem();
+	}
+	$json = json_decode( $wp_filesystem->get_contents( $path ), true );
 	if (!isset($json['vendors'])) {
 		return [];
 	}
@@ -278,7 +303,16 @@ function cmplz_front_end_iab_is_enabled(){
  */
 
 function cmplz_iab_is_enabled(){
+
+	$license_is_valid = cmplz_get_license_status() === 'valid';
+
+	if ( ! $license_is_valid ) {
+		add_filter( 'cmplz_is_tcf_active', '__return_false' );
+		return false;
+	}
+
 	$value = cmplz_get_option('uses_ad_cookies_personalized');
+
 	return $value ==='tcf' || $value === 'yes';
 }
 

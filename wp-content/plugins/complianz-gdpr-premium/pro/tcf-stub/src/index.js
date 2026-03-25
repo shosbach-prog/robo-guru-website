@@ -1,4 +1,4 @@
-import * as cmpstub from '@iabtcf/stub';
+import * as cmpstub from '@iabtechlabtcf/stub';
 
 /**
  * initialize the __tcfapi function and post message

@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Rank Math\n"
 "Last-Translator: Rank Math\n"
-"POT-Creation-Date: 2026-02-11 09:33+0000\n"
+"POT-Creation-Date: 2026-03-18 06:27+0000\n"
 "Project-Id-Version: undefined\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -1523,15 +1523,11 @@ msgstr ""
 msgid "Items processed: %1$s/%2$s"
 msgstr ""
 
+msgid "Nothing to import! The CSV file didn’t contain any valid rows. Please review the file and try again."
+msgstr ""
+
 #. translators: placeholder is the number of rows imported.
 msgid "CSV import completed. Successfully imported %d rows."
-msgstr ""
-
-msgid "CSV import completed."
-msgstr ""
-
-#. translators: placeholder is the number of rows imported.
-msgid "Imported %d rows."
 msgstr ""
 
 msgid "One or more errors occured while importing: "
@@ -1542,6 +1538,9 @@ msgstr ""
 
 #. translators: placeholders are opening and closing tags for link.
 msgid "CSV import in progress. You can see its progress and cancel it in the %1$sImport & Export panel%2$s."
+msgstr ""
+
+msgid "The CSV file is empty or invalid."
 msgstr ""
 
 msgid "Missing import file."
@@ -1949,6 +1948,21 @@ msgid "Install Now"
 msgstr ""
 
 msgid "Learn More."
+msgstr ""
+
+msgid "Link Genius"
+msgstr ""
+
+msgid "Overview"
+msgstr ""
+
+msgid "Links"
+msgstr ""
+
+msgid "Bulk Update"
+msgstr ""
+
+msgid "Keyword Maps"
 msgstr ""
 
 msgid "Local Sitemap"
@@ -2538,6 +2552,518 @@ msgstr ""
 msgid "No products found to migrate."
 msgstr ""
 
+msgid "New!"
+msgstr ""
+
+#. translators: placeholder is the new label.
+msgid "Link Genius %s"
+msgstr ""
+
+msgid "Filters to apply (is_internal, unchecked_only, etc.)."
+msgstr ""
+
+msgid "Array of link IDs to recheck."
+msgstr ""
+
+msgid "Filter criteria for selecting links to recheck."
+msgstr ""
+
+msgid "Link IDs to mark as safe."
+msgstr ""
+
+msgid "Reason for marking as safe."
+msgstr ""
+
+msgid "Filter criteria for selecting links to mark as safe."
+msgstr ""
+
+msgid "An audit is already in progress."
+msgstr ""
+
+msgid "Audit started successfully."
+msgstr ""
+
+msgid "Either link_ids or filters must be provided."
+msgstr ""
+
+msgid "Invalid link IDs provided."
+msgstr ""
+
+msgid "No links found with the provided parameters."
+msgstr ""
+
+#. translators: 1: Number of links queued.
+msgid "%d link queued for rechecking."
+msgid_plural "%d links queued for rechecking."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Link rechecked successfully."
+msgstr ""
+
+msgid "Failed to recheck link. The URL may be unreachable."
+msgstr ""
+
+msgid "A bulk mark safe operation is already in progress."
+msgstr ""
+
+msgid "Bulk marked as safe"
+msgstr ""
+
+msgid "Bulk mark safe queued for background processing."
+msgstr ""
+
+msgid "No status record found for this link."
+msgstr ""
+
+msgid "Link marked as not broken successfully."
+msgstr ""
+
+msgid "Link status reverted successfully."
+msgstr ""
+
+msgid "Sorry, you are not allowed to access this resource."
+msgstr ""
+
+msgid "Invalid post ID."
+msgstr ""
+
+msgid "Sorry, you are not allowed to edit this post."
+msgstr ""
+
+msgid "Content AI module is not enabled. Please enable it to use this feature."
+msgstr ""
+
+msgid "Page number."
+msgstr ""
+
+msgid "Number of items per page."
+msgstr ""
+
+msgid "Batch ID to delete."
+msgstr ""
+
+msgid "Selected text used for suggestions."
+msgstr ""
+
+msgid "Current editor state summary."
+msgstr ""
+
+msgid "Export type (links or posts)."
+msgstr ""
+
+msgid "Export format (csv, json, excel)."
+msgstr ""
+
+msgid "Filters to apply to the export."
+msgstr ""
+
+msgid "Column definitions."
+msgstr ""
+
+msgid "Total number of records to export."
+msgstr ""
+
+msgid "Invalid export type."
+msgstr ""
+
+msgid "Invalid export format."
+msgstr ""
+
+msgid "Link ID."
+msgstr ""
+
+msgid "Link IDs to delete."
+msgstr ""
+
+msgid "Filter criteria for selecting links to delete."
+msgstr ""
+
+msgid "Post ID to restore."
+msgstr ""
+
+msgid "Original post content to restore."
+msgstr ""
+
+msgid "Link ID to remove nofollow from."
+msgstr ""
+
+msgid "Link ID to update."
+msgstr ""
+
+msgid "New URL for the link."
+msgstr ""
+
+msgid "New anchor text for the link."
+msgstr ""
+
+msgid "Whether the link should have nofollow attribute."
+msgstr ""
+
+msgid "Whether the link should open in a new tab."
+msgstr ""
+
+msgid "Batch ID to restore from snapshots."
+msgstr ""
+
+msgid "Invalid link ID."
+msgstr ""
+
+msgid "Link not found."
+msgstr ""
+
+msgid "No link ID or filters provided."
+msgstr ""
+
+msgid "A bulk delete operation is already in progress."
+msgstr ""
+
+msgid "Bulk delete queued for background processing."
+msgstr ""
+
+msgid "No link ID provided."
+msgstr ""
+
+msgid "Post not found."
+msgstr ""
+
+msgid "Failed to restore post content."
+msgstr ""
+
+msgid "Link restored successfully."
+msgstr ""
+
+msgid "Link is not set to nofollow."
+msgstr ""
+
+msgid "Link data is incomplete."
+msgstr ""
+
+msgid "Could not find the link in post content. It may have been modified or deleted."
+msgstr ""
+
+msgid "Nofollow attribute removed successfully."
+msgstr ""
+
+msgid "URL cannot be empty."
+msgstr ""
+
+msgid "Anchor text cannot be empty."
+msgstr ""
+
+msgid "Link updated successfully."
+msgstr ""
+
+msgid "Restore started. Processing in background."
+msgstr ""
+
+msgid "Failed to build delete pattern for the link."
+msgstr ""
+
+msgid "Link not found in post content."
+msgstr ""
+
+msgid "Link deleted successfully."
+msgstr ""
+
+msgid "Items per page."
+msgstr ""
+
+msgid "Filter by source post ID."
+msgstr ""
+
+msgid "Filter by target post ID."
+msgstr ""
+
+msgid "Filter by link type."
+msgstr ""
+
+msgid "Filter by nofollow status."
+msgstr ""
+
+msgid "Filter by anchor type (HPLNK, CNCL, HLANG, IMAGE)."
+msgstr ""
+
+msgid "Filter by target blank status."
+msgstr ""
+
+msgid "Search in anchor text or URL."
+msgstr ""
+
+msgid "Order by field."
+msgstr ""
+
+msgid "Order direction."
+msgstr ""
+
+msgid "Filter by HTTP status code (e.g., 404). Supports multiple values."
+msgstr ""
+
+msgid "Filter by status category (2xx, 3xx, 4xx, 5xx, timeout, error)."
+msgstr ""
+
+msgid "Filter broken links (4xx, 5xx, timeout, error)."
+msgstr ""
+
+msgid "Filter successful links (2xx)."
+msgstr ""
+
+msgid "Filter redirect links (3xx)."
+msgstr ""
+
+msgid "Filter links blocked by robots.txt."
+msgstr ""
+
+msgid "Filter unchecked links (no status data)."
+msgstr ""
+
+msgid "Filter links marked as safe."
+msgstr ""
+
+msgid "Operation type."
+msgstr ""
+
+msgid "Optional operation ID (for keyword maps)."
+msgstr ""
+
+msgid "Operation type to cancel."
+msgstr ""
+
+msgid "Operation type to clear."
+msgstr ""
+
+#. translators: %s is the operation type.
+msgid "No %s operation in progress."
+msgstr ""
+
+msgid "Keyword map ID is required for preview cancellation."
+msgstr ""
+
+msgid "Invalid processor for this operation."
+msgstr ""
+
+msgid "Keyword map ID is required."
+msgstr ""
+
+msgid "Clear operation not supported for this operation type."
+msgstr ""
+
+msgid "link regeneration"
+msgstr ""
+
+msgid "link audit"
+msgstr ""
+
+msgid "bulk delete"
+msgstr ""
+
+msgid "bulk mark safe"
+msgstr ""
+
+msgid "bulk restore"
+msgstr ""
+
+msgid "bulk update preview"
+msgstr ""
+
+msgid "bulk update"
+msgstr ""
+
+msgid "keyword map preview"
+msgstr ""
+
+msgid "keyword map execution"
+msgstr ""
+
+msgid "export"
+msgstr ""
+
+msgid "Link regeneration cancelled successfully."
+msgstr ""
+
+msgid "Link audit cancelled successfully."
+msgstr ""
+
+msgid "Bulk delete operation cancelled successfully."
+msgstr ""
+
+msgid "Bulk mark safe operation cancelled successfully."
+msgstr ""
+
+msgid "Bulk restore operation cancelled successfully."
+msgstr ""
+
+msgid "Bulk update preview cancelled successfully."
+msgstr ""
+
+msgid "Bulk update cancelled successfully."
+msgstr ""
+
+msgid "Keyword map preview cancelled successfully."
+msgstr ""
+
+msgid "Keyword map execution cancelled successfully."
+msgstr ""
+
+msgid "Export cancelled successfully."
+msgstr ""
+
+msgid "Operation cancelled successfully."
+msgstr ""
+
+msgid "Link regeneration completion data cleared."
+msgstr ""
+
+msgid "Link audit completion data cleared."
+msgstr ""
+
+msgid "Bulk delete completion data cleared."
+msgstr ""
+
+msgid "Bulk mark safe completion data cleared."
+msgstr ""
+
+msgid "Bulk restore completion data cleared."
+msgstr ""
+
+msgid "Bulk update preview data cleared."
+msgstr ""
+
+msgid "Bulk update completion data cleared."
+msgstr ""
+
+msgid "Keyword map preview data cleared."
+msgstr ""
+
+msgid "Keyword map execution completion data cleared."
+msgstr ""
+
+msgid "Export completion data cleared."
+msgstr ""
+
+msgid "Operation completion data cleared."
+msgstr ""
+
+msgid "No posts found to process."
+msgstr ""
+
+msgid "Search in post title."
+msgstr ""
+
+msgid "Filter by post type. Supports multiple values."
+msgstr ""
+
+msgid "Filter by orphan status."
+msgstr ""
+
+msgid "Filter by SEO score range."
+msgstr ""
+
+msgid "Minimum incoming links count filter."
+msgstr ""
+
+msgid "Invalid operation type."
+msgstr ""
+
+msgid "Cancelled by user"
+msgstr ""
+
+msgid "Batch ID is required for restore operation."
+msgstr ""
+
+msgid "Batch not found."
+msgstr ""
+
+msgid "This batch is not a delete operation."
+msgstr ""
+
+msgid "Only completed delete operations can be restored."
+msgstr ""
+
+msgid "No snapshots found for this batch. Restore not possible."
+msgstr ""
+
+#. translators: %d: number of records
+msgid "Export started for %s records. It might take a few minutes to complete."
+msgstr ""
+
+msgid "Export scheduled. You will receive an email when it's ready."
+msgstr ""
+
+#. translators: 1: Record count, 2: Download URL
+msgid "Export completed: %1$s records. %2$s"
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Rank Math: Your export is ready"
+msgstr ""
+
+#. translators: 1: Download URL, 2: Record count
+msgid "Your Link Genius export is ready for download.%1$s%1$sTotal records: %2$d%1$s%1$sDownload link: %3$s%1$s%1$sNote: This link will expire in 24 hours."
+msgstr ""
+
+msgid "No rollback data found for this batch."
+msgstr ""
+
+#. translators: %s: operation name
+msgid "A %s operation is already in progress. Please wait for it to complete first."
+msgstr ""
+
+msgid "Rank Math registration data is missing. Please connect your site to use AI features."
+msgstr ""
+
+msgid "History record not found."
+msgstr ""
+
+msgid "Failed to delete history record."
+msgstr ""
+
+msgid "History record deleted successfully."
+msgstr ""
+
+msgid "No batch IDs provided."
+msgstr ""
+
+#. translators: %d: number of deleted records
+msgid "%d history records deleted."
+msgstr ""
+
+#. translators: 1: from value, 2: to value, 3: number of links
+msgid "Changed <span class=\"rank-math-history-from\">\"%1$s\"</span> to <span class=\"rank-math-history-to\">\"%2$s\"</span> in <span class=\"rank-math-history-count\">%3$d</span> links"
+msgstr ""
+
+#. translators: %d: number of links
+msgid "Updated %d links"
+msgstr ""
+
+#. translators: 1: keyword, 2: number of links
+msgid "Added %2$d links for keyword <span class=\"rank-math-history-to\">\"%1$s\"</span>"
+msgstr ""
+
+#. translators: %d: number of links
+msgid "Added %d links"
+msgstr ""
+
+#. translators: %d: number of links
+msgid "Affected %d links"
+msgstr ""
+
+#. translators: %s: current batch status
+msgid "Only completed batches can be rolled back. This batch is currently in status: %s"
+msgstr ""
+
+#. translators: %s: source type
+msgid "Unknown source type: %s"
+msgstr ""
+
+msgid "No rollback preview available for this batch."
+msgstr ""
+
+msgid "No changes found for this batch."
+msgstr ""
+
 msgid "Secondary phone"
 msgstr ""
 
@@ -3072,6 +3598,13 @@ msgstr ""
 msgid "Import could not be canceled: you are not allowed to import content to this site."
 msgstr ""
 
+msgid "CSV import completed."
+msgstr ""
+
+#. translators: placeholder is the number of rows imported.
+msgid "Imported %d rows."
+msgstr ""
+
 msgid "Created"
 msgstr ""
 
@@ -3297,6 +3830,293 @@ msgid "If you can see the site data in your Search Console and Analytics account
 msgstr ""
 
 msgid "VIEW DETAILED ANALYTICS"
+msgstr ""
+
+msgid "A preview generation is already in progress. Please wait for it to complete or cancel it first."
+msgstr ""
+
+msgid "No links found matching the specified filters."
+msgstr ""
+
+msgid "Preview generation started. Processing in background."
+msgstr ""
+
+msgid "Bulk update scheduled. Processing in background."
+msgstr ""
+
+msgid "Search filters for finding links."
+msgstr ""
+
+msgid "Update configuration."
+msgstr ""
+
+msgid "Optional array of specific link IDs to update."
+msgstr ""
+
+msgid "Whether this is a rollback operation (prevents history creation)."
+msgstr ""
+
+msgid "Batch ID being rolled back (for status update)."
+msgstr ""
+
+msgid "Batch ID to rollback."
+msgstr ""
+
+msgid "Optional array of specific post IDs to rollback."
+msgstr ""
+
+msgid "Batch ID."
+msgstr ""
+
+msgid "No preview found."
+msgstr ""
+
+msgid "Preview generation is still in progress."
+msgstr ""
+
+#. translators: %d: maximum number of links
+msgid "Cannot update more than %d links at once. Please refine your filters."
+msgstr ""
+
+msgid "Rollback started. Processing in background."
+msgstr ""
+
+msgid "Bulk update started. Processing in background."
+msgstr ""
+
+msgid "Invalid operation type. Must be \"anchor\", \"url\", or \"both\"."
+msgstr ""
+
+msgid "Anchor search value is required."
+msgstr ""
+
+msgid "Invalid regex pattern for anchor search."
+msgstr ""
+
+msgid "URL search value is required."
+msgstr ""
+
+msgid "Invalid URL format for exact URL search."
+msgstr ""
+
+msgid "Please connect your Rank Math account to use AI features."
+msgstr ""
+
+msgid "Keyword cannot be empty."
+msgstr ""
+
+#. translators: %s: error message
+msgid "API request failed: %s"
+msgstr ""
+
+msgid "Rate limit exceeded. Please try again later."
+msgstr ""
+
+msgid "Authentication failed. Please check your Rank Math account connection."
+msgstr ""
+
+msgid "Insufficient Content AI credits. Please upgrade your plan."
+msgstr ""
+
+msgid "Unknown API error."
+msgstr ""
+
+msgid "Invalid API response format."
+msgstr ""
+
+#. translators: 1: number of links, 2: post title with edit link
+msgid "%1$d auto-link added by Link Genius to %2$s."
+msgid_plural "%1$d auto-links added by Link Genius to %2$s."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "No keywords or variations defined for this keyword map."
+msgstr ""
+
+msgid "No posts found containing the specified keywords."
+msgstr ""
+
+msgid "No new link opportunities found. The matching posts already contain the target link."
+msgstr ""
+
+#. translators: 1: number of links, 2: number of posts
+msgid "Found %1$d link opportunity in %2$d post."
+msgid_plural "Found %1$d link opportunities in %2$d posts."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Post already contains a link to the target URL."
+msgstr ""
+
+msgid "Preview data is required to execute keyword map."
+msgstr ""
+
+msgid "No changes found to apply."
+msgstr ""
+
+msgid "Keyword map execution started. Processing in background."
+msgstr ""
+
+msgid "Cancelled by user."
+msgstr ""
+
+msgid "Preview is already being generated. Please wait."
+msgstr ""
+
+msgid "No preview results found. Please generate a preview first."
+msgstr ""
+
+msgid "Keyword map ID."
+msgstr ""
+
+msgid "Column to order by."
+msgstr ""
+
+msgid "Filter by enabled status."
+msgstr ""
+
+msgid "Search term."
+msgstr ""
+
+msgid "Array of keyword map IDs."
+msgstr ""
+
+msgid "New enabled status."
+msgstr ""
+
+msgid "Variation text."
+msgstr ""
+
+msgid "Variation source."
+msgstr ""
+
+msgid "Keyword to generate variations for."
+msgstr ""
+
+msgid "Optional context to help generate better variations."
+msgstr ""
+
+msgid "Array of variations to accept."
+msgstr ""
+
+msgid "Keyword map name."
+msgstr ""
+
+msgid "Keyword map description."
+msgstr ""
+
+msgid "Target URL."
+msgstr ""
+
+msgid "Whether the keyword map is enabled."
+msgstr ""
+
+msgid "Maximum links per post."
+msgstr ""
+
+msgid "Enable auto-linking on publish."
+msgstr ""
+
+msgid "Enable case-sensitive keyword matching."
+msgstr ""
+
+msgid "Keyword map not found."
+msgstr ""
+
+msgid "Failed to create keyword map."
+msgstr ""
+
+msgid "Keyword map created successfully."
+msgstr ""
+
+msgid "Failed to update keyword map."
+msgstr ""
+
+msgid "Keyword map updated successfully."
+msgstr ""
+
+msgid "A keyword map with this name already exists. Please use a different name."
+msgstr ""
+
+#. translators: %s: existing keyword map name
+msgid "This keyword already exists in the keyword map \"%s\". Consider adding your variations there instead."
+msgstr ""
+
+#. translators: 1: base success message, 2: comma-separated list of skipped variations
+msgid "%1$s The following variations were skipped because they already exist in other keyword maps: %2$s"
+msgstr ""
+
+msgid "Failed to delete keyword map."
+msgstr ""
+
+msgid "Keyword map deleted successfully."
+msgstr ""
+
+#. translators: %d: number of updated items
+msgid "%d keyword maps updated."
+msgstr ""
+
+#. translators: %d: number of deleted items
+msgid "%d keyword maps deleted."
+msgstr ""
+
+msgid "This keyword map is disabled. Enable it first to execute."
+msgstr ""
+
+msgid "This keyword map is disabled. Enable it first to preview."
+msgstr ""
+
+msgid "This variation already exists in this keyword map."
+msgstr ""
+
+#. translators: %s: existing keyword map name
+msgid "This keyword already exists in the keyword map \"%s\"."
+msgstr ""
+
+msgid "Failed to add variation."
+msgstr ""
+
+msgid "Variation added successfully."
+msgstr ""
+
+msgid "Failed to delete variation."
+msgstr ""
+
+msgid "Variation deleted successfully."
+msgstr ""
+
+msgid "This feature is only available for Content AI subscribers."
+msgstr ""
+
+msgid "Synonyms"
+msgstr ""
+
+msgid "Related Phrases"
+msgstr ""
+
+msgid "Long-tail Variations"
+msgstr ""
+
+msgid "Common Misspellings"
+msgstr ""
+
+msgid "AI variations generated. Review and accept the ones you want to add."
+msgstr ""
+
+msgid "Keyword is required."
+msgstr ""
+
+msgid "No variations provided."
+msgstr ""
+
+#. translators: %d: number of variations added
+msgid "%d variations added."
+msgstr ""
+
+msgid "Use preview_keyword_map endpoint instead."
+msgstr ""
+
+msgid "Keyword maps do not support history deletion."
 msgstr ""
 
 msgid "Impressions"

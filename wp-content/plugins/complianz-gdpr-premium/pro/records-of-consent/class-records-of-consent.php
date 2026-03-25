@@ -166,6 +166,8 @@ if ( ! class_exists( "cmplz_records_of_consent" ) ) {
 
 		private function create_csv_file($data, $add_header = true ){
 			$delimiter=",";
+			$enclosure = '"';
+			$escape = '\\';
 			require_once(ABSPATH . 'wp-admin/includes/file.php');
 			$upload_dir = cmplz_upload_dir();
 
@@ -184,7 +186,7 @@ if ( ! class_exists( "cmplz_records_of_consent" ) ) {
 			//create a line with headers
 			if ( $add_header ) {
 				$headers = $this->parse_headers_from_array( $data );
-				fputcsv( $csv_handle, $headers, $delimiter );
+				fputcsv( $csv_handle, $headers, $delimiter, $enclosure, $escape );
 			}
 
 			if ( is_array($data) ) {
@@ -192,7 +194,7 @@ if ( ! class_exists( "cmplz_records_of_consent" ) ) {
 
 				foreach ( $data as $line ) {
 					$line = array_map( 'sanitize_text_field', $line );
-					fputcsv( $csv_handle, $line, $delimiter );
+					fputcsv( $csv_handle, $line, $delimiter, $enclosure, $escape );
 				}
 			}
 			fclose ($csv_handle);

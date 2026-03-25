@@ -20,22 +20,18 @@ function callClarity(method, params) {
 	y.parentNode.insertBefore(t, y);
 })(window, document, "clarity", "script", "{site_ID}");
 
-callClarity('consentv2', {
-	ad_Storage: "denied",
-	analytics_Storage: "denied"
-});
-
 function getConsentFromEvent(e) {
-	var d = e && e.detail && e.detail.categories ? e.detail.categories : {};
+	var d = e && e.detail && e.detail.categories ? e.detail.categories : [];
+	var categories = Array.isArray(d) ? d : [];
+
 	return {
-		analyticsAllowed: !!d.statistics,
-		adsAllowed: !!d.marketing
+		analyticsAllowed: categories.indexOf('statistics') !== -1,
+		adsAllowed: categories.indexOf('marketing') !== -1
 	};
 }
 
 function sendClarityConsent(analyticsAllowed, adsAllowed) {
 	var status = function (b) { return b ? "granted" : "denied"; };
-	// Consent API v2: pass analytics/ad storage status.
 	callClarity('consentv2', {
 		analytics_Storage: status(!!analyticsAllowed),
 		ad_Storage: status(!!adsAllowed)

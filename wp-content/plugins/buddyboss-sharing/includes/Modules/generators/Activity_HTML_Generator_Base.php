@@ -53,12 +53,13 @@ abstract class Activity_HTML_Generator_Base {
 	 */
 	public function generate_shared_activity_html_for_message( $activity ) {
 		$user = get_userdata( $activity->user_id );
+		$activity_url = esc_url( bp_activity_get_permalink( $activity->id ) );
 
 		if ( ! $user ) {
 			return '';
 		}
 
-		$html  = '<div class="shared-activity-wrapper shared-activity-message" data-activity-id="' . esc_attr( $activity->id ) . '">';
+		$html  = '<div class="shared-activity-wrapper shared-activity-message" data-activity-id="' . esc_attr( $activity->id ) . '" data-activity-url="' . esc_url( $activity_url ) . '">';
 		$html .= '<div class="shared-activity-preview" data-activity-id="' . esc_attr( $activity->id ) . '">';
 
 		// Generate media section (video > featured image > media > documents).
@@ -207,9 +208,9 @@ abstract class Activity_HTML_Generator_Base {
 			}
 		}
 
-		// Priority 4: Media Images.
+		// Priority 4: Media Images (show only first image as featured for message preview).
 		if ( ! $has_media_displayed && ! empty( $media_ids ) ) {
-			$media_html = $this->generate_media_images_html( $activity, $user, $media_ids );
+			$media_html = $this->generate_media_images_html( $activity, $user, $media_ids, true );
 			if ( ! empty( $media_html ) ) {
 				$html .= $media_html;
 				$has_media_displayed = true;
@@ -535,9 +536,10 @@ abstract class Activity_HTML_Generator_Base {
 	 * @param object $activity Activity object.
 	 * @param object $user User object.
 	 * @param string $media_ids Comma-separated media IDs.
+	 * @param bool   $featured_only Whether to show only the first image as featured (for message preview).
 	 * @return string Media images HTML.
 	 */
-	protected function generate_media_images_html( $activity, $user, $media_ids ) {
+	protected function generate_media_images_html( $activity, $user, $media_ids, $featured_only = false ) {
 		if ( ! function_exists( 'bp_media_get_specific' ) ) {
 			return '';
 		}
@@ -548,9 +550,12 @@ abstract class Activity_HTML_Generator_Base {
 			return '';
 		}
 
+		// For message preview, only fetch the first media item to display as featured image.
+		$fetch_ids = $featured_only ? array( $media_ids_array[0] ) : $media_ids_array;
+
 		$media = bp_media_get_specific(
 			array(
-				'media_ids' => $media_ids_array,
+				'media_ids' => $fetch_ids,
 				'order_by'  => 'menu_order',
 				'sort'      => 'ASC',
 			)
@@ -560,15 +565,23 @@ abstract class Activity_HTML_Generator_Base {
 			return '';
 		}
 
-		$media_items   = $media['medias'];
-		$media_count   = count( $media_items );
-		$max_length    = function_exists( 'bb_media_get_activity_max_thumb_length' ) ? bb_media_get_activity_max_thumb_length() : 5;
-		$more_media    = $media_count > $max_length;
-		$display_items = $more_media ? array_slice( $media_items, 0, $max_length ) : $media_items;
-		$prefix        = $this->get_class_prefix();
+		$media_items = $media['medias'];
+		$media_count = $featured_only ? 1 : count( $media_items );
+		$prefix      = $this->get_class_prefix();
+
+		// For featured only mode, always use single image layout.
+		if ( $featured_only ) {
+			$display_items = array( $media_items[0] );
+			$max_length    = 1;
+			$more_media    = false;
+		} else {
+			$max_length    = function_exists( 'bb_media_get_activity_max_thumb_length' ) ? bb_media_get_activity_max_thumb_length() : 5;
+			$more_media    = $media_count > $max_length;
+			$display_items = $more_media ? array_slice( $media_items, 0, $max_length ) : $media_items;
+		}
 
 		// Use platform's markup structure for styling.
-		$html  = '<div class="bb-activity-media-wrap bb-media-length-' . esc_attr( $media_count );
+		$html = '<div class="bb-activity-media-wrap bb-media-length-' . esc_attr( $media_count );
 		if ( $media_count > 5 ) {
 			$html .= ' bb-media-length-more';
 		}
@@ -656,8 +669,8 @@ abstract class Activity_HTML_Generator_Base {
 				// Show "+X More Photos" if this is the last visible item and there are more.
 				if ( $is_last_visible ) {
 					$remaining_count = $media_count - $max_length;
-					$length_class = $prefix . 'photos-length';
-					$html .= '<span class="' . esc_attr( $length_class ) . '"><span><strong>+' . esc_html( $remaining_count ) . '</strong> <span>' . esc_html__( 'More Photos', 'buddyboss-sharing' ) . '</span></span></span>';
+					$length_class    = $prefix . 'photos-length';
+					$html           .= '<span class="' . esc_attr( $length_class ) . '"><span><strong>+' . esc_html( $remaining_count ) . '</strong> <span>' . esc_html__( 'More Photos', 'buddyboss-sharing' ) . '</span></span></span>';
 				}
 
 				$html .= '</a>';

@@ -24,10 +24,10 @@ header('Retry-After: 600');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <link rel="icon" href="https://robo-guru.de/wp-content/uploads/2025/12/cropped-Robo-Guru-2-32x32.png">
-    <link rel="stylesheet" href="https://robo-guru.de/wp-content/maintenance/assets/styles.css?1770187461">
-    <script src="https://robo-guru.de/wp-content/maintenance/assets/timer.js?1770187461"></script>
+    <link rel="stylesheet" href="https://robo-guru.de/wp-content/maintenance/assets/styles.css?1773211459">
+    <script src="https://robo-guru.de/wp-content/maintenance/assets/timer.js?1773211459"></script>
     <title>Geplante Wartungsaufgaben</title>
-    <style>body {background-image: url("https://robo-guru.de/wp-content/maintenance/assets/images/bg.jpg?1770187461");}</style>
+    <style>body {background-image: url("https://robo-guru.de/wp-content/maintenance/assets/images/bg.jpg?1773211459");}</style>
 </head>
 
 <body>
@@ -45,10 +45,10 @@ header('Retry-After: 600');
     <!--START_SOCIAL_LINKS_BLOCK-->
     <section class="social-links">
                     <a class="social-links__link" href="https://www.facebook.com/Plesk" target="_blank" title="Facebook">
-                <span class="icon"><img src="https://robo-guru.de/wp-content/maintenance/assets/images/facebook.svg?1770187461" alt="Facebook"></span>
+                <span class="icon"><img src="https://robo-guru.de/wp-content/maintenance/assets/images/facebook.svg?1773211459" alt="Facebook"></span>
             </a>
                     <a class="social-links__link" href="https://x.com/Plesk" target="_blank" title="Twitter">
-                <span class="icon"><img src="https://robo-guru.de/wp-content/maintenance/assets/images/twitter.svg?1770187461" alt="Twitter"></span>
+                <span class="icon"><img src="https://robo-guru.de/wp-content/maintenance/assets/images/twitter.svg?1773211459" alt="Twitter"></span>
             </a>
             </section>
     <!--END_SOCIAL_LINKS_BLOCK-->

@@ -25,6 +25,147 @@ defined( 'ABSPATH' ) || exit;
 class Posts_Controller extends Base_Controller {
 
 	/**
+	 * Constructor.
+	 *
+	 * Registers filter hooks to override the Free plugin's REST responses
+	 * so PRO data (richer queries, PRO columns) is returned when PRO is active.
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		/*
+		 * Override Free plugin /rankmath/v1/links/* REST responses.
+		 * PRO returns data from its Query_Builder, bypassing the Free SQL query.
+		 */
+		add_filter( 'rank_math/links/rest_posts_response', [ $this, 'override_free_posts_response' ], 10, 2 );
+		add_filter( 'rank_math/links/rest_posts_stats_response', [ $this, 'override_free_posts_stats_response' ], 10, 1 );
+		add_filter( 'rank_math/links/rest_links_response', [ $this, 'override_free_links_response' ], 10, 2 );
+		add_filter( 'rank_math/links/rest_links_stats_response', [ $this, 'override_free_links_stats_response' ], 10, 1 );
+	}
+
+	/**
+	 * Override Free plugin's /links/posts response with PRO data.
+	 *
+	 * @param null|array $override Null to use Free's data.
+	 * @param array      $args     Query arguments from Free's controller.
+	 * @return array
+	 */
+	public function override_free_posts_response( $override, $args ) {
+		$per_page = max( 1, (int) ( $args['per_page'] ?? 50 ) );
+		$results  = Query_Builder::get_posts( $args );
+		$total    = Query_Builder::get_posts_count( $args );
+
+		foreach ( $results as $row ) {
+			$row->seo_score_class = $this->get_seo_score_class( $row->seo_score, $row->focus_keyword );
+		}
+
+		return [
+			'posts' => $results,
+			'total' => (int) $total,
+			'pages' => (int) ceil( $total / $per_page ),
+		];
+	}
+
+	/**
+	 * Override Free plugin's /links/posts-stats response with PRO data.
+	 *
+	 * @param null|array $override Null to use Free's data.
+	 * @return array
+	 */
+	public function override_free_posts_stats_response( $override ) {
+		// Re-use the same stats query via direct DB call to avoid duplicate route coupling.
+		$cache_key = 'link_genius_posts_stats';
+		$cached    = wp_cache_get( $cache_key, Query_Builder::CACHE_GROUP );
+		if ( false !== $cached ) {
+			return $cached;
+		}
+
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+		$stats = $wpdb->get_row(
+			"SELECT
+				COUNT(DISTINCT m.object_id) as total_posts,
+				SUM(CASE WHEN m.incoming_link_count IS NULL OR m.incoming_link_count = 0 THEN 1 ELSE 0 END) as orphan_posts,
+				SUM(CASE WHEN m.internal_link_count > 0 THEN 1 ELSE 0 END) as posts_with_internal,
+				SUM(CASE WHEN m.external_link_count > 0 THEN 1 ELSE 0 END) as posts_with_external
+			FROM {$wpdb->prefix}rank_math_internal_meta m
+			INNER JOIN {$wpdb->posts} p ON m.object_id = p.ID
+			WHERE p.post_status = 'publish'"
+		);
+
+		$response = [
+			'total_posts'         => (int) ( $stats->total_posts ?? 0 ),
+			'orphan_posts'        => (int) ( $stats->orphan_posts ?? 0 ),
+			'posts_with_internal' => (int) ( $stats->posts_with_internal ?? 0 ),
+			'posts_with_external' => (int) ( $stats->posts_with_external ?? 0 ),
+		];
+
+		wp_cache_set( $cache_key, $response, Query_Builder::CACHE_GROUP, 5 * MINUTE_IN_SECONDS );
+
+		return $response;
+	}
+
+	/**
+	 * Override Free plugin's /links/links response with PRO data.
+	 *
+	 * @param null|array $override Null to use Free's data.
+	 * @param array      $args     Query arguments from Free's controller.
+	 * @return array
+	 */
+	public function override_free_links_response( $override, $args ) {
+		$per_page = max( 1, (int) ( $args['per_page'] ?? 50 ) );
+		$results  = Query_Builder::get_links( $args );
+		$total    = Query_Builder::get_links_count( $args );
+
+		return [
+			'links' => $results,
+			'total' => (int) $total,
+			'pages' => (int) ceil( $total / $per_page ),
+		];
+	}
+
+	/**
+	 * Override Free plugin's /links/links-stats response with PRO data.
+	 *
+	 * Returns extended stats including nofollow count.
+	 *
+	 * @param null|array $override Null to use Free's data.
+	 * @return array
+	 */
+	public function override_free_links_stats_response( $override ) {
+		$cache_key = 'link_genius_stats';
+		$cached    = wp_cache_get( $cache_key, Query_Builder::CACHE_GROUP );
+		if ( false !== $cached ) {
+			return $cached;
+		}
+
+		global $wpdb;
+		$table = $wpdb->prefix . 'rank_math_internal_links';
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+		$stats = $wpdb->get_row(
+			"SELECT
+				COUNT(*) as total,
+				SUM(CASE WHEN type = 'internal' THEN 1 ELSE 0 END) as internal,
+				SUM(CASE WHEN type = 'external' THEN 1 ELSE 0 END) as external,
+				SUM(CASE WHEN is_nofollow = 1 THEN 1 ELSE 0 END) as nofollow
+			FROM {$table}"
+		);
+
+		$response = [
+			'total'    => (int) ( $stats->total ?? 0 ),
+			'internal' => (int) ( $stats->internal ?? 0 ),
+			'external' => (int) ( $stats->external ?? 0 ),
+			'nofollow' => (int) ( $stats->nofollow ?? 0 ),
+		];
+
+		wp_cache_set( $cache_key, $response, Query_Builder::CACHE_GROUP, 5 * MINUTE_IN_SECONDS );
+
+		return $response;
+	}
+
+	/**
 	 * Register REST API routes.
 	 */
 	public function register_routes() {

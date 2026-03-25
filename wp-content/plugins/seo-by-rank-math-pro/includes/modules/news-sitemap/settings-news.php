@@ -9,6 +9,7 @@
  */
 
 use RankMath\Helper;
+use RankMathPro\Admin\Admin_Helper;
 use RankMathPro\Sitemap\News_Sitemap_Helper;
 
 defined( 'ABSPATH' ) || exit;
@@ -58,7 +59,7 @@ foreach ( $post_types as $post_type ) {
 		}
 
 		$selected = Helper::get_settings( "sitemap.news_sitemap_exclude_{$post_type}_terms.0.{$taxonomy}", [] );
-		$terms    = News_Sitemap_Helper::get_taxonomy_terms( $taxonomy, $selected );
+		$terms    = Admin_Helper::get_taxonomy_terms( $taxonomy, $selected );
 		if ( empty( $terms ) ) {
 			continue;
 		}

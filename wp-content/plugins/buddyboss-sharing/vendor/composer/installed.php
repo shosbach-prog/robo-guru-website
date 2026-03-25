@@ -3,7 +3,7 @@
         'name' => 'buddyboss/buddyboss-sharing',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '9ccf30539338dd10502d1575a09ee096cc62c49b',
+        'reference' => '60198bc3e789c0ef0f9363fd221fd09b2ce77e2b',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'buddyboss/buddyboss-sharing' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '9ccf30539338dd10502d1575a09ee096cc62c49b',
+            'reference' => '60198bc3e789c0ef0f9363fd221fd09b2ce77e2b',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

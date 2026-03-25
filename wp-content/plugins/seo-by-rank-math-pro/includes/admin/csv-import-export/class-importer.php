@@ -97,44 +97,58 @@ class Importer {
 	 * Start import from file.
 	 *
 	 * @param string $file     Path to temporary CSV file.
-	 * @param string $settings Import settings.
+	 * @param array  $settings Import settings.
 	 * @return void
 	 */
 	public function start( $file, $settings = [] ) {
+		$line_indices = $this->get_line_indices( $file );
+		if ( empty( $line_indices ) ) {
+			$status                = (array) get_option( 'rank_math_csv_import_status', [] );
+			$status['errors']      = [ esc_html__( 'The CSV file is empty or invalid.', 'rank-math-pro' ) ];
+			$status['failed_rows'] = [ 1 ];
+
+			update_option( 'rank_math_csv_import_status', $status );
+			return;
+		}
+
 		update_option( 'rank_math_csv_import', $file );
 		update_option( 'rank_math_csv_import_settings', $settings );
 		delete_option( 'rank_math_csv_import_status' );
 		$this->load_settings();
-		$lines = $this->count_lines( $file );
-		update_option( 'rank_math_csv_import_total', $lines );
-		Import_Background_Process::get()->start( $lines );
+		update_option( 'rank_math_csv_import_total', count( $line_indices ) );
+		Import_Background_Process::get()->start( $line_indices );
 	}
 
 	/**
-	 * Count all lines in CSV file.
+	 * Count non-empty lines in CSV file.
 	 *
-	 * @param mixed $file Path to CSV.
+	 * @param string $file Path to CSV.
 	 * @return int
 	 */
 	public function count_lines( $file ) {
-		$file = new \SplFileObject( $file );
-		while ( $file->valid() ) {
-			$file->fgets();
+		return count( $this->get_line_indices( $file ) );
+	}
+
+	/**
+	 * Get line indices of non-empty data rows (excluding header).
+	 *
+	 * @param string $file Path to CSV.
+	 * @return array Array of line indices that contain data.
+	 */
+	public function get_line_indices( $file ) {
+		$spl         = new \SplFileObject( $file, 'r' );
+		$indices     = [];
+		$line_number = 0;
+
+		while ( ! $spl->eof() ) {
+			// Skip header (line 0) and empty lines.
+			if ( $line_number > 0 && trim( $spl->fgets() ) !== '' ) {
+				$indices[] = $line_number;
+			}
+			++$line_number;
 		}
 
-		$count = $file->key();
-
-		// Check if last line is empty.
-		$file->seek( $count );
-		$contents = $file->current();
-		if ( empty( trim( $contents ) ) ) {
-			--$count;
-		}
-
-		// Unlock file.
-		$file = null;
-
-		return $count;
+		return $indices;
 	}
 
 	/**
@@ -148,6 +162,8 @@ class Importer {
 		if ( empty( $this->spl ) ) {
 			$this->spl = new \SplFileObject( $file );
 		}
+
+		$contents = null;
 
 		if ( ! $this->spl->eof() ) {
 			$this->spl->seek( $line );
@@ -209,8 +225,12 @@ class Importer {
 					$data[ $object_type ][ $action ] = array_merge( $data[ $object_type ][ $action ], $row_importer->meta_data[ $action ] );
 				}
 			}
-			$this->row_imported( $line_number );
+
+			if ( $row_importer->processed ) {
+				$this->row_imported( $line_number );
+			}
 		}
+
 		foreach ( $data as $object_type => $object_data ) {
 			if ( ! empty( $object_data['update'] ) ) {
 				$this->update_object_metas( $object_data['update'], $object_type );
@@ -386,11 +406,6 @@ class Importer {
 	 * @return array|false
 	 */
 	public function get_row_data( $line_number ) {
-		// Skip headers.
-		if ( 0 === $line_number ) {
-			return false;
-		}
-
 		$file = get_option( 'rank_math_csv_import' );
 		if ( ! $file ) {
 			$this->add_error( esc_html__( 'Missing import file.', 'rank-math-pro' ), 'missing_file' );
@@ -424,7 +439,7 @@ class Importer {
 		}
 
 		$csv_separator = apply_filters( 'rank_math/csv_import/separator', ',' );
-		$decoded       = str_getcsv( $raw_data, $csv_separator );
+		$decoded       = str_getcsv( $raw_data, $csv_separator, '"', '\\' );
 		if ( count( $headers ) !== count( $decoded ) ) {
 			$this->add_error( esc_html__( 'Columns number mismatch.', 'rank-math-pro' ), 'columns_number_mismatch' );
 			$this->row_failed( $line_number );

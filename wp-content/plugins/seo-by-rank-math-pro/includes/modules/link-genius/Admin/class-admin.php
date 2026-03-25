@@ -12,10 +12,10 @@ namespace RankMathPro\Link_Genius\Admin;
 
 use RankMath\Helper;
 use RankMath\Helpers\Arr;
+use RankMath\Helpers\Param;
 use RankMath\Admin\Admin_Helper;
 use RankMathPro\Admin\Admin_Helper as PRO_Admin_Helper;
 use RankMath\Traits\Hooker;
-use RankMath\Admin\Page;
 use RankMathPro\Link_Genius\Services\Utils;
 use RankMathPro\Link_Genius\Background\Export_Processor;
 use RankMathPro\Link_Genius\Background\Regenerate_Links;
@@ -40,10 +40,35 @@ class Admin {
 			return;
 		}
 
+		$this->filter( 'admin_menu', 'update_links_menu_title' );
 		$this->filter( 'rank_math/admin_pages', 'add_links_page' );
-		$this->action( 'init', 'register_admin_page' );
 		$this->filter( 'rank_math/settings/general', 'add_settings' );
 		$this->action( 'rank_math/admin/editor_scripts', 'enqueue' );
+
+		$this->action( 'rank_math/links/admin_page_registered', 'override_links_page_assets' );
+	}
+
+	/**
+	 * Update the Links menu title to Link Genius.
+	 */
+	public function update_links_menu_title() {
+		global $submenu;
+		if ( ! isset( $submenu['rank-math'] ) ) {
+			return;
+		}
+
+		$new_label = '<span class="rank-math-new-label" style="color:#ed5e5e;font-size:10px;font-weight:normal;">' . esc_html__( 'New!', 'rank-math-pro' ) . '</span>';
+		foreach ( $submenu['rank-math'] as &$item ) {
+			if ( ! isset( $item[2] ) || $item[2] !== 'rank-math-links-page' ) {
+				continue;
+			}
+
+			// Translators: placeholder is the new label.
+			$item[0] = sprintf( esc_html__( 'Link Genius %s', 'rank-math-pro' ), $new_label );
+			$item[3] = esc_html__( 'Link Genius', 'rank-math-pro' );
+
+			break;
+		}
 	}
 
 	/**
@@ -59,43 +84,28 @@ class Admin {
 	}
 
 	/**
-	 * Register admin page.
+	 * Override the Free plugin's Links page assets with PRO's full React app.
 	 */
-	public function register_admin_page() {
-		$uri = untrailingslashit( plugin_dir_url( __FILE__ ) );
+	public function override_links_page_assets() {
+		if ( Param::get( 'page' ) !== 'rank-math-links-page' ) {
+			return;
+		}
 
-		$new_label = '<span class="rank-math-new-label" style="color:#ed5e5e;font-size:10px;font-weight:normal;">' . esc_html__( 'New!', 'rank-math-pro' ) . '</span>';
+		// Dequeue the Free plugin's basic React bundle.
+		wp_dequeue_script( 'rank-math-links-page' );
 
-		new Page(
+		wp_enqueue_script(
 			'rank-math-links-page',
-			esc_html__( 'Link Genius', 'rank-math-pro' ),
+			RANK_MATH_PRO_URL . 'includes/modules/link-genius/assets/js/links-page.js',
+			[ 'lodash', 'wp-components', 'wp-element', 'rank-math-components' ],
+			rank_math_pro()->version,
+			true
+		);
+
+		Helper::add_json(
+			'linkGenius',
 			[
-				'position'   => 4,
-				'parent'     => 'rank-math',
-				// Translators: placeholder is the new label.
-				'menu_title' => sprintf( esc_html__( 'Link Genius %s', 'rank-math-pro' ), $new_label ),
-				'render'     => function () {
-					echo '<div id="rank-math-links-page-container"></div>';
-				},
-				'classes'    => [ 'rank-math-page' ],
-				'assets'     => [
-					'styles'  => [
-						'rank-math-common' => '',
-					],
-					'scripts' => [
-						'lodash'               => '',
-						'wp-components'        => '',
-						'wp-element'           => '',
-						'rank-math-components' => '',
-						'rank-math-links-page' => RANK_MATH_PRO_URL . 'includes/modules/link-genius/assets/js/links-page.js',
-					],
-					'json'    => [
-						'linkGenius' => [
-							'exportLimit' => Export_Processor::get_export_limit(),
-							'postTypes'   => Helper::choices_post_types(),
-						],
-					],
-				],
+				'exportLimit' => Export_Processor::get_export_limit(),
 			]
 		);
 	}

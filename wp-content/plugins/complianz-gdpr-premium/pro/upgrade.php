@@ -166,7 +166,10 @@ function cmplz_upgrade_premium($prev_version)
 
 	}
 
-
+	// Re-save all banners to regenerate CSS and clear caches
+	if ( $prev_version && version_compare( $prev_version, '7.5.7', '<' ) ) {
+		cmplz_resave_all_banners();
+	}
 
 }
 add_action('cmplz_upgrade',  'cmplz_upgrade_premium', 10);

@@ -126,6 +126,9 @@ class Installer {
 		\RankMathPro\Admin\Api::get()->get_settings();
 		$this->create_options();
 
+		// Set up Link Genius tables on fresh install.
+		\RankMathPro\Link_Genius\Data\Table_Extension::initialize_schema();
+
 		// Add Analytics Installer.
 		Workflow::do_workflow( 'analytics', 90, null, null );
 		Workflow::do_workflow( 'adsense', 90, null, null );

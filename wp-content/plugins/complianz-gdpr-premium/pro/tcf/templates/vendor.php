@@ -6,7 +6,8 @@
 		<a href="#" class="cmplz-tcf-toggle-vendor cmplz-tcf-rm"></a>
 	</label>
 	<div class="cmplz-tcf-links">
-		<div class="cmplz-tcf-policy-url"><a target="_blank" rel="noopener noreferrer nofollow" href="{privacy_policy}"><?php esc_html_e(__("Privacy Policy","complianz-gdpr"))?></a></div>
+        <div class="cmplz-tcf-policy-url cmplz-tcf-privacy-link"><a target="_blank" rel="noopener noreferrer nofollow" href="{privacy_policy}"><?php esc_html_e(__("View Privacy Policy","complianz-gdpr"))?></a></div>
+        <div class="cmplz-tcf-policy-url cmplz-tcf-legint-link"><a target="_blank" rel="noopener noreferrer nofollow" href="{legitimate_interest}"><?php esc_html_e(__("View Legitimate Interest Claim","complianz-gdpr"))?></a></div>
 	</div>
 	<div class="cmplz-tcf-info">
 		<div class="cmplz-tcf-info-content">
@@ -47,6 +48,10 @@
 		<div class="cmplz-tcf-info-content">
 			<div class="cmplz-tcf-header"><?php esc_html_e(__("Purposes", 'complianz-gdpr'))?></div>
 			<div class="cmplz-tcf-description">{purposes}</div>
+		</div>
+		<div class="cmplz-tcf-info-content cmplz-tcf-data-retention-section">
+			<div class="cmplz-tcf-header"><?php esc_html_e(__("Data Retention", 'complianz-gdpr'))?></div>
+			<div class="cmplz-tcf-description">{data_retention}</div>
 		</div>
 	</div>
 </div>

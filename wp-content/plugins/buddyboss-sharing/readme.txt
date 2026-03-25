@@ -4,7 +4,7 @@ Tags: sharing, social media, activity, open graph, buddyboss
 Requires at least: 5.0
 Tested up to: 6.8.1
 Requires PHP: 7.4.0
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,10 @@ BuddyBoss Sharing enhances your BuddyBoss Platform community by adding powerful 
 5. Customize sharing options for groups, friends, and messages
 
 == Changelog ==
+
+= 1.2.1 =
+ * Bug: Core - Fixed an issue where indexing settings were not saving correctly in the Settings section
+ * Bug: Core - Fixed Share Posts message preview to correct design and link to the original activity
 
 = 1.2.0 =
  * Bug: Core - Improved Share Posts experience with UI enhancements & post preview support
