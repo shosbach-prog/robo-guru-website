@@ -634,7 +634,7 @@ class Admin_Helper {
 						'username'       => $registered['username'],
 						'api_key'        => $registered['api_key'],
 						'site_url'       => $registered['site_url'],
-						'plugin_version' => RANK_MATH_PRO_VERSION,
+						'plugin_version' => rank_math_pro()->version,
 					]
 				),
 			]

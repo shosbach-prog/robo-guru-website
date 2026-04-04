@@ -26,7 +26,6 @@ class Robots_Txt {
 	 * Class constructor.
 	 */
 	public function __construct() {
-		$this->action( 'rank_math/admin/settings/robots', 'add_options' );
 		$this->action( 'admin_enqueue_scripts', 'enqueue', 9 );
 	}
 
@@ -37,15 +36,5 @@ class Robots_Txt {
 	 */
 	public function enqueue() {
 		Helper::add_json( 'siteUrl', home_url( '/' ) );
-	}
-
-	/**
-	 * Add options to Image SEO module.
-	 *
-	 * @param object $cmb CMB object.
-	 */
-	public function add_options( $cmb ) {
-		$cmb->remove_field( 'robots_tester' );
-		include_once __DIR__ . '/options.php';
 	}
 }

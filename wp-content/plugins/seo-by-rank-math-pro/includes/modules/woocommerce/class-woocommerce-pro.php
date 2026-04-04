@@ -656,7 +656,7 @@ class WooCommerce {
 		}
 
 		foreach ( $variation->get_attributes() as $key => $value ) {
-			if ( ! $value ) {
+			if ( ! $value && $value !== '0' ) {
 				continue;
 			}
 

@@ -181,7 +181,6 @@ class Admin {
 				/* translators: News Sitemap KB link */
 				sprintf( __( 'News Sitemaps allow you to control which content you submit to Google News. More information: <a href="%s" target="_blank">News Sitemaps overview</a>', 'rank-math-pro' ), KB::get( 'news-sitemap', 'Options Panel Sitemap News Tab' ) )
 			),
-			'file'      => __DIR__ . '/settings-news.php',
 			/* translators: News Sitemap Url */
 			'after_row' => '<div class="notice notice-alt notice-info info inline rank-math-notice"><p>' . sprintf( esc_html__( 'Your News Sitemap index can be found here: : %s', 'rank-math-pro' ), '<a href="' . $sitemap_url . '" target="_blank">' . $sitemap_url . '</a>' ) . '</p></div>',
 			'json'      => [

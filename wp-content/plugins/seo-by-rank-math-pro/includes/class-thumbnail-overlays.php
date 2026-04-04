@@ -35,9 +35,6 @@ class Thumbnail_Overlays {
 		$this->filter( 'rank_math/settings/sanitize_fields', 'sanitize_fields', 10, 3 );
 		$this->filter( 'rank_math/social/overlay_image_position', 'apply_overlay_position', 20, 2 );
 		$this->filter( 'rank_math/social/overlay_image_positions', 'get_position_margins', 20, 4 );
-		$this->action( 'cmb2_admin_init', 'cmb_init' );
-
-		$this->filter( 'cmb2_default_filter', 'get_cmb_default', 20, 2 );
 		$this->filter( 'default_post_metadata', 'get_postmeta_default', 10, 3 );
 		$this->filter( 'default_term_metadata', 'get_termmeta_default', 10, 3 );
 		$this->filter( 'default_user_metadata', 'get_usermeta_default', 10, 3 );
@@ -250,22 +247,6 @@ class Thumbnail_Overlays {
 	}
 
 	/**
-	 * Set default value for overlay CMB options.
-	 *
-	 * @param mixed  $defaults Original default value.
-	 * @param object $field   CMB Field object.
-	 * @return mixed
-	 */
-	public function get_cmb_default( $defaults, $field ) {
-		$meta_key = $field->id();
-		if ( ! $this->is_overlay_field( $meta_key ) ) {
-			return $defaults;
-		}
-
-		return $this->get_pt_default( $meta_key, get_post_type(), $defaults );
-	}
-
-	/**
 	 * Check if a field ID is for an overlay related field.
 	 *
 	 * @param string $field Field ID.
@@ -335,120 +316,6 @@ class Thumbnail_Overlays {
 		}
 
 		return $overlays;
-	}
-
-	/**
-	 * Hook CMB2 init process.
-	 */
-	public function cmb_init() {
-		$this->action( 'rank_math/admin/settings/global', 'add_thumbnail_watermark_options', 10, 2 );
-		foreach ( Helper::get_accessible_post_types() as $post_type ) {
-			if ( 'attachment' === $post_type && Helper::get_settings( 'general.attachment_redirect_urls', true ) ) {
-				continue;
-			}
-
-			$this->action( "rank_math/admin/settings/post-type-{$post_type}", 'add_thumbnail_watermark_options', 10, 2 );
-		}
-
-		foreach ( Helper::get_accessible_taxonomies() as $slug => $taxonomy ) {
-			if ( ! $this->is_taxonomy_allowed( $taxonomy->name ) ) {
-				continue;
-			}
-			$this->action( "rank_math/admin/settings/taxonomy-{$slug}", 'add_thumbnail_watermark_options', 10, 2 );
-		}
-	}
-
-	/**
-	 * Add Custom Image Overlay option in Titles & Meta settings.
-	 *
-	 * @param object $cmb CMB2 instance.
-	 * @param array  $tab Current settings tab.
-	 */
-	public function add_thumbnail_watermark_options( $cmb, $tab ) {
-		$overlays  = array_merge( [ '' => __( 'Off', 'rank-math-pro' ) ], Helper::choices_overlay_images( 'names' ) );
-		$field_ids = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
-
-		if ( isset( $tab['post_type'] ) || isset( $tab['taxonomy'] ) ) {
-			$id       = isset( $tab['taxonomy'] ) ? "tax_{$tab['taxonomy']}_image_overlay" : "pt_{$tab['post_type']}_image_overlay";
-			$position = isset( $tab['taxonomy'] ) ? array_search( "remove_{$tab['taxonomy']}_snippet_data", array_keys( $field_ids ), true ) + 1 : $this->get_field_position( $tab['post_type'], $field_ids );
-			$cmb->add_field(
-				[
-					'id'      => $id,
-					'type'    => 'radio_inline',
-					'name'    => esc_html__( 'Default Thumbnail Watermark', 'rank-math-pro' ),
-					'desc'    => esc_html__( 'Select the default watermark that will be applied if no specific watermark is selected.', 'rank-math-pro' ),
-					'options' => $overlays,
-					'default' => '',
-					'classes' => 'default-overlay-field',
-				],
-				++$position
-			);
-
-			return;
-		}
-
-		$fields_position = array_search( 'twitter_card_type', array_keys( $field_ids ), true ) + 1;
-		$overlays_fields = $cmb->add_field(
-			[
-				'id'              => 'custom_image_overlays',
-				'type'            => 'group',
-				'name'            => esc_html__( 'Custom Image Watermarks', 'rank-math-pro' ),
-				'desc'            => esc_html__( 'Add more image watermarks to choose from for the social thumbnails.', 'rank-math-pro' ),
-				'options'         => [
-					'add_button'    => esc_html__( 'Add Watermark', 'rank-math-pro' ),
-					'remove_button' => esc_html__( 'Remove', 'rank-math-pro' ),
-				],
-				'classes'         => 'cmb-group-text-only',
-				'sanitization_cb' => [ $this, 'sanitize_overlays' ],
-			],
-			++$fields_position
-		);
-
-		$cmb->add_group_field(
-			$overlays_fields,
-			[
-				'id'      => 'image',
-				'type'    => 'file',
-				'options' => [
-					'url' => false,
-				],
-				'text'    => [ 'add_upload_file_text' => esc_html__( 'Add Image', 'rank-math-pro' ) ],
-			]
-		);
-
-		$cmb->add_group_field(
-			$overlays_fields,
-			[
-				'id'         => 'name',
-				'type'       => 'text',
-				'attributes' => [
-					'placeholder' => esc_attr__( 'Name*', 'rank-math-pro' ),
-				],
-			]
-		);
-
-		$cmb->add_group_field(
-			$overlays_fields,
-			[
-				'id'      => 'position',
-				'type'    => 'select',
-				'options' => $this->get_position_choices(),
-				'default' => 'bottom_right',
-			]
-		);
-
-		$cmb->add_field(
-			[
-				'id'      => 'default_image_overlay',
-				'type'    => 'radio_inline',
-				'name'    => esc_html__( 'Default Thumbnail Watermark', 'rank-math-pro' ),
-				'desc'    => esc_html__( 'Select the default watermark that will be applied if no specific watermark is selected.', 'rank-math-pro' ),
-				'options' => $overlays,
-				'default' => '',
-				'classes' => 'default-overlay-field',
-			],
-			++$fields_position
-		);
 	}
 
 	/**

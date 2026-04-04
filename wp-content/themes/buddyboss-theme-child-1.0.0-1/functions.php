@@ -18,6 +18,13 @@ function buddyboss_theme_child_languages()
   // Translate text from the PARENT theme.
   load_theme_textdomain( 'buddyboss-theme', get_stylesheet_directory() . '/languages' );
 }
+// WP Rocket: BuddyBoss Menü-Scripts von Delay JS ausschließen
+add_filter( 'rocket_delay_js_exclusions', function( $excluded ) {
+    $excluded[] = 'buddyboss-theme/assets/js/vendors/menu.js';
+    $excluded[] = 'buddyboss-theme/assets/js/main.min.js';
+    $excluded[] = 'buddyboss-theme/assets/js/vendors/panelslider.min.js';
+    return $excluded;
+} );
 
 /**
  * Enqueues scripts and styles for child theme front-end.

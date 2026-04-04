@@ -46,7 +46,7 @@ class Analytics {
 		$this->action( 'rank_math/analytics/options/console', 'add_country_dropdown3' );
 		$this->action( 'rank_math/analytics/options/analytics', 'add_country_dropdown2' );
 		$this->action( 'update_option_rank_math_analytics_last_updated', 'send_summary' );
-		$this->action( 'rank_math/admin/settings/analytics', 'add_new_settings' );
+
 		$this->filter( 'rank_math/analytics/schedule_gap', 'schedule_gap' );
 		$this->filter( 'rank_math/analytics/max_days_allowed', 'data_retention_period' );
 		$this->filter( 'rank_math/analytics/options/cache_control/description', 'change_description' );
@@ -58,7 +58,6 @@ class Analytics {
 		$this->filter( 'rank_math/analytics/gtag', 'gtag' );
 		$this->filter( 'rank_math/analytics/pre_filter_data', 'filter_winning_losing_posts', 10, 3 );
 		$this->filter( 'rank_math/analytics/pre_filter_data', 'filter_winning_keywords', 10, 3 );
-		$this->action( 'cmb2_save_options-page_fields_rank-math-options-general_options', 'sync_global_settings', 25, 2 );
 		$this->action( 'rank_math/settings/before_save', 'before_settings_save', 25, 2 );
 		$this->filter( 'rank_math/metabox/post/values', 'add_metadata', 10, 2 );
 		$this->filter( 'rank_math/analytics/date_exists_tables', 'date_exists_tables', 10 );
@@ -258,6 +257,7 @@ class Analytics {
 		Helper::add_json( 'isAnalyticsConnected', GoogleAnalytics::is_analytics_connected() );
 		Helper::add_json( 'dateFormat', get_option( 'date_format' ) );
 		Helper::add_json( 'isLocalhost', Helper::is_localhost() );
+		Helper::add_json( 'isBusinessPlan', ProAdminHelper::is_business_plan() );
 
 		$preference['topKeywords']['ctr']    = false;
 		$preference['topKeywords']['ctr']    = false;
@@ -272,6 +272,10 @@ class Analytics {
 	 * @return int
 	 */
 	public function data_retention_period() {
+		if ( ProAdminHelper::is_business_plan() ) {
+			return 360;
+		}
+
 		return 'pro' === Admin_Helper::get_user_plan() ? 180 : 1000;
 	}
 
@@ -450,51 +454,10 @@ class Analytics {
 	 * Change option description.
 	 */
 	public function change_description() {
-		return __( 'Enter the number of days to keep Analytics data in your database. The maximum allowed days are 180. Though, 2x data will be stored in the DB for calculating the difference properly.', 'rank-math-pro' );
-	}
-
-	/**
-	 * Add new settings.
-	 *
-	 * @param object $cmb CMB2 instance.
-	 */
-	public function add_new_settings( $cmb ) {
-		if ( ! Authentication::is_authorized() ) {
-			return;
-		}
-
-		$type            = ! ProAdminHelper::is_business_plan() ? 'hidden' : 'toggle';
-		$field_ids       = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
-		$fields_position = array_search( 'console_caching_control', array_keys( $field_ids ), true ) + 1;
-
-		$cmb->add_field(
-			[
-				'id'      => 'sync_global_setting',
-				'type'    => $type,
-				'name'    => esc_html__( 'Monitor SEO Performance', 'rank-math-pro' ),
-				'desc'    => sprintf(
-					/* translators: Link to kb article */
-					wp_kses_post( __( 'This option allows you to monitor the SEO performance of all of your sites in one centralized dashboard on RankMath.com, so you can check up on sites at a glance. <a href="%1$s" target="_blank">Learn more</a>.', 'rank-math-pro' ) ),
-					KB::get( 'monitor-seo-performance', 'Options Panel Analytics Tab Monitor Performance' )
-				),
-				'default' => 'off',
-			],
-			++$fields_position
-		);
-
-		$cmb->add_field(
-			[
-				'id'      => 'google_updates',
-				'type'    => $type,
-				'name'    => esc_html__( 'Google Core Updates in the Graphs', 'rank-math-pro' ),
-				'desc'    => sprintf(
-					/* translators: Link to kb article */
-					__( 'This option allows you to show %s in the Analytics graphs.', 'rank-math-pro' ),
-					'<a href="' . KB::get( 'google-updates', 'Google Core Updates in the Graphs' ) . '" target="_blank">' . __( 'Google Core Updates', 'rank-math-pro' ) . '</a>'
-				),
-				'default' => 'on',
-			],
-			++$fields_position
+		return sprintf(
+			/* translators: %d: number of days */
+			__( 'Enter the number of days to keep Analytics data in your database. The maximum allowed days are %d. Though, 2x data will be stored in the DB for calculating the difference properly.', 'rank-math-pro' ),
+			ProAdminHelper::is_business_plan() ? 360 : 180
 		);
 	}
 
@@ -516,23 +479,6 @@ class Analytics {
 
 		\RankMathPro\Admin\Api::get()->sync_setting( $settings['sync_global_setting'] );
 		$this->send_summary();
-	}
-
-	/**
-	 * Check if certain fields got updated.
-	 *
-	 * @param int   $object_id The ID of the current object.
-	 * @param array $updated   Array of field ids that were updated.
-	 *                         Will only include field ids that had values change.
-	 */
-	public function sync_global_settings( $object_id, $updated ) {
-		if ( in_array( 'sync_global_setting', $updated, true ) ) {
-			\RankMathPro\Admin\Api::get()->sync_setting(
-				cmb2_get_option( $object_id, 'sync_global_setting' )
-			);
-
-			$this->send_summary();
-		}
 	}
 
 	/**

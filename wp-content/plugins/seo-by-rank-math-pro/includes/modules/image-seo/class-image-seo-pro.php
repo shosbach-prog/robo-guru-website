@@ -51,7 +51,6 @@ class Image_Seo_Pro {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->action( 'rank_math/admin/settings/images', 'add_options' );
 		$this->filter( 'rank_math/settings/sanitize_fields', 'sanitize_fields', 10, 3 );
 
 		if ( Helper::get_settings( 'general.add_avatar_alt' ) ) {
@@ -87,7 +86,6 @@ class Image_Seo_Pro {
 		}
 
 		$this->action( 'rank_math/vars/register_extra_replacements', 'register_replacements' );
-		$this->filter( 'cmb2_field_arguments', 'maybe_exclude_image_vars', 10 );
 	}
 
 	/**
@@ -119,37 +117,6 @@ class Image_Seo_Pro {
 		);
 	}
 
-
-	/**
-	 * Filter CMB field arguments to exclude `imagealt` & `imagetitle` when they are not needed.
-	 *
-	 * @param array $args Arguments array.
-	 * @return array
-	 */
-	public function maybe_exclude_image_vars( $args ) {
-		if ( empty( $args['classes'] ) ) {
-			return $args;
-		}
-
-		$classes = is_array( $args['classes'] ) ? $args['classes'] : explode( ' ', $args['classes'] );
-		if ( ! in_array( 'rank-math-supports-variables', $classes, true ) ) {
-			return $args;
-		}
-
-		if ( ! is_string( $args['id'] ) || strpos( $args['id'], 'img_' ) !== false ) {
-			return $args;
-		}
-
-		if ( ! isset( $args['attributes']['data-exclude-variables'] ) ) {
-			$args['attributes']['data-exclude-variables'] = '';
-		}
-
-		$args['attributes']['data-exclude-variables'] .= ',imagealt,imagetitle';
-
-		$args['attributes']['data-exclude-variables'] = trim( $args['attributes']['data-exclude-variables'], ',' );
-
-		return $args;
-	}
 
 	/**
 	 * Get the alt attribute of the attachment to use as a replacement.
@@ -538,17 +505,6 @@ class Image_Seo_Pro {
 		return $out;
 	}
 
-	/**
-	 * Add options to Image SEO module.
-	 *
-	 * @param object $cmb CMB object.
-	 */
-	public function add_options( $cmb ) {
-		$field_ids       = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
-		$fields_position = array_search( 'img_title_format', array_keys( $field_ids ), true ) + 1;
-
-		include_once __DIR__ . '/options.php';
-	}
 
 	/**
 	 * Sanitize the Image SEO options.

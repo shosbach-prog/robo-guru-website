@@ -23,20 +23,9 @@ class Content_Analyzer {
 	 * Analyze content once to extract link information and unsafe ranges.
 	 *
 	 * @param string $content Post content.
-	 * @param bool   $use_cache Whether to use transient cache (default true).
 	 * @return array Analysis results with 'link_ranges', 'existing_hrefs', and 'unsafe_ranges'.
 	 */
-	public static function analyze( $content, $use_cache = true ) {
-		// Check cache first if enabled.
-		if ( $use_cache ) {
-			$cache_key = 'rm_content_analysis_' . md5( $content );
-			$cached    = get_transient( $cache_key );
-
-			if ( false !== $cached && is_array( $cached ) ) {
-				return $cached;
-			}
-		}
-
+	public static function analyze( $content ) {
 		$link_ranges    = [];
 		$existing_hrefs = [];
 
@@ -54,18 +43,11 @@ class Content_Analyzer {
 		// Extract unsafe ranges (blocks, shortcodes, HTML comments, etc.).
 		$unsafe_ranges = self::extract_unsafe_ranges( $content );
 
-		$analysis = [
+		return [
 			'link_ranges'    => $link_ranges,
 			'existing_hrefs' => array_unique( $existing_hrefs ),
 			'unsafe_ranges'  => $unsafe_ranges,
 		];
-
-		// Cache the result if enabled.
-		if ( $use_cache ) {
-			set_transient( $cache_key, $analysis, HOUR_IN_SECONDS );
-		}
-
-		return $analysis;
 	}
 
 	/**

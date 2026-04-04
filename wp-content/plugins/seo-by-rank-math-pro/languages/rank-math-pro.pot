@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language-Team: Rank Math\n"
 "Last-Translator: Rank Math\n"
-"POT-Creation-Date: 2026-03-18 06:27+0000\n"
+"POT-Creation-Date: 2026-03-26 07:01+0000\n"
 "Project-Id-Version: undefined\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -111,33 +111,6 @@ msgid "Settings could not be imported: Upload failed."
 msgstr ""
 
 msgid "A Custom Watermark item could not be saved because the name field is empty."
-msgstr ""
-
-msgid "Off"
-msgstr ""
-
-msgid "Default Thumbnail Watermark"
-msgstr ""
-
-msgid "Select the default watermark that will be applied if no specific watermark is selected."
-msgstr ""
-
-msgid "Custom Image Watermarks"
-msgstr ""
-
-msgid "Add more image watermarks to choose from for the social thumbnails."
-msgstr ""
-
-msgid "Add Watermark"
-msgstr ""
-
-msgid "Remove"
-msgstr ""
-
-msgid "Add Image"
-msgstr ""
-
-msgid "Name*"
 msgstr ""
 
 msgid "Top Left"
@@ -1034,16 +1007,6 @@ msgstr ""
 msgid "Special Sitemaps:"
 msgstr ""
 
-msgid "Enable Search Intent"
-msgstr ""
-
-#. translators: placeholder is a link to "Read more".
-msgid "Determine the Keyword's Search Intent for Writing Tailored Content. %s"
-msgstr ""
-
-msgid "Read more"
-msgstr ""
-
 msgid "Unknown error, call getLastResponse() to find out what happened."
 msgstr ""
 
@@ -1104,15 +1067,6 @@ msgid "Your account has been banned - please contact your Reseller for assistanc
 msgstr ""
 
 msgid "This website is blocked from using the plugin - please contact your Reseller."
-msgstr ""
-
-msgid "Affiliate Link Prefix"
-msgstr ""
-
-msgid "Add the URI prefixes you use for affiliate (cloaked) links, which redirect to external sites. These will not count as internal links in the content analysis. Add one per line."
-msgstr ""
-
-msgid "Example: /get/"
 msgstr ""
 
 msgid "Rank Math SEO Filters"
@@ -1582,15 +1536,6 @@ msgstr ""
 msgid "Hits"
 msgstr ""
 
-msgid "Include Images from the ACF Fields."
-msgstr ""
-
-msgid "Include images added in the ACF fields."
-msgstr ""
-
-msgid "Custom"
-msgstr ""
-
 msgid "Data import will not work for this service as sufficient permissions are not given."
 msgstr ""
 
@@ -1612,24 +1557,8 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-msgid "Enter the number of days to keep Analytics data in your database. The maximum allowed days are 180. Though, 2x data will be stored in the DB for calculating the difference properly."
-msgstr ""
-
-msgid "Monitor SEO Performance"
-msgstr ""
-
-#. translators: Link to kb article
-msgid "This option allows you to monitor the SEO performance of all of your sites in one centralized dashboard on RankMath.com, so you can check up on sites at a glance. <a href=\"%1$s\" target=\"_blank\">Learn more</a>."
-msgstr ""
-
-msgid "Google Core Updates in the Graphs"
-msgstr ""
-
-#. translators: Link to kb article
-msgid "This option allows you to show %s in the Analytics graphs."
-msgstr ""
-
-msgid "Google Core Updates"
+#. translators: %d: number of days
+msgid "Enter the number of days to keep Analytics data in your database. The maximum allowed days are %d. Though, 2x data will be stored in the DB for calculating the difference properly."
 msgstr ""
 
 msgid "AdSense: "
@@ -1645,99 +1574,6 @@ msgid "Search Impression:"
 msgstr ""
 
 msgid "Logo"
-msgstr ""
-
-msgid "Every 15 Days"
-msgstr ""
-
-msgid "Include Only Tracked Keywords"
-msgstr ""
-
-msgid "When enabled, the Winning Keywords section will only show Tracked Keywords."
-msgstr ""
-
-msgid "Every 7 Days"
-msgstr ""
-
-msgid "Report Email Address"
-msgstr ""
-
-msgid "Address where the reports will be sent. You can add multiple recipients separated with commas."
-msgstr ""
-
-msgid "Report Email Subject"
-msgstr ""
-
-msgid "Subject of the report emails."
-msgstr ""
-
-msgid "Report Logo"
-msgstr ""
-
-msgid "Logo appearing in the header part of the report."
-msgstr ""
-
-msgid "Logo Link"
-msgstr ""
-
-msgid "URL where the logo link should point to."
-msgstr ""
-
-msgid "Report Header Background"
-msgstr ""
-
-msgid "Color hex code or any other valid value for the <code>background:</code> CSS property."
-msgstr ""
-
-msgid "Link to Full Report"
-msgstr ""
-
-msgid "Select whether to include a link to the Full Report admin page in the email or not."
-msgstr ""
-
-msgid "Report Top Text"
-msgstr ""
-
-msgid "Text or basic HTML to insert below the title."
-msgstr ""
-
-msgid "Include Sections"
-msgstr ""
-
-msgid "Select which tables to show in the report."
-msgstr ""
-
-msgid "Basic Summary"
-msgstr ""
-
-msgid "Positions Summary"
-msgstr ""
-
-msgid "Top Winning Posts"
-msgstr ""
-
-msgid "Top Losing Posts"
-msgstr ""
-
-msgid "Top Winning Keywords"
-msgstr ""
-
-msgid "Top Losing Keywords"
-msgstr ""
-
-msgid "When enabled, the Winning Keywords and Losing Keywords sections will only show Tracked Keywords."
-msgstr ""
-
-msgid "Report Footer Text"
-msgstr ""
-
-msgid "Text or basic HTML to insert in the footer area."
-msgstr ""
-
-msgid "Additional CSS code"
-msgstr ""
-
-msgid "Additional CSS code to customize the appearance of the reports. Insert the CSS code directly, without the wrapping style tag. Please note that the CSS support is limited in email clients and the appearance may vary greatly."
 msgstr ""
 
 #. translators: placeholder is a link to the homepage.
@@ -1842,112 +1678,6 @@ msgstr ""
 
 #. translators: placeholder is the username or email.
 msgid "Avatar of %s"
-msgstr ""
-
-msgid "Add missing image caption"
-msgstr ""
-
-msgid "Add a caption for all images without a caption automatically. The caption is dynamically applied when the content is displayed, the stored content is not changed."
-msgstr ""
-
-msgid "Caption format"
-msgstr ""
-
-msgid "Format used for the new captions."
-msgstr ""
-
-msgid "Add missing image description"
-msgstr ""
-
-msgid "Add a description for all images without a description automatically. The description is dynamically applied when the content is displayed, the stored content is not changed."
-msgstr ""
-
-msgid "Description format"
-msgstr ""
-
-msgid "Format used for the new descriptions."
-msgstr ""
-
-msgid "Change title casing"
-msgstr ""
-
-msgid "Capitalization settings for the <code>title</code> attribute values. This will be applied for <strong>all</strong> <code>title</code> attributes."
-msgstr ""
-
-msgid "No change"
-msgstr ""
-
-msgid "Title Casing"
-msgstr ""
-
-msgid "Sentence casing"
-msgstr ""
-
-msgid "all lowercase"
-msgstr ""
-
-msgid "ALL UPPERCASE"
-msgstr ""
-
-msgid "Change alt attribute casing"
-msgstr ""
-
-msgid "Capitalization settings for the <code>alt</code> attribute values. This will be applied for <strong>all</strong> <code>alt</code> attributes."
-msgstr ""
-
-msgid "Change description casing"
-msgstr ""
-
-msgid "Capitalization settings for the image descriptions. This will be applied for <strong>all</strong> image descriptions."
-msgstr ""
-
-msgid "Change caption casing"
-msgstr ""
-
-msgid "Capitalization settings for the image captions.  This will be applied for <strong>all</strong> image captions."
-msgstr ""
-
-msgid "Add ALT attributes for avatars"
-msgstr ""
-
-msgid "Add <code>alt</code> attributes for commenter profile pictures (avatars) automatically. The alt attribute value will be the username."
-msgstr ""
-
-msgid "Replacements"
-msgstr ""
-
-msgid "Replace characters or words in the alt tags, title tags, or in the captions."
-msgstr ""
-
-msgid "Add another"
-msgstr ""
-
-msgid "Find"
-msgstr ""
-
-msgid "Replace"
-msgstr ""
-
-msgid "Alt"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Caption"
-msgstr ""
-
-#. translators: Description and link texts
-msgid "%1$s Install Imagify to automatically optimize all your images to improve site performance and enhance your SEO visibility. %2$s or %3$s"
-msgstr ""
-
-msgid "Optimize Images:"
-msgstr ""
-
-msgid "Install Now"
-msgstr ""
-
-msgid "Learn More."
 msgstr ""
 
 msgid "Link Genius"
@@ -2107,26 +1837,6 @@ msgid "Taxonomy to look for terms"
 msgstr ""
 
 msgid "Searched string"
-msgstr ""
-
-msgid "Google News Publication Name"
-msgstr ""
-
-msgid "The name of the news publication. It must match the name exactly as it appears on your articles in news.google.com, omitting any trailing parentheticals. <a href=\"https://support.google.com/news/publisher-center/answer/9606710\" target=\"_blank\">More information at support.google.com</a>"
-msgstr ""
-
-msgid "News Post Type"
-msgstr ""
-
-msgid "Select the post type you use for News articles."
-msgstr ""
-
-#. translators: Post Type
-msgid "Exclude %s Terms "
-msgstr ""
-
-#. translators: 1. Taxonomy Name 2. Post Type
-msgid "%1$s to exclude for %2$s."
 msgstr ""
 
 msgid "XML Sitemap"
@@ -2384,21 +2094,6 @@ msgstr ""
 msgid "Rank Math: Added Video Schema to posts successfully."
 msgstr ""
 
-msgid "Autodetect Video"
-msgstr ""
-
-msgid "Populate automatic Video Schema by auto-detecting any video in the content."
-msgstr ""
-
-msgid "Autogenerate Image"
-msgstr ""
-
-msgid "Auto-generate image for the auto detected video."
-msgstr ""
-
-msgid "Remove Media Data from RSS feed"
-msgstr ""
-
 msgid "Generate Video Schema for Old Posts/Pages"
 msgstr ""
 
@@ -2431,37 +2126,15 @@ msgstr ""
 msgid "Your Video Sitemap index can be found here: %s"
 msgstr ""
 
-msgid "Hide Sitemap"
-msgstr ""
-
-msgid "Hide the sitemap from normal visitors?"
-msgstr ""
-
-msgid "Video Post Type"
-msgstr ""
-
-msgid "Select the post type where you use videos and want them to be shown in the Video search."
-msgstr ""
-
-msgid "YouTube API Key"
-msgstr ""
-
-#. translators: %s is a link to the Rank Math article to get the YouTube API key.
-msgid "Enter your %s to fetch video details automatically. Leave blank to use the default public API, which may have limitations and lower reliability."
-msgstr ""
-
-msgid "Custom Fields"
-msgstr ""
-
-msgid "List of custom fields name to check for video content. Add one per line."
-msgstr ""
-
 #. translators: link to rankmath.com
 msgid "This Video Sitemap is generated by <a href=\"%s\" target=\"_blank\">Rank Math WordPress SEO Plugin</a>. It is what search engines like Google use to find and understand the video content on your website."
 msgstr ""
 
 #. translators: link to rankmath.com
 msgid "Learn more about <a href=\"%s\" target=\"_blank\">Video Sitemap</a>."
+msgstr ""
+
+msgid "Title"
 msgstr ""
 
 msgid "Description"
@@ -2473,61 +2146,13 @@ msgstr ""
 msgid "Last Mod."
 msgstr ""
 
-msgid "Select Brand"
-msgstr ""
-
-msgid "Select Product Brand Taxonomy to use in Schema.org & OpenGraph markup."
-msgstr ""
-
-msgid "Brand"
-msgstr ""
-
-msgid "Brand value to use in Schema.org & OpenGraph markup."
-msgstr ""
-
-msgid "Global Identifier"
-msgstr ""
-
-msgid "Global Identifier key to use in the Product Schema."
-msgstr ""
-
-msgid "GTIN"
-msgstr ""
-
-msgid "GTIN-8"
-msgstr ""
-
-msgid "GTIN-12"
-msgstr ""
-
-msgid "GTIN-13"
-msgstr ""
-
-msgid "GTIN-14"
-msgstr ""
-
 msgid "ISBN"
 msgstr ""
 
 msgid "MPN"
 msgstr ""
 
-msgid "Show Global Identifier"
-msgstr ""
-
-msgid "Display the Global Identified on Product Page along with other product details."
-msgstr ""
-
-msgid "Global Identifier label"
-msgstr ""
-
-msgid "Global Identifier label to show on Product Page."
-msgstr ""
-
-msgid "Noindex Hidden Products"
-msgstr ""
-
-msgid "Set Product Pages to noindex when WooCommerce Catalog visibility is set to hidden."
+msgid "GTIN"
 msgstr ""
 
 #. translators: Global Identifier name.
@@ -3127,424 +2752,6 @@ msgstr ""
 msgid "Show route"
 msgstr ""
 
-msgid "Include KML File in the Sitemap"
-msgstr ""
-
-msgid "locations.kml Sitemap is generated automatically when the Local SEO module is enabled, and the geo-coordinates are added."
-msgstr ""
-
-msgid "Choose a country"
-msgstr ""
-
-msgid "Åland Islands"
-msgstr ""
-
-msgid "Belau"
-msgstr ""
-
-msgid "Bonaire, Sint Eustatius and Saba"
-msgstr ""
-
-msgid "Congo (Brazzaville)"
-msgstr ""
-
-msgid "Congo (Kinshasa)"
-msgstr ""
-
-msgid "Falkland Islands"
-msgstr ""
-
-msgid "Heard Island and McDonald Islands"
-msgstr ""
-
-msgid "Ivory Coast"
-msgstr ""
-
-msgid "Macao S.A.R., China"
-msgstr ""
-
-msgid "Palestinian Territory"
-msgstr ""
-
-msgid "Republic of Ireland"
-msgstr ""
-
-msgid "São Tomé and Príncipe"
-msgstr ""
-
-msgid "Saint Barthélemy"
-msgstr ""
-
-msgid "Saint Martin (Dutch part)"
-msgstr ""
-
-msgid "Saint Martin (French part)"
-msgstr ""
-
-msgid "South Georgia/Sandwich Islands"
-msgstr ""
-
-msgid "United Kingdom (UK)"
-msgstr ""
-
-msgid "United States (US)"
-msgstr ""
-
-msgid "Vatican"
-msgstr ""
-
-msgid "Western Samoa"
-msgstr ""
-
-msgid "Person or Company"
-msgstr ""
-
-msgid "Organization"
-msgstr ""
-
-msgid "Choose whether the site represents a person or an organization."
-msgstr ""
-
-msgid "Website Name"
-msgstr ""
-
-msgid "Enter the name of your site to appear in search results."
-msgstr ""
-
-msgid "Website Alternate Name"
-msgstr ""
-
-msgid "An alternate version of your site name (for example, an acronym or shorter name)."
-msgstr ""
-
-msgid "Person/Organization Name"
-msgstr ""
-
-msgid "Your name or company name intended to feature in Google's Knowledge Panel."
-msgstr ""
-
-msgid "Provide a detailed description of your organization."
-msgstr ""
-
-msgid "<strong>Min Size: 112Χ112px</strong>.<br /> A squared image is preferred by the search engines."
-msgstr ""
-
-msgid "URL of your website or your company’s website."
-msgstr ""
-
-msgid "Use Multiple Locations"
-msgstr ""
-
-msgid "Once you save the changes, we will create a new custom post type called \"Locations\" where you can add multiple locations of your business/organization."
-msgstr ""
-
-msgid "Enter the contact email address that could be displayed on search engines."
-msgstr ""
-
-msgid "Search engines may prominently display your contact phone number for mobile users."
-msgstr ""
-
-msgid "Address Format"
-msgstr ""
-
-msgid "Format used when the address is displayed using the <code>[rank_math_contact_info]</code> shortcode.<br><strong>Available Tags: {address}, {locality}, {region}, {postalcode}, {country}, {gps}</strong>"
-msgstr ""
-
-msgid "Business Type"
-msgstr ""
-
-msgid "Opening Hours"
-msgstr ""
-
-msgid "Select opening hours. You can add multiple sets if you have different opening or closing hours on some days or if you have a mid-day break. Times are specified using 24:00 time."
-msgstr ""
-
-msgid "Add time"
-msgstr ""
-
-msgid "Monday"
-msgstr ""
-
-msgid "Tuesday"
-msgstr ""
-
-msgid "Wednesday"
-msgstr ""
-
-msgid "Thursday"
-msgstr ""
-
-msgid "Friday"
-msgstr ""
-
-msgid "Saturday"
-msgstr ""
-
-msgid "Sunday"
-msgstr ""
-
-msgid "e.g. 09:00-17:00"
-msgstr ""
-
-msgid "Opening Hours Format"
-msgstr ""
-
-msgid "Time format used in the contact shortcode."
-msgstr ""
-
-msgid "Phone Number"
-msgstr ""
-
-msgid "Add number"
-msgstr ""
-
-msgid "Format: +1-401-555-1212"
-msgstr ""
-
-msgid "Price Range"
-msgstr ""
-
-msgid "The price range of the business, for example $$$."
-msgstr ""
-
-msgid "Additional Info"
-msgstr ""
-
-msgid "Provide relevant details of your company to include in the Organization Schema."
-msgstr ""
-
-msgid "Add"
-msgstr ""
-
-msgid "Hide Opening Hours"
-msgstr ""
-
-msgid "Don't add opening hours data in Schema"
-msgstr ""
-
-msgid "Closed label"
-msgstr ""
-
-msgid "Text to show in Opening hours when business is closed."
-msgstr ""
-
-msgid "Open 24/7 label"
-msgstr ""
-
-msgid "Select the text to display alongside your opening hours when your store is open 24/7."
-msgstr ""
-
-msgid "Open 24h label"
-msgstr ""
-
-msgid "Measurement system"
-msgstr ""
-
-msgid "Select your preferred measurement system (miles or kilometers)."
-msgstr ""
-
-msgid "Kilometers"
-msgstr ""
-
-msgid "Miles"
-msgstr ""
-
-msgid "Map Style"
-msgstr ""
-
-msgid "Select the map style you wish to use on the frontend of your website."
-msgstr ""
-
-msgid "Hybrid"
-msgstr ""
-
-msgid "Satellite"
-msgstr ""
-
-msgid "Roadmap"
-msgstr ""
-
-msgid "Terrain"
-msgstr ""
-
-msgid "Maximum number of locations to show"
-msgstr ""
-
-msgid "Limit the number of locations shown on your website to those nearest your user."
-msgstr ""
-
-msgid "Primary Country"
-msgstr ""
-
-msgid "Select your organization’s primary country of operation. This helps improve the accuracy of the store locator."
-msgstr ""
-
-msgid "Show Route label"
-msgstr ""
-
-msgid "Customize the label of the option users can use can click to get directions to your business location on the frontend."
-msgstr ""
-
-msgid "Location Detection"
-msgstr ""
-
-msgid "Automatically detect the user's location as the starting point."
-msgstr ""
-
-msgid "All Locations are part of the same Organization"
-msgstr ""
-
-msgid "Enable if all of the locations where you serve customers are a part of the same legal entity."
-msgstr ""
-
-msgid "Enhanced Search"
-msgstr ""
-
-msgid "Include business locations in site-wide search results."
-msgstr ""
-
-msgid "Google Maps API Key"
-msgstr ""
-
-#. translators: %s expands to "Google Maps Embed API" https://developers.google.com/maps/documentation/embed/
-msgid "An API Key is required to display embedded Google Maps on your site. Get it here: %s"
-msgstr ""
-
-msgid "Google Maps Embed API"
-msgstr ""
-
-msgid "Geo Coordinates"
-msgstr ""
-
-msgid "Latitude and longitude values separated by comma."
-msgstr ""
-
-msgid "Locations Post Type Base"
-msgstr ""
-
-msgid "Locations Category Base"
-msgstr ""
-
-msgid "Location Post Type Name"
-msgstr ""
-
-msgid "The label that appears in the sidebar for the custom post type where you can add & manage locations."
-msgstr ""
-
-msgid "Locations Post Type Name (Plural)"
-msgstr ""
-
-msgid "As above, but the label that would be applicable for more than one location (default: RM Locations)."
-msgstr ""
-
-msgid "Select Page"
-msgstr ""
-
-msgid "About Page"
-msgstr ""
-
-msgid "Select a page on your site where you want to show the LocalBusiness meta data."
-msgstr ""
-
-msgid "Contact Page"
-msgstr ""
-
-msgid "Podcast Name"
-msgstr ""
-
-msgid "Name of the podcast."
-msgstr ""
-
-msgid "Podcast Description"
-msgstr ""
-
-msgid "A plaintext description of the podcast."
-msgstr ""
-
-msgid "Owner Name"
-msgstr ""
-
-msgid "The podcast owner contact name."
-msgstr ""
-
-msgid "Owner Email "
-msgstr ""
-
-msgid "The email address of the podcast owner. Please make sure the email address is active and monitored."
-msgstr ""
-
-msgid "Podcast Category"
-msgstr ""
-
-msgid "Arts"
-msgstr ""
-
-msgid "Business"
-msgstr ""
-
-msgid "Comedy"
-msgstr ""
-
-msgid "Education"
-msgstr ""
-
-msgid "Games &amp; Hobbies"
-msgstr ""
-
-msgid "Government &amp; Organizations"
-msgstr ""
-
-msgid "Health"
-msgstr ""
-
-msgid "Kids &amp; Family"
-msgstr ""
-
-msgid "News &amp; Politics"
-msgstr ""
-
-msgid "Religion &amp; Spirituality"
-msgstr ""
-
-msgid "Science &amp; Medicine"
-msgstr ""
-
-msgid "Society &amp; Culture"
-msgstr ""
-
-msgid "Sports &amp; Recreation"
-msgstr ""
-
-msgid "TV &amp; Film"
-msgstr ""
-
-msgid "Technology"
-msgstr ""
-
-msgid "Select the category that best reflects the content of your show."
-msgstr ""
-
-msgid "<strong>Min Size: 1400x1400px, Max Size: 3000x3000px</strong>.<br /> The filesize should not exceed 0.5MB."
-msgstr ""
-
-msgid "Tracking Prefix"
-msgstr ""
-
-msgid "Add the tracking prefix provided by your tracking service like Chartable, Podsights, Podtrac, etc."
-msgstr ""
-
-msgid "Is Explicit"
-msgstr ""
-
-msgid "Indicates whether the podcast is explicit language or adult content."
-msgstr ""
-
-msgid "Copyright Text"
-msgstr ""
-
-msgid "Add copyright details if your show is copyrighted."
-msgstr ""
-
 #. translators: placeholder is a comma-separated list of columns.
 msgid "Use the following columns in the CSV file (the order does not matter): %s"
 msgstr ""
@@ -4119,6 +3326,9 @@ msgstr ""
 msgid "Keyword maps do not support history deletion."
 msgstr ""
 
+msgid "Top Losing Keywords"
+msgstr ""
+
 msgid "Impressions"
 msgstr ""
 
@@ -4126,6 +3336,9 @@ msgid "Position"
 msgstr ""
 
 msgid "No data to show."
+msgstr ""
+
+msgid "Top Losing Posts"
 msgstr ""
 
 msgid "Post"
@@ -4144,4 +3357,10 @@ msgid "Total Keywords"
 msgstr ""
 
 msgid "Average Position"
+msgstr ""
+
+msgid "Top Winning Keywords"
+msgstr ""
+
+msgid "Top Winning Posts"
 msgstr ""
