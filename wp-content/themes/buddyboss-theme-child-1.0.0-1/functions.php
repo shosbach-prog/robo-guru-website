@@ -134,6 +134,15 @@ add_action( 'wp_enqueue_scripts', 'buddyboss_theme_child_scripts_styles', 9999 )
 
 /****************************** CUSTOM FUNCTIONS ******************************/
 
+// Rank Math: Analytics/gtag Code-Einbettung deaktivieren (Google Site Kit übernimmt das).
+// Verhindert doppelten GA4-Code und überflüssige _gl= Linker-Parameter in URLs.
+add_filter( 'option_rank_math_google_analytic_options', function( $options ) {
+    if ( is_array( $options ) ) {
+        $options['install_code'] = false;
+    }
+    return $options;
+} );
+
 // Admin-Bar aus (du hattest das schon)
 add_filter('show_admin_bar', '__return_false', 9999);
 
