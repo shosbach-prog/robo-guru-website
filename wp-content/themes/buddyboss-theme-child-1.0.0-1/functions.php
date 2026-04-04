@@ -39,6 +39,19 @@ add_filter( 'rocket_rucss_safelist', function( $safelist ) {
     return $safelist;
 } );
 
+// Elementor Pro entfernt den BuddyBoss Mobile-Header auf Seiten mit Elementor-Header-Template.
+// Hier wird er wieder hinzugefügt, damit das Hamburger-Menü auf allen Seiten funktioniert.
+add_action( 'wp', function() {
+    if ( ! function_exists( 'buddyboss_theme_mobile_header' ) ) {
+        return;
+    }
+    // Prüfe ob Elementor Pro den Mobile-Header entfernt hat
+    $hook = defined( 'THEME_HOOK_PREFIX' ) ? THEME_HOOK_PREFIX : 'jesuspended_theme';
+    if ( ! has_action( $hook . 'header', 'buddyboss_theme_mobile_header' ) ) {
+        add_action( $hook . 'header', 'buddyboss_theme_mobile_header', 20 );
+    }
+} );
+
 // Fallback: Mobiles Hamburger-Menü sofort initialisieren (ohne jQuery / WP Rocket Abhängigkeit)
 // Verwendet onclick statt addEventListener, weil WP Rocket EventTarget.prototype.addEventListener
 // global patcht und alle Listener bis zur ersten User-Interaktion verzögert.
