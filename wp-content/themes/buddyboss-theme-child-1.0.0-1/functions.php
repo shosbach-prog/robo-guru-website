@@ -27,6 +27,18 @@ add_filter( 'rocket_delay_js_exclusions', function( $excluded ) {
     return $excluded;
 } );
 
+// WP Rocket: Mobile-Menü CSS vor "Remove Unused CSS" schützen.
+// RUCSS crawlt mit Desktop-Viewport und entfernt mobile-only CSS-Regeln.
+add_filter( 'rocket_rucss_safelist', function( $safelist ) {
+    $safelist[] = '.bb-mobile-header(.*)';
+    $safelist[] = '.bb-mobile-panel(.*)';
+    $safelist[] = '.bb-left-panel(.*)';
+    $safelist[] = '.bb-close-panel(.*)';
+    $safelist[] = '.bb-mobile-panel-open(.*)';
+    $safelist[] = '.push-left(.*)';
+    return $safelist;
+} );
+
 // Fallback: Mobiles Hamburger-Menü sofort initialisieren (ohne jQuery / WP Rocket Abhängigkeit)
 // Verwendet onclick statt addEventListener, weil WP Rocket EventTarget.prototype.addEventListener
 // global patcht und alle Listener bis zur ersten User-Interaktion verzögert.
