@@ -18,13 +18,73 @@ function buddyboss_theme_child_languages()
   // Translate text from the PARENT theme.
   load_theme_textdomain( 'buddyboss-theme', get_stylesheet_directory() . '/languages' );
 }
-// WP Rocket: BuddyBoss Menü-Scripts von Delay JS ausschließen
+// WP Rocket: BuddyBoss Menü-Scripts + jQuery von Delay JS ausschließen
 add_filter( 'rocket_delay_js_exclusions', function( $excluded ) {
+    $excluded[] = '/wp-includes/js/jquery/';
     $excluded[] = 'buddyboss-theme/assets/js/vendors/menu.js';
     $excluded[] = 'buddyboss-theme/assets/js/main.min.js';
     $excluded[] = 'buddyboss-theme/assets/js/vendors/panelslider.min.js';
     return $excluded;
 } );
+
+// WP Rocket: Mobile-Menü CSS vor "Remove Unused CSS" schützen.
+// RUCSS crawlt mit Desktop-Viewport und entfernt mobile-only CSS-Regeln.
+add_filter( 'rocket_rucss_safelist', function( $safelist ) {
+    $safelist[] = '.bb-mobile-header(.*)';
+    $safelist[] = '.bb-mobile-panel(.*)';
+    $safelist[] = '.bb-left-panel(.*)';
+    $safelist[] = '.bb-close-panel(.*)';
+    $safelist[] = '.bb-mobile-panel-open(.*)';
+    $safelist[] = '.push-left(.*)';
+    return $safelist;
+} );
+
+// Fallback: Mobiles Hamburger-Menü sofort initialisieren (ohne jQuery / WP Rocket Abhängigkeit)
+// Verwendet onclick statt addEventListener, weil WP Rocket EventTarget.prototype.addEventListener
+// global patcht und alle Listener bis zur ersten User-Interaktion verzögert.
+add_action( 'wp_footer', function() {
+    ?>
+    <script data-no-optimize="1" data-no-defer="1" data-no-minify="1">
+    (function(){
+      var btn = document.querySelector('.bb-left-panel-mobile');
+      var panel = document.querySelector('.bb-mobile-panel-wrapper');
+      var closeBtn = document.querySelector('.bb-close-panel');
+      if (!btn || !panel) return;
+
+      btn.onclick = function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        panel.classList.toggle('closed');
+        document.body.classList.toggle('bb-mobile-panel-open');
+      };
+
+      if (closeBtn) {
+        closeBtn.onclick = function(e){
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          panel.classList.add('closed');
+          document.body.classList.remove('bb-mobile-panel-open');
+        };
+      }
+
+      // Menü-Links: Panel schließen beim Navigieren
+      var navLinks = panel.querySelectorAll('.main-navigation a');
+      for (var i = 0; i < navLinks.length; i++) {
+        (function(link){
+          var origClick = link.onclick;
+          link.onclick = function(e){
+            if (!e.target.classList.contains('bs-submenu-toggle')) {
+              panel.classList.add('closed');
+              document.body.classList.remove('bb-mobile-panel-open');
+            }
+            if (origClick) origClick.call(this, e);
+          };
+        })(navLinks[i]);
+      }
+    })();
+    </script>
+    <?php
+}, 1 );
 
 /**
  * Enqueues scripts and styles for child theme front-end.
