@@ -39,18 +39,29 @@ add_filter( 'rocket_rucss_safelist', function( $safelist ) {
     return $safelist;
 } );
 
-// Elementor Pro entfernt den BuddyBoss Mobile-Header auf Seiten mit Elementor-Header-Template.
-// Hier wird er wieder hinzugefügt, damit das Hamburger-Menü auf allen Seiten funktioniert.
-add_action( 'wp', function() {
-    if ( ! function_exists( 'buddyboss_theme_mobile_header' ) ) {
-        return;
+// Critical Inline CSS für Mobile-Menü – wird von keinem Optimierungs-Plugin entfernt.
+// WP Rocket RUCSS crawlt mit Desktop-Viewport und entfernt mobile-only CSS komplett.
+add_action( 'wp_head', function() {
+    ?>
+    <style id="rg-mobile-menu-critical">
+    @media(max-width:799px){
+      .bb-mobile-header-wrapper{display:block!important}
+      .bb-mobile-header{display:flex!important;align-items:center;height:76px}
+      .bb-left-panel-mobile{display:inline-block!important;font-size:26px;margin-left:10px;cursor:pointer}
+      .bb-mobile-panel-wrapper{position:fixed!important;top:0;left:0;width:100%;height:100%;overflow-y:auto;z-index:9999!important;transition:all .35s ease-in-out;box-shadow:0 2px 5px 0 rgba(18,43,70,.7)}
+      .bb-mobile-panel-wrapper.left.closed{left:-110%!important}
+      .bb-mobile-panel-wrapper.light{background-color:#fff}
+      .bb-mobile-panel-inner{padding:0}
+      .bb-mobile-panel-header{display:flex;align-items:center;justify-content:space-between;padding:15px}
+      a.bb-close-panel{cursor:pointer;font-size:30px;padding:10px}
+      .bb-mobile-panel-open{overflow-y:hidden!important}
     }
-    // Prüfe ob Elementor Pro den Mobile-Header entfernt hat
-    $hook = defined( 'THEME_HOOK_PREFIX' ) ? THEME_HOOK_PREFIX : 'jesuspended_theme';
-    if ( ! has_action( $hook . 'header', 'buddyboss_theme_mobile_header' ) ) {
-        add_action( $hook . 'header', 'buddyboss_theme_mobile_header', 20 );
+    @media(min-width:800px){
+      .bb-mobile-header-wrapper,.bb-mobile-panel-wrapper{display:none!important}
     }
-} );
+    </style>
+    <?php
+}, 1 );
 
 // Fallback: Mobiles Hamburger-Menü sofort initialisieren (ohne jQuery / WP Rocket Abhängigkeit)
 // Verwendet onclick statt addEventListener, weil WP Rocket EventTarget.prototype.addEventListener
