@@ -28,34 +28,46 @@ add_filter( 'rocket_delay_js_exclusions', function( $excluded ) {
 } );
 
 // Fallback: Mobiles Hamburger-Menü sofort initialisieren (ohne jQuery / WP Rocket Abhängigkeit)
+// Verwendet onclick statt addEventListener, weil WP Rocket EventTarget.prototype.addEventListener
+// global patcht und alle Listener bis zur ersten User-Interaktion verzögert.
 add_action( 'wp_footer', function() {
     ?>
     <script data-no-optimize="1" data-no-defer="1" data-no-minify="1">
     (function(){
-      if (window.__rgMobileMenuReady) return;
-      window.__rgMobileMenuReady = true;
-      function initMobileMenu(){
-        var btn = document.querySelector('.bb-left-panel-mobile');
-        var panel = document.querySelector('.bb-mobile-panel-wrapper');
-        var closeBtn = document.querySelector('.bb-close-panel');
-        if (!btn || !panel) return;
-        btn.addEventListener('click', function(e){
+      var btn = document.querySelector('.bb-left-panel-mobile');
+      var panel = document.querySelector('.bb-mobile-panel-wrapper');
+      var closeBtn = document.querySelector('.bb-close-panel');
+      if (!btn || !panel) return;
+
+      btn.onclick = function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        panel.classList.toggle('closed');
+        document.body.classList.toggle('bb-mobile-panel-open');
+      };
+
+      if (closeBtn) {
+        closeBtn.onclick = function(e){
           e.preventDefault();
-          panel.classList.toggle('closed');
-          document.body.classList.toggle('bb-mobile-panel-open');
-        });
-        if (closeBtn) {
-          closeBtn.addEventListener('click', function(e){
-            e.preventDefault();
-            panel.classList.add('closed');
-            document.body.classList.remove('bb-mobile-panel-open');
-          });
-        }
+          e.stopImmediatePropagation();
+          panel.classList.add('closed');
+          document.body.classList.remove('bb-mobile-panel-open');
+        };
       }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initMobileMenu);
-      } else {
-        initMobileMenu();
+
+      // Menü-Links: Panel schließen beim Navigieren
+      var navLinks = panel.querySelectorAll('.main-navigation a');
+      for (var i = 0; i < navLinks.length; i++) {
+        (function(link){
+          var origClick = link.onclick;
+          link.onclick = function(e){
+            if (!e.target.classList.contains('bs-submenu-toggle')) {
+              panel.classList.add('closed');
+              document.body.classList.remove('bb-mobile-panel-open');
+            }
+            if (origClick) origClick.call(this, e);
+          };
+        })(navLinks[i]);
       }
     })();
     </script>
