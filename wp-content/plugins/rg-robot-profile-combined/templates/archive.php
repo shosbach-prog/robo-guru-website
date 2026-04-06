@@ -102,25 +102,15 @@ $base = is_page('roboter') ? get_permalink() : get_post_type_archive_link($pt);
     $segs=array_keys($segs); sort($segs);
   ?>
 
-  <!-- Duplikat-Hero blockieren (altes WP Rocket cached JS) -->
-  <style>#rg-roboter-hero-block{display:none!important}.rg-wrap>.rg-hero--roboter:not(:first-of-type){display:none!important}</style>
-  <script>
-  /* Altes Hero-Element sofort entfernen, bevor es sichtbar wird */
-  (function(){
-    var orig = document.getElementById('rg-roboter-hero-block');
-    if(orig) orig.parentNode.removeChild(orig);
-    /* Observer: falls JS es später einfügt, sofort entfernen */
-    if(window.MutationObserver){
-      new MutationObserver(function(mutations){
-        var el = document.getElementById('rg-roboter-hero-block');
-        if(el) el.parentNode.removeChild(el);
-      }).observe(document.documentElement, {childList:true, subtree:true});
-    }
-  })();
-  </script>
+  <!-- Duplikat-Hero blockieren -->
+  <style>
+  #rg-roboter-hero-block{display:none!important}
+  .rg-hero--roboter~.rg-hero--roboter{display:none!important}
+  .rg-hero--roboter.rg-hero--duplicate{display:none!important}
+  </style>
 
   <!-- Hero (statisch gerendert) -->
-  <div class="rg-hero rg-hero--roboter">
+  <div id="rg-hero-static" class="rg-hero rg-hero--roboter">
       <div class="rg-hero__inner">
           <span class="rg-hero__badge">Roboter-Datenbank &ndash; <?php echo count($ids); ?> Modelle</span>
           <h1>Kommerzielle Roboter f&uuml;r Reinigung, Service &amp; Transport</h1>
@@ -271,9 +261,28 @@ $base = is_page('roboter') ? get_permalink() : get_post_type_archive_link($pt);
 </div>
 
 <script>
+/* Smooth scroll für Hero-CTA */
 document.addEventListener('click', function(e) {
     var a = e.target.closest('a[href="#roboter-db"]');
     if (a) { e.preventDefault(); var t = document.getElementById('roboter-db'); if (t) t.scrollIntoView({behavior:'smooth', block:'start'}); }
 });
+
+/* Alle Duplikat-Heroes entfernen – nur #rg-hero-static behalten */
+(function killDuplicateHeroes(){
+    var all = document.querySelectorAll('.rg-hero--roboter');
+    for(var i=0;i<all.length;i++){
+        if(all[i].id !== 'rg-hero-static') all[i].parentNode.removeChild(all[i]);
+    }
+    /* Observer: auch späte Injections abfangen */
+    if(window.MutationObserver){
+        var obs = new MutationObserver(function(){
+            var dupes = document.querySelectorAll('.rg-hero--roboter:not(#rg-hero-static)');
+            for(var j=0;j<dupes.length;j++) dupes[j].parentNode.removeChild(dupes[j]);
+        });
+        obs.observe(document.documentElement, {childList:true, subtree:true});
+        /* Observer nach 10s stoppen (Performance) */
+        setTimeout(function(){ obs.disconnect(); }, 10000);
+    }
+})();
 </script>
 <?php get_footer(); ?>
