@@ -102,11 +102,27 @@ $base = is_page('roboter') ? get_permalink() : get_post_type_archive_link($pt);
     $segs=array_keys($segs); sort($segs);
   ?>
 
-  <!-- Duplikat-Hero blockieren -->
+  <!-- Hero CSS inline (RUCSS-sicher) + Duplikat-Schutz -->
   <style>
   #rg-roboter-hero-block{display:none!important}
   .rg-hero--roboter~.rg-hero--roboter{display:none!important}
-  .rg-hero--roboter.rg-hero--duplicate{display:none!important}
+  .rg-hero--roboter{--rg-primary:#00BCD4;--rg-primary-dark:#0097A7;--rg-dark:#1A2332;--rg-dark-light:#2A3444;font-family:Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Arial,sans-serif!important;background:linear-gradient(135deg,var(--rg-dark) 0%,var(--rg-dark-light) 100%);padding:100px 24px 80px;position:relative;overflow:hidden;margin:-30px -24px 24px;box-sizing:border-box}
+  .rg-hero--roboter *{box-sizing:border-box}
+  .rg-hero--roboter::before{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(circle at 70% 30%,rgba(0,188,212,0.15) 0%,transparent 50%);pointer-events:none}
+  .rg-hero--roboter .rg-hero__inner{max-width:800px;margin:0 auto;position:relative;z-index:1}
+  .rg-hero--roboter .rg-hero__badge{display:inline-block;background:rgba(0,188,212,0.15);padding:8px 16px;border-radius:100px;font-size:14px;font-weight:700;letter-spacing:.4px;color:var(--rg-primary)!important;margin-bottom:24px}
+  .rg-hero--roboter h1{font-size:clamp(32px,5vw,48px)!important;font-weight:800!important;line-height:1.15!important;color:#fff!important;margin:0 0 20px!important;padding:0!important}
+  .rg-hero--roboter .rg-hero__lead{font-size:18px;color:rgba(255,255,255,0.82)!important;max-width:600px;margin-bottom:32px;line-height:1.6}
+  .rg-hero--roboter .rg-hero__cta{display:flex;gap:16px;flex-wrap:wrap}
+  .rg-hero--roboter .rg-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none!important;transition:all .2s ease;cursor:pointer;border:none}
+  .rg-hero--roboter .rg-btn--primary{background:var(--rg-primary);color:var(--rg-dark)!important}
+  .rg-hero--roboter .rg-btn--primary:hover{background:var(--rg-primary-dark);transform:translateY(-2px);box-shadow:0 10px 15px -3px rgba(0,0,0,0.1)}
+  .rg-hero--roboter .rg-btn--outline{background:transparent;border:2px solid rgba(255,255,255,0.3);color:#fff!important}
+  .rg-hero--roboter .rg-btn--outline:hover{border-color:#fff;background:rgba(255,255,255,0.1)}
+  .rg-hero--roboter .rg-hero__usp{display:flex;gap:32px;flex-wrap:wrap;margin-top:40px}
+  .rg-hero--roboter .rg-hero__usp-item{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--rg-primary)!important}
+  .rg-hero--roboter .rg-hero__usp-item svg{width:18px;height:18px;flex-shrink:0}
+  @media(max-width:600px){.rg-hero--roboter{padding:80px 20px 60px;margin:-20px -16px 16px}.rg-hero--roboter .rg-hero__usp{gap:20px}}
   </style>
 
   <!-- Hero (statisch gerendert) -->
