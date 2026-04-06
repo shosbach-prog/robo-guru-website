@@ -448,4 +448,15 @@ add_action('wp_head', function () {
     echo '<script type="application/ld+json">' . wp_json_encode( $webapp_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ) . '</script>' . "\n";
 }, 5);
 
+/****************************** BLOG H1 – STATISCH RENDERN ******************************/
+
+/**
+ * Statisches H1 auf der Blog-Seite ausgeben, damit es sofort sichtbar ist
+ * und nicht erst per JS (WP Rocket Delayed) beim Hover erscheint.
+ */
+add_action( 'buddyboss_theme_template_parts_content_top', function () {
+    if ( ! is_home() ) return;
+    echo '<h1 class="entry-title" style="margin-bottom:20px">Blog</h1>';
+});
+
 ?>
