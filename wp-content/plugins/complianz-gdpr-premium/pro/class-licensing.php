@@ -48,6 +48,7 @@ if (!class_exists("cmplz_license")) {
 			add_action( 'cmplz_every_day_hook', array( $this, 'maybe_sync_wsc_license' ) );
 			add_action( 'cmplz_maybe_sync_wsc_license', array( $this, 'maybe_sync_wsc_license' ), 0 );
 			add_action( 'cmplz_schedule_wsc_license_sync', array( $this, 'schedule_wsc_license_sync' ) );
+			add_filter( 'cmplz_remove_wsc_options', array( $this, 'remove_wsc_licensing_options' ) );
 		}
 
 		/**
@@ -1064,6 +1065,20 @@ if (!class_exists("cmplz_license")) {
 		 */
 		public function retrieve_wsc_license_sync_status(): string {
 			return cmplz_get_option( self::WSC_LICENSE_SYNC_STATUS );
+		}
+		
+		/**
+		 * Lists the WSC licensing option keys that need to be removed.
+		 *
+		 * Used during the uninstallation/reset process of the wsc.
+		 *
+		 * @return string[] Array containing the option keys for the WSC license sync id and status.
+		 */
+		public function remove_wsc_licensing_options() {
+			return array(
+				self::WSC_LICENSE_SYNC_ID,
+				self::WSC_LICENSE_SYNC_STATUS,
+			);
 		}
 	}
 }

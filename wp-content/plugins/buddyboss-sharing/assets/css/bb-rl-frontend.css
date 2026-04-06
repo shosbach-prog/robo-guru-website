@@ -60,6 +60,9 @@
   position: static;
 }
 
+.shared-activity-message {
+  cursor: pointer;
+}
 .shared-activity-message .bb-media-length-more .act-grid-1-1 .bb-rl-entry-img > img,
 .shared-activity-message .bb-media-length-more .act-grid-1-2 .bb-rl-entry-img > img,
 .shared-activity-message .bb-media-length-5 .act-grid-1-1 .bb-rl-entry-img > img,
@@ -70,6 +73,9 @@
 }
 .shared-activity-message .bb-rl-activity-media-elem.no_more_option .bb-rl-photos-length {
   font-size: var(--bb-sharing-font-size-regular);
+}
+.shared-activity-message .bb-activity-media-wrap .bb-rl-entry-img > img {
+  border-radius: var(--bb-rl-radius-lg) var(--bb-rl-radius-lg) 0 0;
 }
 .shared-activity-message .shared-activity-preview > iframe {
   width: 100%;

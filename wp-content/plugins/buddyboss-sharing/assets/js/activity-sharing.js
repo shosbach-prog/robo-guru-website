@@ -3412,6 +3412,12 @@
       if (isReadMoreLink) {
         return; // Allow the link to work normally
       }
+      if ($target.closest('.shared-activity-message').length > 0) {
+        e.preventDefault();
+        var activityUrl = $target.closest('.shared-activity-message').data('activity-url');
+        window.location.href = activityUrl;
+        return;
+      }
 
       // If it's a media element click, prevent its default behavior and stop propagation
       if (isMediaClick) {

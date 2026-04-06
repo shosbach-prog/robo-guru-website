@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd1b61033d1b5a7cd3834fe2a2f98be65
+class ComposerStaticInit3161f96ceb998f8d1a06eaf773304cb7
 {
     public static $files = array (
         '6c592737b91137905268e9a0eb968869' => __DIR__ . '/..' . '/wp-media/apply-filters-typed/functions.php',
@@ -72,6 +72,55 @@ class ComposerStaticInitd1b61033d1b5a7cd3834fe2a2f98be65
         'RankMathPro\\Google\\PageSpeed' => __DIR__ . '/../..' . '/includes/modules/analytics/google/class-pagespeed.php',
         'RankMathPro\\Image_Seo_Pro' => __DIR__ . '/../..' . '/includes/modules/image-seo/class-image-seo-pro.php',
         'RankMathPro\\Installer' => __DIR__ . '/../..' . '/includes/class-installer.php',
+        'RankMathPro\\Link_Genius\\Admin\\Admin' => __DIR__ . '/../..' . '/includes/modules/link-genius/Admin/class-admin.php',
+        'RankMathPro\\Link_Genius\\Api\\Audit_Controller' => __DIR__ . '/../..' . '/includes/modules/link-genius/Api/class-audit-controller.php',
+        'RankMathPro\\Link_Genius\\Api\\Base_Controller' => __DIR__ . '/../..' . '/includes/modules/link-genius/Api/class-base-controller.php',
+        'RankMathPro\\Link_Genius\\Api\\Base_Operation_Controller' => __DIR__ . '/../..' . '/includes/modules/link-genius/Api/class-base-operation-controller.php',
+        'RankMathPro\\Link_Genius\\Api\\Editor_Controller' => __DIR__ . '/../..' . '/includes/modules/link-genius/Api/class-editor-controller.php',
+        'RankMathPro\\Link_Genius\\Api\\Export_Controller' => __DIR__ . '/../..' . '/includes/modules/link-genius/Api/class-export-controller.php',
+        'RankMathPro\\Link_Genius\\Api\\Links_Controller' => __DIR__ . '/../..' . '/includes/modules/link-genius/Api/class-links-controller.php',
+        'RankMathPro\\Link_Genius\\Api\\Operations_Rest' => __DIR__ . '/../..' . '/includes/modules/link-genius/Api/class-operations-rest.php',
+        'RankMathPro\\Link_Genius\\Api\\Posts_Controller' => __DIR__ . '/../..' . '/includes/modules/link-genius/Api/class-posts-controller.php',
+        'RankMathPro\\Link_Genius\\Background\\Background_Processor_Error_Handler' => __DIR__ . '/../..' . '/includes/modules/link-genius/Background/trait-background-processor-error-handler.php',
+        'RankMathPro\\Link_Genius\\Background\\Bulk_Link_Modifier' => __DIR__ . '/../..' . '/includes/modules/link-genius/Background/class-bulk-link-modifier.php',
+        'RankMathPro\\Link_Genius\\Background\\Coordinated_Processor' => __DIR__ . '/../..' . '/includes/modules/link-genius/Background/trait-coordinated-processor.php',
+        'RankMathPro\\Link_Genius\\Background\\Export_Processor' => __DIR__ . '/../..' . '/includes/modules/link-genius/Background/class-export-processor.php',
+        'RankMathPro\\Link_Genius\\Background\\Link_Status_Crawler' => __DIR__ . '/../..' . '/includes/modules/link-genius/Background/class-link-status-crawler.php',
+        'RankMathPro\\Link_Genius\\Background\\Process_Coordinator' => __DIR__ . '/../..' . '/includes/modules/link-genius/Background/class-process-coordinator.php',
+        'RankMathPro\\Link_Genius\\Background\\Processor_Utils' => __DIR__ . '/../..' . '/includes/modules/link-genius/Background/class-processor-utils.php',
+        'RankMathPro\\Link_Genius\\Background\\Progress_Helper' => __DIR__ . '/../..' . '/includes/modules/link-genius/Background/trait-progress-helper.php',
+        'RankMathPro\\Link_Genius\\Background\\Regenerate_Links' => __DIR__ . '/../..' . '/includes/modules/link-genius/Background/class-regenerate-links.php',
+        'RankMathPro\\Link_Genius\\Blocks\\Related\\Block_Related_Posts' => __DIR__ . '/../..' . '/includes/modules/link-genius/blocks/related/class-block-related-posts.php',
+        'RankMathPro\\Link_Genius\\Data\\Link_Updater' => __DIR__ . '/../..' . '/includes/modules/link-genius/Data/class-link-updater.php',
+        'RankMathPro\\Link_Genius\\Data\\Query_Builder' => __DIR__ . '/../..' . '/includes/modules/link-genius/Data/class-query-builder.php',
+        'RankMathPro\\Link_Genius\\Data\\Table_Extension' => __DIR__ . '/../..' . '/includes/modules/link-genius/Data/class-table-extension.php',
+        'RankMathPro\\Link_Genius\\Features\\BulkUpdate\\Preview_Processor' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/BulkUpdate/class-preview-processor.php',
+        'RankMathPro\\Link_Genius\\Features\\BulkUpdate\\Processor' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/BulkUpdate/class-processor.php',
+        'RankMathPro\\Link_Genius\\Features\\BulkUpdate\\Rest' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/BulkUpdate/class-rest.php',
+        'RankMathPro\\Link_Genius\\Features\\BulkUpdate\\Service' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/BulkUpdate/class-service.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\AI_Client' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/class-ai-client.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Auto_Linker' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/class-auto-linker.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Executor' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/class-executor.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Keyword_Map_Processor' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/class-keyword-map-processor.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Keyword_Maps' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/class-keyword-maps.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Preview_Processor' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/class-preview-processor.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Rest' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/class-rest.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Storage' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/class-storage.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Utils\\Content_Analyzer' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/Utils/class-content-analyzer.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Utils\\Link_Applier' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/Utils/class-link-applier.php',
+        'RankMathPro\\Link_Genius\\Features\\KeywordMaps\\Utils\\Variation_Expander' => __DIR__ . '/../..' . '/includes/modules/link-genius/Features/KeywordMaps/Utils/class-variation-expander.php',
+        'RankMathPro\\Link_Genius\\Link_Genius' => __DIR__ . '/../..' . '/includes/modules/link-genius/class-link-genius.php',
+        'RankMathPro\\Link_Genius\\Rest' => __DIR__ . '/../..' . '/includes/modules/link-genius/class-rest.php',
+        'RankMathPro\\Link_Genius\\Services\\Batch_Helper' => __DIR__ . '/../..' . '/includes/modules/link-genius/Services/class-batch-helper.php',
+        'RankMathPro\\Link_Genius\\Services\\Content_Processor' => __DIR__ . '/../..' . '/includes/modules/link-genius/Services/class-content-processor.php',
+        'RankMathPro\\Link_Genius\\Services\\Content_Similarity' => __DIR__ . '/../..' . '/includes/modules/link-genius/services/class-content-similarity.php',
+        'RankMathPro\\Link_Genius\\Services\\History_Service' => __DIR__ . '/../..' . '/includes/modules/link-genius/Services/class-history-service.php',
+        'RankMathPro\\Link_Genius\\Services\\Link_Processor' => __DIR__ . '/../..' . '/includes/modules/link-genius/Services/class-link-processor.php',
+        'RankMathPro\\Link_Genius\\Services\\Related_Posts' => __DIR__ . '/../..' . '/includes/modules/link-genius/services/class-related-posts.php',
+        'RankMathPro\\Link_Genius\\Services\\Robots_Checker' => __DIR__ . '/../..' . '/includes/modules/link-genius/Services/class-robots-checker.php',
+        'RankMathPro\\Link_Genius\\Services\\Rollback_Service' => __DIR__ . '/../..' . '/includes/modules/link-genius/Services/class-rollback-service.php',
+        'RankMathPro\\Link_Genius\\Services\\Utils' => __DIR__ . '/../..' . '/includes/modules/link-genius/Services/class-utils.php',
+        'RankMathPro\\Link_Genius\\Shortcodes\\Related_Posts_Shortcode' => __DIR__ . '/../..' . '/includes/modules/link-genius/Shortcodes/class-related-posts-shortcode.php',
         'RankMathPro\\Local_Seo\\Address' => __DIR__ . '/../..' . '/includes/modules/local-seo/shortcodes/class-address.php',
         'RankMathPro\\Local_Seo\\Admin' => __DIR__ . '/../..' . '/includes/modules/local-seo/class-admin.php',
         'RankMathPro\\Local_Seo\\Block_Local_Business' => __DIR__ . '/../..' . '/includes/modules/local-seo/class-block-local-business.php',
@@ -148,9 +197,9 @@ class ComposerStaticInitd1b61033d1b5a7cd3834fe2a2f98be65
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd1b61033d1b5a7cd3834fe2a2f98be65::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd1b61033d1b5a7cd3834fe2a2f98be65::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd1b61033d1b5a7cd3834fe2a2f98be65::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3161f96ceb998f8d1a06eaf773304cb7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3161f96ceb998f8d1a06eaf773304cb7::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3161f96ceb998f8d1a06eaf773304cb7::$classMap;
 
         }, null, ClassLoader::class);
     }

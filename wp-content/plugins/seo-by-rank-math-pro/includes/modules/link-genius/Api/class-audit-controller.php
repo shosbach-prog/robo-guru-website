@@ -238,18 +238,22 @@ class Audit_Controller extends Base_Controller {
 
 		if ( $is_bulk ) {
 			$crawler = Link_Status_Crawler::get();
-			foreach ( $links as $link ) {
-				$crawler->push_to_queue(
-					[
-						'link_id'  => $link['id'],
-						'url'      => $link['url'],
-						'url_hash' => $link['url_hash'],
-						'type'     => $link['type'],
-					]
-				);
-			}
 
-			$crawler->save();
+			// Save in chunks of 100 — each chunk becomes its own batch row,
+			// preventing large wp_options writes that cause binlog growth.
+			foreach ( array_chunk( $links, 100 ) as $chunk ) {
+				foreach ( $chunk as $link ) {
+					$crawler->push_to_queue(
+						[
+							'link_id'  => $link['id'],
+							'url'      => $link['url'],
+							'url_hash' => $link['url_hash'],
+							'type'     => $link['type'],
+						]
+					);
+				}
+				$crawler->save();
+			}
 			$crawler->update_progress_tracking();
 
 			if ( ! wp_next_scheduled( 'rank_math_link_genius_dispatch_crawler' ) ) {

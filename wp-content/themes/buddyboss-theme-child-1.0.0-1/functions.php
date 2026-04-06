@@ -18,6 +18,97 @@ function buddyboss_theme_child_languages()
   // Translate text from the PARENT theme.
   load_theme_textdomain( 'buddyboss-theme', get_stylesheet_directory() . '/languages' );
 }
+// WP Rocket: BuddyBoss Menü-Scripts + jQuery von Delay JS ausschließen
+add_filter( 'rocket_delay_js_exclusions', function( $excluded ) {
+    $excluded[] = '/wp-includes/js/jquery/';
+    $excluded[] = 'buddyboss-theme/assets/js/vendors/menu.js';
+    $excluded[] = 'buddyboss-theme/assets/js/main.min.js';
+    $excluded[] = 'buddyboss-theme/assets/js/vendors/panelslider.min.js';
+    return $excluded;
+} );
+
+// WP Rocket: Mobile-Menü CSS vor "Remove Unused CSS" schützen.
+// RUCSS crawlt mit Desktop-Viewport und entfernt mobile-only CSS-Regeln.
+add_filter( 'rocket_rucss_safelist', function( $safelist ) {
+    $safelist[] = '.bb-mobile-header(.*)';
+    $safelist[] = '.bb-mobile-panel(.*)';
+    $safelist[] = '.bb-left-panel(.*)';
+    $safelist[] = '.bb-close-panel(.*)';
+    $safelist[] = '.bb-mobile-panel-open(.*)';
+    $safelist[] = '.push-left(.*)';
+    return $safelist;
+} );
+
+// Critical Inline CSS für Mobile-Menü – wird von keinem Optimierungs-Plugin entfernt.
+// WP Rocket RUCSS crawlt mit Desktop-Viewport und entfernt mobile-only CSS komplett.
+add_action( 'wp_head', function() {
+    ?>
+    <style id="rg-mobile-menu-critical">
+    @media(max-width:799px){
+      .bb-mobile-header-wrapper{display:block!important}
+      .bb-mobile-header{display:flex!important;align-items:center;height:76px}
+      .bb-left-panel-mobile{display:inline-block!important;font-size:26px;margin-left:10px;cursor:pointer}
+      .bb-mobile-panel-wrapper{position:fixed!important;top:0;left:0;width:100%;height:100%;overflow-y:auto;z-index:9999!important;transition:all .35s ease-in-out;box-shadow:0 2px 5px 0 rgba(18,43,70,.7)}
+      .bb-mobile-panel-wrapper.left.closed{left:-110%!important}
+      .bb-mobile-panel-wrapper.light{background-color:#fff}
+      .bb-mobile-panel-inner{padding:0}
+      .bb-mobile-panel-header{display:flex;align-items:center;justify-content:space-between;padding:15px}
+      a.bb-close-panel{cursor:pointer;font-size:30px;padding:10px}
+      .bb-mobile-panel-open{overflow-y:hidden!important}
+    }
+    @media(min-width:800px){
+      .bb-mobile-header-wrapper,.bb-mobile-panel-wrapper{display:none!important}
+    }
+    </style>
+    <?php
+}, 1 );
+
+// Fallback: Mobiles Hamburger-Menü sofort initialisieren (ohne jQuery / WP Rocket Abhängigkeit)
+// Verwendet onclick statt addEventListener, weil WP Rocket EventTarget.prototype.addEventListener
+// global patcht und alle Listener bis zur ersten User-Interaktion verzögert.
+add_action( 'wp_footer', function() {
+    ?>
+    <script data-no-optimize="1" data-no-defer="1" data-no-minify="1">
+    (function(){
+      var btn = document.querySelector('.bb-left-panel-mobile');
+      var panel = document.querySelector('.bb-mobile-panel-wrapper');
+      var closeBtn = document.querySelector('.bb-close-panel');
+      if (!btn || !panel) return;
+
+      btn.onclick = function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        panel.classList.toggle('closed');
+        document.body.classList.toggle('bb-mobile-panel-open');
+      };
+
+      if (closeBtn) {
+        closeBtn.onclick = function(e){
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          panel.classList.add('closed');
+          document.body.classList.remove('bb-mobile-panel-open');
+        };
+      }
+
+      // Menü-Links: Panel schließen beim Navigieren
+      var navLinks = panel.querySelectorAll('.main-navigation a');
+      for (var i = 0; i < navLinks.length; i++) {
+        (function(link){
+          var origClick = link.onclick;
+          link.onclick = function(e){
+            if (!e.target.classList.contains('bs-submenu-toggle')) {
+              panel.classList.add('closed');
+              document.body.classList.remove('bb-mobile-panel-open');
+            }
+            if (origClick) origClick.call(this, e);
+          };
+        })(navLinks[i]);
+      }
+    })();
+    </script>
+    <?php
+}, 1 );
 
 /**
  * Enqueues scripts and styles for child theme front-end.
@@ -42,6 +133,15 @@ add_action( 'wp_enqueue_scripts', 'buddyboss_theme_child_scripts_styles', 9999 )
 
 
 /****************************** CUSTOM FUNCTIONS ******************************/
+
+// Rank Math: Analytics/gtag Code-Einbettung deaktivieren (Google Site Kit übernimmt das).
+// Verhindert doppelten GA4-Code und überflüssige _gl= Linker-Parameter in URLs.
+add_filter( 'option_rank_math_google_analytic_options', function( $options ) {
+    if ( is_array( $options ) ) {
+        $options['install_code'] = false;
+    }
+    return $options;
+} );
 
 // Admin-Bar aus (du hattest das schon)
 add_filter('show_admin_bar', '__return_false', 9999);
@@ -201,22 +301,12 @@ add_action('wp_head', function () {
 }, 1);
 
 /**
- * 3) SEO Intro (above calculator) + FAQ (below calculator) via the_content filter.
+ * 3) FAQ (below calculator) via the_content filter.
  */
 add_filter('the_content', function ( $content ) {
     if ( ! bb_child_is_roi_rechner_page() || ! is_main_query() || ! in_the_loop() ) {
         return $content;
     }
-
-    // --- Intro Section ---
-    $intro = '<section class="rg-seo-intro" style="max-width: 960px; margin: 0 auto 2rem; padding: 0 1rem;">
-  <h1 style="font-size: 1.8rem; margin-bottom: 1rem;">Reinigungsroboter ROI berechnen – unabhängig und kostenlos</h1>
-  <p>Lohnt sich ein Reinigungsroboter für Ihr Objekt? Die Antwort hängt von vielen Faktoren ab: Flächengröße, Lohnkosten, Reinigungszyklen, Finanzierungsmodell und Betriebskosten. Unser ROI-Rechner macht diese Bewertung transparent und nachvollziehbar – herstellerunabhängig und ohne versteckte Absicht.</p>
-  <p>Anders als bei Hersteller-Kalkulatoren verfolgt dieser Rechner kein Verkaufsziel. Sie wählen Ihren Roboter, passen alle Parameter an Ihre reale Situation an und erhalten eine ehrliche Wirtschaftlichkeitsanalyse. Das Ergebnis zeigt Ihnen die jährliche Netto-Ersparnis, den Break-Even-Zeitpunkt und eine vollständige 5-Jahres-Projektion – inklusive Kauf- und Leasing-Vergleich.</p>
-  <p>Der Rechner eignet sich für Entscheider im Facility Management, in der Gebäudereinigung, Logistik und Industrie, die vor einer Investitionsentscheidung belastbare Zahlen brauchen. Ob Gausium Scrubber 50, Pudu CC1 oder Nexaro NR 1500 – wählen Sie aus realen Robotermodellen und sehen Sie sofort, wie sich Anschaffung oder Robot-as-a-Service in Ihrem konkreten Einsatzszenario rechnet.</p>
-  <p>Für registrierte Mitglieder stehen zusätzlich eine Executive-PDF mit Investitionsvergleich, gespeicherte Berechnungen und das eigene Firmenlogo im Report zur Verfügung. Die Nutzung des Rechners selbst ist vollständig kostenlos.</p>
-  <p><strong>Tipp:</strong> Nutzen Sie die Branchenprofile (Industrie, Logistik, Krankenhaus, Einzelhandel, Bürogebäude), um mit branchentypischen Werten zu starten – und passen Sie anschließend die Werte an Ihr Objekt an.</p>
-</section>';
 
     // --- FAQ Section ---
     $faq = '<section class="rg-seo-faq" style="max-width: 960px; margin: 2rem auto; padding: 0 1rem;">
@@ -258,7 +348,7 @@ add_filter('the_content', function ( $content ) {
   </details>
 </section>';
 
-    return $intro . $content . $faq;
+    return $content . $faq;
 });
 
 /**

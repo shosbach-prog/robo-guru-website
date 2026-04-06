@@ -14,6 +14,7 @@ use WP_Error;
 use WP_REST_Server;
 use WP_REST_Request;
 use WP_REST_Response;
+use RankMath\Helper;
 use RankMath\Rest\Rest_Helper;
 use RankMathPro\Link_Genius\Api\Base_Operation_Controller;
 use RankMathPro\Link_Genius\Services\History_Service;
@@ -1130,6 +1131,15 @@ class Rest extends Base_Operation_Controller {
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function generate_variations( $request ) {
+		$plan = Helper::get_content_ai_plan();
+		if ( ! $plan || $plan === 'free' ) {
+			return new WP_Error(
+				'upgrade_required',
+				esc_html__( 'This feature is only available for Content AI subscribers.', 'rank-math-pro' ),
+				[ 'status' => 426 ]
+			);
+		}
+
 		$id  = (int) $request->get_param( 'id' );
 		$map = $this->storage->get_keyword_map( $id );
 

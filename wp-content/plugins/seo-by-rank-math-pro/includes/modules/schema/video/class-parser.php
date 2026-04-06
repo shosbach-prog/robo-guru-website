@@ -211,7 +211,7 @@ class Parser {
 	 * @return array
 	 */
 	private function get_video_metadata( $url, $generate_image = true ) {
-		$url = ! Str::contains( 'vimeo.com', $url ) ? preg_replace( '/\?.*/', '', $url ) : $url; // Remove query string from URL.
+		$url = ! Str::contains( 'vimeo.com', $url ) && ! Str::contains( 'watch?v=', $url ) ? preg_replace( '/\?.*/', '', $url ) : $url; // Remove query string from URL.
 		if (
 			$url &&
 			(
@@ -459,6 +459,11 @@ class Parser {
 			return false;
 		}
 
+		// If URL not found in post_content, check Elementor's raw data before deleting.
+		if ( ! empty( $url ) && $this->is_video_in_elementor_data( $url ) ) {
+			return false;
+		}
+
 		$meta_id = str_replace( 'schema-', '', $key );
 		return delete_metadata_by_mid( 'post', $meta_id );
 	}
@@ -527,5 +532,40 @@ class Parser {
 		}
 		$pattern = '/https:\/\/(?:(www\.)?youtu\.?be(?:(-nocookie)?\.com)?(\/)?(embed|watch\?v=)?)(\/)?' . current( $id ) . '/';
 		return 1 === preg_match( $pattern, $content );
+	}
+
+	/**
+	 * Check if a video URL is present in Elementor's raw _elementor_data JSON.
+	 *
+	 * Elementor stores video URLs in widget settings (e.g. youtube_url, vimeo_url)
+	 * inside _elementor_data post meta. Videos are rendered client-side so the
+	 * server-side HTML never contains an iframe src we can match against.
+	 *
+	 * @param string $url Embed or content URL from the VideoObject schema.
+	 *
+	 * @return bool
+	 */
+	private function is_video_in_elementor_data( $url ) {
+		if ( ! get_post_meta( $this->post->ID, '_elementor_edit_mode', true ) ) {
+			return false;
+		}
+
+		$elementor_data = get_post_meta( $this->post->ID, '_elementor_data', true );
+		if ( empty( $elementor_data ) ) {
+			return false;
+		}
+
+		// Extract the video ID from the schema URL (works for embed and watch URLs).
+		$ids = $this->get_ids_from_shortcode( $url );
+		if ( ! empty( $ids ) ) {
+			foreach ( $ids as $video_id ) {
+				if ( Str::contains( $video_id, $elementor_data ) ) {
+					return true;
+				}
+			}
+		}
+
+		// Fallback: direct URL substring match (covers Vimeo, self-hosted, etc.).
+		return Str::contains( $url, $elementor_data );
 	}
 }

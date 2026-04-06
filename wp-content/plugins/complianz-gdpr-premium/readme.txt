@@ -5,7 +5,7 @@ Requires at least: 5.8
 License: Complianz Terms of Use (Premium, see pro/license.txt), and where applicable GPL 2 (Free)
 Requires PHP: 7.4
 Tested up to: 6.9
-Stable tag: 7.5.6.1
+Stable tag: 7.5.7.1
 
 Complianz Privacy Suite with a Cookie Consentbanner and customized Cookie Policy based on the results of the built in Cookie Scan.
 
@@ -23,7 +23,38 @@ IMPORTANT! Complianz Privacy Suite can help you meet compliance requirements, bu
 == Frequently Asked Questions ==
 
 == Change log ==
-= 7.5.6.1 = 
+= 7.5.7.1 =
+* March 10th, 2026
+* Fix: Cookie banner focus trap incorrectly re-activating after consent was given, blocking page links during navigation.
+
+= 7.5.7 =
+* March 9th, 2026
+* Feature: Added WCAG color contrast calculator to color picker.
+* Feature: New plugin integration: Pinterest for WooCommerce.
+* Add: Add Tennessee (TIPA), Minnesota (MCDPA), Maryland (MODPA), Indiana (ICDPA), Kentucky (KCDPA), Rhode Island (DTPPA) to the US Privacy Policy.
+* Accessibility: Improved cookie banner keyboard navigation and focus trapping.
+* Security: Fixed Stored Cross-Site Scripting vulnerability.
+* Fix: Improved script detection for WP Google Maps Plugin.
+* Fix: Record of consent table display and cookie banner array comparison.
+* Fix: Conditionally hide script header option for integrations that handle tracking implementation.
+* Fix: Processing agreement file upload validation and DOCX mime type.
+* Fix: Website Scan onboarding modal not checking for new installations.
+* Fix: Remote scan issues in non-standard WordPress setups.
+* Fix: Added necessary classes to email and website labels in Cookie Policy.
+* Fix: Added missing Website Scan options to uninstall routine.
+* Fix: Website Scan email case sensitivity in authentication.
+* Fix: Custom cookies and services now display all fields (retention, purpose, function, service type, privacy URL) in non-English languages.
+* Fix: Support form description.
+* Fix: Hide link section in blocked content when no cookie-statement is found.
+* Fix: Old links and typos.
+
+= 7.5.6.2 =
+* February 23rd, 2026
+* Security: Fixed Stored Cross-Site Scripting vulnerability.
+* Feature: Added TCF 2.3 support.
+* Fix: Logo update.
+
+= 7.5.6.1 =
 * October 31th, 2025
 * Fix: Optimize cookiedatabase.org sync.
 

@@ -131,11 +131,11 @@ class Rest extends WP_REST_Controller {
 			);
 		}
 		$file_import = CSV_Import_Export::import( $import_file, $request->get_param( 'no_overwrite' ) );
-		if ( ! $file_import ) {
+		if ( isset( $file_import['error'] ) ) {
 			return new WP_REST_Response(
 				[
 					'success' => false,
-					'message' => esc_html__( 'Something went wrong! Please try again later.', 'rank-math-pro' ),
+					'message' => $file_import['error'] ?? esc_html__( 'Something went wrong! Please try again later.', 'rank-math-pro' ),
 				]
 			);
 		}
@@ -207,7 +207,9 @@ class Rest extends WP_REST_Controller {
 
 		$settings = json_decode( $request->get_param( 'settings' ), true );
 		if ( ! ProAdminHelper::is_business_plan() && ! empty( $settings['analytics'] ) ) {
-			cmb2_update_option( 'rank-math-options-general', 'sync_global_setting', $settings['analytics'] );
+			$options                        = get_option( 'rank-math-options-general', [] );
+			$options['sync_global_setting'] = $settings['analytics'];
+			update_option( 'rank-math-options-general', $options );
 		}
 
 		return true;

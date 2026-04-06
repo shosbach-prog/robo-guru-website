@@ -290,13 +290,33 @@ class Admin {
 			'buddyboss_site_seo'
 		);
 
-		// Search Engine Indexing.
+		// Search Engine Indexing - Posts.
 		$settings_tab->add_field(
 			'buddyboss_seo_index_posts',
 			'',
-			array( $this, 'render_search_indexing_field' ),
+			array( $this, 'render_index_posts_field' ),
 			'intval',
 			array( 'class' => 'child-no-padding-first' ),
+			'buddyboss_site_seo'
+		);
+
+		// Search Engine Indexing - Profiles.
+		$settings_tab->add_field(
+			'buddyboss_seo_index_profiles',
+			'',
+			array( $this, 'render_index_profiles_field' ),
+			'intval',
+			array( 'class' => 'child-no-padding' ),
+			'buddyboss_site_seo'
+		);
+
+		// Search Engine Indexing - Groups.
+		$settings_tab->add_field(
+			'buddyboss_seo_index_groups',
+			'',
+			array( $this, 'render_index_groups_field' ),
+			'intval',
+			array( 'class' => 'child-no-padding' ),
 			'buddyboss_site_seo'
 		);
 	}
@@ -630,32 +650,50 @@ class Admin {
 	}
 
 	/**
-	 * Render Search Indexing field.
+	 * Render Search Indexing - Posts field.
 	 *
 	 * @since 1.0.0
 	 */
-	public function render_search_indexing_field() {
-		$index_posts    = bp_get_option( 'buddyboss_seo_index_posts', 1 );
-		$index_profiles = bp_get_option( 'buddyboss_seo_index_profiles', 1 );
-		$index_groups   = bp_get_option( 'buddyboss_seo_index_groups', 1 );
+	public function render_index_posts_field() {
+		$value = bp_get_option( 'buddyboss_seo_index_posts', 1 );
 		?>
-		<fieldset>
-			<label style="display: block; margin-bottom: 10px;">
-				<input type="checkbox" name="buddyboss_seo_index_posts" value="1" <?php checked( $index_posts, 1 ); ?> />
-				<?php esc_html_e( 'Posts', 'buddyboss-sharing' ); ?>
-			</label>
-			<label style="display: block; margin-bottom: 10px;">
-				<input type="checkbox" name="buddyboss_seo_index_profiles" value="1" <?php checked( $index_profiles, 1 ); ?> />
-				<?php esc_html_e( 'Profiles', 'buddyboss-sharing' ); ?>
-			</label>
-			<label style="display: block; margin-bottom: 10px;">
-				<input type="checkbox" name="buddyboss_seo_index_groups" value="1" <?php checked( $index_groups, 1 ); ?> />
-				<?php esc_html_e( 'Groups', 'buddyboss-sharing' ); ?>
-			</label>
-			<p class="description" style="margin-top: 10px;">
-				<?php esc_html_e( 'Disabling indexing will hide this content from search engines.', 'buddyboss-sharing' ); ?>
-			</p>
-		</fieldset>
+		<label>
+			<input type="checkbox" name="buddyboss_seo_index_posts" id="buddyboss_seo_index_posts" value="1" <?php checked( $value, 1 ); ?> />
+			<?php esc_html_e( 'Posts', 'buddyboss-sharing' ); ?>
+		</label>
+		<?php
+	}
+
+	/**
+	 * Render Search Indexing - Profiles field.
+	 *
+	 * @since 1.0.0
+	 */
+	public function render_index_profiles_field() {
+		$value = bp_get_option( 'buddyboss_seo_index_profiles', 1 );
+		?>
+		<label>
+			<input type="checkbox" name="buddyboss_seo_index_profiles" id="buddyboss_seo_index_profiles" value="1" <?php checked( $value, 1 ); ?> />
+			<?php esc_html_e( 'Profiles', 'buddyboss-sharing' ); ?>
+		</label>
+		<?php
+	}
+
+	/**
+	 * Render Search Indexing - Groups field.
+	 *
+	 * @since 1.0.0
+	 */
+	public function render_index_groups_field() {
+		$value = bp_get_option( 'buddyboss_seo_index_groups', 1 );
+		?>
+		<label>
+			<input type="checkbox" name="buddyboss_seo_index_groups" id="buddyboss_seo_index_groups" value="1" <?php checked( $value, 1 ); ?> />
+			<?php esc_html_e( 'Groups', 'buddyboss-sharing' ); ?>
+		</label>
+		<p class="description">
+			<?php esc_html_e( 'Disabling indexing will hide this content from search engines.', 'buddyboss-sharing' ); ?>
+		</p>
 		<?php
 	}
 

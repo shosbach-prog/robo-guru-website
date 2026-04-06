@@ -1,29 +1,370 @@
 /*
-Theme Name: 	BuddyBoss Child
-Theme URI: 		https://www.buddyboss.com/
-Description: 	A child theme of BuddyBoss Theme. To ensure easy updates, make your own edits in this theme.
-Author: 		BuddyBoss.com
-Author URI: 	https://www.buddyboss.com/
-License: 		GNU General Public License v3 or later
-License URI: 	http://www.gnu.org/licenses/gpl-3.0.html
-Template: 		buddyboss-theme
-Version: 		1.0.0
+ Theme Name:   Robo-Guru Child Theme
+ Theme URI:    https://robo-guru.de
+ Description:  Child Theme für BuddyBoss – einheitliche Typografie mit DM Sans
+ Author:       Robo-Guru
+ Template:     buddyboss-theme
+ Version:      1.0.0
 */
 
-/*
-
--- Stylesheet locations --
-
-Add your own customizations into /css/custom.css in this child theme.
-
-Parent styles are called from /buddyboss-theme/inc/theme/functions.php in the 
-parent theme and are located in /buddyboss-theme/assets/css/ in the parent theme.
+/* ============================================================
+   1. GOOGLE FONTS – DM Sans laden
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
 
 
---- If you are editing CSS via the WordPress admin, do the following ---
+/* ============================================================
+   2. CSS CUSTOM PROPERTIES (Design Tokens)
+   ============================================================ */
+:root {
+  /* Farben */
+  --rg-teal:          #00b8c4;
+  --rg-teal-dark:     #009aa5;
+  --rg-teal-light:    #e6f9fb;
+  --rg-text-dark:     #1a1a2e;
+  --rg-text-body:     #3d3d5c;
+  --rg-text-muted:    #6b7280;
+  --rg-border:        #e5e7eb;
+  --rg-bg:            #ffffff;
 
-1. Install the plugin WP Editor: http://wordpress.org/plugins/wp-editor/
-2. Navigate to Appearance > Theme Editor in the WordPress admin.
-3. Navigate into the /css/ folder of your child theme to edit custom.css.
+  /* Schrift */
+  --rg-font:          'DM Sans', sans-serif;
 
-*/
+  /* Heading-Größen (modular scale) */
+  --rg-h1:  2.25rem;    /* 36px */
+  --rg-h2:  1.75rem;    /* 28px */
+  --rg-h3:  1.375rem;   /* 22px */
+  --rg-h4:  1.125rem;   /* 18px */
+  --rg-h5:  1rem;       /* 16px */
+  --rg-h6:  0.875rem;   /* 14px */
+
+  /* Abstände */
+  --rg-heading-mb:     0.5em;
+  --rg-heading-mt:     1.5em;
+  --rg-line-height-h:  1.25;
+  --rg-line-height-p:  1.75;
+}
+
+
+/* ============================================================
+   3. BASIS – Gesamte Seite auf DM Sans setzen
+   ============================================================ */
+html,
+body,
+body *,
+input,
+textarea,
+select,
+button {
+  font-family: var(--rg-font) !important;
+}
+
+body {
+  color: var(--rg-text-body);
+  font-size: 1rem;
+  line-height: var(--rg-line-height-p);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* ============================================================
+   4. ÜBERSCHRIFTEN – einheitlich, linksbündig, gleiche Linie
+   ============================================================ */
+
+/* Alle Headings – gemeinsame Basis */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.entry-title,
+.page-title,
+.widget-title,
+.bb-page-header-title,
+.site-title {
+  font-family: var(--rg-font) !important;
+  color: var(--rg-text-dark) !important;
+  font-weight: 700 !important;
+  line-height: var(--rg-line-height-h) !important;
+  letter-spacing: -0.02em !important;
+  margin-top: var(--rg-heading-mt) !important;
+  margin-bottom: var(--rg-heading-mb) !important;
+
+  /* Kritisch: alle Headings starten exakt an der gleichen linken Kante */
+  padding-left: 0 !important;
+  text-indent: 0 !important;
+}
+
+/* Erste Überschrift auf einer Seite – kein top-margin */
+h1:first-child,
+h2:first-child,
+.entry-content > h1:first-child,
+.entry-content > h2:first-child {
+  margin-top: 0 !important;
+}
+
+/* Größen-Hierarchie */
+h1, .h1, .entry-title, .page-title { font-size: var(--rg-h1) !important; }
+h2, .h2, .widget-title             { font-size: var(--rg-h2) !important; }
+h3, .h3                             { font-size: var(--rg-h3) !important; }
+h4, .h4                             { font-size: var(--rg-h4) !important; }
+h5, .h5                             { font-size: var(--rg-h5) !important; font-weight: 600 !important; }
+h6, .h6                             { font-size: var(--rg-h6) !important; font-weight: 600 !important; text-transform: uppercase !important; letter-spacing: 0.06em !important; color: var(--rg-teal) !important; }
+
+/* Gutenberg Heading-Blöcke */
+.wp-block-heading {
+  font-family: var(--rg-font) !important;
+  color: var(--rg-text-dark) !important;
+}
+
+
+/* ============================================================
+   5. FLIESSTEXT – Konsistenz
+   ============================================================ */
+p,
+.entry-content p,
+.wp-block-paragraph {
+  font-family: var(--rg-font) !important;
+  font-size: 0.975rem !important;
+  line-height: var(--rg-line-height-p) !important;
+  color: var(--rg-text-body) !important;
+  margin-bottom: 1.25em !important;
+}
+
+/* Links */
+a,
+.entry-content a {
+  color: var(--rg-teal) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+a:hover,
+.entry-content a:hover {
+  color: var(--rg-teal-dark) !important;
+  text-decoration: underline !important;
+}
+
+/* Fettschrift */
+strong, b {
+  font-weight: 700 !important;
+  color: var(--rg-text-dark) !important;
+}
+
+
+/* ============================================================
+   6. CONTENT-BREITE – verhindert unterschiedliche Einrückungen
+   ============================================================ */
+.entry-content,
+.page-content,
+.bb-page-content,
+article .entry-content {
+  /* Einheitlicher linker Ausgangspunkt für alle Elemente */
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Gutenberg-Blöcke sollen alle an der gleichen Linie starten */
+.entry-content > *,
+.page-content > *,
+.wp-block-group > * {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* Ausnahme: Blöcke mit eigenem Padding (z.B. rg-intro-block) */
+.entry-content > [class*="rg-"],
+.entry-content > .wp-block-group[style] {
+  padding-left: inherit !important;
+}
+
+
+/* ============================================================
+   7. LISTEN
+   ============================================================ */
+ul, ol,
+.entry-content ul,
+.entry-content ol {
+  font-family: var(--rg-font) !important;
+  font-size: 0.975rem !important;
+  line-height: 1.7 !important;
+  color: var(--rg-text-body) !important;
+  padding-left: 1.5rem !important;
+  margin-bottom: 1.25em !important;
+}
+
+li {
+  margin-bottom: 0.35em !important;
+}
+
+
+/* ============================================================
+   8. NAVIGATION
+   ============================================================ */
+.main-navigation,
+.bb-header-menu,
+#site-header nav,
+.bb-mobile-header {
+  font-family: var(--rg-font) !important;
+}
+
+.main-navigation a,
+.bb-header-menu a,
+#site-header nav a {
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+}
+
+
+/* ============================================================
+   9. BUTTONS
+   ============================================================ */
+.wp-block-button__link,
+button,
+input[type="submit"],
+.bb-btn,
+.button,
+a.button {
+  font-family: var(--rg-font) !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.02em !important;
+}
+
+
+/* ============================================================
+   10. FORMULARE
+   ============================================================ */
+input,
+textarea,
+select,
+label {
+  font-family: var(--rg-font) !important;
+  font-size: 0.9rem !important;
+}
+
+label {
+  font-weight: 500 !important;
+  color: var(--rg-text-dark) !important;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+textarea,
+select {
+  color: var(--rg-text-body) !important;
+  border-color: var(--rg-border) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--rg-teal) !important;
+  box-shadow: 0 0 0 3px rgba(0, 184, 196, 0.12) !important;
+  outline: none !important;
+}
+
+
+/* ============================================================
+   11. SIDEBAR & WIDGETS
+   ============================================================ */
+.widget,
+.widget *,
+.sidebar *,
+#secondary * {
+  font-family: var(--rg-font) !important;
+}
+
+.widget-title {
+  font-size: var(--rg-h4) !important;
+  font-weight: 700 !important;
+  color: var(--rg-text-dark) !important;
+  margin-bottom: 0.75rem !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 2px solid var(--rg-teal) !important;
+}
+
+
+/* ============================================================
+   12. PAGE HEADER / HERO
+   ============================================================ */
+.bb-page-header,
+.bb-page-header-title,
+.page-hero-title {
+  font-family: var(--rg-font) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em !important;
+}
+
+
+/* ============================================================
+   13. TABELLEN
+   ============================================================ */
+table,
+th,
+td {
+  font-family: var(--rg-font) !important;
+  font-size: 0.9rem !important;
+}
+
+th {
+  font-weight: 700 !important;
+  color: var(--rg-text-dark) !important;
+}
+
+
+/* ============================================================
+   14. BREADCRUMBS & META
+   ============================================================ */
+.breadcrumb,
+.entry-meta,
+.post-meta,
+.bb-breadcrumb {
+  font-family: var(--rg-font) !important;
+  font-size: 0.8rem !important;
+  color: var(--rg-text-muted) !important;
+}
+
+
+/* ============================================================
+   15. KORREKTUREN – BuddyBoss-spezifische Overrides
+   ============================================================ */
+
+/* BuddyBoss setzt manchmal margin-left auf Headings */
+.bb-single-page h1,
+.bb-single-page h2,
+.bb-single-page h3,
+.site-content h1,
+.site-content h2,
+.site-content h3 {
+  margin-left: 0 !important;
+}
+
+/* BuddyBoss page-title Klassen */
+.bb-lms-header .bb-page-header-title,
+.bb-course-header .bb-page-header-title {
+  font-size: var(--rg-h1) !important;
+}
+
+/* Verhindert dass BuddyBoss-Theme eigene Font-Size auf body setzt */
+body.buddyboss-theme,
+body.buddyboss-theme p {
+  font-family: var(--rg-font) !important;
+}
+
+
+/* ============================================================
+   16. RESPONSIVE – Mobile Anpassungen
+   ============================================================ */
+@media (max-width: 768px) {
+  :root {
+    --rg-h1: 1.75rem;
+    --rg-h2: 1.4rem;
+    --rg-h3: 1.175rem;
+    --rg-h4: 1rem;
+  }
+
+  body {
+    font-size: 0.9375rem !important;
+  }
+}

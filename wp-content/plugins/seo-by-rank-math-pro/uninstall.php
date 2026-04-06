@@ -40,7 +40,7 @@ if ( true === apply_filters( 'rank_math_clear_data_on_uninstall', false ) ) {
 function rank_math_pro_drop_tables() {
 	global $wpdb;
 
-	foreach ( [ 'analytics_ga', 'analytics_adsense', 'analytics_keyword_manager' ] as $table ) {
+	foreach ( [ 'analytics_ga', 'analytics_adsense', 'analytics_keyword_manager', 'link_genius_audit', 'link_genius_history', 'link_genius_snapshots', 'link_genius_maps', 'link_genius_map_variations' ] as $table ) {
 		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}rank_math_{$table}" ); // phpcs:ignore
 	}
 }

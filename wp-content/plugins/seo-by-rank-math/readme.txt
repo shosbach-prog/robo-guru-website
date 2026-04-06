@@ -2,10 +2,10 @@
 Contributors: rankmath
 Plugin link: https://rankmath.com/?utm_source=LP&utm_campaign=WP
 Tags: seo, WordPress SEO, google search console, schema, redirection, 
-Tested up to: 6.9
+Tested up to: 7.0
 Requires at least: 6.3
 Requires PHP: 7.4
-Stable tag: 1.0.264.1
+Stable tag: 1.0.267
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -339,15 +339,10 @@ Please drop us an email at support@rankmath.com, and we will be more than happy 
 
 == Changelog ==
 
-= 1.0.264 [Feb 11, 2026] =
-- Improved: Added an index to the `rank_math_redirections` `status` and `updated` columns to improve query execution performance
-- Fixed: Deleting a [Settings Backup](https://rankmath.com/kb/import-export-settings/#performing-and-restoring-backups) was breaking other backups created on the site
-- Fixed: Increased the Rank Math SEO metabox priority on taxonomy pages so it appears after custom fields
-- Fixed: Browser console warnings when the `SCRIPT_DEBUG` constant was set to `true`
-- Fixed: The `lastmod` value was missing in the [Sitemap](https://rankmath.com/kb/configure-sitemaps/) for the Posts Page selected in the Reading settings
-
-= 1.0.264.1 [Feb 12, 2026] =
-- Fixed: Missing [Add Property Group button in the Schema Generator](https://rankmath.com/kb/schema-generator/#num-1-5-add-property-and-property-group) after the last update.
-
+= 1.0.267 [Apr 01, 2026] =
+- Fixed: PHP error when [Focus keyword](https://rankmath.com/kb/what-is-a-focus-keyword/) is stored in array format
+- Fixed: PHP warnings related to [Analytics](https://rankmath.com/kb/analytics/) when connecting the site from the Analytics page
+- Fixed: `plugin_version` parameter is now always sent to the [Content AI](https://rankmath.com/content-ai/) as part of the payload
+- Fixed: WPML notice to activate the String Translation plugin was shown even when it was already active
 
 Full changelog can be found here - **[Rank Math changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**

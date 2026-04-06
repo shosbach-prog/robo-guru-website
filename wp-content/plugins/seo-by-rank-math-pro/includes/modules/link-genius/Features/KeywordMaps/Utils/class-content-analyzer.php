@@ -19,25 +19,13 @@ defined( 'ABSPATH' ) || exit;
  * Single responsibility: Analyze content to extract link information.
  */
 class Content_Analyzer {
-
 	/**
 	 * Analyze content once to extract link information and unsafe ranges.
 	 *
 	 * @param string $content Post content.
-	 * @param bool   $use_cache Whether to use transient cache (default true).
 	 * @return array Analysis results with 'link_ranges', 'existing_hrefs', and 'unsafe_ranges'.
 	 */
-	public static function analyze( $content, $use_cache = true ) {
-		// Check cache first if enabled.
-		if ( $use_cache ) {
-			$cache_key = 'rm_content_analysis_' . md5( $content );
-			$cached    = get_transient( $cache_key );
-
-			if ( false !== $cached && is_array( $cached ) ) {
-				return $cached;
-			}
-		}
-
+	public static function analyze( $content ) {
 		$link_ranges    = [];
 		$existing_hrefs = [];
 
@@ -55,18 +43,11 @@ class Content_Analyzer {
 		// Extract unsafe ranges (blocks, shortcodes, HTML comments, etc.).
 		$unsafe_ranges = self::extract_unsafe_ranges( $content );
 
-		$analysis = [
+		return [
 			'link_ranges'    => $link_ranges,
 			'existing_hrefs' => array_unique( $existing_hrefs ),
 			'unsafe_ranges'  => $unsafe_ranges,
 		];
-
-		// Cache the result if enabled.
-		if ( $use_cache ) {
-			set_transient( $cache_key, $analysis, HOUR_IN_SECONDS );
-		}
-
-		return $analysis;
 	}
 
 	/**
@@ -458,16 +439,19 @@ class Content_Analyzer {
 	private static function extract_unsafe_ranges_from_blocks( $content, $safe_block_types ) {
 		$unsafe_ranges = [];
 		$blocks        = parse_blocks( $content );
+		$search_from   = 0;
 
-		// Process each top-level block recursively.
+		// Recursively process top-level blocks; use block_end to advance the cursor.
 		foreach ( $blocks as $block ) {
-			$block_unsafe  = self::process_block_recursively(
+			$result        = self::process_block_recursively(
 				$block,
 				$content,
 				$safe_block_types,
-				false  // parent_is_unsafe = false for top-level blocks.
+				false,        // parent_is_unsafe = false for top-level blocks.
+				$search_from  // Start searching after the previous block.
 			);
-			$unsafe_ranges = array_merge( $unsafe_ranges, $block_unsafe );
+			$unsafe_ranges = array_merge( $unsafe_ranges, $result['ranges'] );
+			$search_from   = $result['block_end'];
 		}
 
 		return $unsafe_ranges;
@@ -489,14 +473,12 @@ class Content_Analyzer {
 	/**
 	 * Get the start and end positions of a block in the original content.
 	 *
-	 * @param array  $block   Block data from parse_blocks().
-	 * @param string $content Full post content.
+	 * @param array  $block       Block data from parse_blocks().
+	 * @param string $content     Full post content.
+	 * @param int    $search_from Offset to start searching from (avoids matching earlier sibling blocks of same type).
 	 * @return array|false Array with 'start' and 'end' keys, or false if not found.
 	 */
-	private static function get_block_range_in_content( $block, $content ) {
-		// Blocks have comment markers in original content.
-		// Note: parse_blocks() returns 'core/paragraph' but HTML has '<!-- wp:paragraph -->'
-		// So we need to remove the 'core/' namespace prefix for core blocks.
+	private static function get_block_range_in_content( $block, $content, $search_from = 0 ) {
 		$block_name = $block['blockName'];
 
 		// Strip 'core/' prefix for core blocks to match HTML format.
@@ -507,81 +489,113 @@ class Content_Analyzer {
 		$opening_pattern = '<!-- wp:' . $block_name;
 		$closing_pattern = '<!-- /wp:' . $block_name . ' -->';
 
-		// Find opening comment.
-		$start = strpos( $content, $opening_pattern );
+		// Find opening comment starting from $search_from to correctly locate repeated blocks of the same type.
+		$start = strpos( $content, $opening_pattern, $search_from );
 		if ( false === $start ) {
 			return false;
 		}
 
-		// Find corresponding closing comment after the opening.
-		$end_search_start = $start + strlen( $opening_pattern );
-		$end              = strpos( $content, $closing_pattern, $end_search_start );
-		if ( false === $end ) {
-			return false;
+		// Check if the block is self-closing (ends with '/-->' and has no closing comment).
+		$comment_end = strpos( $content, '-->', $start );
+		if ( false !== $comment_end ) {
+			$comment_text = substr( $content, $start, $comment_end + 3 - $start );
+			if ( substr( rtrim( $comment_text ), -4 ) === '/-->' ) {
+				return [
+					'start' => $start,
+					'end'   => $comment_end + 3,
+				];
+			}
 		}
 
-		return [
-			'start' => $start,
-			'end'   => $end + strlen( $closing_pattern ),
-		];
+		// Find the matching closing comment by tracking nested blocks of the same type.
+		$depth          = 1;
+		$cursor         = $start + strlen( $opening_pattern );
+		$content_length = strlen( $content );
+
+		while ( $depth > 0 && $cursor < $content_length ) {
+			$next_open  = strpos( $content, $opening_pattern, $cursor );
+			$next_close = strpos( $content, $closing_pattern, $cursor );
+
+			if ( false === $next_close ) {
+				return false; // Unclosed block — malformed content.
+			}
+
+			// If there's another opening before the next closing, it's a nested block.
+			if ( false !== $next_open && $next_open < $next_close ) {
+				// But only count it as a nested open if it's not self-closing.
+				$nested_comment_end  = strpos( $content, '-->', $next_open );
+				$nested_comment_text = substr( $content, $next_open, $nested_comment_end + 3 - $next_open );
+				if ( substr( rtrim( $nested_comment_text ), -4 ) !== '/-->' ) {
+					++$depth;
+				}
+				$cursor = $next_open + strlen( $opening_pattern );
+			} else {
+				--$depth;
+				if ( 0 === $depth ) {
+					return [
+						'start' => $start,
+						'end'   => $next_close + strlen( $closing_pattern ),
+					];
+				}
+				$cursor = $next_close + strlen( $closing_pattern );
+			}
+		}
+
+		return false;
 	}
 
 	/**
 	 * Process a block and its children recursively.
 	 *
-	 * Handles nested blocks with inheritance: if a parent block is unsafe,
-	 * all its children are automatically unsafe.
+	 * Each block is evaluated independently based on its own type — safe or unsafe.
+	 * Unsafe container blocks protect their own HTML markup but
+	 * still allow child blocks to be evaluated individually, so safe blocks like
+	 * core/paragraph nested anywhere in the tree can still receive links.
 	 *
-	 * @param array  $block             Block data from parse_blocks().
-	 * @param string $content           Full post content.
-	 * @param array  $safe_block_types  Array of safe block type names.
-	 * @param bool   $parent_is_unsafe  Whether parent block was unsafe.
-	 * @return array Unsafe ranges for this block and its children.
+	 * @param array  $block            Block data from parse_blocks().
+	 * @param string $content          Full post content.
+	 * @param array  $safe_block_types Array of safe block type names.
+	 * @param bool   $parent_is_unsafe Unused — kept for backwards-compatibility with any callers. Always ignored.
+	 * @param int    $search_from      Offset to start searching for this block (avoids matching earlier siblings of same type).
+	 * @return array{ranges: array, block_end: int} 'ranges' is the unsafe ranges array; 'block_end' is the end
+	 *                                               position of this block in content (used by callers to advance
+	 *                                               their search cursor without a redundant get_block_range_in_content call).
 	 */
-	private static function process_block_recursively( $block, $content, $safe_block_types, $parent_is_unsafe = false ) {
+	private static function process_block_recursively( $block, $content, $safe_block_types, $parent_is_unsafe = false, $search_from = 0 ) {
 		$unsafe_ranges = [];
 
 		// Skip empty blocks (parse_blocks can return empty array items).
 		if ( empty( $block['blockName'] ) ) {
-			return $unsafe_ranges;
+			return [
+				'ranges'    => $unsafe_ranges,
+				'block_end' => $search_from,
+			];
 		}
 
-		// Get block position in content.
-		$block_range = self::get_block_range_in_content( $block, $content );
+		// Find the block position starting from $search_from to handle repeated blocks.
+		$block_range = self::get_block_range_in_content( $block, $content, $search_from );
 		if ( false === $block_range ) {
-			return $unsafe_ranges; // Could not find block in content.
+			return [
+				'ranges'    => $unsafe_ranges,
+				'block_end' => $search_from,
+			];
 		}
 
-		// If parent was unsafe, mark entire block as unsafe and stop.
-		// This implements inheritance: children of unsafe blocks are automatically unsafe.
-		if ( $parent_is_unsafe ) {
+		// Always protect the block's opening comment marker.
+		$opening_comment_end = strpos( $content, '-->', $block_range['start'] );
+		if ( false !== $opening_comment_end ) {
 			$unsafe_ranges[] = [
 				'start' => $block_range['start'],
-				'end'   => $block_range['end'],
-				'type'  => 'wp_block_nested',
+				'end'   => $opening_comment_end + 3,
+				'type'  => 'block_comment',
 			];
-			return $unsafe_ranges;
 		}
 
-		// Check if this block is safe.
-		// Block name must match exactly what parse_blocks() returns (e.g., 'core/paragraph').
+		// Check if the block is safe using the parse_blocks() block name.
 		$is_safe = in_array( $block['blockName'], $safe_block_types, true );
 
 		if ( $is_safe ) {
-			// Safe block: protect comment markers, scan innerHTML for nested unsafe patterns.
-
-			// Protect opening comment (from block start to end of opening comment).
-			$opening_comment_end = strpos( $content, '-->', $block_range['start'] );
-			if ( false !== $opening_comment_end ) {
-				$unsafe_ranges[] = [
-					'start' => $block_range['start'],
-					'end'   => $opening_comment_end + 3,
-					'type'  => 'block_comment',
-				];
-			}
-
 			// Protect closing comment (from start of closing comment to block end).
-			// The closing comment starts with '<!-- /wp:' and we search backwards from block end.
 			$closing_comment_start = strrpos( substr( $content, 0, $block_range['end'] ), '<!-- /wp:' );
 			if ( false !== $closing_comment_start ) {
 				$unsafe_ranges[] = [
@@ -591,7 +605,7 @@ class Content_Analyzer {
 				];
 			}
 
-			// Scan innerHTML for unsafe patterns (shortcodes, scripts, etc.).
+			// Scan innerHTML for unsafe patterns (shortcodes, scripts, HTML tags, etc.).
 			if ( ! empty( $block['innerHTML'] ) ) {
 				$inner_html_start  = $opening_comment_end + 3;
 				$inner_html_unsafe = self::scan_for_unsafe_patterns(
@@ -600,35 +614,96 @@ class Content_Analyzer {
 				);
 				$unsafe_ranges     = array_merge( $unsafe_ranges, $inner_html_unsafe );
 			}
+		} else {
+			// Protect closing comment.
+			$closing_comment_start = strrpos( substr( $content, 0, $block_range['end'] ), '<!-- /wp:' );
+			if ( false !== $closing_comment_start ) {
+				$unsafe_ranges[] = [
+					'start' => $closing_comment_start,
+					'end'   => $block_range['end'],
+					'type'  => 'block_comment',
+				];
+			}
 
-			// Process innerBlocks (children) with parent_is_unsafe = false.
-			// Safe parent allows children to be processed based on their own type.
-			if ( ! empty( $block['innerBlocks'] ) ) {
-				foreach ( $block['innerBlocks'] as $inner_block ) {
-					$inner_unsafe  = self::process_block_recursively(
-						$inner_block,
-						$content,
-						$safe_block_types,
-						false  // Parent is safe, children process normally.
-					);
-					$unsafe_ranges = array_merge( $unsafe_ranges, $inner_unsafe );
+			// Check innerContent for unsafe patterns; fall back to innerHTML for leaf blocks (e.g. core/shortcode).
+			if ( empty( $block['innerContent'] ) && ! empty( $block['innerHTML'] ) ) {
+				$inner_html_start = $opening_comment_end + 3;
+				$text_only        = trim( wp_strip_all_tags( $block['innerHTML'] ) );
+				if ( ! empty( $text_only ) ) {
+					$unsafe_ranges[] = [
+						'start' => $inner_html_start,
+						'end'   => $inner_html_start + strlen( $block['innerHTML'] ),
+						'type'  => 'block_html',
+					];
+				}
+				$fragment_unsafe = self::scan_for_unsafe_patterns( $block['innerHTML'], $inner_html_start );
+				$unsafe_ranges   = array_merge( $unsafe_ranges, $fragment_unsafe );
+			}
+
+			if ( ! empty( $block['innerContent'] ) ) {
+				$fragment_cursor   = $opening_comment_end + 3;
+				$inner_block_index = 0;
+				$inner_blocks      = ! empty( $block['innerBlocks'] ) ? $block['innerBlocks'] : [];
+				$inner_search_pos  = $block_range['start'];
+
+				foreach ( $block['innerContent'] as $fragment ) {
+					if ( null === $fragment ) {
+						// This slot is an inner block — skip past it in the cursor.
+						if ( isset( $inner_blocks[ $inner_block_index ] ) ) {
+							$child_range = self::get_block_range_in_content(
+								$inner_blocks[ $inner_block_index ],
+								$content,
+								$inner_search_pos
+							);
+							if ( false !== $child_range ) {
+								$fragment_cursor  = $child_range['end'];
+								$inner_search_pos = $child_range['end'];
+							}
+							++$inner_block_index;
+						}
+						continue;
+					}
+
+					// Scan fragment for unsafe patterns; also mark unsafe if it has plain text outside HTML tags.
+					if ( ! empty( trim( $fragment ) ) ) {
+						$fragment_unsafe = self::scan_for_unsafe_patterns( $fragment, $fragment_cursor );
+						$unsafe_ranges   = array_merge( $unsafe_ranges, $fragment_unsafe );
+
+						// Mark fragment unsafe if it contains plain text outside HTML tags.
+						$text_only = trim( wp_strip_all_tags( $fragment ) );
+						if ( ! empty( $text_only ) ) {
+							$unsafe_ranges[] = [
+								'start' => $fragment_cursor,
+								'end'   => $fragment_cursor + strlen( $fragment ),
+								'type'  => 'block_html',
+							];
+						}
+					}
+					$fragment_cursor += strlen( $fragment );
 				}
 			}
-		} else {
-			// Unsafe block: protect entire block INCLUDING all children.
-			$unsafe_ranges[] = [
-				'start' => $block_range['start'],
-				'end'   => $block_range['end'],
-				'type'  => 'wp_block',
-			];
-
-			// Important: Do NOT process innerBlocks when parent is unsafe.
-			// The entire block range is already protected above.
-			// Processing innerBlocks separately would be redundant and could cause issues
-			// with nested safe blocks (e.g., paragraph inside columns).
 		}
 
-		return $unsafe_ranges;
+		// Recurse into inner blocks and use returned block_end to advance the cursor.
+		if ( ! empty( $block['innerBlocks'] ) ) {
+			$inner_search_from = $block_range['start'];
+			foreach ( $block['innerBlocks'] as $inner_block ) {
+				$inner_result      = self::process_block_recursively(
+					$inner_block,
+					$content,
+					$safe_block_types,
+					false,
+					$inner_search_from
+				);
+				$unsafe_ranges     = array_merge( $unsafe_ranges, $inner_result['ranges'] );
+				$inner_search_from = $inner_result['block_end'];
+			}
+		}
+
+		return [
+			'ranges'    => $unsafe_ranges,
+			'block_end' => $block_range['end'],
+		];
 	}
 
 	/**
@@ -645,12 +720,11 @@ class Content_Analyzer {
 	private static function scan_for_unsafe_patterns( $content, $offset = 0 ) {
 		$unsafe_ranges = [];
 
-		// Combined pattern: Match scripts, styles, and shortcodes in one pass.
-		// This is faster than running 3 separate regex scans.
+		// Single regex to match scripts, styles, and shortcodes for better performance.
 		$combined_pattern = '/'
-			. '(?<script><script[^>]*>.*?<\/script>)'  // Script tags.
-			. '|(?<style><style[^>]*>.*?<\/style>)'    // Style tags.
-			. '|(?<shortcode>\[[^\]]+\])'              // Shortcodes.
+			. '(?<script><script[^>]*>.*?<\/script>)'
+			. '|(?<style><style[^>]*>.*?<\/style>)'
+			. '|(?<shortcode>\[[^\]]+\])'
 			. '/is';
 
 		if ( preg_match_all( $combined_pattern, $content, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER ) ) {
@@ -675,8 +749,7 @@ class Content_Analyzer {
 			}
 		}
 
-		// HTML tags (<tag attr="value">) - protects tag markup and attributes.
-		// Kept separate because it needs different flags and is very common.
+		// Match HTML tags (<tag ...>) to protect markup and attributes.
 		if ( preg_match_all( '/<[^>]+>/s', $content, $matches, PREG_OFFSET_CAPTURE ) ) {
 			foreach ( $matches[0] as $match ) {
 				$unsafe_ranges[] = [
@@ -687,8 +760,7 @@ class Content_Analyzer {
 			}
 		}
 
-		// HTML comments (<!-- comment -->) - excluding WordPress block comments.
-		// Kept separate because of negative lookahead for wp: blocks.
+		// Match HTML comments (excluding WordPress block comments).
 		if ( preg_match_all( '/<!--(?! wp:).*?-->/s', $content, $matches, PREG_OFFSET_CAPTURE ) ) {
 			foreach ( $matches[0] as $match ) {
 				$unsafe_ranges[] = [

@@ -13,6 +13,7 @@ require_once( __DIR__ .'/fields/financial-incentives.php');
 require_once( __DIR__ .'/fields/settings.php');
 require_once( __DIR__ .'/fields/multisite.php');
 require_once( __DIR__ .'/fields/translations.php');
+require_once( __DIR__ .'/fields/tools.php');
 /**
  * Unlock premium fields
  * @param array $field

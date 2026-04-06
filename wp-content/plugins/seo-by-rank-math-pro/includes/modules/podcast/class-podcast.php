@@ -99,7 +99,6 @@ class Podcast {
 					'title'     => esc_html__( 'Podcast', 'rank-math-pro' ),
 					/* translators: Link to kb article */
 					'desc'      => sprintf( esc_html__( 'Make your podcasts discoverable via Google Podcasts, Apple Podcasts, and similar services. %s.', 'rank-math-pro' ), '<a href="' . KB::get( 'podcast-settings', 'Options Panel Podcast Tab' ) . '" target="_blank">' . esc_html__( 'Learn more', 'rank-math-pro' ) . '</a>' ),
-					'file'      => __DIR__ . '/views/options.php',
 					/* translators: Link to Podcast RSS feed */
 					'after_row' => '<div class="notice notice-alt notice-info info inline rank-math-notice"><p>' . sprintf( esc_html__( 'Your Podcast RSS feed can be found here: %s', 'rank-math-pro' ), '<a href="' . get_feed_link( $this->podcast ) . '" target="_blank">' . get_feed_link( $this->podcast ) . '</a>' ) . '</p></div>',
 					'json'      => [

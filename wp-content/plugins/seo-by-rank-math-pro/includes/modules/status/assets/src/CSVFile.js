@@ -41,7 +41,7 @@ const tabs = [
 export default ( props ) => {
 	return (
 		<div className="import-export-csv">
-			<h2>{ __( 'CSV File', 'rank-math-pro' ) }</h2>
+			<h2>{ __( 'SEO Data', 'rank-math-pro' ) }</h2>
 			<p className="description">{ __( 'Import SEO meta data for posts, terms, and users from a CSV file.', 'rank-math-pro' ) }</p>
 
 			<div className="rank-math-box no-padding">

@@ -289,7 +289,9 @@ class Api {
 		Admin_Helper::get_registration_data( $registered );
 
 		update_option( 'rank_math_keyword_quota', $response['keywords'] );
-		cmb2_update_option( 'rank-math-options-general', 'sync_global_setting', $response['settings']['analytics'] );
+		$options                        = get_option( 'rank-math-options-general', [] );
+		$options['sync_global_setting'] = $response['settings']['analytics'];
+		update_option( 'rank-math-options-general', $options );
 	}
 
 	/**

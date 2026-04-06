@@ -12,7 +12,6 @@ namespace RankMathPro\Link_Genius;
 
 use RankMath\Traits\Hooker;
 use RankMathPro\Link_Genius\Admin\Admin;
-use RankMathPro\Link_Genius\Admin\Post_List_Integration;
 use RankMathPro\Link_Genius\Api\Operations_Rest;
 use RankMathPro\Link_Genius\Background\Export_Processor;
 use RankMathPro\Link_Genius\Background\Regenerate_Links;
@@ -24,6 +23,7 @@ use RankMathPro\Link_Genius\Shortcodes\Related_Posts_Shortcode;
 use RankMathPro\Link_Genius\Blocks\Related\Block_Related_Posts;
 use RankMathPro\Link_Genius\Features\BulkUpdate;
 use RankMathPro\Link_Genius\Features\KeywordMaps;
+use RankMath\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -55,6 +55,8 @@ class Link_Genius {
 		// Register cron hook for orphaned link status cleanup.
 		$this->action( 'rank_math_cleanup_orphaned_link_status', 'cleanup_orphaned_link_status' );
 
+		$this->action( 'rank_math/admin_bar/items', 'admin_bar_items' );
+
 		// Schedule weekly orphaned status cleanup if not already scheduled.
 		if ( ! wp_next_scheduled( 'rank_math_cleanup_orphaned_link_status' ) ) {
 			wp_schedule_event( time(), 'weekly', 'rank_math_cleanup_orphaned_link_status' );
@@ -84,11 +86,6 @@ class Link_Genius {
 		KeywordMaps\Preview_Processor::get();
 		KeywordMaps\Keyword_Map_Processor::get();
 		KeywordMaps\Keyword_Maps::get();
-
-		// Make link counts clickable in Posts list (admin only).
-		if ( is_admin() ) {
-			new Post_List_Integration();
-		}
 	}
 
 	/**
@@ -154,5 +151,57 @@ class Link_Genius {
 	 */
 	public function cleanup_orphaned_link_status() {
 		Link_Status_Crawler::cleanup_orphaned_status();
+	}
+
+	/**
+	 * Updates update admin bar items.
+	 *
+	 * @param Admin_Bar_Menu $menu The Admin Bar Menu object.
+	 *
+	 * @return void
+	 */
+	public function admin_bar_items( $menu ) {
+		// Early bail if current user doesn't have access to Link Genius.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$url = Helper::get_admin_url( 'links-page' );
+
+		$menu->add_sub_menu(
+			'link-genius',
+			[
+				'title'    => esc_html__( 'Link Genius', 'rank-math-pro' ),
+				'href'     => $url,
+				'priority' => 60,
+			]
+		);
+
+		$items = [
+			'link-genius-overview'     => [
+				'title' => esc_html__( 'Overview', 'rank-math-pro' ),
+				'href'  => $url . '#overview',
+			],
+			'link-genius-posts'        => [
+				'title' => esc_html__( 'Posts', 'rank-math-pro' ),
+				'href'  => $url . '#posts',
+			],
+			'link-genius-links'        => [
+				'title' => esc_html__( 'Links', 'rank-math-pro' ),
+				'href'  => $url . '#links',
+			],
+			'link-genius-bulk-update'  => [
+				'title' => esc_html__( 'Bulk Update', 'rank-math-pro' ),
+				'href'  => $url . '#bulk-update',
+			],
+			'link-genius-keyword-maps' => [
+				'title' => esc_html__( 'Keyword Maps', 'rank-math-pro' ),
+				'href'  => $url . '#keyword-maps',
+			],
+		];
+
+		foreach ( $items as $id => $args ) {
+			$menu->add_sub_menu( $id, $args, 'link-genius' );
+		}
 	}
 }

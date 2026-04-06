@@ -259,7 +259,6 @@ $this->pages['us']['privacy-statement']['document_elements'] = array(
 			'us_states' => 'cal',
 		],
 	],
-
 	[
 		'numbering' => false,
 		'dropdown-open'  => true,
@@ -361,6 +360,40 @@ $this->pages['us']['privacy-statement']['document_elements'] = array(
 			'us_states' => 'del',
 		],
 	],
+	// Indiana
+	[
+		'numbering' => false,
+		'dropdown-open'  => true,
+		'p' => false,
+		'dropdown-title' => 'Indiana',
+		'content' => '<h4>Right to Data Portability</h4>
+              <p>When exercising the right to Access personal data , you have the right to obtain the personal data in a portable and, to the extent technically feasible, readily usable format that allows you to transmit the data to another entity without hindrance. You may exercise this right no more than two times per calendar year.</p>
+              <h4>Right to opt-out</h4>
+              <p>You may submit a request directing us not to make certain disclosures of personal information we maintain about you.</p>
+              <p>Under the ICDPA this concerns the following purposes:</p>
+              <ol>
+              <li>targeted advertising;</li>
+              <li>the sale of personal data; or</li>
+              <li>profiling in furtherance of decisions that produce legal or similarly significant effects concerning a consumer; or</li>
+			  <li>the processing of sensitive data.</li>
+              </ol>
+              <p>For more information about the possibility of submitting an opt-out request, please refer to our Opt-out preferences page.</p>
+              ',
+
+		'dropdown-class' => 'dropdown-privacy-statement',
+		'condition' => [
+			'us_states' => 'ind',
+		],
+	],
+	[
+		'numbering' => false,
+		'dropdown-close'  => true,
+		'p' => false,
+		'content' => '',
+		'condition' => [
+			'us_states' => 'ind',
+		],
+	],
 	// Iowa
 	[
 		'numbering' => false,
@@ -392,6 +425,116 @@ $this->pages['us']['privacy-statement']['document_elements'] = array(
 		'content' => '',
 		'condition' => [
 			'us_states' => 'iow',
+		],
+	],
+	// Kentucky
+	[
+		'numbering' => false,
+		'dropdown-open'  => true,
+		'p' => false,
+		'dropdown-title' => 'Kentucky',
+		'content' => '<h4>Right to Data Portability</h4>
+              <p>When exercising the right to Access personal data , you have the right to obtain the personal data in a portable and, to the extent technically feasible, readily usable format that allows you to transmit the data to another entity without hindrance. You may exercise this right no more than two times per calendar year.</p>
+              <h4>Right to opt-out</h4>
+              <p>You may submit a request directing us not to make certain disclosures of personal information we maintain about you.</p>
+              <p>Under the KCDPA this concerns the following purposes:</p>
+              <ol>
+              <li>targeted advertising;</li>
+              <li>the sale of personal data; or</li>
+              <li>profiling in furtherance of decisions that produce legal or similarly significant effects concerning a consumer; or</li>
+			  <li>the processing of sensitive data.</li>
+              </ol>
+              <p>For more information about the possibility of submitting an opt-out request, please refer to our Opt-out preferences page.</p>
+              ',
+
+		'dropdown-class' => 'dropdown-privacy-statement',
+		'condition' => [
+			'us_states' => 'ken',
+		],
+	],
+	[
+		'numbering' => false,
+		'dropdown-close'  => true,
+		'p' => false,
+		'content' => '',
+		'condition' => [
+			'us_states' => 'ken',
+		],
+	],
+	// Maryland
+	[
+		'numbering' => false,
+		'dropdown-open'  => true,
+		'p' => false,
+		'dropdown-title' => 'Maryland',
+		'content' => '<h4>Right to Data Portability</h4>
+              <p>When exercising the right to Access personal data , you have the right to obtain the personal data in a portable and, to the extent technically feasible, readily usable format that allows you to transmit the data to another entity without hindrance. You may exercise this right no more than two times per calendar year.</p>
+              <h4>Right to opt-out</h4>
+              <p>You may submit a request directing us not to make certain disclosures of personal information we maintain about you.</p>
+              <p>Under the MODPA this concerns the following purposes:</p>
+              <ol>
+              <li>targeted advertising;</li>
+              <li>the sale of personal data; or</li>
+              <li>profiling in furtherance of decisions that produce legal or similarly significant effects concerning a consumer; or</li>
+			  <li>the processing of sensitive data.</li>
+              </ol>
+              <p>For more information about the possibility of submitting an opt-out request, please refer to our Opt-out preferences page.</p>
+              ',
+
+		'dropdown-class' => 'dropdown-privacy-statement',
+		'condition' => [
+			'us_states' => 'mar',
+		],
+	],
+	[
+		'numbering' => false,
+		'dropdown-close'  => true,
+		'p' => false,
+		'content' => '',
+		'condition' => [
+			'us_states' => 'mar',
+		],
+	],
+	// Minnesota
+	[
+		'numbering' => false,
+		'dropdown-open'  => true,
+		'p' => false,
+		'dropdown-title' => 'Minnesota',
+		'content' => '<h4>Right to Data Portability</h4>
+              <p>When exercising the right to Access personal data , you have the right to obtain the personal data in a portable and, to the extent technically feasible, readily usable format that allows you to transmit the data to another entity without hindrance. You may exercise this right no more than two times per calendar year.</p>
+              <h4>Right to opt-out</h4>
+              <p>You may submit a request directing us not to make certain disclosures of personal information we maintain about you.</p>
+              <p>Under the MCDPA this concerns the following purposes:</p>
+              <ol>
+              <li>targeted advertising;</li>
+              <li>the sale of personal data; or</li>
+              <li>profiling in furtherance of decisions that produce legal or similarly significant effects concerning a consumer; or</li>
+			  <li>the processing of sensitive data.</li>
+              </ol>
+			  <p>You have the following specific rights related to profiling:</p>
+			  <ul>
+			  <li>The right to challenge the outcome of the profiling.</li>
+			  <li>The right to be informed, where feasible, of the reasons behind the decision resulting from the profiling.</li>
+			  <li>The right to know what actions you could have taken to obtain a different outcome, and what actions you can take in the future to do so.</li>
+			  <li>The right to review the personal data used in the profiling process.</li>
+			  <li>The right to have any inaccurate data corrected and the profiling decision reassessed based on the updated information.</li>
+			  </ul>
+              <p>For more information about the possibility of submitting an opt-out request, please refer to our Opt-out preferences page.</p>
+              ',
+
+		'dropdown-class' => 'dropdown-privacy-statement',
+		'condition' => [
+			'us_states' => 'min',
+		],
+	],
+	[
+		'numbering' => false,
+		'dropdown-close'  => true,
+		'p' => false,
+		'content' => '',
+		'condition' => [
+			'us_states' => 'min',
 		],
 	],
 	// montana
@@ -583,6 +726,74 @@ $this->pages['us']['privacy-statement']['document_elements'] = array(
 		'content' => '',
 		'condition' => [
 			'us_states' => 'ore',
+		],
+	],
+	// Rhode Island
+	[
+		'numbering' => false,
+		'dropdown-open'  => true,
+		'p' => false,
+		'dropdown-title' => 'Rhode Island',
+		'content' => '<h4>Right to Data Portability</h4>
+              <p>When exercising the right to Access personal data , you have the right to obtain the personal data in a portable and, to the extent technically feasible, readily usable format that allows you to transmit the data to another entity without hindrance. You may exercise this right no more than two times per calendar year.</p>
+              <h4>Right to opt-out</h4>
+              <p>You may submit a request directing us not to make certain disclosures of personal information we maintain about you.</p>
+              <p>Under the DTPPA this concerns the following purposes:</p>
+              <ol>
+              <li>targeted advertising;</li>
+              <li>the sale of personal data; or</li>
+              <li>profiling in furtherance of decisions that produce legal or similarly significant effects concerning a consumer; or</li>
+			  <li>the processing of sensitive data.</li>
+              </ol>
+              <p>For more information about the possibility of submitting an opt-out request, please refer to our Opt-out preferences page.</p>
+              ',
+
+		'dropdown-class' => 'dropdown-privacy-statement',
+		'condition' => [
+			'us_states' => 'rho',
+		],
+	],
+	[
+		'numbering' => false,
+		'dropdown-close'  => true,
+		'p' => false,
+		'content' => '',
+		'condition' => [
+			'us_states' => 'rho',
+		],
+	],
+	// Tennessee
+	[
+		'numbering' => false,
+		'dropdown-open'  => true,
+		'p' => false,
+		'dropdown-title' => 'Tennessee',
+		'content' => '<h4>Right to Data Portability</h4>
+              <p>When exercising the right to Access personal data , you have the right to obtain the personal data in a portable and, to the extent technically feasible, readily usable format that allows you to transmit the data to another entity without hindrance. You may exercise this right no more than two times per calendar year.</p>
+              <h4>Right to opt-out</h4>
+              <p>You may submit a request directing us not to make certain disclosures of personal information we maintain about you.</p>
+              <p>Under the TIPA this concerns the following purposes:</p>
+              <ol>
+              <li>targeted advertising;</li>
+              <li>the sale of personal data; or</li>
+              <li>profiling in furtherance of decisions that produce legal or similarly significant effects concerning a consumer; or</li>
+			  <li>the processing of sensitive data.</li>
+              </ol>
+              <p>For more information about the possibility of submitting an opt-out request, please refer to our Opt-out preferences page.</p>
+              ',
+
+		'dropdown-class' => 'dropdown-privacy-statement',
+		'condition' => [
+			'us_states' => 'ten',
+		],
+	],
+	[
+		'numbering' => false,
+		'dropdown-close'  => true,
+		'p' => false,
+		'content' => '',
+		'condition' => [
+			'us_states' => 'ten',
 		],
 	],
 	// Texas

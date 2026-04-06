@@ -45,8 +45,6 @@ class Admin {
 		$this->filter( 'rank_math/settings/sitemap', 'special_seprator' );
 		$this->action( 'admin_enqueue_scripts', 'enqueue' );
 		$this->filter( 'wp_helpers_notifications_render', 'prevent_pro_notice', 10, 3 );
-		$this->action( 'rank_math/admin/settings/others', 'add_search_intent_setting' );
-
 		new Updates();
 	}
 
@@ -104,28 +102,6 @@ class Admin {
 		}
 
 		return $tabs;
-	}
-
-	/**
-	 * Add new settings.
-	 *
-	 * @param object $cmb CMB2 instance.
-	 */
-	public function add_search_intent_setting( $cmb ) {
-		$field_ids      = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
-		$field_position = array_search( 'rss_after_content', array_keys( $field_ids ), true ) + 1;
-
-		$cmb->add_field(
-			[
-				'id'      => 'determine_search_intent',
-				'type'    => 'toggle',
-				'name'    => esc_html__( 'Enable Search Intent', 'rank-math-pro' ),
-				// Translators: placeholder is a link to "Read more".
-				'desc'    => sprintf( esc_html__( 'Determine the Keyword\'s Search Intent for Writing Tailored Content. %s', 'rank-math-pro' ), '<a href="https://rankmath.com/kb/search-intent-analysis/?utm_source=Plugin&utm_medium=Others%20Tab%20KB%20Link&utm_campaign=WP" target="_blank">' . esc_html__( 'Read more', 'rank-math-pro' ) . '</a>' ),
-				'default' => 'on',
-			],
-			++$field_position
-		);
 	}
 
 	/**

@@ -28,6 +28,7 @@ add_action( 'admin_init', 'cmplz_tcf_reset_cache');
 
 function cmplz_tcf_reset_cache(){
 	//allow cache override.
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Cache override parameter, no sensitive data processed
 	if ( isset($_GET['cmplz_nocache']) ) {
 		delete_option( 'cmplz_vendorlist_downloaded_once' );
 	}
@@ -201,7 +202,7 @@ function cmplz_download_json_to_site( string $src ) {
 	if ( !is_wp_error( $tmpfile ) ) {
 		//remove current file
 		if ( file_exists( $file ) ) {
-			unlink( $file );
+			wp_delete_file( $file );
 		}
 
 		//in case the server prevents deletion, we check it again.
@@ -211,7 +212,7 @@ function cmplz_download_json_to_site( string $src ) {
 	}
 
 	if ( is_string( $tmpfile ) && file_exists( $tmpfile ) ) {
-		unlink( $tmpfile );
+		wp_delete_file( $tmpfile );
 	}
 }
 
@@ -348,7 +349,12 @@ function cmplz_tcf_get( string $fieldname, bool $default_on = false){
 			return $items;
 		}
 
-		$data = json_decode(file_get_contents($path));
+		global $wp_filesystem;
+		if ( ! $wp_filesystem ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		$data = json_decode($wp_filesystem->get_contents($path));
 		if (!empty($data)) {
 			if ($fieldname==='specialfeatures') $fieldname = 'specialFeatures';
 			if ($fieldname==='specialpurposes') $fieldname = 'specialPurposes';
@@ -428,6 +434,9 @@ function cmplz_add_tcf_fields( array $fields): array {
 			'colorpalette_toggles',
 			'colorpalette_border_radius',
 			'save_preferences',
+			'dismiss',
+			'wcag_colors_toggles',
+			'wcag_colors_general',
 //			'manage_consent_options',
 		];
 		foreach ( $hide_fields as $field_id ) {
@@ -479,6 +488,13 @@ function cmplz_add_tcf_fields( array $fields): array {
 					'show' => true,
 				),
 			],
+			[
+				'id'      => 'dismiss',
+				'default' => [
+					'text' => __( "Deny", 'complianz-gdpr' ),
+					'show' => true,
+				]
+			]
 		];
 		$color_schemes   = cmplz_banner_color_schemes();
 		$color_scheme    = $color_schemes['tcf'];
@@ -758,7 +774,12 @@ function cmplz_count_all_vendors(){
 		return 0;
 	}
 
-	$json = json_decode( file_get_contents( $path ), true );
+	global $wp_filesystem;
+	if ( ! $wp_filesystem ) {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		WP_Filesystem();
+	}
+	$json = json_decode( $wp_filesystem->get_contents( $path ), true );
 	if (!isset($json['vendors'])) {
 		return 0;
 	}

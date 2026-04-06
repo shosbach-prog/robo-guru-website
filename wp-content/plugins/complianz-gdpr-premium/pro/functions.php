@@ -59,6 +59,32 @@ if ( !function_exists('cmplz_is_multisite_and_multisite_plugin') ) {
 	}
 }
 
+if ( ! function_exists( 'cmplz_get_license_status' ) ) {
+	/**
+	 * Get the license status.
+	 * Uses get_site_option() on multisite to read the network-level license transient.
+	 *
+	 * @return string
+	 */
+	function cmplz_get_license_status() {
+		$status              = 'invalid';
+		$transient_key       = 'cmplz_transients';
+		$transient_license_key = 'cmplz_license_status';
+
+		if ( cmplz_is_multisite_and_multisite_plugin() ) {
+			$transients = get_site_option( $transient_key, array() );
+		} else {
+			$transients = get_option( $transient_key, array() );
+		}
+
+		if ( empty( $transients ) || ! isset( $transients[ $transient_license_key ] ) ) {
+			return $status;
+		}
+
+		return $transients[ $transient_license_key ]['value'];
+	}
+}
+
 if (!function_exists('cmplz_custom_document_data')) {
 	/**
 	 * Get array of fields or document elements, for either processing or dataleaks

@@ -118,6 +118,8 @@ class Query_Builder {
 			// Add source post URL (relative path without home_url).
 			$row->source_url = self::get_relative_permalink( $row->post_id );
 
+			$row->last_checked_at_display = $row->last_checked_at ? date( 'M d, Y • h:i A', strtotime( $row->last_checked_at ) ) : null;
+
 			// Add source post edit URL.
 			$row->source_edit_url = $row->post_id ? get_edit_post_link( $row->post_id, '&' ) : '';
 
@@ -270,6 +272,7 @@ class Query_Builder {
 			$row->is_noindex              = is_array( $robots ) && in_array( 'noindex', $robots, true );
 			$row->has_internal_nofollow   = ( (int) $row->internal_nofollow_count > 0 );
 			$row->internal_nofollow_count = (int) $row->internal_nofollow_count;
+			$row->post_type               = ucfirst( $row->post_type );
 
 			// Add post URL (relative path without home_url).
 			$row->post_url = self::get_relative_permalink( $row->post_id );

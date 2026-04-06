@@ -1,30 +1,188 @@
-/* === Robo-Guru ROI Calculator v4.0.0 === */
+/* === Robo-Guru ROI Calculator v4.1.0 === */
+/* Design System: robo-guru.de */
 :root{
-  --rg-primary:#16C6E5;
-  --rg-primary-dark:#0EA5C2;
-  --rg-dark:#0F2537;
+  --rg-primary:#00CFEB;
+  --rg-primary-dark:#00B4CC;
+  --rg-dark:#1B365D;
+  --rg-text:#333333;
+  --rg-subtext:#666666;
   --rg-success:#2FBF71;
   --rg-warning:#f59e0b;
   --rg-danger:#ef4444;
-  --rg-bg:#F5FBFD;
+  --rg-bg:#f5f7fa;
   --rg-card-bg:#ffffff;
-  --rg-border:rgba(15,37,55,.08);
-  --rg-shadow:0 4px 24px rgba(15,37,55,.08);
-  --rg-shadow-lg:0 8px 32px rgba(15,37,55,.12);
-  --rg-radius:16px;
-  --rg-radius-sm:12px;
+  --rg-border:#e0e0e0;
+  --rg-border-light:rgba(27,54,93,.08);
+  --rg-shadow:0 2px 8px rgba(0,0,0,.06);
+  --rg-shadow-lg:0 4px 16px rgba(0,0,0,.08);
+  --rg-radius:12px;
+  --rg-radius-sm:8px;
+  --rg-radius-btn:8px;
 }
 
 /* === Base === */
-.rg-roi{max-width:1400px;margin:0 auto;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:var(--rg-dark);line-height:1.5;padding:0 16px}
+.rg-roi{
+  max-width:1400px;
+  margin:0 auto;
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  color:var(--rg-text);
+  line-height:1.6;
+  padding:0 16px;
+  font-size:14px;
+  overflow-x:hidden;
+}
 .rg-roi *, .rg-roi *::before, .rg-roi *::after{box-sizing:border-box}
 .rg-hide{display:none!important}
 
-/* === Hide BuddyBoss side panel on ROI page === */
-.page-template-default .bb-side-panel,
-body[class*="roi-rechner"] .bb-side-panel,
-body[class*="roi-rechner"] .bb-mobile-panel-wrapper{display:none!important}
-body[class*="roi-rechner"] #content{max-width:100%!important}
+/* === ROI Intro Block (in WordPress-Seite vor Shortcode) === */
+.rg-intro-block{
+  position:relative;
+  z-index:1;
+  overflow:visible!important;
+  margin-top:32px!important;
+}
+body:has(.rg-roi) .entry-content,
+body:has(.rg-roi) .bb-custom-post-content,
+body:has(.rg-roi) article,
+body.rg-roi-page .entry-content,
+body.rg-roi-page .bb-custom-post-content,
+body.rg-roi-page article{
+  overflow:visible!important;
+}
+
+/* === ROI Page Layout Fixes === */
+/* Force full-width layout on ROI page - override BuddyBoss grid/sidebar */
+body:has(.rg-roi),
+body.rg-roi-page{
+  overflow-x:hidden!important;
+}
+body:has(.rg-roi) .bb-side-panel,
+body:has(.rg-roi) #secondary,
+body:has(.rg-roi) aside,
+body:has(.rg-roi) .widget-area,
+body:has(.rg-roi) .sidebar,
+body.rg-roi-page .bb-side-panel,
+body.rg-roi-page #secondary,
+body.rg-roi-page aside,
+body.rg-roi-page .widget-area,
+body.rg-roi-page .sidebar{display:none!important}
+
+/* Reset BuddyBoss grid layout to single column */
+body:has(.rg-roi) .bb-grid,
+body:has(.rg-roi) .bb-content,
+body:has(.rg-roi) .site-content,
+body:has(.rg-roi) #content,
+body.rg-roi-page .bb-grid,
+body.rg-roi-page .bb-content,
+body.rg-roi-page .site-content,
+body.rg-roi-page #content{
+  display:block!important;
+  grid-template-columns:1fr!important;
+  max-width:100%!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  float:none!important;
+  overflow-x:hidden!important;
+}
+
+/* Center the main content area */
+body:has(.rg-roi) #primary,
+body:has(.rg-roi) .content-area,
+body:has(.rg-roi) main,
+body:has(.rg-roi) article,
+body.rg-roi-page #primary,
+body.rg-roi-page .content-area,
+body.rg-roi-page main,
+body.rg-roi-page article{
+  max-width:100%!important;
+  width:100%!important;
+  margin:0 auto!important;
+  padding:0!important;
+  float:none!important;
+}
+
+body:has(.rg-roi) .entry-content,
+body.rg-roi-page .entry-content{
+  max-width:1400px!important;
+  margin:0 auto!important;
+  padding:0 16px!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
+/* SEO Intro Text (before calculator) */
+body.rg-roi-page .entry-content > h1:first-of-type,
+body:has(.rg-roi) .entry-content > h1:first-of-type,
+body.rg-roi-page .entry-content > p,
+body:has(.rg-roi) .entry-content > p{
+  max-width:1400px;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  padding:0 16px;
+  box-sizing:border-box;
+}
+body.rg-roi-page .entry-content > h1:first-of-type,
+body:has(.rg-roi) .entry-content > h1:first-of-type{
+  font-size:1.8rem!important;
+  font-weight:700!important;
+  color:#1E2132!important;
+  margin-bottom:1rem!important;
+  line-height:1.3!important;
+}
+body.rg-roi-page .entry-content > p,
+body:has(.rg-roi) .entry-content > p{
+  color:#5A5A5A!important;
+  line-height:1.7!important;
+  margin-bottom:0.8rem!important;
+}
+
+/* FAQ Section styling */
+body.rg-roi-page .entry-content details,
+body:has(.rg-roi) .entry-content details{
+  max-width:1400px;
+  margin:0 auto 1rem auto;
+  padding:0 16px;
+  box-sizing:border-box;
+  border-bottom:1px solid rgba(15,37,55,.1);
+  padding-bottom:1rem;
+}
+body.rg-roi-page .entry-content details:last-of-type,
+body:has(.rg-roi) .entry-content details:last-of-type{
+  border-bottom:none;
+}
+body.rg-roi-page .entry-content summary,
+body:has(.rg-roi) .entry-content summary{
+  cursor:pointer;
+  font-weight:600;
+  font-size:1rem;
+  color:#1E2132!important;
+  list-style:none;
+  padding:4px 0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+body.rg-roi-page .entry-content summary::-webkit-details-marker,
+body:has(.rg-roi) .entry-content summary::-webkit-details-marker{display:none}
+body.rg-roi-page .entry-content summary::before,
+body:has(.rg-roi) .entry-content summary::before{
+  content:'▸';
+  display:inline-block;
+  transition:transform .2s ease;
+  font-size:.85em;
+  flex-shrink:0;
+}
+body.rg-roi-page .entry-content details[open] summary::before,
+body:has(.rg-roi) .entry-content details[open] summary::before{
+  transform:rotate(90deg);
+}
+body.rg-roi-page .entry-content details p{
+  margin-top:0.5rem!important;
+  padding-left:1.2rem!important;
+  color:#5A5A5A!important;
+  line-height:1.7!important;
+}
 
 /* === Advisor Bar (top) === */
 .rg-advisor-bar{display:flex;justify-content:flex-end;align-items:center;padding:8px 0;margin-bottom:12px}
@@ -45,16 +203,45 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-roi-summary{position:sticky;top:24px;min-width:0;overflow:hidden;margin-top:24px}
 
 /* Summary card styling */
-.rg-summary-inner{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow-lg);padding:24px;display:flex;flex-direction:column;gap:16px;max-width:100%;overflow:hidden}
+.rg-summary-inner{
+  background:var(--rg-card-bg);
+  border:1px solid var(--rg-border);
+  border-radius:var(--rg-radius);
+  box-shadow:var(--rg-shadow);
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  max-width:100%;
+  overflow:visible;
+}
 
 /* === Sections (Input side) === */
-.rg-section{background:var(--rg-card-bg);border:1px solid var(--rg-border);border-radius:var(--rg-radius);box-shadow:var(--rg-shadow);margin-bottom:16px;overflow:hidden}
-.rg-section--open>.rg-section__title{padding:20px 20px 8px}
-.rg-section--open>.rg-section__body{padding:0 20px 20px}
-.rg-section--accordion>.rg-section__toggle{width:100%;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border:none;background:none;cursor:pointer;text-align:left;font-family:inherit}
-.rg-section--accordion>.rg-section__toggle:hover{background:rgba(22,198,229,.04)}
+.rg-section{
+  background:var(--rg-card-bg);
+  border:1px solid var(--rg-border);
+  border-radius:var(--rg-radius);
+  box-shadow:var(--rg-shadow);
+  margin-bottom:24px;
+  overflow:visible;
+}
+.rg-section--open>.rg-section__title{padding:24px 24px 8px}
+.rg-section--open>.rg-section__body{padding:0 24px 24px}
+.rg-section--accordion>.rg-section__toggle{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 24px;
+  border:none;
+  background:none;
+  cursor:pointer;
+  text-align:left;
+  font-family:inherit;
+}
+.rg-section--accordion>.rg-section__toggle:hover{background:rgba(0,207,235,.04)}
 .rg-section--accordion>.rg-section__toggle:focus-visible{outline:2px solid var(--rg-primary);outline-offset:-2px}
-.rg-section__title{margin:0;font-size:16px;font-weight:700;color:var(--rg-dark)}
+.rg-section__title{margin:0;font-size:18px;font-weight:600;color:var(--rg-dark)}
 .rg-section__chevron{width:20px;height:20px;transition:transform .25s ease;flex-shrink:0}
 .rg-section__chevron::before{content:'';display:block;width:10px;height:10px;border-right:2px solid var(--rg-dark);border-bottom:2px solid var(--rg-dark);transform:rotate(45deg);margin:2px auto}
 .rg-section__toggle[aria-expanded="true"] .rg-section__chevron{transform:rotate(180deg)}
@@ -69,13 +256,49 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-fieldset legend{font-size:13px;font-weight:700;color:var(--rg-dark);padding:0 8px;text-transform:uppercase;letter-spacing:.5px}
 
 /* === Form Elements === */
-.rg-roi label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--rg-dark);margin-bottom:12px}
-.rg-roi .rg-in{width:100%;padding:10px 14px;border:1px solid #e2e8f0;border-radius:var(--rg-radius-sm);font-size:15px;font-family:inherit;background:#fff;transition:border-color .15s,box-shadow .15s;color:var(--rg-dark)}
-.rg-roi .rg-in:focus{border-color:var(--rg-primary);box-shadow:0 0 0 3px rgba(22,198,229,.15);outline:none}
+.rg-roi label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:13px;
+  font-weight:500;
+  color:#555;
+  margin-bottom:16px;
+}
+.rg-roi .rg-in,
+.rg-roi input[type="number"],
+.rg-roi input[type="text"],
+.rg-roi select{
+  width:100%;
+  padding:8px 12px;
+  border:1px solid var(--rg-border);
+  border-radius:var(--rg-radius-sm);
+  font-size:14px;
+  font-family:inherit;
+  background:#fff;
+  transition:border-color .15s,box-shadow .15s;
+  color:var(--rg-text);
+  box-sizing:border-box;
+}
+.rg-roi .rg-in:focus,
+.rg-roi input[type="number"]:focus,
+.rg-roi input[type="text"]:focus,
+.rg-roi select:focus{
+  border-color:var(--rg-primary);
+  box-shadow:0 0 0 3px rgba(0,207,235,.15);
+  outline:none;
+}
 .rg-roi .rg-in:disabled{background:#f1f5f9;color:#94a3b8;cursor:not-allowed}
-.rg-roi .rg-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%2364748b' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
-.rg-note{font-size:12px;color:#94a3b8;margin:4px 0 8px;font-style:italic}
-.rg-optional{font-weight:400;color:#94a3b8}
+.rg-roi .rg-select,
+.rg-roi select{
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%23666666' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+  padding-right:36px;
+}
+.rg-note{font-size:12px;color:var(--rg-subtext);margin:4px 0 8px;font-style:italic}
+.rg-optional{font-weight:400;color:var(--rg-subtext)}
 
 /* === Stepper (Anzahl Roboter) === */
 .rg-scenario-row{display:flex;flex-wrap:wrap;gap:16px;padding:16px 20px}
@@ -106,8 +329,58 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-am-field[data-mode="manual"] .rg-am-field__source{display:none}
 
 /* === Tooltip Styles === */
-.rg-tooltip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e2e8f0;color:#64748b;font-size:10px;font-weight:700;cursor:help;margin-left:6px;flex-shrink:0;line-height:1}
-.rg-tooltip::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--rg-dark);color:#fff;font-size:11px;font-weight:400;padding:6px 10px;border-radius:6px;white-space:normal;width:220px;text-align:left;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10;line-height:1.4}
+/* Tooltip icon stays inline with label text, no line break */
+.rg-tooltip{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:16px;
+  height:16px;
+  min-width:16px;
+  border-radius:50%;
+  background:var(--rg-border);
+  color:var(--rg-subtext);
+  font-size:10px;
+  font-weight:700;
+  cursor:help;
+  margin-left:6px;
+  flex-shrink:0;
+  line-height:1;
+  vertical-align:middle;
+}
+/* Ensure label + tooltip stay on same line */
+.rg-roi label{
+  flex-wrap:nowrap;
+}
+.rg-roi label > span:first-child{
+  display:inline-flex;
+  align-items:center;
+  white-space:nowrap;
+}
+.rg-tooltip::after{
+  content:attr(data-tip);
+  position:absolute;
+  bottom:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--rg-dark);
+  color:#fff;
+  font-size:11px;
+  font-weight:400;
+  padding:8px 12px;
+  border-radius:6px;
+  white-space:normal;
+  width:220px;
+  max-width:280px;
+  text-align:left;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .15s;
+  z-index:100;
+  line-height:1.4;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
 .rg-tooltip:hover::after,.rg-tooltip:focus::after{opacity:1}
 
 /* === Mode badge on fields === */
@@ -142,11 +415,42 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 /* === KPI Hero Section (4 Cards) === */
 /* Desktop sidebar (420px): 2×2 grid, first card spans full width */
 .rg-kpi-hero{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.rg-kpi-card{background:#fff;border:1px solid var(--rg-border);border-radius:var(--rg-radius);padding:20px 16px;text-align:center;box-shadow:0 2px 12px rgba(15,37,55,.06);transition:box-shadow .2s}
-.rg-kpi-card:first-child{grid-column:1/-1;background:linear-gradient(135deg,#f0fdff 0%,#e0f7fa 100%);border-color:rgba(22,198,229,.2)}
-.rg-kpi-card__value{display:block;font-size:24px;font-weight:800;color:var(--rg-primary);line-height:1.2;letter-spacing:-0.5px;transition:color .3s;overflow-wrap:break-word;word-break:break-word}
+.rg-kpi-card{
+  background:#fff;
+  border:1px solid var(--rg-border);
+  border-radius:var(--rg-radius);
+  padding:20px 16px;
+  text-align:center;
+  box-shadow:var(--rg-shadow);
+  transition:box-shadow .2s;
+  overflow:visible;
+}
+.rg-kpi-card:first-child{
+  grid-column:1/-1;
+  background:linear-gradient(135deg,#e8f9fc 0%,#d4f4f9 100%);
+  border-color:rgba(0,207,235,.25);
+}
+.rg-kpi-card__value{
+  display:block;
+  font-size:24px;
+  font-weight:700;
+  color:var(--rg-primary);
+  line-height:1.2;
+  letter-spacing:-0.5px;
+  transition:color .3s;
+  overflow-wrap:break-word;
+  word-break:break-word;
+}
 .rg-kpi-card:first-child .rg-kpi-card__value{font-size:32px;letter-spacing:-1px}
-.rg-kpi-card__label{display:block;font-size:11px;color:#64748b;margin-top:6px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+.rg-kpi-card__label{
+  display:block;
+  font-size:11px;
+  color:var(--rg-subtext);
+  margin-top:6px;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  font-weight:600;
+}
 .rg-kpi-card__sub{display:block;font-size:13px;color:var(--rg-dark);font-weight:600;margin-top:4px}
 .rg-kpi-card[data-positive="true"] .rg-kpi-card__value{color:var(--rg-success)}
 .rg-kpi-card[data-positive="false"] .rg-kpi-card__value{color:var(--rg-danger)}
@@ -185,27 +489,81 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
 .rg-roi .rg-in.rg-in--warn{border-color:var(--rg-warning);box-shadow:0 0 0 2px rgba(245,158,11,.15)}
 
 /* CTA Buttons */
-.rg-actions{display:flex;flex-wrap:wrap;gap:8px}
-.rg-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border:1px solid #e2e8f0;border-radius:var(--rg-radius-sm);background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:var(--rg-dark);font-family:inherit;transition:all .15s}
+.rg-actions{display:flex;flex-wrap:wrap;gap:10px}
+.rg-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:10px 20px;
+  border:1px solid var(--rg-border);
+  border-radius:var(--rg-radius-btn);
+  background:#fff;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:600;
+  color:var(--rg-dark);
+  font-family:inherit;
+  transition:all .15s;
+}
 .rg-btn:hover:not(:disabled){border-color:var(--rg-primary);color:var(--rg-primary)}
 .rg-btn:disabled{opacity:.4;cursor:not-allowed}
-.rg-btn--primary{background:var(--rg-primary);color:#fff;border-color:var(--rg-primary)}
-.rg-btn--primary:hover:not(:disabled){background:var(--rg-primary-dark);border-color:var(--rg-primary-dark);color:#fff}
+/* Primary Button */
+.rg-btn--primary{
+  background:var(--rg-primary);
+  color:#fff;
+  border-color:var(--rg-primary);
+}
+.rg-btn--primary:hover:not(:disabled){
+  background:var(--rg-primary-dark);
+  border-color:var(--rg-primary-dark);
+  color:#fff;
+  filter:brightness(0.9);
+}
+/* Secondary Button */
+.rg-btn--secondary{
+  background:transparent;
+  color:var(--rg-primary);
+  border:1px solid var(--rg-primary);
+}
+.rg-btn--secondary:hover:not(:disabled){
+  background:rgba(0,207,235,.08);
+  color:var(--rg-primary);
+}
 .rg-btn--save{background:var(--rg-success);color:#fff;border-color:var(--rg-success)}
 .rg-btn--save:hover:not(:disabled){background:#25a05f;border-color:#25a05f;color:#fff}
 .rg-ico{font-size:16px;line-height:1}
-.rg-hint{font-size:12px;color:#94a3b8;width:100%;margin-top:4px}
+.rg-hint{font-size:12px;color:var(--rg-subtext);width:100%;margin-top:4px}
 
 /* === Comparison v2 Table (Mensch vs Roboter, 1/3/5 Jahre) === */
-.rg-comparison-v2{max-width:100%;overflow:hidden}
+.rg-comparison-v2{max-width:100%;overflow:visible}
 .rg-comparison-v2__title{margin:0 0 10px;font-size:14px;font-weight:700;color:var(--rg-dark)}
-.rg-comparison-v2__table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
-.rg-comparison-v2__table th{padding:8px 6px;text-align:right;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.1px;color:#64748b;border-bottom:2px solid var(--rg-dark)}
+.rg-comparison-v2__table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  table-layout:fixed;
+}
+.rg-comparison-v2__table th{
+  padding:10px 8px;
+  text-align:right;
+  font-weight:600;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.1px;
+  color:var(--rg-subtext);
+  border-bottom:2px solid var(--rg-dark);
+}
 .rg-comparison-v2__table th:first-child{text-align:left}
-.rg-comparison-v2__table td{padding:10px 6px;text-align:right;border-bottom:1px solid rgba(15,37,55,.06);font-variant-numeric:tabular-nums}
-.rg-comparison-v2__table td:first-child{text-align:left;font-weight:700;color:var(--rg-dark)}
-.rg-comparison-v2__table .rg-diff-pos{color:var(--rg-success);font-weight:600;background:rgba(47,191,113,.06)}
-.rg-comparison-v2__table .rg-diff-neg{color:var(--rg-danger);font-weight:600;background:rgba(239,68,68,.06)}
+.rg-comparison-v2__table td{
+  padding:12px 8px;
+  text-align:right;
+  border-bottom:1px solid var(--rg-border);
+  font-variant-numeric:tabular-nums;
+  color:var(--rg-text);
+}
+.rg-comparison-v2__table td:first-child{text-align:left;font-weight:600;color:var(--rg-dark)}
+.rg-comparison-v2__table .rg-diff-pos{color:var(--rg-success);font-weight:600;background:rgba(47,191,113,.08)}
+.rg-comparison-v2__table .rg-diff-neg{color:var(--rg-danger);font-weight:600;background:rgba(239,68,68,.08)}
 .rg-comparison-v2__table tbody tr:last-child td{border-bottom:none;font-weight:700}
 
 /* === Break-Even Timeline === */
@@ -383,10 +741,15 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
   padding-left:1.2rem !important;
 }
 
-/* === Mobile: Summary below inputs (no bottom-sheet) === */
+/* === Responsive Breakpoints === */
+/* Mobile: max-width 600px → single column, no overflow */
+/* Tablet: max-width 900px → 2-col or stack */
+/* Desktop: 900px+ → full grid layout */
+
 .rg-summary-handle{display:none}
 
-@media(max-width:1100px){
+/* Tablet Breakpoint (max-width: 900px) */
+@media(max-width:900px){
   .rg-roi-layout{grid-template-columns:1fr;gap:24px}
 
   /* Summary flows naturally below inputs */
@@ -398,39 +761,39 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
     background:transparent;
     border-radius:0;
     box-shadow:none;
-    z-index:auto
+    z-index:auto;
   }
   .rg-roi-summary.is-expanded{transform:none!important;overflow-y:visible!important}
   .rg-summary-handle{display:none!important}
   .rg-summary-inner{padding:20px 16px}
   .rg-roi-inputs{padding-bottom:0}
 
-  /* Section titles on mobile */
-  .rg-section--open>.rg-section__title{padding:16px 16px 6px}
-  .rg-section--open>.rg-section__body{padding:0 16px 16px}
-  .rg-section__body{padding:0 16px 16px}
-  .rg-section__body--expanded{padding:0 16px 16px}
-  .rg-section--accordion>.rg-section__toggle{padding:14px 16px}
+  /* Section padding adjustments */
+  .rg-section--open>.rg-section__title{padding:20px 20px 8px}
+  .rg-section--open>.rg-section__body{padding:0 20px 20px}
+  .rg-section__body{padding:0 20px 20px}
+  .rg-section__body--expanded{padding:0 20px 20px}
+  .rg-section--accordion>.rg-section__toggle{padding:16px 20px}
 
   /* Comparison v2 responsive */
   .rg-comparison-v2__table{font-size:12px}
-  .rg-comparison-v2__table th,.rg-comparison-v2__table td{padding:8px}
+  .rg-comparison-v2__table th,.rg-comparison-v2__table td{padding:10px 6px}
 
-  /* Robot grid smaller */
-  .rg-robot-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
-  .rg-robot-card{padding:8px 6px;min-height:80px}
-  .rg-robot-card img{width:48px;height:48px}
+  /* Robot grid - 2 columns on tablet */
+  .rg-robot-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+  .rg-robot-card{padding:10px 8px;min-height:90px}
+  .rg-robot-card img{width:56px;height:56px}
 
-  /* KPI Hero: full-width → 4 columns, no spanning */
-  .rg-kpi-hero{grid-template-columns:repeat(4,1fr);gap:10px}
-  .rg-kpi-card:first-child{grid-column:auto}
-  .rg-kpi-card{padding:20px 14px}
-  .rg-kpi-card__value{font-size:26px}
+  /* KPI Hero: 2×2 grid on tablet */
+  .rg-kpi-hero{grid-template-columns:repeat(2,1fr);gap:12px}
+  .rg-kpi-card:first-child{grid-column:1/-1}
+  .rg-kpi-card{padding:20px 16px}
+  .rg-kpi-card__value{font-size:24px}
   .rg-kpi-card:first-child .rg-kpi-card__value{font-size:28px}
 
   /* CTA Buttons wrap nicely */
-  .rg-actions{gap:6px}
-  .rg-btn{padding:9px 12px;font-size:12px}
+  .rg-actions{gap:8px}
+  .rg-btn{padding:10px 16px;font-size:13px}
 
   /* Chart */
   .rg-chart-container{height:180px}
@@ -439,33 +802,50 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
   .rg-details__grid{grid-template-columns:1fr}
 
   /* Fieldsets */
-  .rg-fieldset{padding:12px}
-  .rg-scenario-row{padding:12px 16px}
+  .rg-fieldset{padding:14px}
+  .rg-scenario-row{padding:14px 20px}
 
   /* Meta row */
-  .rg-meta-card{padding:12px 16px}
+  .rg-meta-card{padding:14px 20px}
   .rg-meta-field{flex:1 1 100%;min-width:0;max-width:none}
 }
 
-@media(max-width:480px){
-  .rg-roi{padding:0 8px}
-  .rg-scenario-row{flex-direction:column}
+/* Mobile Breakpoint (max-width: 600px) */
+@media(max-width:600px){
+  .rg-roi{
+    padding:0 12px;
+    overflow-x:hidden;
+  }
+  .rg-scenario-row{flex-direction:column;gap:12px}
+
+  /* Section padding on mobile */
+  .rg-section--open>.rg-section__title{padding:16px 16px 6px}
+  .rg-section--open>.rg-section__body{padding:0 16px 16px}
+  .rg-section__body{padding:0 16px 16px}
+  .rg-section__body--expanded{padding:0 16px 16px}
+  .rg-section--accordion>.rg-section__toggle{padding:14px 16px}
+  .rg-section{margin-bottom:16px}
 
   /* KPI Hero: single column on mobile */
-  .rg-kpi-hero{grid-template-columns:1fr}
+  .rg-kpi-hero{grid-template-columns:1fr;gap:10px}
   .rg-kpi-card:first-child{grid-column:auto}
-  .rg-kpi-card__value{font-size:26px}
-  .rg-kpi-card:first-child .rg-kpi-card__value{font-size:28px}
+  .rg-kpi-card__value{font-size:24px}
+  .rg-kpi-card:first-child .rg-kpi-card__value{font-size:26px}
   .rg-kpi-card{padding:16px 14px}
+
+  /* Robot grid - single column */
+  .rg-robot-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+  .rg-robot-card{padding:8px 6px;min-height:80px}
+  .rg-robot-card img{width:48px;height:48px}
 
   /* Comparison v2 mobile */
   .rg-comparison-v2__table{font-size:11px}
   .rg-comparison-v2__table th,.rg-comparison-v2__table td{padding:8px 4px}
 
   /* Projection table mobile */
-  .rg-projection-table{font-size:9px}
-  .rg-projection-table th{font-size:8px;padding:4px 2px}
-  .rg-projection-table td{padding:4px 2px}
+  .rg-projection-table{font-size:10px}
+  .rg-projection-table th{font-size:9px;padding:6px 3px}
+  .rg-projection-table td{padding:6px 3px}
 
   /* Export section mobile */
   .rg-export-section .rg-actions{flex-direction:column}
@@ -475,8 +855,15 @@ body[class*="roi-rechner"] #content{max-width:100%!important}
   .rg-timeline__track{margin:0 16px}
 
   /* Actions full width */
-  .rg-actions{flex-direction:column}
+  .rg-actions{flex-direction:column;gap:8px}
   .rg-btn{width:100%;justify-content:center}
+
+  /* Fieldsets */
+  .rg-fieldset{padding:12px}
+  .rg-scenario-row{padding:12px 16px}
+
+  /* Meta row */
+  .rg-meta-card{padding:12px 16px}
 }
 
 /* === Print === */

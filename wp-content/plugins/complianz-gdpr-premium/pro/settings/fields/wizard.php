@@ -28,7 +28,7 @@ function cmplz_add_pro_wizard_fields( array $fields): array {
 				'label' => 'default',
 				'title' => __( "A toll free phone number", 'complianz-gdpr' ),
 				'text'  => __('For US based companies, you can provide a toll free phone number for inquiries.','complianz-gdpr'),
-				'url'   => 'https://complianz.io/toll-free-number/',
+				'url'   => 'https://complianz.io/toll-free-phone-number-ccpa/',
 			],
 		]]
 	);

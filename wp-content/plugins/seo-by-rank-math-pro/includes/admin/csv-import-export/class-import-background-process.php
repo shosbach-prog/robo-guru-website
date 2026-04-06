@@ -65,10 +65,13 @@ class Import_Background_Process extends \WP_Background_Process {
 	/**
 	 * Start creating batches.
 	 *
-	 * @param int $lines_number The line number to push to queue.
+	 * @param array $line_indices Array of line indices to import.
+	 * @return void
 	 */
-	public function start( $lines_number ) {
-		$chunks = array_chunk( range( 0, $lines_number ), apply_filters( 'rank_math/admin/csv_import_chunk_size', 100 ) );
+	public function start( $line_indices ) {
+		$chunk_size = apply_filters( 'rank_math/admin/csv_import_chunk_size', 100 );
+		$chunks     = array_chunk( $line_indices, $chunk_size );
+
 		foreach ( $chunks as $chunk ) {
 			$this->push_to_queue( $chunk );
 		}

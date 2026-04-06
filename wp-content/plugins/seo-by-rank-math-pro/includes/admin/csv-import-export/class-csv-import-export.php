@@ -177,7 +177,7 @@ class CSV_Import_Export {
 		remove_filter( 'upload_mimes', [ __CLASS__, 'allow_csv_upload' ] );
 
 		if ( ! self::validate_file( $file ) ) {
-			return false;
+			return $file;
 		}
 
 		$settings = [
@@ -389,28 +389,25 @@ class CSV_Import_Export {
 	 * @return string
 	 */
 	public static function get_import_complete_message() {
-		$status  = (array) get_option( 'rank_math_csv_import_status', [] );
-		$message = sprintf(
-			// Translators: placeholder is the number of rows imported.
-			__( 'CSV import completed. Successfully imported %d rows.', 'rank-math-pro' ),
-			count( $status['imported_rows'] )
-		);
+		$status              = (array) get_option( 'rank_math_csv_import_status', [] );
+		$imported_rows_count = count( $status['imported_rows'] );
+		$message             = '<p class="csv-import-error">' . __( 'Nothing to import! The CSV file didn’t contain any valid rows. Please review the file and try again.', 'rank-math-pro' ) . '</p>';
+
+		if ( $imported_rows_count ) {
+			$message = sprintf(
+				// Translators: placeholder is the number of rows imported.
+				__( 'CSV import completed. Successfully imported %d rows.', 'rank-math-pro' ),
+				$imported_rows_count
+			);
+		}
 
 		if ( ! empty( $status['errors'] ) ) {
-			$message  = __( 'CSV import completed.', 'rank-math-pro' ) . ' ';
-			$message .= sprintf(
-				// Translators: placeholder is the number of rows imported.
-				__( 'Imported %d rows.', 'rank-math-pro' ) . ' ',
-				count( $status['imported_rows'] )
-			);
-
 			if ( ! empty( $status['errors'] ) ) {
-				$message .= __( 'One or more errors occured while importing: ', 'rank-math-pro' ) . '<br>';
-				$message .= join( '<br>', $status['errors'] ) . '<br>';
+				$message .= '<p class="csv-import-error">' . __( 'One or more errors occured while importing: ', 'rank-math-pro' ) . '</p>';
+				$message .= '<p class="csv-import-error">' . join( '<br>', $status['errors'] ) . '</p>';
 			}
 			if ( ! empty( $status['failed_rows'] ) ) {
-				$message .= __( 'The following lines could not be imported: ', 'rank-math-pro' ) . '<br>';
-				$message .= join( ', ', $status['failed_rows'] );
+				$message .= '<p class="csv-import-error">' . __( 'The following lines could not be imported: ', 'rank-math-pro' ) . join( ', ', $status['failed_rows'] ) . '</p>';
 			}
 		}
 

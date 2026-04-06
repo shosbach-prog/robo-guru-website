@@ -26,33 +26,6 @@ class ACF {
 	public function __construct() {
 		$this->action( 'rank_math/sitemap/urlimages', 'add_acf_images', 10, 2 );
 		$this->filter( 'rank_math/sitemap/content_before_parse_html_images', 'parse_html_images', 10, 2 );
-		$this->action( 'rank_math/admin/settings/general', 'acf_sitemap_settings' );
-	}
-
-	/**
-	 * Add new settings.
-	 *
-	 * @param object $cmb CMB2 instance.
-	 */
-	public function acf_sitemap_settings( $cmb ) {
-		$field_ids      = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
-		$field_position = array_search( 'include_featured_image', array_keys( $field_ids ), true ) + 1;
-
-		$cmb->add_field(
-			[
-				'id'      => 'include_acf_images',
-				'type'    => 'toggle',
-				'name'    => esc_html__( 'Include Images from the ACF Fields.', 'rank-math-pro' ),
-				'desc'    => esc_html__( 'Include images added in the ACF fields.', 'rank-math-pro' ),
-				'options' => [
-					'off' => esc_html__( 'Default', 'rank-math-pro' ),
-					'on'  => esc_html__( 'Custom', 'rank-math-pro' ),
-				],
-				'default' => 'off',
-				'dep'     => [ [ 'include_images', 'on' ] ],
-			],
-			++$field_position
-		);
 	}
 
 	/**

@@ -69,7 +69,7 @@ function cmplz_pro_disclaimer_fields($fields){
 					'label' => 'default',
 					'title' => "WCAG",
 					'text'  => __( "You can find more information about how we handle WCAG requirements on our website.", "complianz-gdpr" ),
-					'url'   => 'https://complianz.io/wcag-2-0-what-is-it/',
+					'url'   => 'https://complianz.io/definition/what-is-wcag/',
 				],
 			],
 
@@ -119,7 +119,7 @@ function cmplz_pro_disclaimer_fields($fields){
 					'label' => 'default',
 					'title' => __( "Creative Commons (CC)", 'complianz-gdpr' ),
 					'text'  => __( "Creative Commons (CC) is an American non-profit organization devoted to expanding the range of creative works available for others to build upon legally and to share.", "complianz-gdpr" ),
-					'url'   => 'https://complianz.io/creative-commons',
+					'url'   => 'https://complianz.io/definition/what-is-creative-commons/',
 				],
 			],
 		]

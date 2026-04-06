@@ -162,6 +162,12 @@ export default ( { data } ) => {
 									alert( error.message )
 								} )
 								.then( ( response ) => {
+									if ( ! response || ! response.success ) {
+										setProgress( {} )
+										alert( response.message )
+										return
+									}
+
 									setImportFile( false )
 									if ( ! response.success ) {
 										alert( response.message )

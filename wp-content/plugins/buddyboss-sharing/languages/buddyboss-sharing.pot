@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-22T16:04:31+00:00\n"
+"POT-Creation-Date: 2026-03-18T15:09:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: buddyboss-sharing\n"
@@ -75,7 +75,7 @@ msgid "Configure activity sharing options for your members."
 msgstr ""
 
 #: includes/Admin/Activity_Settings.php:203
-#: includes/Admin/Admin.php:313
+#: includes/Admin/Admin.php:333
 msgid "View Tutorial"
 msgstr ""
 
@@ -172,7 +172,7 @@ msgid "SEO Description"
 msgstr ""
 
 #: includes/Admin/Admin.php:116
-#: includes/Admin/Admin.php:404
+#: includes/Admin/Admin.php:424
 msgid "Social"
 msgstr ""
 
@@ -189,7 +189,7 @@ msgid "Open Graph Image"
 msgstr ""
 
 #: includes/Admin/Admin.php:196
-#: includes/Admin/Admin.php:669
+#: includes/Admin/Admin.php:707
 msgid "Activity Open Graph (Public Networks)"
 msgstr ""
 
@@ -202,7 +202,7 @@ msgid "Activity Description Template"
 msgstr ""
 
 #: includes/Admin/Admin.php:226
-#: includes/Admin/Admin.php:752
+#: includes/Admin/Admin.php:790
 msgid "Group Open Graph (Public Networks)"
 msgstr ""
 
@@ -215,7 +215,7 @@ msgid "Group Description Template"
 msgstr ""
 
 #: includes/Admin/Admin.php:256
-#: includes/Admin/Admin.php:823
+#: includes/Admin/Admin.php:861
 msgid "Member Open Graph (Public Networks)"
 msgstr ""
 
@@ -228,251 +228,251 @@ msgid "Member Description Template"
 msgstr ""
 
 #: includes/Admin/Admin.php:286
-#: includes/Admin/Admin.php:625
+#: includes/Admin/Admin.php:645
 msgid "Indexing"
 msgstr ""
 
-#: includes/Admin/Admin.php:375
+#: includes/Admin/Admin.php:395
 msgid "Define the main title of your website that Google will index. Optimal title length is approximately 55 characters."
 msgstr ""
 
-#: includes/Admin/Admin.php:392
+#: includes/Admin/Admin.php:412
 msgid "Set the default description that will accompany your SEO title in search engine results. Optimal description length is 155 to 300 characters."
 msgstr ""
 
-#: includes/Admin/Admin.php:418
+#: includes/Admin/Admin.php:438
 msgid "Enable Open Graph"
 msgstr ""
 
-#: includes/Admin/Admin.php:421
+#: includes/Admin/Admin.php:441
 msgid "Open Graph support improves how your content looks when shared on social media like Facebook, ensuring a more engaging and visually appealing experience."
 msgstr ""
 
-#: includes/Admin/Admin.php:534
+#: includes/Admin/Admin.php:554
 msgid "Use same as SEO title"
 msgstr ""
 
-#: includes/Admin/Admin.php:583
+#: includes/Admin/Admin.php:603
 msgid "Use same as SEO description"
 msgstr ""
 
-#: includes/Admin/Admin.php:606
+#: includes/Admin/Admin.php:626
 msgid "Upload"
 msgstr ""
 
-#: includes/Admin/Admin.php:608
-#: includes/Admin/Admin.php:928
+#: includes/Admin/Admin.php:628
+#: includes/Admin/Admin.php:966
 msgid "Remove"
 msgstr ""
 
-#: includes/Admin/Admin.php:612
+#: includes/Admin/Admin.php:632
 msgid "Use an image that's at least 1200px by 630px minimum (1.91:1 ratio). Maximum file size: 8 MB. Recommended: 1-2 MB for optimal performance."
 msgstr ""
 
-#: includes/Admin/Admin.php:627
+#: includes/Admin/Admin.php:647
 msgid "Choose if you want search engines to index this page."
 msgstr ""
 
-#: includes/Admin/Admin.php:645
+#: includes/Admin/Admin.php:662
 msgid "Posts"
 msgstr ""
 
-#: includes/Admin/Admin.php:649
+#: includes/Admin/Admin.php:677
 msgid "Profiles"
 msgstr ""
 
-#: includes/Admin/Admin.php:653
+#: includes/Admin/Admin.php:692
 msgid "Groups"
 msgstr ""
 
-#: includes/Admin/Admin.php:656
+#: includes/Admin/Admin.php:695
 msgid "Disabling indexing will hide this content from search engines."
 msgstr ""
 
-#: includes/Admin/Admin.php:671
+#: includes/Admin/Admin.php:709
 msgid "Customize how single activity posts appear when shared on social media. These settings only apply when your network is public."
 msgstr ""
 
-#: includes/Admin/Admin.php:674
+#: includes/Admin/Admin.php:712
 msgid "Note:"
 msgstr ""
 
-#: includes/Admin/Admin.php:678
+#: includes/Admin/Admin.php:716
 #, php-format
 msgid "For private networks, the general Open Graph settings above will be used. You can configure your network privacy in %s."
 msgstr ""
 
-#: includes/Admin/Admin.php:679
+#: includes/Admin/Admin.php:717
 msgid "BuddyBoss &gt; Settings"
 msgstr ""
 
-#: includes/Admin/Admin.php:698
+#: includes/Admin/Admin.php:736
 msgid "Template for activity Open Graph titles. Use the tags below to dynamically insert activity data."
 msgstr ""
 
-#: includes/Admin/Admin.php:701
-#: includes/Admin/Admin.php:731
-#: includes/Admin/Admin.php:774
-#: includes/Admin/Admin.php:803
-#: includes/Admin/Admin.php:845
-#: includes/Admin/Admin.php:873
+#: includes/Admin/Admin.php:739
+#: includes/Admin/Admin.php:769
+#: includes/Admin/Admin.php:812
+#: includes/Admin/Admin.php:841
+#: includes/Admin/Admin.php:883
+#: includes/Admin/Admin.php:911
 msgid "Available Tags:"
 msgstr ""
 
-#: includes/Admin/Admin.php:703
-#: includes/Admin/Admin.php:733
+#: includes/Admin/Admin.php:741
+#: includes/Admin/Admin.php:771
 msgid "Activity post title (falls back to activity_action if empty)"
 msgstr ""
 
-#: includes/Admin/Admin.php:704
-#: includes/Admin/Admin.php:734
+#: includes/Admin/Admin.php:742
+#: includes/Admin/Admin.php:772
 msgid "Activity action text (e.g., \"John posted an update\")"
 msgstr ""
 
-#: includes/Admin/Admin.php:705
+#: includes/Admin/Admin.php:743
 msgid "Activity content (limited to 60 characters)"
 msgstr ""
 
-#: includes/Admin/Admin.php:706
-#: includes/Admin/Admin.php:736
+#: includes/Admin/Admin.php:744
+#: includes/Admin/Admin.php:774
 msgid "Activity author display name"
 msgstr ""
 
-#: includes/Admin/Admin.php:707
-#: includes/Admin/Admin.php:737
+#: includes/Admin/Admin.php:745
+#: includes/Admin/Admin.php:775
 msgid "Activity author first name"
 msgstr ""
 
-#: includes/Admin/Admin.php:708
-#: includes/Admin/Admin.php:738
+#: includes/Admin/Admin.php:746
+#: includes/Admin/Admin.php:776
 msgid "Activity author last name"
 msgstr ""
 
-#: includes/Admin/Admin.php:709
-#: includes/Admin/Admin.php:739
-#: includes/Admin/Admin.php:781
-#: includes/Admin/Admin.php:810
-#: includes/Admin/Admin.php:851
-#: includes/Admin/Admin.php:879
+#: includes/Admin/Admin.php:747
+#: includes/Admin/Admin.php:777
+#: includes/Admin/Admin.php:819
+#: includes/Admin/Admin.php:848
+#: includes/Admin/Admin.php:889
+#: includes/Admin/Admin.php:917
 msgid "Your site name"
 msgstr ""
 
-#: includes/Admin/Admin.php:710
-#: includes/Admin/Admin.php:782
-#: includes/Admin/Admin.php:852
+#: includes/Admin/Admin.php:748
+#: includes/Admin/Admin.php:820
+#: includes/Admin/Admin.php:890
 msgid "Separator (displays as |)"
 msgstr ""
 
-#: includes/Admin/Admin.php:728
+#: includes/Admin/Admin.php:766
 msgid "Template for activity Open Graph descriptions. Use the tags below to dynamically insert activity data. Optimal length is 155-300 characters."
 msgstr ""
 
-#: includes/Admin/Admin.php:735
+#: includes/Admin/Admin.php:773
 msgid "Activity content (limited to 300 characters)"
 msgstr ""
 
-#: includes/Admin/Admin.php:754
+#: includes/Admin/Admin.php:792
 msgid "Customize how group pages appear when shared on social media. These settings only apply when your network is public."
 msgstr ""
 
-#: includes/Admin/Admin.php:771
+#: includes/Admin/Admin.php:809
 msgid "Template for group Open Graph titles. Use the tags below to dynamically insert group data."
 msgstr ""
 
-#: includes/Admin/Admin.php:776
-#: includes/Admin/Admin.php:805
+#: includes/Admin/Admin.php:814
+#: includes/Admin/Admin.php:843
 msgid "Group name"
 msgstr ""
 
-#: includes/Admin/Admin.php:777
+#: includes/Admin/Admin.php:815
 msgid "Group description (limited to 60 characters)"
 msgstr ""
 
-#: includes/Admin/Admin.php:778
-#: includes/Admin/Admin.php:807
+#: includes/Admin/Admin.php:816
+#: includes/Admin/Admin.php:845
 msgid "Group creator display name"
 msgstr ""
 
-#: includes/Admin/Admin.php:779
-#: includes/Admin/Admin.php:808
+#: includes/Admin/Admin.php:817
+#: includes/Admin/Admin.php:846
 msgid "Group creator first name"
 msgstr ""
 
-#: includes/Admin/Admin.php:780
-#: includes/Admin/Admin.php:809
+#: includes/Admin/Admin.php:818
+#: includes/Admin/Admin.php:847
 msgid "Group creator last name"
 msgstr ""
 
-#: includes/Admin/Admin.php:800
+#: includes/Admin/Admin.php:838
 msgid "Template for group Open Graph descriptions. Use the tags below to dynamically insert group data. Optimal length is 155-300 characters."
 msgstr ""
 
-#: includes/Admin/Admin.php:806
+#: includes/Admin/Admin.php:844
 msgid "Group description (limited to 300 characters)"
 msgstr ""
 
-#: includes/Admin/Admin.php:825
+#: includes/Admin/Admin.php:863
 msgid "Customize how member profile pages appear when shared on social media. These settings only apply when your network is public."
 msgstr ""
 
-#: includes/Admin/Admin.php:842
+#: includes/Admin/Admin.php:880
 msgid "Template for member profile Open Graph titles. Use the tags below to dynamically insert member data."
 msgstr ""
 
-#: includes/Admin/Admin.php:847
-#: includes/Admin/Admin.php:875
+#: includes/Admin/Admin.php:885
+#: includes/Admin/Admin.php:913
 msgid "Member display name"
 msgstr ""
 
-#: includes/Admin/Admin.php:848
-#: includes/Admin/Admin.php:876
+#: includes/Admin/Admin.php:886
+#: includes/Admin/Admin.php:914
 msgid "Member first name"
 msgstr ""
 
-#: includes/Admin/Admin.php:849
-#: includes/Admin/Admin.php:877
+#: includes/Admin/Admin.php:887
+#: includes/Admin/Admin.php:915
 msgid "Member last name"
 msgstr ""
 
-#: includes/Admin/Admin.php:850
+#: includes/Admin/Admin.php:888
 msgid "Member biography (limited to 60 characters)"
 msgstr ""
 
-#: includes/Admin/Admin.php:870
+#: includes/Admin/Admin.php:908
 msgid "Template for member profile Open Graph descriptions. Use the tags below to dynamically insert member data. Optimal length is 155-300 characters."
 msgstr ""
 
-#: includes/Admin/Admin.php:878
+#: includes/Admin/Admin.php:916
 msgid "Member biography (limited to 300 characters)"
 msgstr ""
 
-#: includes/Admin/Admin.php:926
+#: includes/Admin/Admin.php:964
 msgid "Upload Image"
 msgstr ""
 
-#: includes/Admin/Admin.php:927
+#: includes/Admin/Admin.php:965
 msgid "Select Image"
 msgstr ""
 
-#: includes/Admin/Admin.php:929
+#: includes/Admin/Admin.php:967
 msgid "Settings saved successfully!"
 msgstr ""
 
-#: includes/Admin/Admin.php:930
+#: includes/Admin/Admin.php:968
 #: includes/Frontend/Frontend.php:172
 msgid "An error occurred. Please try again."
 msgstr ""
 
-#: includes/Admin/Admin.php:963
+#: includes/Admin/Admin.php:1001
 #: includes/Core/Dependency_Checker.php:148
 msgid "BuddyBoss Sharing:"
 msgstr ""
 
-#: includes/Admin/Admin.php:968
+#: includes/Admin/Admin.php:1006
 msgid "Get BuddyBoss Pro"
 msgstr ""
 
-#: includes/Admin/Admin.php:971
+#: includes/Admin/Admin.php:1009
 msgid "Activate License"
 msgstr ""
 
@@ -1010,35 +1010,35 @@ msgstr ""
 msgid "%s's Profile"
 msgstr ""
 
-#: includes/Modules/generators/Activity_HTML_Generator_Base.php:468
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:469
 msgid "Your browser does not support the video tag."
 msgstr ""
 
-#: includes/Modules/generators/Activity_HTML_Generator_Base.php:510
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:511
 msgid "More Video"
 msgstr ""
 
-#: includes/Modules/generators/Activity_HTML_Generator_Base.php:512
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:513
 msgid "More Videos"
 msgstr ""
 
-#: includes/Modules/generators/Activity_HTML_Generator_Base.php:660
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:673
 msgid "More Photos"
 msgstr ""
 
-#: includes/Modules/generators/Activity_HTML_Generator_Base.php:793
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:806
 msgid "Your browser does not support the audio element."
 msgstr ""
 
-#: includes/Modules/generators/Activity_HTML_Generator_Base.php:868
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:881
 msgid "Click to"
 msgstr ""
 
-#: includes/Modules/generators/Activity_HTML_Generator_Base.php:936
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:949
 msgid "Read more"
 msgstr ""
 
-#: includes/Modules/generators/Activity_HTML_Generator_Base.php:1003
+#: includes/Modules/generators/Activity_HTML_Generator_Base.php:1016
 msgid "ago"
 msgstr ""
 

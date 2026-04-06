@@ -345,6 +345,7 @@ class Page extends Abstract_Render {
 			'sucury_waf_api_key'          => 1,
 			'cache_webp'                  => 1,
 			'cache_logged_user'           => 1,
+			'wpr-js-tips'                 => 1,
 		];
 
 		if ( ! isset( $_POST['option']['name'] ) || ! isset( $allowed[ $_POST['option']['name'] ] ) ) {
@@ -961,7 +962,10 @@ class Page extends Abstract_Render {
 				'font_optimization_section' => [
 					'title' => __( 'Fonts', 'rocket' ),
 					'type'  => 'fields_container',
-					'help'  => $fonts,
+					'help'  => [
+						'id'  => $this->beacon->get_suggest( 'fonts_section' ),
+						'url' => $fonts['url'],
+					],
 					'page'  => 'media',
 				],
 			]

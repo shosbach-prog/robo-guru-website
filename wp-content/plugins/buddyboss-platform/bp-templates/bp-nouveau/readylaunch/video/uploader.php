@@ -50,8 +50,7 @@ defined( 'ABSPATH' ) || exit;
 								<?php endif; ?>
 								<div class="video-uploader-wrapper">
 									<div class="dropzone video-dropzone" id="video-uploader"></div>
-									<div class="uploader-post-video-template" style="display:none;">
-										<div class="dz-preview dz-file-preview well" id="dz-preview-template">
+<div class="uploader-post-video-template" style="display:none;"><div class="dz-preview dz-file-preview well" id="dz-preview-template">
 											<div class="dz-error-title"><?php esc_html_e( 'Upload Failed', 'buddyboss' ); ?></div>
 											<div class="dz-progress-ring-wrap">
 												<i class="bb-icons-rl-fill bb-icons-rl-video-camera"></i>

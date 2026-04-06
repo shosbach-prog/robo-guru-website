@@ -35,94 +35,11 @@ class Video {
 		$this->filter( 'rank_math/database/tools', 'generate_video_schema_tool' );
 		$this->action( 'rank_math/pre_update_metadata', 'detect_video_in_content', 10, 3 );
 		if ( is_admin() ) {
-			$this->action( 'cmb2_admin_init', 'add_video_settings' );
-			$this->action( 'rank_math/admin/settings/others', 'add_media_rss_field' );
-
 			return;
 		}
 
 		$this->action( 'rank_math/opengraph/facebook', 'add_video_tags', 99 );
 		new Media_RSS();
-	}
-
-	/**
-	 * Add auto-detect Video fields in Titles & Meta settings.
-	 */
-	public function add_video_settings() {
-		foreach ( Helper::get_accessible_post_types() as $post_type ) {
-			$this->action( "rank_math/admin/settings/post-type-{$post_type}", 'add_video_schema_fields', 10, 2 );
-		}
-	}
-
-	/**
-	 * Add auto-generate video schema settings.
-	 *
-	 * @param object $cmb CMB2 instance.
-	 * @param array  $tab Current settings tab.
-	 */
-	public function add_video_schema_fields( $cmb, $tab ) {
-		if ( 'attachment' === $tab['post_type'] ) {
-			return;
-		}
-
-		$field_ids      = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
-		$field_position = array_search( "pt_{$tab['post_type']}_default_article_type", array_keys( $field_ids ), true ) + 1;
-
-		$cmb->add_field(
-			[
-				'id'      => 'pt_' . $tab['post_type'] . '_autodetect_video',
-				'type'    => 'toggle',
-				'name'    => esc_html__( 'Autodetect Video', 'rank-math-pro' ),
-				'desc'    => esc_html__( 'Populate automatic Video Schema by auto-detecting any video in the content.', 'rank-math-pro' ),
-				'options' => [
-					'off' => esc_html__( 'Default', 'rank-math-pro' ),
-					'on'  => esc_html__( 'Custom', 'rank-math-pro' ),
-				],
-				'default' => 'on',
-			],
-			++$field_position
-		);
-
-		$cmb->add_field(
-			[
-				'id'      => 'pt_' . $tab['post_type'] . '_autogenerate_image',
-				'type'    => 'toggle',
-				'name'    => esc_html__( 'Autogenerate Image', 'rank-math-pro' ),
-				'desc'    => esc_html__( 'Auto-generate image for the auto detected video.', 'rank-math-pro' ),
-				'options' => [
-					'off' => esc_html__( 'Default', 'rank-math-pro' ),
-					'on'  => esc_html__( 'Custom', 'rank-math-pro' ),
-				],
-				'default' => 'off',
-				'dep'     => [ [ 'pt_' . $tab['post_type'] . '_autodetect_video', 'on' ] ],
-			],
-			++$field_position
-		);
-	}
-
-	/**
-	 * Add new settings.
-	 *
-	 * @param object $cmb CMB2 instance.
-	 */
-	public function add_media_rss_field( $cmb ) {
-		$field_ids      = wp_list_pluck( $cmb->prop( 'fields' ), 'id' );
-		$field_position = array_search( 'rss_after_content', array_keys( $field_ids ), true ) + 1;
-
-		$cmb->add_field(
-			[
-				'id'      => 'disable_media_rss',
-				'type'    => 'toggle',
-				'name'    => esc_html__( 'Remove Media Data from RSS feed', 'rank-math-pro' ),
-				'desc'    => esc_html__( 'Remove Media Data from RSS feed', 'rank-math-pro' ),
-				'options' => [
-					'off' => esc_html__( 'Default', 'rank-math-pro' ),
-					'on'  => esc_html__( 'Custom', 'rank-math-pro' ),
-				],
-				'default' => 'off',
-			],
-			++$field_position
-		);
 	}
 
 	/**

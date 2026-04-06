@@ -39,6 +39,26 @@ class Link_Status_Crawler extends \WP_Background_Process {
 	protected $action = 'link_status_crawler';
 
 	/**
+	 * Save the current queue to a unique batch key.
+	 *
+	 * Overrides parent to use uniqid() instead of microtime(), preventing key
+	 * collisions when save() is called multiple times in rapid succession.
+	 *
+	 * @return $this
+	 */
+	public function save() {
+		if ( empty( $this->data ) ) {
+			return $this;
+		}
+
+		$key = $this->identifier . '_batch_' . md5( uniqid( '', true ) . wp_rand() );
+		update_site_option( $key, $this->data );
+		$this->data = [];
+
+		return $this;
+	}
+
+	/**
 	 * Main instance.
 	 *
 	 * Ensure only one instance is loaded or can be loaded.
@@ -84,11 +104,16 @@ class Link_Status_Crawler extends \WP_Background_Process {
 				]
 			);
 
-			foreach ( $links as $link ) {
-				$this->push_to_queue( $link );
+			// Save in chunks of 100 — each chunk becomes its own batch row,
+			// preventing large wp_options writes that cause binlog growth.
+			foreach ( array_chunk( $links, 100 ) as $chunk ) {
+				foreach ( $chunk as $link ) {
+					$this->push_to_queue( $link );
+				}
+				$this->save();
 			}
 
-			$this->save()->dispatch();
+			$this->dispatch();
 			return;
 		}
 
@@ -109,9 +134,10 @@ class Link_Status_Crawler extends \WP_Background_Process {
 			]
 		);
 
-		// Queue ALL links using cursor-based pagination in chunks.
+		// Queue links in chunks of 100 — each chunk becomes its own batch row,
+		// preventing large wp_options writes that cause binlog growth.
 		$cursor     = '';
-		$chunk_size = 10;
+		$chunk_size = 100;
 
 		while ( true ) {
 			$links = $this->get_links_to_check( $args, $cursor, $chunk_size );
@@ -120,10 +146,11 @@ class Link_Status_Crawler extends \WP_Background_Process {
 				break; // No more links.
 			}
 
-			// Queue this chunk.
+			// Persist this chunk as its own batch row.
 			foreach ( $links as $link ) {
 				$this->push_to_queue( $link );
 			}
+			$this->save();
 
 			// Update cursor to last url_hash for next chunk.
 			$last_link = end( $links );
@@ -135,7 +162,7 @@ class Link_Status_Crawler extends \WP_Background_Process {
 			}
 		}
 
-		$this->save()->dispatch();
+		$this->dispatch();
 	}
 
 	/**
@@ -214,24 +241,34 @@ class Link_Status_Crawler extends \WP_Background_Process {
 		}
 
 		// Queue unique links that weren't checked recently.
+		// Collect links to queue, then save in chunks of 100.
+		$to_queue = [];
 		foreach ( $unique_links as $url_hash => $link_data ) {
 			if ( isset( $recently_checked_set[ $url_hash ] ) ) {
 				// URL was recently checked and status records have been copied above.
 				continue;
 			}
 
-			$instance->push_to_queue(
-				[
-					'link_id'  => $link_data['link_id'] ?? 0,
-					'url'      => $link_data['url'],
-					'url_hash' => $link_data['url_hash'],
-					'type'     => $link_data['type'],
-				]
-			);
+			$to_queue[] = [
+				'link_id'  => $link_data['link_id'] ?? 0,
+				'url'      => $link_data['url'],
+				'url_hash' => $link_data['url_hash'],
+				'type'     => $link_data['type'],
+			];
 		}
 
-		// Save queue and schedule dispatch.
-		$instance->save();
+		if ( empty( $to_queue ) ) {
+			return;
+		}
+
+		// Save in chunks of 100 — each chunk becomes its own batch row,
+		// preventing large wp_options writes that cause binlog growth.
+		foreach ( array_chunk( $to_queue, 100 ) as $chunk ) {
+			foreach ( $chunk as $item ) {
+				$instance->push_to_queue( $item );
+			}
+			$instance->save();
+		}
 		$instance->update_progress_tracking();
 
 		// Schedule async dispatch via WP cron (non-blocking).

@@ -14,6 +14,7 @@ use RankMath\Helper;
 use RankMath\Helpers\Arr;
 use RankMath\Redirections\DB;
 use RankMath\Redirections\Cache;
+use RankMath\Helpers\DB as DB_Helper;
 use RankMath\Redirections\Redirection;
 
 defined( 'ABSPATH' ) || exit;
@@ -75,6 +76,13 @@ class Import_Row {
 	public $meta_data = [];
 
 	/**
+	 * Processed status.
+	 *
+	 * @var boolean
+	 */
+	public $processed = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param array $data            Row data.
@@ -89,6 +97,31 @@ class Import_Row {
 		if ( $should_query_db ) {
 			$this->meta_data = false;
 		}
+
+		global $wpdb;
+
+		$object_id     = $data['id'];
+		$object_slug   = $data['slug'];
+		$object_exists = false;
+
+		switch ( $this->object_type ) {
+			case 'post':
+				$object_exists = DB_Helper::get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE ID = %d", $object_id ) );
+				break;
+			case 'term':
+				$object_exists = DB_Helper::get_var( $wpdb->prepare( "SELECT term_id FROM {$wpdb->terms} WHERE term_id = %d", $object_id ) );
+				break;
+			case 'user':
+				$object_exists = DB_Helper::get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->users} WHERE ID = %d", $object_id ) );
+				break;
+		}
+
+		if ( ! $object_exists ) {
+			$this->processed = false;
+			return;
+		}
+
+		$this->processed = true;
 
 		foreach ( $this->data as $key => $value ) {
 			$clear_method        = "clear_{$key}";

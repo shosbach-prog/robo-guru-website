@@ -73,10 +73,11 @@ class AI_Client {
 		$endpoint = $this->api_base;
 
 		$body = [
-			'keyword'  => $keyword,
-			'username' => $this->registered_data['username'],
-			'api_key'  => $this->registered_data['api_key'],
-			'site_url' => $this->get_site_url(),
+			'keyword'        => $keyword,
+			'username'       => $this->registered_data['username'],
+			'api_key'        => $this->registered_data['api_key'],
+			'site_url'       => $this->get_site_url(),
+			'plugin_version' => rank_math_pro()->version,
 		];
 
 		// Add context if provided.
@@ -223,9 +224,10 @@ class AI_Client {
 			[
 				'timeout' => 10,
 				'body'    => [
-					'username' => $this->registered_data['username'],
-					'api_key'  => $this->registered_data['api_key'],
-					'site_url' => $this->get_site_url(),
+					'username'       => $this->registered_data['username'],
+					'api_key'        => $this->registered_data['api_key'],
+					'site_url'       => $this->get_site_url(),
+					'plugin_version' => rank_math_pro()->version,
 				],
 			]
 		);
