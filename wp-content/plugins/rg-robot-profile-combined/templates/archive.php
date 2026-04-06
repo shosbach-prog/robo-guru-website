@@ -102,7 +102,24 @@ $base = is_page('roboter') ? get_permalink() : get_post_type_archive_link($pt);
     $segs=array_keys($segs); sort($segs);
   ?>
 
-  <!-- Hero (statisch gerendert – kein JS nötig) -->
+  <!-- Duplikat-Hero blockieren (altes WP Rocket cached JS) -->
+  <style>#rg-roboter-hero-block{display:none!important}.rg-wrap>.rg-hero--roboter:not(:first-of-type){display:none!important}</style>
+  <script>
+  /* Altes Hero-Element sofort entfernen, bevor es sichtbar wird */
+  (function(){
+    var orig = document.getElementById('rg-roboter-hero-block');
+    if(orig) orig.parentNode.removeChild(orig);
+    /* Observer: falls JS es später einfügt, sofort entfernen */
+    if(window.MutationObserver){
+      new MutationObserver(function(mutations){
+        var el = document.getElementById('rg-roboter-hero-block');
+        if(el) el.parentNode.removeChild(el);
+      }).observe(document.documentElement, {childList:true, subtree:true});
+    }
+  })();
+  </script>
+
+  <!-- Hero (statisch gerendert) -->
   <div class="rg-hero rg-hero--roboter">
       <div class="rg-hero__inner">
           <span class="rg-hero__badge">Roboter-Datenbank &ndash; <?php echo count($ids); ?> Modelle</span>
