@@ -640,6 +640,11 @@ body .rgfde-btn-ico{
 }
 
 /* === Hero – Roboter Archive === */
+
+/* Defensiv: altes MU-Plugin Hero und Duplikate blockieren */
+#rg-roboter-hero-block { display: none !important; }
+.rg-hero--roboter ~ .rg-hero--roboter { display: none !important; }
+
 .rg-hero--roboter {
     --rg-primary: #00BCD4;
     --rg-primary-dark: #0097A7;
