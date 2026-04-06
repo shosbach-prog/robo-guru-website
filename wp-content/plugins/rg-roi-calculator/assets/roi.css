@@ -56,14 +56,10 @@ body:has(.rg-roi),
 body.rg-roi-page{
   overflow-x:hidden!important;
 }
-body:has(.rg-roi) .bb-side-panel,
 body:has(.rg-roi) #secondary,
-body:has(.rg-roi) aside,
 body:has(.rg-roi) .widget-area,
 body:has(.rg-roi) .sidebar,
-body.rg-roi-page .bb-side-panel,
 body.rg-roi-page #secondary,
-body.rg-roi-page aside,
 body.rg-roi-page .widget-area,
 body.rg-roi-page .sidebar{display:none!important}
 
