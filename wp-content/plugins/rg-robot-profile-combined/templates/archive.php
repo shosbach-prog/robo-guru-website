@@ -102,28 +102,8 @@ $base = is_page('roboter') ? get_permalink() : get_post_type_archive_link($pt);
     $segs=array_keys($segs); sort($segs);
   ?>
 
-  <!-- Hero (statisch gerendert – kein JS nötig, kein CLS) -->
-  <div class="rg-hero rg-hero--roboter">
-      <div class="rg-hero__inner">
-          <span class="rg-hero__badge">Roboter-Datenbank &ndash; <?php echo count($ids); ?> Modelle</span>
-          <h1>Kommerzielle Roboter f&uuml;r Reinigung, Service &amp; Transport</h1>
-          <p class="rg-hero__lead">Vergleichen Sie Reinigungsroboter, Serviceroboter und Transportroboter f&uuml;r den professionellen Einsatz &ndash; herstellerunabh&auml;ngig und praxisnah.</p>
-          <div class="rg-hero__cta">
-              <a href="#roboter-db" class="rg-btn rg-btn--primary">Roboter Datenbank starten &darr;</a>
-              <a href="/robo-finder/" class="rg-btn rg-btn--outline">Robo Finder</a>
-          </div>
-          <div class="rg-hero__usp">
-              <span class="rg-hero__usp-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Herstellerunabh&auml;ngig</span>
-              <span class="rg-hero__usp-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Praxisnah</span>
-              <span class="rg-hero__usp-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><?php echo count($ids); ?> Modelle vergleichbar</span>
-          </div>
-      </div>
-  </div>
-
-  <h1 class="rg-title" style="display:none">Roboter</h1>
-  <div class="rg-muted" style="display:none">Filtere & suche – vergleiche bis zu 3 Roboter.</div>
-
-  <h2 class="rg-section-heading rg-section-heading--roboter" id="roboter-db">Alle Roboter-Modelle im &Uuml;berblick</h2>
+  <h1 class="rg-title" style="margin-bottom:10px">Roboter</h1>
+  <div class="rg-muted" style="margin-bottom:16px">Filtere &amp; suche &ndash; vergleiche bis zu 3 Roboter.</div>
 
   <div class="rg-card">
     <div class="rg-filterbar">
@@ -256,10 +236,4 @@ $base = is_page('roboter') ? get_permalink() : get_post_type_archive_link($pt);
   </div>
 </div>
 
-<script>
-document.addEventListener('click', function(e) {
-    var a = e.target.closest('a[href="#roboter-db"]');
-    if (a) { e.preventDefault(); var t = document.getElementById('roboter-db'); if (t) t.scrollIntoView({behavior:'smooth', block:'start'}); }
-});
-</script>
 <?php get_footer(); ?>
