@@ -413,16 +413,6 @@ final class RG_ROI_Calculator {
         ?>
         <div class="rg-roi rg-roi-page" data-rg-roi>
 
-            <!-- Beratermodus Toggle (top bar) – soft-locked for guests -->
-            <div class="rg-advisor-bar">
-                <label class="rg-advisor-toggle">
-                    <input type="checkbox" data-rg="advisorMode"<?php if (!is_user_logged_in()) echo ' data-rg-gated="1"'; ?>>
-                    <span class="rg-advisor-toggle__slider"></span>
-                    <span class="rg-advisor-toggle__label">Beratermodus</span>
-                    <span class="rg-tooltip" data-tip="Aktiviert Branchenprofile und Schnell-Szenarien im Ergebnis-Panel, um verschiedene Szenarien schnell durchzuspielen." tabindex="0" role="img" aria-label="Hilfe">?</span>
-                </label>
-            </div>
-
             <!-- Soft-Lock Overlay Modal (für nicht-eingeloggte Nutzer) -->
             <?php if (!is_user_logged_in()) : ?>
             <div class="rg-gate-overlay rg-gate-overlay--hidden" data-rg-gate-overlay role="dialog" aria-modal="true" aria-labelledby="rg-gate-title">
@@ -788,6 +778,15 @@ final class RG_ROI_Calculator {
 
             <!-- RIGHT COLUMN: Sticky Summary -->
             <div class="rg-roi-summary" data-rg-summary>
+                <!-- Beratermodus Toggle – soft-locked for guests -->
+                <div class="rg-advisor-bar">
+                    <label class="rg-advisor-toggle">
+                        <input type="checkbox" data-rg="advisorMode"<?php if (!is_user_logged_in()) echo ' data-rg-gated="1"'; ?>>
+                        <span class="rg-advisor-toggle__slider"></span>
+                        <span class="rg-advisor-toggle__label">Beratermodus</span>
+                        <span class="rg-tooltip" data-tip="Aktiviert Branchenprofile und Schnell-Szenarien im Ergebnis-Panel, um verschiedene Szenarien schnell durchzuspielen." tabindex="0" role="img" aria-label="Hilfe">?</span>
+                    </label>
+                </div>
                 <div class="rg-summary-inner">
 
                     <div class="rg-result__head">
